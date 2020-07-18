@@ -29,13 +29,16 @@ if SERVER then
 	resourceLoader( resources["client"], AddCSLuaFile )
 	-- add the taunts in
 	for _,t in pairs(PROP_TAUNTS) do
-		if file.Exists( "sound/"..t, "MOD" ) then
-			resource.AddSingleFile("sound/"..t)
-		end
+		--if not file.Exists( "sound/"..t, "MOD" ) then
+			print ( "Adding prop taunt "..t )
+		--	resource.AddFile("sound/"..t)
+		--else
+		--	print ( "Prop taunt "..t.." not found." )
+		--end
 	end
 	for _,t in pairs(HUNTER_TAUNTS) do
 		if file.Exists( "sound/"..t, "MOD" ) then
-			resource.AddSingleFile("sound/"..t)
+		--	resource.AddSingleFile("sound/"..t)
 		end
 	end
 else
