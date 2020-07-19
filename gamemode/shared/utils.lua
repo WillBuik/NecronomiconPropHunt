@@ -85,7 +85,7 @@ function RoundToTime(round)
 		return OBJHUNT_PRE_ROUND_TIME - secs
 	elseif ( round.state == ROUND_IN or round.state == ROUND_START ) then
 		return OBJHUNT_ROUND_TIME - secs
-	elseif ( round.state == ROUND_END) then
+	elseif ( round.state == ROUND_END ) then
 		secs = CurTime() - round.endTime + round.timePad
 		return OBJHUNT_POST_ROUND_TIME - secs
 	else

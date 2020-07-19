@@ -79,6 +79,7 @@ net.Receive( "Round Update", function()
 	round.state     = net.ReadInt(8)
 	round.current   = net.ReadInt(8)
 	round.startTime = net.ReadInt(32)
+	round.endTime   = net.ReadInt(32)
 	-- pad the local clock so that the time is accurate
 	round.timePad   = net.ReadInt(32) - CurTime()
 
