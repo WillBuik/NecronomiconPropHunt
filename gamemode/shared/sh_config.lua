@@ -76,7 +76,7 @@ THIRDPERSON_DISTANCE = 100
 OBJHUNT_TEAM_HUNTERS_CAN_MOVE_PROPS = false
 
 -- this enables TEAM_PROPS to pick up props
-OBJHUNT_TEAM_PROPS_CAN_MOVE_PROPS = true
+OBJHUNT_TEAM_PROPS_CAN_MOVE_PROPS = false
 
 -- entities that are capable of being chosen by props
 USABLE_PROP_ENTITIES = {
