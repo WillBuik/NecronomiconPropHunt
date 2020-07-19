@@ -9,6 +9,7 @@ local PLAYER = {}
 PLAYER.DisplayName       = "Prop"
 PLAYER.WalkSpeed         = 222
 PLAYER.RunSpeed          = 222
+PLAYER.JumpPower         = 800
 PLAYER.CanUseFlashlight  = false
 PLAYER.UseVMHands        = false
 PLAYER.AvoidPlayers      = false
