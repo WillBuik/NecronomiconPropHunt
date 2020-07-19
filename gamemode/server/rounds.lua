@@ -45,8 +45,6 @@ local function SwapTeams()
 			player_manager.SetPlayerClass( v, "player_hunter" )
 		end
 	end
-
-	RespawnTeams()
 end
 
 local function RespawnTeams()
@@ -91,6 +89,7 @@ local function StartRound()
 	    RespawnTeams()
 	else
 	    SwapTeams()
+		RespawnTeams()
 	end
 	round.current = round.current + 1
 	round.startTime = CurTime()
