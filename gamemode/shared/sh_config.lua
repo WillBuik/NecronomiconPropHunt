@@ -79,7 +79,7 @@ OBJHUNT_TEAM_HUNTERS_CAN_MOVE_PROPS = false
 OBJHUNT_TEAM_PROPS_CAN_MOVE_PROPS = false
 
 -- Increase the default prop jump height to make it so props can get on tables
-PROP_DEFAULT_JUMP_POWER = 400
+PROP_DEFAULT_JUMP_POWER = 260
 
 -- entities that are capable of being chosen by props
 USABLE_PROP_ENTITIES = {
