@@ -65,7 +65,7 @@ local function RespawnTeams()
 			v:Spawn()
 		end
 	end
-
+end
 
 local function WaitRound()
 	-- wait for everyone to connect and what not
