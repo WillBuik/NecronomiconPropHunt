@@ -76,7 +76,7 @@ THIRDPERSON_DISTANCE = 100
 OBJHUNT_TEAM_HUNTERS_CAN_MOVE_PROPS = false
 
 -- this enables TEAM_PROPS to pick up props
-OBJHUNT_TEAM_PROPS_CAN_MOVE_PROPS = true
+OBJHUNT_TEAM_PROPS_CAN_MOVE_PROPS = false
 
 -- Increase the default prop jump height to make it so props can get on tables
 PROP_DEFAULT_JUMP_POWER = 400
