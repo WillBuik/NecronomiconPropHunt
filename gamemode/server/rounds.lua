@@ -34,8 +34,6 @@ local function SwapTeams()
 			RemovePlayerProp( v )
 			v:SetTeam( TEAM_PROPS )
 			player_manager.SetPlayerClass( v, "player_prop" )
-			v:KillSilent()
-			v:Spawn()
 		end
 	end
 
@@ -44,11 +42,30 @@ local function SwapTeams()
 			RemovePlayerProp( v )
 			v:SetTeam( TEAM_HUNTERS )
 			player_manager.SetPlayerClass( v, "player_hunter" )
+		end
+	end
+
+	SwapTeams()
+end
+
+local function RespawnTeams()
+	local hunters = team.GetPlayers(TEAM_HUNTERS)
+	local props = team.GetPlayers(TEAM_PROPS)
+
+	for _, v in pairs(hunters) do
+		if( IsValid(v) ) then
 			v:KillSilent()
 			v:Spawn()
 		end
 	end
-end
+
+	for _, v in pairs(props) do
+		if( IsValid(v) ) then
+			v:KillSilent()
+			v:Spawn()
+		end
+	end
+
 
 local function WaitRound()
 	-- wait for everyone to connect and what not
@@ -65,12 +82,16 @@ local function WaitRound()
 end
 
 local function StartRound()
-	round.current = round.current + 1
-	round.startTime = CurTime()
 	-- reset the map
 	game.CleanUpMap(false, {"player_prop_ent"})
-	-- swap teams, respawn everyone
-	SwapTeams()
+	-- respawn everyone, swap teams if it's not the 0th round
+	if( round.current == 0 ) then
+	    RespawnTeams()
+	else
+	    SwapTeams()
+	end
+	round.current = round.current + 1
+	round.startTime = CurTime()
 	round.state = ROUND_IN
 	hook.Call( "OBJHUNT_RoundStart" )
 end
