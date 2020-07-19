@@ -21,6 +21,8 @@ PLAYER.lastTaunt         = 0.0
 
 function PLAYER:Loadout()
 	self.Player:RemoveAllAmmo()
+	self.Player:Give( "weapon_zm_carry" )
+	self.Player:Give( "weapon_ttt_unarmed" )
 end
 
 function PLAYER:SetupDataTables()
