@@ -10,12 +10,14 @@ function ENT:Draw()
 	self:SetPos( owner:GetPos() )
 
 	local propAngle = owner:EyeAngles()
-	-- snap to 45 degree increments on yaw and pitch
+	-- snap to 45 degree increments on yaw, and dissallow pitch movement
 
 
 		-- angle snapping stuff
 		if( owner.wantAngleSnap ) then
-			propAngle:SnapTo("p",45):SnapTo("y",45)
+			propAngle:SnapTo("p",180):SnapTo("y",45)
+		else
+			propAngle:SnapTo("p",180)
 		end
 
 		-- angle locking stuff
