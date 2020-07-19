@@ -45,7 +45,7 @@ local function SwapTeams()
 		end
 	end
 
-	SwapTeams()
+	RespawnTeams()
 end
 
 local function RespawnTeams()
