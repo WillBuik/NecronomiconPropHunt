@@ -211,15 +211,13 @@ local function RoundHUD()
 		-- Time left text
 		surface.SetFont( "ObjHUDFont" )
 		surface.SetTextColor( 255, 255, 255, 255 )
-		if( round.startTime == 0 || round.state == 3 ) then
-			textToDraw = "00:00"
-		else
-			local secs = CurTime() - round.startTime + round.timePad
-			secs = OBJHUNT_ROUND_TIME - secs
-			secs = math.max( 0, secs )
-			secs = math.Round( secs, 0 )
-			textToDraw = string.FormattedTime( secs, "%02i:%02i" )
-		end
+
+		local secs = CurTime() - round.startTime + round.timePad
+		secs = RoundStateToTime(round.state) - secs
+		secs = math.max( 0, secs )
+		secs = math.Round( secs, 0 )
+		textToDraw = string.FormattedTime( secs, "%02i:%02i" )
+
 		textWidth, textHeight = surface.GetTextSize( textToDraw )
 		textX = startX + box1Width/2 - textWidth/2
 		textY = startY + height/2 - textHeight/2

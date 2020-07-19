@@ -79,6 +79,18 @@ function TeamString(teamID)
 	end
 end
 
+function RoundStateToTime(state)
+	if( state == ROUND_WAIT ) then
+		return OBJHUNT_PRE_ROUND_TIME
+	elseif ( state == ROUND_IN) then
+		return OBJHUNT_ROUND_TIME
+	elseif ( state == ROUND_END) then
+		return OBJHUNT_POST_ROUND_TIME
+	else
+		return 0
+	end
+end
+
 
 --[[
 Ordered table iterator, allow to iterate on the natural order of the keys of a
