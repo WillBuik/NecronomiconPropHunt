@@ -212,8 +212,7 @@ local function RoundHUD()
 		surface.SetFont( "ObjHUDFont" )
 		surface.SetTextColor( 255, 255, 255, 255 )
 
-		local secs = CurTime() - round.startTime + round.timePad
-		secs = RoundStateToTime(round.state) - secs
+		local secs = RoundToTime(round)
 		secs = math.max( 0, secs )
 		secs = math.Round( secs, 0 )
 		textToDraw = string.FormattedTime( secs, "%02i:%02i" )
