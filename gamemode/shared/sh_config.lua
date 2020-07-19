@@ -136,8 +136,8 @@ TEXT_COLOR = Color( 255, 255, 255, 255 )
 --[[============]]--
 
 -- change within 0 < range < 256
-TAUNT_MAX_PITCH = 128
-TAUNT_MIN_PITCH = 64
+TAUNT_MAX_PITCH = 110
+TAUNT_MIN_PITCH = 90
 
 if (PROP_TAUNTS == nil) then
     PROP_TAUNTS = {}
