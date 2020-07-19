@@ -88,7 +88,7 @@ function SendTaunt( ply, taunt, pitch )
 	net.Broadcast()
 end
 
-net.Receive( "Update Taunt Times", function() 
+net.Receive( "Update Taunt Times", function()
 	local id = net.ReadUInt( 8 )
 	local ply = player.GetByID( id )
 	local nextTaunt = net.ReadFloat()
@@ -300,7 +300,7 @@ function SetPlayerProp( ply, ent, scale, hbMin, hbMax )
 	ply:SetStepSize( math.Round( 4+(tHeight)/4 ) )
 
 	-- give bigger props a bonus for being big
-	ply:SetJumpPower( 200 + math.sqrt(tHeight) )
+	ply:SetJumpPower( PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight) )
 
 	ply.lastPropChange = os.time()
 
