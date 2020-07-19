@@ -79,13 +79,15 @@ function TeamString(teamID)
 	end
 end
 
-function RoundStateToTime(state)
-	if( state == ROUND_WAIT ) then
-		return OBJHUNT_PRE_ROUND_TIME
-	elseif ( state == ROUND_IN) then
-		return OBJHUNT_ROUND_TIME
-	elseif ( state == ROUND_END) then
-		return OBJHUNT_POST_ROUND_TIME
+function RoundToTime(round)
+	local secs = CurTime() - round.startTime + round.timePad
+	if( round.state == ROUND_WAIT ) then
+		return OBJHUNT_PRE_ROUND_TIME - secs
+	elseif ( round.state == ROUND_IN or round.state == ROUND_START ) then
+		return OBJHUNT_ROUND_TIME - secs
+	elseif ( round.state == ROUND_END) then
+		secs = CurTime() - round.endTime + round.timePad
+		return OBJHUNT_POST_ROUND_TIME - secs
 	else
 		return 0
 	end
