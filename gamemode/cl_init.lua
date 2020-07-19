@@ -1,5 +1,12 @@
 include( "shared.lua" )
 
+hook.Add("PreDrawHalos", "PropTauntWallhacks", function()
+	local ply = LocalPlayer()
+	if( ply.Team() == TEAM_PROPS && ply.tauntPatch:IsPlaying() && ply ) then
+	    halo.Add(team.GetPlayers(TEAM_HUNTERS), Color(0,255,0), 0, 0, 1, true, true)
+    end
+end)
+
 local function KillTaunt( ply )
 	if( ply.tauntPatch && ply.tauntPatch:IsPlaying() ) then
 		ply.tauntPatch:Stop()
