@@ -20,7 +20,7 @@ OBJHUNT_ROUNDS = 4
 OBJHUNT_ROUND_TIME = 300
 
 -- Initial waiting time before first round starts
-OBJHUNT_PRE_ROUND_TIME = 30
+OBJHUNT_PRE_ROUND_TIME = 90
 
 -- Waiting time before new round starts after first round
 OBJHUNT_POST_ROUND_TIME = 5

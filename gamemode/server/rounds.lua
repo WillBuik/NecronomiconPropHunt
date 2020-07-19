@@ -70,7 +70,8 @@ end
 local function WaitRound()
 	-- wait for everyone to connect and what not
 	local mapTime = CurTime()
-	if( mapTime < OBJHUNT_PRE_ROUND_TIME ) then return end
+	local spectators = team.GetPlayers(TEAM_SPECTATOR)
+	if( mapTime < OBJHUNT_PRE_ROUND_TIME && #spectators != 0 ) then return end
 
 	-- make sure we have at least one player on each team
 	local hunters = team.GetPlayers(TEAM_HUNTERS)
