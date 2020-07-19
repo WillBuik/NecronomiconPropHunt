@@ -121,12 +121,12 @@ net.Receive( "Taunt Selection", function()
 		ply.lastTauntDuration = soundDur
 		ply.autoTauntInterval = OBJHUNT_AUTOTAUNT_INTERVAL + soundDur
 
-	net.Start( "Update Taunt Times" )
-		net.WriteUInt( id, 8 )
-		net.WriteFloat( ply.nextTaunt )
-		net.WriteFloat( ply.lastTaunt )
-		net.WriteFloat( ply.autoTauntInterval )
-		net.SendToServer()
+		net.Start( "Update Taunt Times" )
+			net.WriteUInt( id, 8 )
+			net.WriteFloat( ply.nextTaunt )
+			net.WriteFloat( ply.lastTaunt )
+			net.WriteFloat( ply.autoTauntInterval )
+			net.SendToServer()
 	end
 
 	local s = Sound(taunt)
@@ -139,7 +139,12 @@ net.Receive( "Taunt Selection", function()
 		end
 	end
 
-	ply.tauntPatch:SetSoundLevel( 100 )
+	if( ply == LocalPlayer() ) then
+		-- Let's make the taunt less horrible for the player playing it
+		ply.tauntPatch:SetSoundLevel( 70 )
+	else
+		ply.tauntPatch:SetSoundLevel( 100 )
+	end
 	ply.tauntPatch:PlayEx(1, pitch)
 
 	-- old not stoppable method
