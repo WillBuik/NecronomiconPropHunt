@@ -109,7 +109,7 @@ end )
 --[[ when the player tries to select a prop ]]--
 hook.Add( "PlayerTick", "New Player Use", function( ply )
 	if( ply:Team() != TEAM_PROPS ) then return end
-	if( ply:KeyPressed( IN_USE ) ) then
+	if( ply:KeyPressed( IN_RELOAD ) ) then
 		if( !ply.lastPropChange || os.time() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN ) then return end
 		local prop = getViewEnt( ply )
 		local sColor = stencilColor( LocalPlayer(), prop )
