@@ -68,7 +68,7 @@ function MapVote.Start(length, current, limit, prefix)
             end
         else
             for k, v in pairs(prefix) do
-                if string.find(map, "^"..v) then
+                if string.find(map:lower(), "^"..v) then
                     vote_maps[#vote_maps + 1] = map:sub(1, -5)
                     amt = amt + 1
                     break
