@@ -4,7 +4,7 @@ include( "shared.lua" )
 include( "server/autotaunt.lua" )
 
 function GM:PlayerInitialSpawn( ply )
-	if( ply:IsBot() )
+	if( ply:IsBot() ) then
 		-- Auto add bots to hunter team for testing.
 		ply:SetTeam( TEAM_HUNTERS )
 		player_manager.SetPlayerClass( ply, "player_hunter" )
