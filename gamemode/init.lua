@@ -5,12 +5,12 @@ include( "server/autotaunt.lua" )
 
 function GM:PlayerInitialSpawn( ply )
 	if( ply:IsBot() )
-	    -- Auto add bots to hunter team for testing.
-	    ply:SetTeam( TEAM_HUNTERS )
-	    player_manager.SetPlayerClass( ply, "player_hunter" )
+		-- Auto add bots to hunter team for testing.
+		ply:SetTeam( TEAM_HUNTERS )
+		player_manager.SetPlayerClass( ply, "player_hunter" )
     else
-	    ply:SetTeam( TEAM_SPECTATOR )
-	    player_manager.SetPlayerClass( ply, "player_spectator" )
+		ply:SetTeam( TEAM_SPECTATOR )
+		player_manager.SetPlayerClass( ply, "player_spectator" )
 	end
 	ply:SetCustomCollisionCheck( true )
 	ply.nextTaunt = 0
