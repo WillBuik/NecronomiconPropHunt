@@ -8,7 +8,7 @@ function GM:PlayerInitialSpawn( ply )
 		-- Auto add bots to hunter team for testing.
 		ply:SetTeam( TEAM_HUNTERS )
 		player_manager.SetPlayerClass( ply, "player_hunter" )
-    else
+	else
 		ply:SetTeam( TEAM_SPECTATOR )
 		player_manager.SetPlayerClass( ply, "player_spectator" )
 	end
