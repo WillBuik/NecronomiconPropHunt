@@ -10,7 +10,6 @@ surface.CreateFont( "Nametags",
 hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
 	if( LocalPlayer():Team() != TEAM_HUNTERS &&
 		LocalPlayer():Team() != TEAM_PROPS ) then return end
-	if( !LocalPlayer():Alive() ) then return end
 
 	local toTag = GetLivingPlayers( LocalPlayer():Team() )
 
