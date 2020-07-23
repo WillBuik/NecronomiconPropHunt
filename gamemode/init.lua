@@ -237,6 +237,8 @@ hook.Add( "Initialize", "Precache all network strings", function()
 	util.AddNetworkString( "Prop Angle Lock BROADCAST" )
 	util.AddNetworkString( "Prop Angle Snap" )
 	util.AddNetworkString( "Prop Angle Snap BROADCAST" )
+	util.AddNetworkString( "Prop Pitch Enable" )
+	util.AddNetworkString( "Prop Pitch Enable BROADCAST" )
 	util.AddNetworkString( "AutoTaunt Update" )
 	util.AddNetworkString( "Update Taunt Times" )
 end )
@@ -401,6 +403,35 @@ net.Receive( "Prop Angle Lock", function( len, ply )
 		lockStatus = false
 	end
 
+	if (ply.wantPitchEnable) then
+		local tHitboxMin, tHitboxMax = ply:GetProp():WorldSpaceAABB()
+		-- we round to reduce getting stuck
+		tHitboxMin = Vector( math.Round(tHitboxMin.x),math.Round(tHitboxMin.y),math.Round(tHitboxMin.z) )
+		tHitboxMax = Vector( math.Round(tHitboxMax.x),math.Round(tHitboxMax.y),math.Round(tHitboxMax.z) )
+
+		--Adjust Position for no stuck
+		local ppos = ply:GetPos()
+		ply:SetPos(Vector(ppos.x,ppos.y,ppos.z-tHitboxMin.z))
+
+		ply:SetHull( tHitboxMin, tHitboxMax )
+		ply:SetHullDuck( tHitboxMin, tHitboxMax )
+		local tHeight = tHitboxMax.z-tHitboxMin.z
+
+		-- match the view offset for calcviewing to the height
+		ply:SetViewOffset( Vector(0,0,tHeight) )
+
+		-- scale steps to prop size
+		ply:SetStepSize( math.Round( 4+(tHeight)/4 ) )
+
+		-- give bigger props a bonus for being big
+		ply:SetJumpPower( PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight) )
+
+		net.Start( "Prop Update" )
+		net.WriteVector( tHitboxMax )
+		net.WriteVector( tHitboxMin )
+		net.Send( ply )
+	end
+
 	net.Start( "Prop Angle Lock BROADCAST" )
 		net.WriteEntity( ply )
 		net.WriteBit( lockStatus )
@@ -421,6 +452,17 @@ net.Receive( "Prop Angle Snap", function( len, ply )
 	net.Start( "Prop Angle Snap BROADCAST" )
 		net.WriteEntity( ply )
 		net.WriteBit( snapStatus )
+	net.Broadcast()
+end )
+
+--[[ When a player wants enable pitch on their prop ]]--
+net.Receive( "Prop Pitch Enable", function( len, ply )
+	-- Especially shouldn't use slurs against the mentally ill when you don't know how types work
+	local enableStatus = net.ReadBit() == 1
+
+	net.Start( "Prop Pitch Enable BROADCAST" )
+		net.WriteEntity( ply )
+		net.WriteBit( enableStatus )
 	net.Broadcast()
 end )
 

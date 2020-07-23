@@ -140,8 +140,47 @@ local function DrawContextMenu()
 		end
 	end
 
+	if( LocalPlayer():Team() == TEAM_PROPS ) then
+		totalBtns = totalBtns + 1
+		local pitchEnableBtn = vgui.Create( "DButton", mainPanel)
+		pitchEnableBtn:SetText( "" )
+		pitchEnableBtn:SetPos( padding, padding*3 + btnHeight*2)
+		pitchEnableBtn:SetSize( width - 2*padding, btnHeight)
+		pitchEnableBtn.DoClick = function()
+			if( !IsValid( LocalPlayer():GetProp() ) ) then return end
+			net.Start( "Prop Pitch Enable" )
+				net.WriteBit( !LocalPlayer().enablePitchMovement )
+			net.SendToServer()
+		end
+
+		-- painting
+		pitchEnableBtn.Paint = function(self,w,h)
+			local btnColor
+			if( LocalPlayer().wantPitchLock ) then
+				btnColor = table.Copy(ON_COLOR)
+			else
+				btnColor = table.Copy(OFF_COLOR)
+			end
+
+			if( pitchEnableBtn:IsHovered() ) then
+				btnColor.a = btnColor.a + 20
+			end
+
+			surface.SetFont( "Toggle Buttons" )
+			surface.SetTextColor( Color( 255,255,255,255 ) )
+			local text = "Tilt Enable"
+			local tw, th = surface.GetTextSize( text )
+			surface.SetTextPos( w/2 - tw/2, h/2 - th/2 )
+			surface.DrawText( text )
+			surface.SetDrawColor( btnColor )
+			surface.DrawRect( 0, 0, w, h)
+			surface.SetDrawColor( PANEL_BORDER )
+			surface.DrawOutlinedRect( 0, 0, w, h)
+		end
+	end
+
 	mainPanel.Paint = function(self,w,h)
-		surface.SetDrawColor( PANEL_FILL )
+	surface.SetDrawColor( PANEL_FILL )
 		surface.DrawRect( 0, 0, w, h)
 		surface.SetDrawColor( PANEL_BORDER )
 		surface.DrawOutlinedRect( 0, 0, w, h)
