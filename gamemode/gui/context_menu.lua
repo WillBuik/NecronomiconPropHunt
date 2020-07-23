@@ -149,14 +149,14 @@ local function DrawContextMenu()
 		pitchEnableBtn.DoClick = function()
 			if( !IsValid( LocalPlayer():GetProp() ) ) then return end
 			net.Start( "Prop Pitch Enable" )
-				net.WriteBit( !LocalPlayer().enablePitchMovement )
+				net.WriteBit( !LocalPlayer().wantPitchEnable )
 			net.SendToServer()
 		end
 
 		-- painting
 		pitchEnableBtn.Paint = function(self,w,h)
 			local btnColor
-			if( LocalPlayer().wantPitchLock ) then
+			if( LocalPlayer().wantPitchEnable ) then
 				btnColor = table.Copy(ON_COLOR)
 			else
 				btnColor = table.Copy(OFF_COLOR)
