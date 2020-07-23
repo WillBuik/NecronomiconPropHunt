@@ -144,7 +144,7 @@ local function DrawContextMenu()
 		totalBtns = totalBtns + 1
 		local pitchEnableBtn = vgui.Create( "DButton", mainPanel)
 		pitchEnableBtn:SetText( "" )
-		pitchEnableBtn:SetPos( padding, padding*4 + btnHeight*2)
+		pitchEnableBtn:SetPos( padding, padding*4 + btnHeight*3)
 		pitchEnableBtn:SetSize( width - 2*padding, btnHeight)
 		pitchEnableBtn.DoClick = function()
 			if( !IsValid( LocalPlayer():GetProp() ) ) then return end
