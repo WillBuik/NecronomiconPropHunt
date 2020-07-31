@@ -409,8 +409,6 @@ net.Receive( "Prop Angle Lock", function( len, ply )
         print("NonAABB Hitboxes:", tHitboxMinNonAABB, tHitboxMaxNonAABB, "\n")
         local tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMinNonAABB, tHitboxMaxNonAABB)
         print("AABB Hitboxes:", tHitboxMin, tHitboxMax, "\n")
-        local tHitboxMinPhys, tHitboxMaxPhys = ply:GetProp():GetPhysicsObject():GetAABB()
-        print("AABB Phys Hitboxes:", tHitboxMin, tHitboxMax, "\n")
 
 		-- we round to reduce getting stuck
 		tHitboxMin = Vector( math.Round(tHitboxMin.x),math.Round(tHitboxMin.y),math.Round(tHitboxMin.z) )
