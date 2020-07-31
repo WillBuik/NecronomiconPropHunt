@@ -140,7 +140,7 @@ local function DrawContextMenu()
 		end
 	end
 
-	if( LocalPlayer():Team() == TEAM_PROPS ) then
+	if( LocalPlayer():Team() == TEAM_PROPS and LocalPlayer():IsAdmin() ) then
 		totalBtns = totalBtns + 1
 		local pitchEnableBtn = vgui.Create( "DButton", mainPanel)
 		pitchEnableBtn:SetText( "" )
