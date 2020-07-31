@@ -29,7 +29,7 @@ local function DrawContextMenu()
 		totalBtns = totalBtns + 1
 		local thirdPersonBtn = vgui.Create( "DButton", mainPanel)
 		thirdPersonBtn:SetText( "" )
-		thirdPersonBtn:SetPos( padding, padding )
+		thirdPersonBtn:SetPos( padding, totalBtns * padding  + (totalBtns - 1) * btnHeight)
 		thirdPersonBtn:SetSize( width - 2*padding, btnHeight)
 		thirdPersonBtn.DoClick = function()
 			LocalPlayer().wantThirdPerson = !LocalPlayer().wantThirdPerson
@@ -66,12 +66,11 @@ local function DrawContextMenu()
 		totalBtns = totalBtns + 1
 		local worldAngleBtn = vgui.Create( "DButton", mainPanel)
 		worldAngleBtn:SetText( "" )
-		worldAngleBtn:SetPos( padding, padding*2 + btnHeight)
+		worldAngleBtn:SetPos( padding, totalBtns * padding  + (totalBtns - 1) * btnHeight)
 		worldAngleBtn:SetSize( width - 2*padding, btnHeight)
 		worldAngleBtn.DoClick = function()
 			net.Start( "Prop Angle Lock" )
 				net.WriteBit( !LocalPlayer().wantAngleLock )
-				net.WriteBit( LocalPlayer().wantPitchEnable )
 				net.WriteAngle( LocalPlayer():GetProp():GetAngles() )
 			net.SendToServer()
 		end
@@ -106,7 +105,7 @@ local function DrawContextMenu()
 		totalBtns = totalBtns + 1
 		local snapAngleBtn = vgui.Create( "DButton", mainPanel)
 		snapAngleBtn:SetText( "" )
-		snapAngleBtn:SetPos( padding, padding*3 + btnHeight*2)
+		snapAngleBtn:SetPos( padding, totalBtns * padding  + (totalBtns - 1) * btnHeight)
 		snapAngleBtn:SetSize( width - 2*padding, btnHeight)
 		snapAngleBtn.DoClick = function()
 			if( !IsValid( LocalPlayer():GetProp() ) ) then return end
@@ -145,7 +144,7 @@ local function DrawContextMenu()
 		totalBtns = totalBtns + 1
 		local pitchEnableBtn = vgui.Create( "DButton", mainPanel)
 		pitchEnableBtn:SetText( "" )
-		pitchEnableBtn:SetPos( padding, padding*4 + btnHeight*3)
+		pitchEnableBtn:SetPos( padding, totalBtns * padding  + (totalBtns - 1) * btnHeight)
 		pitchEnableBtn:SetSize( width - 2*padding, btnHeight)
 		pitchEnableBtn.DoClick = function()
 			if( !IsValid( LocalPlayer():GetProp() ) ) then return end

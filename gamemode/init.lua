@@ -395,7 +395,6 @@ end )
 --[[ When a player wants to lock world angles on their prop ]]--
 net.Receive( "Prop Angle Lock", function( len, ply )
 	local lockStatus = net.ReadBit()
-	local pitchEnable = net.ReadBit()
 	local propAngle = net.ReadAngle()
 	-- this is literally retarded
 	if( lockStatus == 1 ) then
@@ -404,14 +403,11 @@ net.Receive( "Prop Angle Lock", function( len, ply )
 		lockStatus = false
 	end
 
-	if ( pitchEnable == 1 and ply.GetProp) then
-	    print("propAngle:", propAngle)
-	    print("GetPropAngles:", ply:GetProp():GetAngles())
+	if ( ply.GetProp ) then
+	    -- We should investigate why this angle doesn't naturally stay in sync
 	    ply:GetProp():SetAngles(propAngle)
-        local tHitboxMinNonAABB, tHitboxMaxNonAABB = ply:GetProp():GetHitBoxBounds( 0, 0 )
-        print("NonAABB Hitboxes:", tHitboxMinNonAABB, tHitboxMaxNonAABB, "\n")
-        local tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMinNonAABB, tHitboxMaxNonAABB)
-        print("AABB Hitboxes:", tHitboxMin, tHitboxMax, "\n")
+        local tHitboxMinUnrotated, tHitboxMaxUnrotated = ply:GetProp():GetHitBoxBounds( 0, 0 )
+        local tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMinUnrotated, tHitboxMaxUnrotated)
 
 		-- we round to reduce getting stuck
 		tHitboxMin = Vector( math.Round(tHitboxMin.x),math.Round(tHitboxMin.y),math.Round(tHitboxMin.z) )
@@ -435,8 +431,8 @@ net.Receive( "Prop Angle Lock", function( len, ply )
 		ply:SetJumpPower( PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight) )
 
 		net.Start( "Prop Update" )
-		net.WriteVector( tHitboxMax )
-		net.WriteVector( tHitboxMin )
+            net.WriteVector( tHitboxMax )
+            net.WriteVector( tHitboxMin )
 		net.Send( ply )
 	end
 
