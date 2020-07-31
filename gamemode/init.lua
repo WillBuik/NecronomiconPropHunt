@@ -405,8 +405,7 @@ net.Receive( "Prop Angle Lock", function( len, ply )
 	end
 
 	if (pitchEnable) then
-        local tHitboxMinNonAABB, tHitboxMaxNonAABB = ply:GetProp():GetHitBoxBounds( 0, 0 )
-        local tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMinNonAABB, tHitboxMaxNonAABB)
+        local tHitboxMin, tHitboxMax = ply:GetProp():WorldSpaceAABB()
 		-- we round to reduce getting stuck
 		tHitboxMin = Vector( math.Round(tHitboxMin.x),math.Round(tHitboxMin.y),math.Round(tHitboxMin.z) )
 		tHitboxMax = Vector( math.Round(tHitboxMax.x),math.Round(tHitboxMax.y),math.Round(tHitboxMax.z) )
