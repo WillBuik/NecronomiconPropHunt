@@ -71,6 +71,7 @@ local function DrawContextMenu()
 		worldAngleBtn.DoClick = function()
 			net.Start( "Prop Angle Lock" )
 				net.WriteBit( !LocalPlayer().wantAngleLock )
+				net.WriteBit( LocalPlayer().wantPitchEnable )
 				net.WriteAngle( LocalPlayer():GetProp():GetAngles() )
 			net.SendToServer()
 		end

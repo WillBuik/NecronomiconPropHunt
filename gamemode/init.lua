@@ -395,6 +395,7 @@ end )
 --[[ When a player wants to lock world angles on their prop ]]--
 net.Receive( "Prop Angle Lock", function( len, ply )
 	local lockStatus = net.ReadBit()
+	local pitchEnable = net.ReadBit()
 	local propAngle = net.ReadAngle()
 	-- this is literally retarded
 	if( lockStatus == 1 ) then
@@ -403,11 +404,9 @@ net.Receive( "Prop Angle Lock", function( len, ply )
 		lockStatus = false
 	end
 
-    local tHitboxMinNonAABB, tHitboxMaxNonAABB = ply:GetProp():GetHitBoxBounds( 0, 0 )
-    print("NonAABB Hitboxes:", tHitboxMinNonAABB, tHitboxMaxNonAABB, "\n")
-    local tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMinNonAABB, tHitboxMaxNonAABB)
-    print("AABB Hitboxes:", tHitboxMin, tHitboxMax, "\n")
-	if (ply.wantPitchEnable) then
+	if (pitchEnable) then
+        local tHitboxMinNonAABB, tHitboxMaxNonAABB = ply:GetProp():GetHitBoxBounds( 0, 0 )
+        local tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMinNonAABB, tHitboxMaxNonAABB)
 		-- we round to reduce getting stuck
 		tHitboxMin = Vector( math.Round(tHitboxMin.x),math.Round(tHitboxMin.y),math.Round(tHitboxMin.z) )
 		tHitboxMax = Vector( math.Round(tHitboxMax.x),math.Round(tHitboxMax.y),math.Round(tHitboxMax.z) )
