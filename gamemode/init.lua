@@ -405,6 +405,8 @@ net.Receive( "Prop Angle Lock", function( len, ply )
 	end
 
 	if ( pitchEnable == 1 ) then
+	    print("propAngle:", propAngle)
+	    print("GetPropAngles:", ply:GetProp():GetAngles())
         local tHitboxMinNonAABB, tHitboxMaxNonAABB = ply:GetProp():GetHitBoxBounds( 0, 0 )
         print("NonAABB Hitboxes:", tHitboxMinNonAABB, tHitboxMaxNonAABB, "\n")
         local tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMinNonAABB, tHitboxMaxNonAABB)
