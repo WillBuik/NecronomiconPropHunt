@@ -129,7 +129,7 @@ hook.Add( "PreDrawHalos", "Prop Taunt Wallhacks", function()
 	    halo.Add(GetLivingPlayers(TEAM_HUNTERS), Color(255,0,0), 0, 0, 1, true, true)
 
         for _, propPly in pairs(GetLivingPlayers(TEAM_PROPS)) do
-            if (propPly != ply) then
+            if (propPly != ply and propPly.GetProp) then
                 halo.Add({propPly:GetProp()}, Color(0,255,0), 0, 0, 1, true, true)
             end
         end
