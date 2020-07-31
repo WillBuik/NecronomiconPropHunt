@@ -127,6 +127,11 @@ hook.Add( "PreDrawHalos", "Prop Taunt Wallhacks", function()
 	local ply = LocalPlayer()
 	if( ply.lastTaunt && CurTime() < ply.lastTaunt + ply.lastTauntDuration ) then
 	    halo.Add(GetLivingPlayers(TEAM_HUNTERS), Color(255,0,0), 0, 0, 1, true, true)
-		halo.Add(GetLivingPlayers(TEAM_PROPS), Color(0,255,0), 0, 0, 1, true, true)
+
+        for _, propPly in pairs(GetLivingPlayers(TEAM_PROPS)) do
+            if (propPly != ply) then
+                halo.Add({propPly:GetProp()}, Color(0,255,0), 0, 0, 1, true, true)
+            end
+        end
 	end
 end)
