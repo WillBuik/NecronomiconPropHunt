@@ -404,8 +404,8 @@ net.Receive( "Prop Angle Lock", function( len, ply )
 	end
 
     local tHitboxMinNonAABB, tHitboxMaxNonAABB = ply:GetProp():GetHitBoxBounds( 0, 0 )
-    local tHitboxMin, tHitboxMax = ply:GetProp():SetAngles(propAngle):GetRotatedAABB(tHitboxMinNonAABB, tHitboxMaxNonAABB)
     print("NonAABB Hitboxes:", tHitboxMinNonAABB, tHitboxMaxNonAABB, "\n")
+    local tHitboxMin, tHitboxMax = ply:GetProp():SetAngles(propAngle):GetRotatedAABB(tHitboxMinNonAABB, tHitboxMaxNonAABB)
     print("AABB Hitboxes:", tHitboxMin, tHitboxMax, "\n")
 	if (ply.wantPitchEnable) then
 		-- we round to reduce getting stuck
