@@ -84,7 +84,8 @@ PROP_DEFAULT_JUMP_POWER = 260
 -- entities that are capable of being chosen by props
 USABLE_PROP_ENTITIES = {
 	"prop_physics",
-	"prop_physics_multiplayer"
+	"prop_physics_multiplayer",
+	"prop_physics_override"
 }
 
 BANNED_PROPS = {
