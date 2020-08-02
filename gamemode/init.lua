@@ -349,10 +349,10 @@ end
 
 --[[ When a player presses +use on a prop ]]--
 net.Receive( "Selected Prop", function( len, ply )
-	local ent = net.ReadEntity()
+	local ent = net.ReadEntity()-- and not input.IsKeyDown(KEY_LCONTROL) 
 
 	local tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds( 0, 0 )
-	if( !playerCanBeEnt( ply, ent) ) then return end
+	if( ply.pickupProp || !playerCanBeEnt( ply, ent) ) then return end
 	local oldHP = ply:GetProp().health
 	SetPlayerProp( ply, ent, PROP_CHOSEN_SCALE )
 	ply:GetProp().health = oldHP
@@ -531,6 +531,19 @@ function GM:PlayerCanPickupWeapon(ply, wep)
 end
 
 function GM:AllowPlayerPickup(ply, ent)
-	return (OBJHUNT_TEAM_HUNTERS_CAN_MOVE_PROPS and ply:Team() == TEAM_HUNTERS) or
-		   (OBJHUNT_TEAM_PROPS_CAN_MOVE_PROPS   and ply:Team() == TEAM_PROPS)
+	print( "allow pickup: " .. tostring(ply.pickupProp) )
+	return (OBJHUNT_TEAM_HUNTERS_CAN_MOVE_PROPS and ply:Team() == TEAM_HUNTERS and ply.pickupProp) or
+		   (OBJHUNT_TEAM_PROPS_CAN_MOVE_PROPS   and ply:Team() == TEAM_PROPS   and ply.pickupProp)
+end
+
+function GM:PlayerButtonDown(ply, button)
+	if( button == KEY_LCONTROL ) then
+		ply.pickupProp = true
+	end
+end
+
+function GM:PlayerButtonUp(ply, button)
+	if( button == KEY_LCONTROL ) then
+		ply.pickupProp = false
+	end
 end
