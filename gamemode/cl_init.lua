@@ -149,7 +149,7 @@ net.Receive( "Taunt Selection", function()
 
 	if( ply == LocalPlayer() ) then
 		-- Let's make the taunt less horrible for the player playing it
-		ply.tauntPatch:SetSoundLevel( 70 )
+		ply.tauntPatch:SetSoundLevel( 40 )
 	else
 		ply.tauntPatch:SetSoundLevel( 100 )
 	end
