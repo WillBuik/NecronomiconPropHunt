@@ -140,7 +140,7 @@ local function DrawContextMenu()
 		end
 	end
 
-	if( LocalPlayer():Team() == TEAM_PROPS and LocalPlayer():IsAdmin() ) then
+	if( LocalPlayer():Team() == TEAM_PROPS ) then
 		totalBtns = totalBtns + 1
 		local pitchEnableBtn = vgui.Create( "DButton", mainPanel)
 		pitchEnableBtn:SetText( "" )
@@ -168,7 +168,7 @@ local function DrawContextMenu()
 
 			surface.SetFont( "Toggle Buttons" )
 			surface.SetTextColor( Color( 255,255,255,255 ) )
-			local text = "Tilt Enable"
+			local text = "Debug Hitbox"
 			local tw, th = surface.GetTextSize( text )
 			surface.SetTextPos( w/2 - tw/2, h/2 - th/2 )
 			surface.DrawText( text )
