@@ -20,6 +20,7 @@ local function classSelection()
 	local btnWidth  = 80
 	local width   = 3*btnWidth + 4*padding
 	local height  = btnHeight + 2*padding
+	local totalBtns = 0
 
 	local classPanel = vgui.Create( "DPanel" )
 		classPanel:SetSize( width+padding*2, ScrH() )
@@ -33,28 +34,41 @@ local function classSelection()
 		prettyPanel:SetSize( width, height )
 		prettyPanel:Center()
 
+    totalBtns = totalBtns + 1
+	local anyBtn = vgui.Create( "DButton", prettyPanel )
+		anyBtn:SetText( "" )
+		anyBtn:SetSize( btnWidth, btnHeight )
+		anyBtn:SetPos( padding*totalBtns + btnWidth*(totalBtns - 1), padding )
+		anyBtn.DoClick = function()
+			SendTeam( TEAM_ANY )
+			classPanel:Remove()
+		end
+
+    totalBtns = totalBtns + 1
 	local hunterBtn = vgui.Create( "DButton", prettyPanel )
 		hunterBtn:SetText( "" )
 		hunterBtn:SetSize( btnWidth, btnHeight )
-		hunterBtn:SetPos( padding, padding )
+		hunterBtn:SetPos( padding*totalBtns + btnWidth*(totalBtns - 1), padding )
 		hunterBtn.DoClick = function()
 			SendTeam( TEAM_HUNTERS )
 			classPanel:Remove()
 		end
 
+    totalBtns = totalBtns + 1
 	local propBtn = vgui.Create( "DButton", prettyPanel )
 		propBtn:SetText( "" )
 		propBtn:SetSize( btnWidth, btnHeight )
-		propBtn:SetPos( padding*2 + btnWidth, padding )
+		propBtn:SetPos( padding*totalBtns + btnWidth*(totalBtns - 1), padding )
 		propBtn.DoClick = function()
 			SendTeam( TEAM_PROPS )
 			classPanel:Remove()
 		end
 
+    totalBtns = totalBtns + 1
 	local specBtn = vgui.Create( "DButton", prettyPanel )
 		specBtn:SetText( "" )
 		specBtn:SetSize( btnWidth, btnHeight )
-		specBtn:SetPos( padding*3 + btnWidth*2, padding )
+		specBtn:SetPos( padding*totalBtns + btnWidth*(totalBtns - 1), padding )
 		specBtn.DoClick = function()
 			SendTeam( TEAM_SPECTATOR )
 			classPanel:Remove()
@@ -146,6 +160,24 @@ local function classSelection()
 		surface.DrawOutlinedRect( 0, 0, w, h)
 	end
 
+	anyBtn.Paint = function(self,w,h)
+		local btnColor = table.Copy( TEAM_ANY_COLOR )
+
+		if( specBtn:IsHovered() ) then
+			btnColor.a = btnColor.a + 50
+		end
+
+		surface.SetFont( "Toggle Buttons" )
+		surface.SetTextColor( Color( 255,255,255,255 ) )
+		local text = "Spectator"
+		local tw, th = surface.GetTextSize( text )
+		surface.SetTextPos( w/2 - tw/2, h/2 - th/2 )
+		surface.DrawText( text )
+		surface.SetDrawColor( btnColor )
+		surface.DrawRect( 0, 0, w, h)
+		surface.SetDrawColor( PANEL_BORDER )
+		surface.DrawOutlinedRect( 0, 0, w, h)
+	end
 
 end
 

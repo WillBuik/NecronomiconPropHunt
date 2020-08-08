@@ -6,6 +6,8 @@
 TEAM_PROPS      = 1
 TEAM_HUNTERS    = 2
 
+TEAM_ANY        = 1003
+
 -- the default player models
 TEAM_PROPS_DEFAULT_MODEL = "models/player/kleiner.mdl"
 TEAM_HUNTERS_DEFAULT_MODEL = "models/player/combine_super_soldier.mdl"
@@ -122,6 +124,7 @@ TEAM_PROPS_COLOR = Color( 255, 0, 0, 100 )
 TEAM_HUNTERS_COLOR = Color( 0, 0, 255, 100 )
 TEAM_PROPS_CHAT_COLOR = Color( 255, 0, 0, 255 )
 TEAM_HUNTERS_CHAT_COLOR = Color( 0, 0, 255, 255 )
+TEAM_ANY_COLOR = Color(65, 105, 225, 100)
 
 -- context menu elements
 ON_COLOR = Color( 0, 255, 0, 100 )

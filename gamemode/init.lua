@@ -51,6 +51,14 @@ net.Receive("Class Selection", function( len, ply )
 	playerTable[ TEAM_SPECTATOR ] = team.NumPlayers( TEAM_SPECTATOR )
 	playerTable[ ply:Team() ] = playerTable[ ply:Team() ] - 1
 
+	if chosen == TEAM_ANY then
+	    if playerTable[ TEAM_PROPS ] > playerTable[ TEAM_HUNTERS ] then
+	        chosen = TEAM_HUNTERS
+	    else
+	        chosen = TEAM_PROPS
+	    end
+	end
+
 	if math.abs( playerTable[ TEAM_PROPS ] - playerTable[ TEAM_HUNTERS ] ) >= MAX_TEAM_NUMBER_DIFFERENCE then
 		if playerTable[ chosen ] == math.max( playerTable[ TEAM_PROPS ], playerTable[ TEAM_HUNTERS ] ) then
 			ply:ChatPrint( "Sorry, that team is currently full." )
@@ -349,7 +357,7 @@ end
 
 --[[ When a player presses +use on a prop ]]--
 net.Receive( "Selected Prop", function( len, ply )
-	local ent = net.ReadEntity()-- and not input.IsKeyDown(KEY_LCONTROL) 
+	local ent = net.ReadEntity()-- and not input.IsKeyDown(KEY_LCONTROL)
 
 	local tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds( 0, 0 )
 	if( ply.pickupProp || !playerCanBeEnt( ply, ent) ) then return end
