@@ -163,13 +163,13 @@ local function classSelection()
 	anyBtn.Paint = function(self,w,h)
 		local btnColor = table.Copy( TEAM_ANY_COLOR )
 
-		if( specBtn:IsHovered() ) then
+		if( anyBtn:IsHovered() ) then
 			btnColor.a = btnColor.a + 50
 		end
 
 		surface.SetFont( "Toggle Buttons" )
 		surface.SetTextColor( Color( 255,255,255,255 ) )
-		local text = "Spectator"
+		local text = "Any"
 		local tw, th = surface.GetTextSize( text )
 		surface.SetTextPos( w/2 - tw/2, h/2 - th/2 )
 		surface.DrawText( text )
