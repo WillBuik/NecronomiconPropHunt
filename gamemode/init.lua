@@ -357,7 +357,7 @@ end
 
 --[[ When a player presses +use on a prop ]]--
 net.Receive( "Selected Prop", function( len, ply )
-	local ent = net.ReadEntity()-- and not input.IsKeyDown(KEY_LCONTROL)
+	local ent = net.ReadEntity()
 
 	local tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds( 0, 0 )
 	if( ply.pickupProp || !playerCanBeEnt( ply, ent) ) then return end
@@ -539,7 +539,6 @@ function GM:PlayerCanPickupWeapon(ply, wep)
 end
 
 function GM:AllowPlayerPickup(ply, ent)
-	print( "allow pickup: " .. tostring(ply.pickupProp) )
 	return (OBJHUNT_TEAM_HUNTERS_CAN_MOVE_PROPS and ply:Team() == TEAM_HUNTERS and ply.pickupProp) or
 		   (OBJHUNT_TEAM_PROPS_CAN_MOVE_PROPS   and ply:Team() == TEAM_PROPS   and ply.pickupProp)
 end
