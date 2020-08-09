@@ -124,7 +124,7 @@ TEAM_PROPS_COLOR = Color( 255, 0, 0, 100 )
 TEAM_HUNTERS_COLOR = Color( 0, 0, 255, 100 )
 TEAM_PROPS_CHAT_COLOR = Color( 255, 0, 0, 255 )
 TEAM_HUNTERS_CHAT_COLOR = Color( 0, 0, 255, 255 )
-TEAM_ANY_COLOR = Color(255, 0, 255, 100)
+TEAM_ANY_COLOR = Color(180, 0, 180, 100)
 
 -- context menu elements
 ON_COLOR = Color( 0, 255, 0, 100 )
