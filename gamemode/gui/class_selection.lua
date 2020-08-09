@@ -18,7 +18,7 @@ local function classSelection()
 	local padding = 10
 	local btnHeight = 30
 	local btnWidth  = 80
-	local width   = 3*btnWidth + 4*padding
+	local width   = 4*btnWidth + 5*padding
 	local height  = btnHeight + 2*padding
 	local totalBtns = 0
 
