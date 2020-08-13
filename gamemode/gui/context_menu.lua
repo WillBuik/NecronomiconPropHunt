@@ -194,31 +194,6 @@ local function DrawContextMenu()
 	posY = ScrH()/2 - nHeight/2
 end
 
-hook.Add( "Tick", "LockRotationKeyPress", function()
-	if ( LocalPlayer():KeyPressed( KEY_R ) &&
-	     LocalPlayer():Team() == TEAM_PROPS &&
-	     LocalPlayer():Alive() &&
-	     IsValid( LocalPlayer():GetProp() )
-	) then
-        net.Start( "Prop Angle Lock" )
-            net.WriteBit( !LocalPlayer().wantAngleLock )
-            net.WriteAngle( LocalPlayer():GetProp():GetAngles() )
-        net.SendToServer()
-	end
-end )
-
-hook.Add( "Tick", "EnableTiltKeyPress", function()
-	if ( LocalPlayer():KeyPressed( KEY_T ) &&
-	     LocalPlayer():Team() == TEAM_PROPS &&
-	     LocalPlayer():Alive() &&
-	     IsValid( LocalPlayer():GetProp() )
-	) then
-        net.Start( "Prop Pitch Enable" )
-            net.WriteBit( !LocalPlayer().wantPitchEnable )
-        net.SendToServer()
-	end
-end )
-
 hook.Add( "OnContextMenuOpen", "Display the context menu", function()
 	if( LocalPlayer():Team() != TEAM_PROPS &&
 		LocalPlayer():Team() != TEAM_HUNTERS ||
