@@ -12,7 +12,7 @@ hook.Add( "PlayerButtonDown", "LockRotationKeyPress", function( ply, button )
 end )
 
 hook.Add( "PlayerButtonDown", "EnableTiltKeyPress", function( ply, button )
-	if ( button == KEY_R &&
+	if ( button == KEY_T &&
 	     ply:Team() == TEAM_PROPS &&
 	     ply:Alive() &&
 	     IsValid( ply:GetProp() )
