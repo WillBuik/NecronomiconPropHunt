@@ -138,6 +138,31 @@ ROUND_TIME_COLOR = Color( 85, 85, 85, 200 )
 TAUNT_BAR_COLOR = Color( 0, 255, 255, 150 )
 TEXT_COLOR = Color( 255, 255, 255, 255 )
 
+--[[================]]--
+--[[ABILITIES CONFIG]]--
+--[[================]]--
+
+ABILITIES = {
+    "weapon_gw_prophunt",
+    "weapon_gw_surge",
+    "weapon_gw_shockwave",
+    "weapon_gw_cloak",
+    "weapon_gw_shrink",
+    "weapon_gw_decoy",
+    "weapon_gw_sudoku",
+    "weapon_gw_disguise",
+    "weapon_gw_vampirism",
+    "weapon_gw_ragdoll",
+    "weapon_gw_superhot",
+    "weapon_gw_blasting_off",
+    "weapon_gw_teleport",
+    "weapon_gw_deflect",
+    "weapon_gw_timelapse",
+    "weapon_gw_solarflare",
+    "weapon_gw_mind_transfer",
+    "weapon_gw_tumble"
+}
+
 --[[============]]--
 --[[TAUNT CONFIG]]--
 --[[============]]--
