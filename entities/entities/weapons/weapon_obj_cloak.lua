@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_objbase"
+SWEP.Base = "weapon_obj_base"
 SWEP.Name = "Cloak"
 
 SWEP.AbilityDuration = 7
