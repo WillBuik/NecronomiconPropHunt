@@ -485,6 +485,8 @@ net.Receive( "Hunter Roll", function( len, ply )
     local newAngle = ply:EyeAngles()
     if ( shouldRoll ) then
        newAngle:Add(Angle(0,0, -90))
+    else
+       newAngle:Add(Angle(0,0, 90))
     end
 	ply:SetEyeAngles(newAngle)
 
