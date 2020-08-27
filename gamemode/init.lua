@@ -488,7 +488,6 @@ net.Receive( "Hunter Roll", function( len, ply )
     else
        newAngle:Add(Angle(0,0, 90))
     end
-	ply:SetEyeAngles(newAngle)
 
 	net.Start( "Hunter Roll BROADCAST" )
 		net.WriteEntity( ply )
