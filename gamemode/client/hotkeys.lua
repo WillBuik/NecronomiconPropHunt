@@ -23,10 +23,10 @@ hook.Add( "PlayerButtonDown", "EnableTiltKeyPress", function( ply, button )
 	end
 end )
 
-hook.Add( "KeyPress", "ShiftRollHunter", function( ply, key )
+hook.Add( "KeyPress", "PressShiftRollHunter", function( ply, key )
 	if ( key == IN_SPEED &&
 	     ply:Team() == TEAM_HUNTERS &&
-	     ply:Alive() )
+	     ply:Alive()
 	) then
 	    local currentEyes = ply:GetShootPos()
         net.Start( "Hunter Roll" )
@@ -35,10 +35,10 @@ hook.Add( "KeyPress", "ShiftRollHunter", function( ply, key )
 	end
 end )
 
-hook.Add( "KeyRelease", "ShiftRollHunter", function( ply, key )
+hook.Add( "KeyRelease", "ReleaseShiftRollHunter", function( ply, key )
 	if ( key == IN_SPEED &&
 	     ply:Team() == TEAM_HUNTERS &&
-	     ply:Alive() )
+	     ply:Alive()
 	) then
 	    local currentEyes = ply:GetShootPos()
         net.Start( "Hunter Roll" )
