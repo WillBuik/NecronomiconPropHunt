@@ -71,9 +71,7 @@ end
 function SWEP:DrawWorldModel()
     if not self:GetIsAbilityUsed() and self.AbilityShowTargetHalos and self.AbilityRange and self.AbilityRange > 0 and self:IsCarriedByLocalPlayer() then
         for _, v in pairs(self:GetHuntersInRange(self.AbilityRange, not self.AbilityShowTargetHalosCheckLOS)) do
-            if not v:GWIsRagdolled() then
-                halo.Add({v}, Color(255, 0, 0), 3, 3, 5)
-            end
+            halo.Add({v}, Color(255, 0, 0), 3, 3, 5)
         end
     end
 end
