@@ -482,12 +482,12 @@ end )
 
 net.Receive( "Hunter Roll", function( len, ply )
 	local shouldRoll = net.ReadBit() == 1
-    local newAngle = ply:EyeAngles()
+    local oldAngle = ply:EyeAngles()
+    local newAngle = Angle(oldAngle.p, oldAngle.y, 0)
     if ( shouldRoll ) then
        newAngle:Add(Angle(0,0, -90))
-    else
-       newAngle:Add(Angle(0,0, 90))
     end
+	ply:SetEyeAngles(newAngle)
 
 	net.Start( "Hunter Roll BROADCAST" )
 		net.WriteEntity( ply )
