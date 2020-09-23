@@ -20,7 +20,6 @@ PLAYER.lastTaunt         = 0.0
 
 
 function PLAYER:Loadout()
-	self.Player:RemoveAllAmmo()
     self.Player:Give("weapon_obj_cloak")
 end
 

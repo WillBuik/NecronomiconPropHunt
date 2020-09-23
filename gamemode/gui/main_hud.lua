@@ -146,6 +146,27 @@ local function ObjHUD()
 		end
 	end
 
+	-- POWERUP GUI
+	if( ply:Alive() && ply:Team() == TEAM_PROPS ) then
+
+		startY = startY - padding - 16
+
+		-- icon
+		local tauntMat = Material("icon16/music.png", "unlitgeneric")
+		surface.SetMaterial( tauntMat )
+		surface.DrawTexturedRect( iconX, startY, 16 , 16)
+
+		--text
+        surface.SetFont( "barHUD" )
+        surface.SetTextColor( 255, 255, 255, 255 )
+        local textToDraw = ply:GetActiveWeapon():GetClass()
+        local textWidth, textHeight = surface.GetTextSize( textToDraw )
+        local textX = barX
+        local textY = startY
+        surface.SetTextPos( textX, textY )
+        surface.DrawText( textToDraw )
+	end
+
 	-- INFO GUI
 	startY = startY - padding - 16
 
