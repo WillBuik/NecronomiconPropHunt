@@ -81,6 +81,11 @@ net.Receive( "Prop Pitch Enable BROADCAST", function( length )
 	ply.wantPitchEnable = net.ReadBit() == 1
 end )
 
+net.Receive( "Hunter Roll BROADCAST", function( length )
+	local ply = net.ReadEntity()
+	ply:SetEyeAngles(net.ReadAngle())
+end )
+
 round = {}
 net.Receive( "Round Update", function()
 	round.state     = net.ReadInt(8)

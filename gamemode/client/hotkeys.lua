@@ -22,3 +22,25 @@ hook.Add( "PlayerButtonDown", "EnableTiltKeyPress", function( ply, button )
         net.SendToServer()
 	end
 end )
+
+hook.Add( "KeyPress", "PressShiftRollHunter", function( ply, key )
+	if ( key == IN_SPEED &&
+	     ply:Team() == TEAM_HUNTERS &&
+	     ply:Alive()
+	) then
+        net.Start( "Hunter Roll" )
+            net.WriteBit( true )
+        net.SendToServer()
+	end
+end )
+
+hook.Add( "KeyRelease", "ReleaseShiftRollHunter", function( ply, key )
+	if ( key == IN_SPEED &&
+	     ply:Team() == TEAM_HUNTERS &&
+	     ply:Alive()
+	) then
+        net.Start( "Hunter Roll" )
+            net.WriteBit( false )
+        net.SendToServer()
+	end
+end )

@@ -247,6 +247,8 @@ hook.Add( "Initialize", "Precache all network strings", function()
 	util.AddNetworkString( "Prop Angle Snap BROADCAST" )
 	util.AddNetworkString( "Prop Pitch Enable" )
 	util.AddNetworkString( "Prop Pitch Enable BROADCAST" )
+	util.AddNetworkString( "Hunter Roll" )
+	util.AddNetworkString( "Hunter Roll BROADCAST" )
 	util.AddNetworkString( "AutoTaunt Update" )
 	util.AddNetworkString( "Update Taunt Times" )
 end )
@@ -475,6 +477,21 @@ net.Receive( "Prop Pitch Enable", function( len, ply )
 	net.Start( "Prop Pitch Enable BROADCAST" )
 		net.WriteEntity( ply )
 		net.WriteBit( enableStatus )
+	net.Broadcast()
+end )
+
+net.Receive( "Hunter Roll", function( len, ply )
+	local shouldRoll = net.ReadBit() == 1
+    local oldAngle = ply:EyeAngles()
+    local newAngle = Angle(oldAngle.p, oldAngle.y, 0)
+    if ( shouldRoll ) then
+       newAngle:Add(Angle(0,0, -90))
+    end
+	ply:SetEyeAngles(newAngle)
+
+	net.Start( "Hunter Roll BROADCAST" )
+		net.WriteEntity( ply )
+		net.WriteAngle( newAngle )
 	net.Broadcast()
 end )
 
