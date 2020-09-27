@@ -1,0 +1,39 @@
+AddCSLuaFile()
+
+SWEP.Base = "weapon_gwbase"
+SWEP.Name = "Disguise"
+SWEP.PrintName = "Disguise"
+
+SWEP.AbilityDuration = 20
+SWEP.AbilityDescription = "Transforms you into a random hunter for $AbilityDuration seconds."
+
+function SWEP:Ability()
+    local ply = self:GetOwner()
+    self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
+    local hunters = team.GetPlayers(TEAM_HUNTERS)
+    ply:SetDisguised(true)
+    if #hunters > 0 then
+        ply:SetDisguiseName(seekers[math.random(1, #hunters)]:Nick())
+    else
+        ply:SetDisguiseName(ply:Nick())
+    end
+    if SERVER then
+        ply:SetModel(TEAM_HUNTERS_DEFAULT_MODEL)
+        ply:SetRenderMode( RENDERMODE_NORMAL )
+        ply:GetProp():SetRenderMode( RENDERMODE_NONE )
+        ply:Give("weapon_obj_smgdummy")
+        ply:SelectWeapon("weapon_obj_smgdummy")
+    end
+end
+
+function SWEP:AbilityCleanup()
+    if not IsValid( self:GetOwner() ) then return end
+    local ply = self:GetOwner()
+    ply:SetDisguised(false)
+    if SERVER then
+        ply:StripWeapon("weapon_obj_smgdummy")
+        ply:SetModel(TEAM_PROPS_DEFAULT_MODEL)
+        ply:GetProp():SetRenderMode( RENDERMODE_NORMAL )
+        ply:SetRenderMode( RENDERMODE_NONE )
+    end
+end

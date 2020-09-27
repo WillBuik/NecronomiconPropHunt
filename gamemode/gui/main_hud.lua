@@ -34,6 +34,24 @@ local function ObjHUD()
 	-- random color just to let the icon draw
 	surface.SetDrawColor( PANEL_BORDER )
 
+	-- INFO GUI
+	startY = startY - padding - 16
+
+	-- icon
+	local infoMat = Material("icon16/information.png", "unlitgeneric")
+	surface.SetMaterial( infoMat )
+	surface.DrawTexturedRect( iconX, startY, 16 , 16)
+
+	--text
+	surface.SetFont( "barHUD" )
+	surface.SetTextColor( 255, 255, 255, 255 )
+	local textToDraw = "Press F1 For Information"
+	local textWidth, textHeight = surface.GetTextSize( textToDraw )
+	local textX = barX
+	local textY = startY
+	surface.SetTextPos( textX, textY )
+	surface.DrawText( textToDraw )
+
 	-- HP GUI
 	if( ply:Alive() && ( ply:Team() == TEAM_PROPS || ply:Team() == TEAM_HUNTERS ) ) then
 		startY = startY - padding - 16
@@ -147,43 +165,29 @@ local function ObjHUD()
 	end
 
 	-- POWERUP GUI
-	if( ply:Alive() && ply:Team() == TEAM_PROPS ) then
+	if( ply:Alive() &&
+	    ply:Team() == TEAM_PROPS &&
+	    ply:GetActiveWeapon() != nil &&
+	    not ply:GetActiveWeapon():GetIsAbilityUsed()
+	) then
 
 		startY = startY - padding - 16
 
 		-- icon
-		local tauntMat = Material("icon16/music.png", "unlitgeneric")
+		local tauntMat = Material("icon16/star.png", "unlitgeneric")
 		surface.SetMaterial( tauntMat )
 		surface.DrawTexturedRect( iconX, startY, 16 , 16)
 
 		--text
         surface.SetFont( "barHUD" )
         surface.SetTextColor( 255, 255, 255, 255 )
-        local textToDraw = ply:GetActiveWeapon():GetClass()
+        local textToDraw = ply:GetActiveWeapon():GetPrintName()
         local textWidth, textHeight = surface.GetTextSize( textToDraw )
         local textX = barX
         local textY = startY
         surface.SetTextPos( textX, textY )
         surface.DrawText( textToDraw )
 	end
-
-	-- INFO GUI
-	startY = startY - padding - 16
-
-	-- icon
-	local infoMat = Material("icon16/information.png", "unlitgeneric")
-	surface.SetMaterial( infoMat )
-	surface.DrawTexturedRect( iconX, startY, 16 , 16)
-
-	--text
-	surface.SetFont( "barHUD" )
-	surface.SetTextColor( 255, 255, 255, 255 )
-	local textToDraw = "Press F1 For Information"
-	local textWidth, textHeight = surface.GetTextSize( textToDraw )
-	local textX = barX
-	local textY = startY
-	surface.SetTextPos( textX, textY )
-	surface.DrawText( textToDraw )
 end
 
 --[[=========================]]--

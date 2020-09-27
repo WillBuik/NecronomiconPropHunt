@@ -20,7 +20,14 @@ PLAYER.lastTaunt         = 0.0
 
 
 function PLAYER:Loadout()
-    self.Player:Give("weapon_obj_cloak")
+	self.Player:RemoveAllAmmo()
+	local random = math.random (6)
+    if (random == 5) then
+        self.Player:Give("weapon_obj_cloak")
+    end
+    if (random == 6) then
+        self.Player:Give("weapon_obj_disguise")
+    end
 end
 
 function PLAYER:SetupDataTables()
