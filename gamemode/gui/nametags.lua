@@ -20,7 +20,7 @@ hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
 	if ( LocalPlayer():Team() == TEAM_HUNTERS ) then
 	    local props = GetLivingPlayers( TEAM_HUNTERS )
 	    for _, v in pairs(props) do
-	        if (v:ObjGetDisguised()) then
+	        if (v:ObjIsDisguised()) then
 	            table.insert(toTag, v)
 	        end
 	    end
@@ -46,7 +46,7 @@ hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
 			surface.SetFont( "Nametags" )
 			surface.SetTextColor( Color( 255,255,255,255 ) )
 			local text = v:Nick()
-	        if (v:ObjGetDisguised()) then
+	        if (v:ObjIsDisguised()) then
 	            text = v:ObjGetDisguiseName()
 	        end
 			local tw, th = surface.GetTextSize( text )
