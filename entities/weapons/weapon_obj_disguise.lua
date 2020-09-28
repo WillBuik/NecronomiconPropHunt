@@ -32,7 +32,7 @@ function SWEP:AbilityCleanup()
     ply:ObjSetDisguised(false)
     if SERVER then
         ply:StripWeapon("weapon_obj_smgdummy")
-        ply:SetModel(TEAM_PROPS_DEFAULT_MODEL)
+        player_manager.RunClass( ply, "SetModel" )
         ply:GetProp():SetRenderMode( RENDERMODE_NORMAL )
         ply:SetRenderMode( RENDERMODE_NONE )
     end
