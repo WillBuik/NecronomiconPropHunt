@@ -168,6 +168,7 @@ local function ObjHUD()
 	if( ply:Alive() &&
 	    ply:Team() == TEAM_PROPS &&
 	    ply:GetActiveWeapon() != nil &&
+	    ply:GetActiveWeapon().GetIsAbilityUsed &&
 	    not ply:GetActiveWeapon():GetIsAbilityUsed()
 	) then
 

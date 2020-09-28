@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_gwbase"
+SWEP.Base = "weapon_obj_base"
 SWEP.Name = "Disguise"
 SWEP.PrintName = "Disguise"
 
@@ -11,11 +11,11 @@ function SWEP:Ability()
     local ply = self:GetOwner()
     self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
     local hunters = team.GetPlayers(TEAM_HUNTERS)
-    ply:SetDisguised(true)
+    ply:ObjSetDisguised(true)
     if #hunters > 0 then
-        ply:SetDisguiseName(seekers[math.random(1, #hunters)]:Nick())
+        ply:ObjSetDisguiseName(seekers[math.random(1, #hunters)]:Nick())
     else
-        ply:SetDisguiseName(ply:Nick())
+        ply:ObjSetDisguiseName(ply:Nick())
     end
     if SERVER then
         ply:SetModel(TEAM_HUNTERS_DEFAULT_MODEL)
@@ -29,7 +29,7 @@ end
 function SWEP:AbilityCleanup()
     if not IsValid( self:GetOwner() ) then return end
     local ply = self:GetOwner()
-    ply:SetDisguised(false)
+    ply:ObjSetDisguised(false)
     if SERVER then
         ply:StripWeapon("weapon_obj_smgdummy")
         ply:SetModel(TEAM_PROPS_DEFAULT_MODEL)

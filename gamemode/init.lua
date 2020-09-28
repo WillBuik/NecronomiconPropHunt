@@ -1,5 +1,6 @@
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("player_ext_shd.lua")
 include( "shared.lua" )
 include( "server/autotaunt.lua" )
 
