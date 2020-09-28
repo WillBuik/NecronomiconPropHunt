@@ -28,6 +28,7 @@ hook.Add( "KeyPress", "PressShiftRollHunter", function( ply, key )
 	     ply:Team() == TEAM_HUNTERS &&
 	     ply:Alive()
 	) then
+	    ply.Freeze( true )
         net.Start( "Hunter Roll" )
             net.WriteBit( true )
         net.SendToServer()
@@ -39,6 +40,7 @@ hook.Add( "KeyRelease", "ReleaseShiftRollHunter", function( ply, key )
 	     ply:Team() == TEAM_HUNTERS &&
 	     ply:Alive()
 	) then
+	    ply.Freeze( false )
         net.Start( "Hunter Roll" )
             net.WriteBit( false )
         net.SendToServer()
