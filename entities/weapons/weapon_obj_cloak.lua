@@ -19,7 +19,6 @@ end
 function SWEP:AbilityCleanup()
     if not IsValid( self:GetOwner() ) then return end
     local ply = self:GetOwner()
-    ply:GetProp():SetRenderMode( RENDERMODE_NORMAL )
     if SERVER then
         ply:GetProp():SetRenderMode( RENDERMODE_NORMAL )
         ply:Fire( "alpha", 255, 0 )
