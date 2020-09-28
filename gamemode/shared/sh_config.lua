@@ -147,6 +147,7 @@ ONE_IN_HOW_MANY_GET_ABILITY = 2
 ABILITIES = {
     "weapon_gw_cloak",
     "weapon_gw_disguise",
+    "weapon_gw_remove"
 }
 
 --[[============]]--

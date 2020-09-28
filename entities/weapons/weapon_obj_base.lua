@@ -157,11 +157,9 @@ function SWEP:OnRemove()
 end
 
 function SWEP:AbilityCancelled()
-
 end
 
 function SWEP:AbilityCleanup()
-
 end
 
 function SWEP:AbilityIsTargetInLOS(target, mask)
