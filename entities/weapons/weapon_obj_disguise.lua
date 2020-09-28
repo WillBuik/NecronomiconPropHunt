@@ -13,7 +13,7 @@ function SWEP:Ability()
     local hunters = team.GetPlayers(TEAM_HUNTERS)
     ply:ObjSetDisguised(true)
     if #hunters > 0 then
-        ply:ObjSetDisguiseName(seekers[math.random(1, #hunters)]:Nick())
+        ply:ObjSetDisguiseName(hunters[math.random(1, #hunters)]:Nick())
     else
         ply:ObjSetDisguiseName(ply:Nick())
     end
