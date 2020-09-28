@@ -18,7 +18,7 @@ hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
 	end
 
 	if ( LocalPlayer():Team() == TEAM_HUNTERS ) then
-	    local props = GetLivingPlayers( TEAM_HUNTERS )
+	    local props = GetLivingPlayers( TEAM_PROPS )
 	    for _, v in pairs(props) do
 	        if (v:ObjIsDisguised()) then
 	            table.insert(toTag, v)

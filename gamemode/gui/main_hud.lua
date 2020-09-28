@@ -25,7 +25,7 @@ local function ObjHUD()
 	if( !ply:IsValid() ) then return end
 
 	local width = 200
-	local height = 125
+	local height = 150
 	local padding = 10
 	local iconX = padding
 	local barX = padding*2 + 16
