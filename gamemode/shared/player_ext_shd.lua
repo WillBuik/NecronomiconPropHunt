@@ -17,3 +17,10 @@ function plymeta:ObjGetDisguiseName()
     return self:GetNWString("objAbilityDisguiseName", "")
 end
 
+function plymeta:ObjSetRagdolled(state)
+    self:SetNWBool("objAbilityIsRagdolled", state)
+end
+
+function plymeta:ObjIsRagdolled()
+    return self:GetNWBool("objAbilityIsRagdolled", false)
+end
