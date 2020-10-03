@@ -552,8 +552,7 @@ function GM:PlayerCanSeePlayersChat( text, teamOnly, listener, speaker )
 end
 
 function GM:PlayerCanPickupWeapon(ply, wep)
-	--if( ply:Team() != TEAM_HUNTERS && ) then return false end
-	return true
+	return ply:Team() == TEAM_HUNTERS || (ply:Team() == TEAM_PROPS && wep:IsScripted())
 end
 
 function GM:AllowPlayerPickup(ply, ent)
