@@ -42,14 +42,17 @@ hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
 		-- 'Sprite' like angles based on view angle
 		angle = Angle(0,0,90) + LocalPlayer():GetAimVector():Angle():Right():Angle()
 
+        local name = v:Nick()
+
+        if (v:ObjIsDisguised() && LocalPlayer():Team() == TEAM_HUNTERS) then
+            pos = v:GetPos() + v:LocalPlayer() + cOffset
+            name = v:ObjGetDisguiseName()
+        end
+
 		cam.Start3D2D( pos, angle, .05 )
 			surface.SetFont( "Nametags" )
 			surface.SetTextColor( Color( 255,255,255,255 ) )
-			local text = v:Nick()
-	        if (v:ObjIsDisguised()) then
-	            text = v:ObjGetDisguiseName()
-	        end
-			local tw, th = surface.GetTextSize( text )
+			local tw, th = surface.GetTextSize( name )
 			surface.SetTextPos( -tw/2, -th )
 			surface.DrawText( text )
 		cam.End3D2D()
