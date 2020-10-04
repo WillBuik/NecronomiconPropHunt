@@ -45,7 +45,7 @@ hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
         local name = v:Nick()
 
         if (v:ObjIsDisguised() && LocalPlayer():Team() == TEAM_HUNTERS) then
-            pos = v:GetPos() + v:LocalPlayer() + cOffset
+            pos = v:GetPos() + LocalPlayer():GetViewOffset() + cOffset
             name = v:ObjGetDisguiseName()
         end
 
