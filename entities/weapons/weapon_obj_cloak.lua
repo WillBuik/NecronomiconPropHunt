@@ -12,7 +12,7 @@ function SWEP:Ability()
     self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end )
     if SERVER then
         ply:GetProp():SetRenderMode( RENDERMODE_TRANSALPHA )
-        ply:Fire( "alpha", 4, 0 )
+        ply:GetProp():Fire( "alpha", 4, 0 )
     end
 end
 
@@ -21,6 +21,6 @@ function SWEP:AbilityCleanup()
     local ply = self:GetOwner()
     if SERVER then
         ply:GetProp():SetRenderMode( RENDERMODE_NORMAL )
-        ply:Fire( "alpha", 255, 0 )
+        ply:GetProp():Fire( "alpha", 255, 0 )
     end
 end
