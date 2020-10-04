@@ -68,14 +68,14 @@ function plymeta:ObjEndRagdoll()
             self:Spawn()
         end
 
-        local pos = ragdoll:GetPos()
-        pos.z = pos.z + 8 -- So they don't end up in the ground
-
-        self:SetModel(ragdoll:GetModel())
-        self:SetPos(pos)
-        self:SetVelocity(ragdoll:GetVelocity())
-        local yaw = ragdoll:GetAngles().yaw
-        self:SetAngles(Angle(0, yaw, 0))
+--         local pos = ragdoll:GetPos()
+--         pos.z = pos.z + 8 -- So they don't end up in the ground
+--
+--         self:SetModel(ragdoll:GetModel())
+--         self:SetPos(pos)
+--         self:SetVelocity(ragdoll:GetVelocity())
+--         local yaw = ragdoll:GetAngles().yaw
+--         self:SetAngles(Angle(0, yaw, 0))
         ragdoll:Remove()
     end
 end

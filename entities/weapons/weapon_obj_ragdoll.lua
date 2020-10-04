@@ -2,9 +2,10 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_obj_base"
 SWEP.Name = "Ragdoll"
+SWEP.PrintName = "Ragdoll"
 
 SWEP.AbilityDuration = 8
-SWEP.AbilityDescription ="Pretty much what the name suggests.\nTransforms you into a ragdoll for $AbilityDuration seconds."
+SWEP.AbilityDescription = "Pretty much what the name suggests.\nTransforms you into a ragdoll for $AbilityDuration seconds."
 
 function SWEP:Ability()
     if CLIENT then return end
