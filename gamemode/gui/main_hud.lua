@@ -170,7 +170,7 @@ local function ObjHUD()
 	    ply:Team() == TEAM_PROPS &&
 	    weapon != nil &&
 	    weapon.GetIsAbilityUsed &&
-	    ((not weapon:GetIsAbilityUsed()) || weapon.AbilityStartTime + weapon.AbilityDuration < CurTime())
+	    ((not weapon:GetIsAbilityUsed()) || weapon.AbilityStartTime + weapon.AbilityDuration > CurTime())
 	) then
 
 		startY = startY - padding - 16
