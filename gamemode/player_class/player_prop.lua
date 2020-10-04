@@ -21,7 +21,7 @@ PLAYER.lastTaunt         = 0.0
 
 function PLAYER:Loadout()
 	self.Player:RemoveAllAmmo()
-    self.Player:Give("weapon_obj_cloak")
+    self.Player:Give("weapon_obj_disguise")
 --     if (math.random(ONE_IN_HOW_MANY_GET_ABILITY) == 1) then
 --         self.Player:Give(ABILITIES[ math.random( #ABILITIES ) ])
 --     end
