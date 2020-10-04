@@ -197,6 +197,7 @@ local function ObjHUD()
 
             --text
             textToDraw = weapon.AbilityDuration - powerupFrac*weapon.AbilityDuration
+            textToDraw = math.ceil( textToDraw )
         end
 
 		--text
