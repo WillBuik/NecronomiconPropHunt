@@ -165,11 +165,12 @@ local function ObjHUD()
 	end
 
 	-- POWERUP GUI
+	local weapon = ply:GetActiveWeapon()
 	if( ply:Alive() &&
 	    ply:Team() == TEAM_PROPS &&
-	    ply:GetActiveWeapon() != nil &&
-	    ply:GetActiveWeapon().GetIsAbilityUsed &&
-	    not ply:GetActiveWeapon():GetIsAbilityUsed()
+	    weapon != nil &&
+	    weapon.GetIsAbilityUsed &&
+	    (not weapon:GetIsAbilityUsed() || weapon.AbilityStartTime + weapon.AbilityDuration < CurTime())
 	) then
 
 		startY = startY - padding - 16
@@ -179,10 +180,28 @@ local function ObjHUD()
 		surface.SetMaterial( tauntMat )
 		surface.DrawTexturedRect( iconX, startY, 16 , 16)
 
+        local textToDraw = ""
+        if( not weapon:GetIsAbilityUsed() ) then
+            textToDraw = weapon:GetPrintName()
+        else
+            -- bar
+            local powerupFrac = math.Clamp( CurTime() - weapon.AbilityStartTime, 0, weapon.AbilityDuration)/weapon.AbilityDuration
+
+            local widthOffset = width - (padding*3) - 16
+            surface.SetDrawColor( PANEL_FILL )
+            surface.DrawRect( barX, startY, widthOffset, 16)
+            surface.SetDrawColor( POWERUP_COLOR )
+            surface.DrawRect( barX, startY, widthOffset*powerupFrac, 16)
+            surface.SetDrawColor( PANEL_BORDER )
+            surface.DrawOutlinedRect( barX, startY, widthOffset, 16)
+
+            --text
+            textToDraw = weapon.AbilityDuration - powerupFrac*weapon.AbilityDuration
+        end
+
 		--text
         surface.SetFont( "barHUD" )
         surface.SetTextColor( 255, 255, 255, 255 )
-        local textToDraw = ply:GetActiveWeapon():GetPrintName()
         local textWidth, textHeight = surface.GetTextSize( textToDraw )
         local textX = barX
         local textY = startY
