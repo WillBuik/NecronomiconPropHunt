@@ -45,7 +45,7 @@ function SWEP:AbilityCleanup()
     print("AbilityCleanup")
     if CLIENT then return end
     if not IsValid( self:GetOwner() ) then return end
-    ply:GetProp():SetRenderMode( RENDERMODE_NORMAL )
+    self:GetOwner():GetProp():SetRenderMode( RENDERMODE_NORMAL )
     self:GetOwner():ObjEndRagdoll()
 end
 
