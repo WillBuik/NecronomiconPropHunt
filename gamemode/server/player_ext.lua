@@ -64,9 +64,9 @@ function plymeta:ObjEndRagdoll()
     if not IsValid(ragdoll) or not ragdoll:IsValid() then -- Something must have removed it, just spawn
         return
     else
-        if self:Alive() then
-            self:Spawn()
-        end
+--         if self:Alive() then
+--             self:Spawn()
+--         end
 
         local pos = ragdoll:GetPos()
         pos.z = pos.z + 8 -- So they don't end up in the ground
