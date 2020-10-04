@@ -54,7 +54,7 @@ hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
 			surface.SetTextColor( Color( 255,255,255,255 ) )
 			local tw, th = surface.GetTextSize( name )
 			surface.SetTextPos( -tw/2, -th )
-			surface.DrawText( text )
+			surface.DrawText( name )
 		cam.End3D2D()
 	end
 end )
