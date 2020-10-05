@@ -133,9 +133,11 @@ local function seedRNG()
 	--    http://lua-users.org/lists/lua-l/2007-03/msg00564.html)
 	print( "Initializing RNG..." )
 	local seed = os.time()
-	local player = LocalPlayer()
-	if( player ) then
-		seed = bit.bxor( seed, player.AccountID() or 0 )
+	if( LocalPlayer ) then
+		local player = LocalPlayer()
+		if( player ) then
+			seed = bit.bxor( seed, player:AccountID() or 0 )
+		end
 	end
 	print( "-- seed=" .. seed )
 	math.randomseed( seed )
