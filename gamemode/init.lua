@@ -483,8 +483,24 @@ end )
 
 net.Receive( "Hunter Roll", function( len, ply )
 	local shouldRoll = net.ReadBit() == 1
+
+    local props = GetLivingPlayers( TEAM_PROPS )
+    local closestPlyTaunting = nil
+    for _, prop in pairs(props) do
+        if ( prop:nextTaunt > CurTime() ) then
+            if (closestPlyTaunting == nil ||
+                ply:GetPos():DistToSqr(prop:GetPos()) < ply:GetPos():DistToSqr(closestPlyTaunting:GetPos()) ) then
+                closestPlyTaunting = prop
+        end
+    end
+    local newPitch = 0
+    if (closestPlyTaunting != nil ) then
+        local vectorBetween = closestPlyTaunting:GetPos() - ply:GetPos()
+        local pitchFromAngle = vectorBetween:Angle().p
+        newPitch = pitchFromAngle / (math.abs(pitchFromAngle))
+    end
     local oldAngle = ply:EyeAngles()
-    local newAngle = Angle(oldAngle.p, oldAngle.y, 0)
+    local newAngle = Angle(newPitch, oldAngle.y, 0)
     if ( shouldRoll ) then
        newAngle:Add(Angle(0,0, -90))
     end

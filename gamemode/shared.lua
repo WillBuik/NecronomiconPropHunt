@@ -117,3 +117,35 @@ function initNoCollide( ent1, ent2 )
 	end
 end
 hook.Add( "ShouldCollide", "Initial Nocollide For Props", initNoCollide )
+
+-- Seed the random number generator.
+local function seedRNG()
+	-- Implementation notes:
+	--  * Combining os.time() with the player's ID helps ensure that different
+	--    players get different seeds, even if they run this code at similar times.
+	--  * LocalPlayer() does not work until GM:InitPostEntity() is called.
+	--  * The Player:AccountID() docs say "In singleplayer, this will return no
+	--    value".  Does that mean it returns nil, or 0?  Or does it crash?  I have
+	--    no idea.  In case it returns nil, "or 0" ensures that we get a number.
+	--  * Generating a bunch of random numbers up-front helps "warm up" certain
+	--    pseudorandom number generation algorithms.  Without it, the first few
+	--    random numbers generated will not look very random.  (See:
+	--    http://lua-users.org/lists/lua-l/2007-03/msg00564.html)
+	print( "Initializing RNG..." )
+	local seed = os.time()
+	local player = LocalPlayer()
+	if( player ) then
+		seed = bit.bxor( seed, player.AccountID() or 0 )
+	end
+	print( "-- seed=" .. seed )
+	math.randomseed( seed )
+	for i = 1, 50 do math.random() end
+	print( "-- done" )
+end
+
+-- Per docs:
+--  > Called after all the entities are initialized. Starting from this hook
+--  > LocalPlayer will return valid object.
+function GM:InitPostEntity()
+   seedRNG()
+end
