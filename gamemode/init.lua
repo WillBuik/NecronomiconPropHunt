@@ -487,10 +487,11 @@ net.Receive( "Hunter Roll", function( len, ply )
     local props = GetLivingPlayers( TEAM_PROPS )
     local closestPlyTaunting = nil
     for _, prop in pairs(props) do
-        if ( prop:nextTaunt > CurTime() ) then
+        if ( prop.nextTaunt > CurTime() ) then
             if (closestPlyTaunting == nil ||
                 ply:GetPos():DistToSqr(prop:GetPos()) < ply:GetPos():DistToSqr(closestPlyTaunting:GetPos()) ) then
-                closestPlyTaunting = prop
+				closestPlyTaunting = prop
+			end
         end
     end
     local newPitch = 0
