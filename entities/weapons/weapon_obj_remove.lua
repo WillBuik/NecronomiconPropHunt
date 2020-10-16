@@ -14,7 +14,7 @@ function SWEP:Ability()
     end
 end
 
-local function getViewEnt(ply)
+function getViewEnt(ply)
 	-- this needs to be here otherwise some people get errors for some unknown reason
 	if( ply.viewOrigin == nil || ply.wantThirdPerson == nil ) then return end
 
