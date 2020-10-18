@@ -12,7 +12,7 @@ function GM:PlayerInitialSpawn( ply )
 		-- Auto add bots to the smaller team for testing.
 		SetTeam( ply, TEAM_ANY )
 	end
-	
+
 	ply:SetCustomCollisionCheck( true )
 	ply.nextTaunt = 0
 	ply.lastTaunt = CurTime()
@@ -21,6 +21,15 @@ function GM:PlayerInitialSpawn( ply )
 		-- Just used as a hook
 	net.Send( ply )
 end
+
+-- Add command to hunter blindness for testing.
+-- This is a huge hack but it is only needed for testing.
+concommand.Add( "testmode", function ( ply )
+	if IsValid(ply) then return end -- Bail if this is sent from a player.
+	BroadcastLua( "OBJHUNT_HIDE_TIME = 1" )
+	OBJHUNT_HIDE_TIME = 1
+	print( "Test mode enabled." )
+end )
 
 -- [[ Class Selection ]] --
 function GM:ShowTeam( ply ) -- This hook is called everytime F1 is pressed.
