@@ -72,7 +72,7 @@ function SWEP:Throw()
 
             local props_in_range = {}
             for _,ply in pairs(team.GetPlayers(TEAM_PROPS)) do
-                if ply:Alive() and and ply:GetPos():Distance(self:GetOwner():GetPos()) < self.AbilityRange) then
+                if ply:Alive() and ply:GetPos():Distance(self:GetOwner():GetPos()) < self.AbilityRange then
                     local taunt = table.Random( PROP_TAUNTS )
                     local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
                     local pitch = math.random()*pRange + TAUNT_MIN_PITCH
