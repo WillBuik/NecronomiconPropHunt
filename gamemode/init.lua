@@ -5,14 +5,14 @@ include( "shared.lua" )
 include( "server/autotaunt.lua" )
 
 function GM:PlayerInitialSpawn( ply )
+	ply:SetTeam( TEAM_SPECTATOR )
+	player_manager.SetPlayerClass( ply, "player_spectator" )
+
 	if( ply:IsBot() ) then
-		-- Auto add bots to hunter team for testing.
-		ply:SetTeam( TEAM_HUNTERS )
-		player_manager.SetPlayerClass( ply, "player_hunter" )
-	else
-		ply:SetTeam( TEAM_SPECTATOR )
-		player_manager.SetPlayerClass( ply, "player_spectator" )
+		-- Auto add bots to the smaller team for testing.
+		SetTeam( ply, TEAM_ANY )
 	end
+	
 	ply:SetCustomCollisionCheck( true )
 	ply.nextTaunt = 0
 	ply.lastTaunt = CurTime()
@@ -37,6 +37,10 @@ end
 
 net.Receive("Class Selection", function( len, ply )
 	local chosen = net.ReadUInt(32)
+	SetTeam(ply, chosen)
+end )
+
+function SetTeam (ply, chosen)
 	local playerTable = {}
 	local oldTeam = ply:Team()
 
@@ -77,7 +81,7 @@ net.Receive("Class Selection", function( len, ply )
 	RemovePlayerProp( ply )
 	ply:KillSilent()
 	--ply:Spawn()
-end )
+end
 
 -- [[ Taunts ]] --
 function SendTaunt( ply, taunt, pitch )
