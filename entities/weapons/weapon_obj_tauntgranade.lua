@@ -18,12 +18,12 @@ SWEP.WorldModel = "models/weapons/w_bugbait.mdl"
 
 SWEP.Primary.TakeAmmo = 1
 SWEP.Primary.ClipSize = 1
-SWEP.Primary.Ammo = "grenade"
+SWEP.Primary.Ammo = "XBowBolt"
 SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
 SWEP.Primary.Delay = 1.5
 
-SWEP.AbilityRange = 250
+SWEP.AbilityRange = 300
 
 SWEP.Secondary.Ammo = "none"
 
@@ -65,15 +65,12 @@ function SWEP:Throw()
             explosion:Fire("Explode", 0, 0)
             explosion:EmitSound("BaseGrenade.Explode", 75, 100)
 
-
-            local props_in_range = {}
             for _,ply in pairs(team.GetPlayers(TEAM_PROPS)) do
-                if (ply:Alive() and ply:GetPos():Distance(entobj:GetPos()) < self.AbilityRange) then
+                if (ply:Alive() and ply:GetPos():DistToSqr(entobj:GetPos()) < self.AbilityRange^2) then
                     local taunt = table.Random( PROP_TAUNTS )
                     local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
                     local pitch = math.random()*pRange + TAUNT_MIN_PITCH
                     SendTaunt(ply, taunt, pitch )
-                    table.insert(props_in_range, v)
                 end
             end
             ent:Remove()
