@@ -51,10 +51,6 @@ function SWEP:Throw()
         ent:Ignite(1, 0)
         end )
 
-        timer.Simple(1.5, function()
-        entobj:SetVelocity( Vector(0, 0, 400) )
-        end )
-
         timer.Simple(1, function()
         ent:EmitSound("weapons/bugbait/bugbait_squeeze1.wav", 100, 100)
         end )
