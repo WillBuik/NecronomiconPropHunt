@@ -13,7 +13,7 @@ SWEP.AutoSwitchFrom = true
 
 SWEP.HoldType = "grenade"
 SWEP.ViewModelFOV = 54
-SWEP.ViewModel = "models/weapons/v_bugbait.mdl"
+SWEP.ViewModel = "models/weapons/c_bugbait.mdl"
 SWEP.WorldModel = "models/weapons/w_bugbait.mdl"
 
 SWEP.Primary.TakeAmmo = 1
@@ -48,8 +48,24 @@ function SWEP:Throw()
         ent:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
         util.SpriteTrail(ent, 0, Color(0,255,0), false, 16, 16, 0.5, 1/(15+1)*0.5, "trails/laser.vmt")
 
+        local ang = ply:EyeAngles()
+        local src = ply:GetPos() + (ply:Crouching() and ply:GetViewOffsetDucked() or ply:GetViewOffset())+ (ang:Forward() * 8) + (ang:Right() * 10)
+        local target = ply:GetEyeTraceNoCursor().HitPos
+        local tang = (target-src):Angle() -- A target angle to actually throw the grenade to the crosshair instead of fowards
+        -- Makes the grenade go upgwards
+        if tang.p < 90 then
+            tang.p = -10 + tang.p * ((90 + 10) / 90)
+        else
+            tang.p = 360 - tang.p
+            tang.p = -10 + tang.p * -((90 + 10) / 90)
+        end
+        tang.p=math.Clamp(tang.p,-90,90) -- Makes the grenade not go backwards :/
+        local vel = math.min(800, (90 - tang.p) * 6)
+        local thr = tang:Forward() * vel + ply:GetVelocity()
+
         local entobj = ent:GetPhysicsObject()
-        entobj:ApplyForceCenter(self.Owner:GetAimVector():GetNormalized() * self.Owner:GetEyeTrace().HitPos:Length() / 8)
+        entobj:SetVelocity(thr)
+        entobj:AddAngleVelocity(Vector(600, math.random(-1200, 1200), 0))
 
         timer.Simple(1, function()
         ent:Ignite(1, 0)
@@ -63,7 +79,6 @@ function SWEP:Throw()
             explosion:SetKeyValue("iMagnitude", 0)
             explosion:SetKeyValue("DamageForce", 0)
             explosion:Fire("Explode", 0, 0)
-            explosion:EmitSound("BaseGrenade.Explode", 75, 100)
             explosion:EmitSound("weapons/bugbait/bugbait_squeeze1.wav", 100, 100)
 
             for _,ply in pairs(team.GetPlayers(TEAM_PROPS)) do
