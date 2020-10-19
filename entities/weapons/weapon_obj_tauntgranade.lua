@@ -42,6 +42,10 @@ function SWEP:Throw()
         ent:SetPos(self.Owner:EyePos() + (self.Owner:GetAimVector() * 16))
         ent:Spawn()
         ent:SetMaterial("super_bouncy")
+        ent:PhysicsInit(SOLID_VPHYSICS)
+        ent:SetMoveType(MOVETYPE_VPHYSICS)
+        ent:SetSolid(SOLID_BBOX)
+        ent:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
         util.SpriteTrail(ent, 0, Color(0,255,0), false, 16, 16, 0.5, 1/(15+1)*0.5, "trails/laser.vmt")
 
         local entobj = ent:GetPhysicsObject()
@@ -49,10 +53,6 @@ function SWEP:Throw()
 
         timer.Simple(1, function()
         ent:Ignite(1, 0)
-        end )
-
-        timer.Simple(1, function()
-        ent:EmitSound("weapons/bugbait/bugbait_squeeze1.wav", 100, 100)
         end )
 
         timer.Simple(2, function()
@@ -64,6 +64,7 @@ function SWEP:Throw()
             explosion:SetKeyValue("DamageForce", 0)
             explosion:Fire("Explode", 0, 0)
             explosion:EmitSound("BaseGrenade.Explode", 75, 100)
+            explosion:EmitSound("weapons/bugbait/bugbait_squeeze1.wav", 100, 100)
 
             for _,ply in pairs(team.GetPlayers(TEAM_PROPS)) do
                 if (ply:Alive() and ply:GetPos():DistToSqr(entobj:GetPos()) < self.AbilityRange^2) then
