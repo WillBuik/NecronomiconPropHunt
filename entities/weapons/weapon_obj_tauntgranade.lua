@@ -9,7 +9,7 @@ SWEP.SlotPos = 4
 
 SWEP.Weight = 5
 SWEP.AutoSwitchTo = false
-SWEP.AutoSwitchFrom = false
+SWEP.AutoSwitchFrom = true
 
 SWEP.HoldType = "grenade"
 SWEP.ViewModelFOV = 54
@@ -18,12 +18,12 @@ SWEP.WorldModel = "models/weapons/w_bugbait.mdl"
 
 SWEP.Primary.TakeAmmo = 1
 SWEP.Primary.ClipSize = 1
-SWEP.Primary.Ammo = "grenade"
+SWEP.Primary.Ammo = "XBowBolt"
 SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
 SWEP.Primary.Delay = 1.5
 
-SWEP.AbilityRange = 100
+SWEP.AbilityRange = 250
 
 SWEP.Secondary.Ammo = "none"
 
@@ -63,7 +63,7 @@ function SWEP:Throw()
             explosion:SetKeyValue("iMagnitude", 0)
             explosion:SetKeyValue("DamageForce", 0)
             explosion:Fire("Explode", 0, 0)
-            explosion:EmitSound("BaseGrenade.Explode", 100, 100)
+            explosion:EmitSound("BaseGrenade.Explode", 75, 100)
 
 
             local props_in_range = {}
