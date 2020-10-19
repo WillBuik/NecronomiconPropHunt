@@ -228,10 +228,10 @@ local function DamageHandler( target, dmgInfo )
 					attacker:Kill()
 					-- default suicide notice
 				end
-			elseif( target:GetOwner():IsPlayer() && target:GetOwner():Team() == TEAM_PROPS ) then
+			elseif( target:GetOwner():IsPlayer() && target:GetOwner():Team() == TEAM_PROPS && not target:GetOwner():ObjIsPlayDead() ) then
 				local ply = target:GetOwner()
 				HurtProp( ply, dmg, attacker )
-			elseif( target:IsPlayer() && target:Team() == TEAM_PROPS ) then
+			elseif( target:IsPlayer() && target:Team() == TEAM_PROPS && not target:ObjIsPlayDead() ) then
 				local ply = target
 				HurtProp( ply, dmg, attacker )
 			end

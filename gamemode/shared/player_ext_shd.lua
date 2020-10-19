@@ -21,6 +21,14 @@ function plymeta:ObjSetRagdolled(state)
     self:SetNWBool("objAbilityIsRagdolled", state)
 end
 
-function plymeta:ObjIsRagdolled()
-    return self:GetNWBool("objAbilityIsRagdolled", false)
+ function plymeta:ObjIsRagdolled()
+     return self:GetNWBool("objAbilityIsRagdolled", false)
+ end
+
+function plymeta:ObjSetPlaydead(state)
+    self:SetNWBool("objAbilityIsPlaydead", state)
+end
+
+function plymeta:ObjIsPlayDead()
+    return self:GetNWBool("objAbilityIsPlaydead", false)
 end

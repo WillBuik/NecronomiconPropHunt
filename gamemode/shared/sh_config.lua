@@ -149,7 +149,7 @@ ABILITIES = {
     "weapon_obj_cloak",
     "weapon_obj_disguise",
     "weapon_obj_remove",
-    "weapon_obj_ragdoll"
+    "weapon_obj_playdead"
 }
 
 --[[============]]--
