@@ -264,6 +264,7 @@ hook.Add( "Initialize", "Precache all network strings", function()
 	util.AddNetworkString( "Hunter Roll BROADCAST" )
 	util.AddNetworkString( "AutoTaunt Update" )
 	util.AddNetworkString( "Update Taunt Times" )
+	util.AddNetworkString( "Remove Prop" )
 end )
 
 --[[ Map Time ]]--
@@ -537,6 +538,12 @@ hook.Add( "PlayerDeath", "Remove ent prop on death", function( ply )
 	if( ply:IsFrozen() ) then
 		ply:Freeze( false )
 	end
+end )
+
+--[[ When a player Removes a prop with the ability ]]--
+net.Receive( "Remove Prop", function(len, ply)
+	local prop = net.ReadEntity()
+	prop.Remove()
 end )
 
 --[[ remove the ent prop ]]--

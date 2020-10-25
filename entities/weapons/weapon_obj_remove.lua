@@ -7,11 +7,12 @@ SWEP.PrintName = "Remove"
 SWEP.AbilityDescription = "Removes the Prop you're looking at for better hiding."
 
 function SWEP:Ability()
+    if SERVER then return end
     local ply = self:GetOwner()
     local prop = getViewEnt( ply )
-    if SERVER then
-        prop:Remove()
-    end
+	net.Start( "Remove Prop" )
+		net.WriteEntity( prop )
+	net.SendToServer()
 end
 
 function getViewEnt(ply)

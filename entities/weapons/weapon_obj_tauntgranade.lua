@@ -1,10 +1,10 @@
 AddCSLuaFile()
 
 SWEP.Name = "Taunt Grenade"
-SWEP.PrintName = "Taunt Grenade"
+SWEP.PrintName = "TAUNT GRENADE"
 SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = true
-SWEP.Slot = 5
+SWEP.Slot = 4
 SWEP.SlotPos = 4
 
 SWEP.Weight = 5
