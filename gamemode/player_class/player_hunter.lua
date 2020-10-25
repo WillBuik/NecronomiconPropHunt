@@ -25,6 +25,7 @@ function PLAYER:Loadout()
 	self.Player:GiveAmmo( 64, "Buckshot" )
 	self.Player:GiveAmmo( 24, "357" )
 	self.Player:GiveAmmo( 5, "XBowBolt" )
+	self.Player:GiveAmmo( 3, "AR2AltFire" )
 	self.Player:Give( "weapon_crowbar" )
 	self.Player:Give( "weapon_pistol" )
 	self.Player:Give( "weapon_smg1" )
@@ -33,6 +34,7 @@ function PLAYER:Loadout()
 	self.Player:Give( "weapon_frag" )
 	self.Player:Give( "weapon_357" )
 	self.Player:Give( "weapon_obj_tauntgranade" )
+	self.Player:Give( "weapon_obj_tauntseeker" )
 
 end
 
