@@ -20,7 +20,7 @@ function SWEP:AbilityCleanup()
     if not IsValid( self:GetOwner() ) then return end
     local ply = self:GetOwner()
     if SERVER then
-        if (ply.GetProp != nil && ply:GetProp() != nil) then
+        if (ply:GetProp() != nil && IsValid( ply:GetProp()) then
             ply:GetProp():SetRenderMode( RENDERMODE_NORMAL )
             ply:GetProp():DrawShadow(true)
         end
