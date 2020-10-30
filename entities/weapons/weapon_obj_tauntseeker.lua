@@ -47,6 +47,7 @@ function SWEP:Fire()
             closestDistSq = currentDistSq
         end
     end
+    print(closestDistSq)
 
     local posToShoot = Vector(0,0,0)
     if closestPropTaunting != nil then
@@ -64,7 +65,7 @@ function SWEP:Fire()
 
 	local ent = ents.Create( "prop_combine_ball" )
 	if ( IsValid( ent ) ) then
-		ent:SetPos( self.Owner:GetShootPos() + Forward * 32 )
+		ent:SetPos( self.Owner:GetShootPos() )
 		ent:SetAngles( self.Owner:EyeAngles() )
 		ent:Spawn()
         ent:SetOwner(self.Owner)
