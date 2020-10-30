@@ -65,7 +65,7 @@ function SWEP:Fire()
 
 	local ent = ents.Create( "prop_combine_ball" )
 	if ( IsValid( ent ) ) then
-		ent:SetPos( self.Owner:GetShootPos() )
+		ent:SetPos( self.Owner:GetShootPos() + Forward * 32 )
 		ent:SetAngles( self.Owner:EyeAngles() )
 		ent:Spawn()
         ent:SetOwner(self.Owner)
