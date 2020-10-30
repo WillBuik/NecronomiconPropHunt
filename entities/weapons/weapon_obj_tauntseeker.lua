@@ -73,7 +73,7 @@ function SWEP:FireBall()
         ent:SetSaveValue("m_nState", 3)
         ent:SetSaveValue("m_nMaxBounces", 0)
         local phys = ent:GetPhysicsObject()
-		phys:SetVelocity( posToShoot:Angle() * 150 )
+		phys:SetVelocity( posToShoot:GetNormalized() * 150 )
 	end
 end
 
