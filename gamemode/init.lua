@@ -543,7 +543,7 @@ end )
 --[[ When a player Removes a prop with the ability ]]--
 net.Receive( "Remove Prop", function(len, ply)
 	local prop = net.ReadEntity()
-	prop.Remove()
+	prop:Remove()
 end )
 
 --[[ remove the ent prop ]]--

@@ -29,6 +29,5 @@ function getViewEnt(ply)
 	end
 	trace.filter = { ply:GetProp(), ply }
 	tr = util.TraceLine(trace)
-    print(tr.Entity)
 	return tr.Entity
 end
