@@ -46,7 +46,7 @@ end
 function SWEP:AbilityCleanup()
     if CLIENT then return end
     if not IsValid( self:GetOwner() ) then return end
-    if (self:GetOwner():GetProp() != nil) then
+    if (IsValid(ply:GetProp())) then
         self:GetOwner():GetProp():SetRenderMode( RENDERMODE_NORMAL )
     end
     self:GetOwner():ObjSetPlaydead(false)
