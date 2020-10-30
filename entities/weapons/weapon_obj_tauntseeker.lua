@@ -47,13 +47,12 @@ function SWEP:FireBall()
             closestDistSq = currentDistSq
         end
     end
-    print(closestDistSq)
 
     local posToShoot = Vector(0,0,0)
     if closestPropTaunting != nil then
         posToShoot = closestPropTaunting:GetPos()
     end
-    print(posToShoot)
+
     -- A little uncertaintity
     posToShoot:Add(Vector(
         math.random(-self.AbilityAccuracy, self.AbilityAccuracy),
@@ -61,19 +60,20 @@ function SWEP:FireBall()
         math.random(-self.AbilityAccuracy, self.AbilityAccuracy)
     ))
 
-    local Forward = self.Owner:EyeAngles():Forward()
+    local forward = self.Owner:EyeAngles():Forward()
 
 	local ent = ents.Create( "prop_combine_ball" )
 	if ( IsValid( ent ) ) then
-		ent:SetPos( self.Owner:GetShootPos() + Forward * 32 )
+		ent:SetPos( self.Owner:GetShootPos() + forward * 32 )
 		ent:SetAngles( self.Owner:EyeAngles() )
 		ent:Spawn()
         ent:SetOwner(self.Owner)
         ent:SetSaveValue("m_flRadius", 12)
         ent:SetSaveValue("m_nState", 3)
-        ent:SetSaveValue("m_nMaxBounces", 1)
+        ent:SetSaveValue("m_nMaxBounces", 0)
         local phys = ent:GetPhysicsObject()
-		phys:SetVelocity( posToShoot:Sub(self.Owner:GetShootPos()):Angle() * 15 )
+        print(phys)
+		phys:SetVelocity( posToShoot:Sub(self.Owner:GetShootPos()):Angle() * 150 )
 	end
 end
 
