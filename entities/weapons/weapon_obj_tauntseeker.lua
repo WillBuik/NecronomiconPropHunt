@@ -52,6 +52,7 @@ function SWEP:Fire()
     if closestPropTaunting != nil then
         posToShoot = closestPropTaunting:GetPos()
     end
+    print(posToShoot)
     -- A little uncertaintity
     posToShoot:Add(Vector(
         math.random(-self.AbilityAccuracy, self.AbilityAccuracy),
@@ -69,9 +70,9 @@ function SWEP:Fire()
         ent:SetOwner(self.Owner)
         ent:SetSaveValue("m_flRadius", 12)
         ent:SetSaveValue("m_nState", 3)
-        ent:SetSaveValue("m_nMaxBounces", 0)
-	local phys = ent:GetPhysicsObject()
-		phys:SetVelocity( posToShoot:Sub(self.Owner:GetShootPos()):Angle() * 1500 )
+        ent:SetSaveValue("m_nMaxBounces", 1)
+        local phys = ent:GetPhysicsObject()
+		phys:SetVelocity( posToShoot:Sub(self.Owner:GetShootPos()):Angle() * 15 )
 	end
 end
 
