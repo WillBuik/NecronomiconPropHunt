@@ -23,7 +23,7 @@ SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
 SWEP.Primary.Delay = 1.5
 
-SWEP.AbilityAccuracy = 10
+SWEP.AbilityAccuracy = 100
 
 SWEP.Secondary.Ammo = "none"
 
@@ -71,7 +71,7 @@ function SWEP:FireBall()
         ent:SetOwner(self.Owner)
         ent:SetSaveValue("m_flRadius", 12)
         ent:SetSaveValue("m_nState", 3)
-        ent:SetSaveValue("m_nMaxBounces", 0)
+        ent:SetSaveValue("m_nMaxBounces", 1)
         local phys = ent:GetPhysicsObject()
 		phys:SetVelocity( posToShoot:GetNormalized() * 150 )
 	end
