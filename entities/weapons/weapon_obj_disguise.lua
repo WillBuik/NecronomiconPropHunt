@@ -33,7 +33,9 @@ function SWEP:AbilityCleanup()
     if SERVER then
         ply:StripWeapon("weapon_obj_smgdummy")
         player_manager.RunClass( ply, "SetModel" )
-        if (ply:GetProp() != nil) then ply:GetProp():SetRenderMode( RENDERMODE_NORMAL ) end
+        if (ply.GetProp != nil && ply:GetProp() != nil) then
+            ply:GetProp():SetRenderMode( RENDERMODE_NORMAL )
+        end
         ply:SetRenderMode( RENDERMODE_NONE )
     end
 end
