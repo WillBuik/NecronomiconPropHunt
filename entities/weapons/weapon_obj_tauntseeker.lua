@@ -66,14 +66,14 @@ function SWEP:FireBall()
 	if ( IsValid( ent ) ) then
 		ent:SetPos( self.Owner:GetShootPos() + forward * 32 )
 		ent:SetAngles( self.Owner:EyeAngles() )
+        posToShoot:Sub(self.Owner:GetShootPos())
 		ent:Spawn()
         ent:SetOwner(self.Owner)
         ent:SetSaveValue("m_flRadius", 12)
         ent:SetSaveValue("m_nState", 3)
         ent:SetSaveValue("m_nMaxBounces", 0)
         local phys = ent:GetPhysicsObject()
-        print(phys)
-		phys:SetVelocity( posToShoot:Sub(self.Owner:GetShootPos()):Angle() * 150 )
+		phys:SetVelocity( posToShoot:Angle() * 150 )
 	end
 end
 
