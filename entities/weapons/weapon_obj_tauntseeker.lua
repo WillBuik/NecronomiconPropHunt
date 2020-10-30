@@ -34,7 +34,7 @@ end
 function SWEP:Think()
 end
 
-function SWEP:Fire()
+function SWEP:FireBall()
     if CLIENT then return end
 
     local props = team.GetPlayers(TEAM_PROPS)
@@ -84,7 +84,7 @@ function SWEP:PrimaryAttack()
 		self:Reload()
 		self:SendWeaponAnim(ACT_VM_DRAW)
 	end )
-	self:Fire()
+	self:FireBall()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	self:TakePrimaryAmmo(self.Primary.TakeAmmo)
 	self.Owner:DoAttackEvent()
