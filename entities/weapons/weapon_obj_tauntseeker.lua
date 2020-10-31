@@ -38,15 +38,7 @@ function SWEP:FireBall()
     if CLIENT then return end
 
     local props = team.GetPlayers(TEAM_PROPS)
-    local closestPropTaunting = nil
-    local closestDistSq = math.huge
-    for _, prop in pairs(props) do
-        local currentDistSq = self.Owner:GetPos():DistToSqr(prop:GetPos())
-        if IsValid(prop) and prop:Alive() and CurTime() < prop.nextTaunt and (currentDistSq < closestDistSq) then
-            closestPropTaunting = prop
-            closestDistSq = currentDistSq
-        end
-    end
+    local closestPropTaunting = GetClosestTaunter(self.Owner)
 
     local posToShoot = Vector(0,0,0)
     if closestPropTaunting != nil then
@@ -72,6 +64,7 @@ function SWEP:FireBall()
         ent:SetSaveValue("m_flRadius", 12)
         ent:SetSaveValue("m_nState", 3)
         ent:SetSaveValue("m_nMaxBounces", 1)
+        ent:SetSaveValue("m_nBounceCount", 1)
         local phys = ent:GetPhysicsObject()
 		phys:SetVelocity( posToShoot:GetNormalized() * 150 )
 	end

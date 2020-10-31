@@ -58,6 +58,20 @@ function WouldBeStuck( ply, prop )
 	return false
 end
 
+function GetClosestTaunter( ply )
+    local props = GetLivingPlayers( TEAM_PROPS )
+    local closestPlyTaunting = nil
+    for _, prop in pairs(props) do
+        if ( prop.nextTaunt > CurTime() ) then
+            if (closestPlyTaunting == nil ||
+                ply:GetPos():DistToSqr(prop:GetPos()) < ply:GetPos():DistToSqr(closestPlyTaunting:GetPos()) ) then
+				closestPlyTaunting = prop
+			end
+        end
+    end
+    return closestPlyTaunting
+end
+
 function LerpColor(frac,from,to)
 	return Color(
 		Lerp(frac,from.r,to.r),
