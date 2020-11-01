@@ -15,7 +15,7 @@ jobs:
       
       # Get dependencies
       - name: Get Dependencies
-        run: apt install libffi
+        run: sudo apt install libffi
      
       # Get GLuaFixer linter from releases
       - uses: dsaltares/fetch-gh-release-asset@master
