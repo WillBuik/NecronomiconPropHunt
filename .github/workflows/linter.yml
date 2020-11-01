@@ -30,4 +30,6 @@ jobs:
 
       # Run GLuaFixer on the repo
       - name: GLuaFixer Linter
-        run: ./glualint $GITHUB_WORKSPACE
+        run: |
+          cd $GITHUB_WORKSPACE
+          ./glualint .
