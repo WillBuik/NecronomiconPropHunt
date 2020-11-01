@@ -1,4 +1,4 @@
-surface.CreateFont( "Nametags",
+surface.CreateFont("Nametags",
 {
 	font = "Helvetica",
 	size = 128,
@@ -7,18 +7,18 @@ surface.CreateFont( "Nametags",
 	outline = true,
 })
 
-hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
-	if( LocalPlayer():Team() != TEAM_HUNTERS &&
-		LocalPlayer():Team() != TEAM_PROPS ) then return end
+hook.Add("PostDrawOpaqueRenderables", "Draw Nametags", function()
+	if (LocalPlayer():Team() != TEAM_HUNTERS &&
+		LocalPlayer():Team() != TEAM_PROPS) then return end
 
-	local toTag = GetLivingPlayers( LocalPlayer():Team() )
+	local toTag = GetLivingPlayers(LocalPlayer():Team())
 
-	if( LocalPlayer():Team() == TEAM_PROPS ) then
-		table.Add( toTag, GetLivingPlayers( TEAM_HUNTERS ) )
+	if (LocalPlayer():Team() == TEAM_PROPS) then
+		table.Add(toTag, GetLivingPlayers(TEAM_HUNTERS))
 	end
 
-	if ( LocalPlayer():Team() == TEAM_HUNTERS ) then
-	    local props = GetLivingPlayers( TEAM_PROPS )
+	if (LocalPlayer():Team() == TEAM_HUNTERS) then
+	    local props = GetLivingPlayers(TEAM_PROPS)
 	    for _, v in pairs(props) do
 	        if (v:ObjIsDisguised()) then
 	            table.insert(toTag, v)
@@ -27,9 +27,9 @@ hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
 	end
 
 	for _, v in pairs(toTag) do
-		if( v == LocalPlayer() ) then continue end
+		if (v == LocalPlayer()) then continue end
 
-		local cOffset = Vector( 0, 0, 10 )
+		local cOffset = Vector(0, 0, 10)
 		local pos = v:GetPos() + v:GetViewOffset() + cOffset
 
 		local pDiff = v:GetPos() - LocalPlayer():GetPos()
@@ -49,12 +49,12 @@ hook.Add( "PostDrawOpaqueRenderables", "Draw Nametags", function()
             name = v:ObjGetDisguiseName()
         end
 
-		cam.Start3D2D( pos, angle, .05 )
-			surface.SetFont( "Nametags" )
-			surface.SetTextColor( Color( 255,255,255,255 ) )
-			local tw, th = surface.GetTextSize( name )
-			surface.SetTextPos( -tw/2, -th )
-			surface.DrawText( name )
+		cam.Start3D2D(pos, angle, .05)
+			surface.SetFont("Nametags")
+			surface.SetTextColor(Color(255,255,255,255))
+			local tw, th = surface.GetTextSize(name)
+			surface.SetTextPos(-tw/2, -th)
+			surface.DrawText(name)
 		cam.End3D2D()
 	end
-end )
+end)

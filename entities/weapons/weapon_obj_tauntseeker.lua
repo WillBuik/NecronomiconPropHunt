@@ -50,14 +50,14 @@ function SWEP:FireBall()
         math.random(-self.AbilityAccuracy, self.AbilityAccuracy),
         math.random(-self.AbilityAccuracy, self.AbilityAccuracy),
         math.random(-self.AbilityAccuracy, self.AbilityAccuracy)
-    ))
+  ))
 
     local forward = self.Owner:EyeAngles():Forward()
 
-	local ent = ents.Create( "prop_combine_ball" )
-	if ( IsValid( ent ) ) then
-		ent:SetPos( self.Owner:GetShootPos() + forward * 32 )
-		ent:SetAngles( self.Owner:EyeAngles() )
+	local ent = ents.Create("prop_combine_ball")
+	if (IsValid(ent)) then
+		ent:SetPos(self.Owner:GetShootPos() + forward * 32)
+		ent:SetAngles(self.Owner:EyeAngles())
         posToShoot:Sub(self.Owner:GetShootPos())
 		ent:Spawn()
         ent:SetOwner(self.Owner)
@@ -66,7 +66,7 @@ function SWEP:FireBall()
         ent:SetSaveValue("m_nMaxBounces", 1)
         ent:SetSaveValue("m_nBounceCount", 1)
         local phys = ent:GetPhysicsObject()
-		phys:SetVelocity( posToShoot:GetNormalized() * 150 )
+		phys:SetVelocity(posToShoot:GetNormalized() * 150)
 	end
 end
 
@@ -76,7 +76,7 @@ function SWEP:PrimaryAttack()
 		if !self.Owner:Alive() or self:GetOwner():GetActiveWeapon():GetClass() ~= "weapon_obj_tauntseeker" then return end
 		self:Reload()
 		self:SendWeaponAnim(ACT_VM_DRAW)
-	end )
+	end)
 	self:FireBall()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	self:TakePrimaryAmmo(self.Primary.TakeAmmo)

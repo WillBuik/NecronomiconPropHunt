@@ -28,16 +28,16 @@ function SWEP:Ability()
     end
 
     if IsValid(closestHunter) then
-		net.Start( "Death Notice" )
-			net.WriteString( closestHunter:Nick() )
-			net.WriteUInt( closestHunter:Team(), 16 )
-			net.WriteString( "found" )
-			net.WriteString( ply:Nick() )
-			net.WriteUInt( ply:Team(), 16 )
+		net.Start("Death Notice")
+			net.WriteString(closestHunter:Nick())
+			net.WriteUInt(closestHunter:Team(), 16)
+			net.WriteString("found")
+			net.WriteString(ply:Nick())
+			net.WriteUInt(ply:Team(), 16)
 		net.Broadcast()
     end
 
-    ply:GetProp():SetRenderMode( RENDERMODE_NONE )
+    ply:GetProp():SetRenderMode(RENDERMODE_NONE)
 
     ply:ObjSetPlaydead(true)
     ply:ObjStartRagdoll()
@@ -45,16 +45,16 @@ end
 
 function SWEP:AbilityCleanup()
     if CLIENT then return end
-    if not IsValid( self:GetOwner() ) then return end
+    if not IsValid(self:GetOwner()) then return end
     if (IsValid(ply:GetProp())) then
-        self:GetOwner():GetProp():SetRenderMode( RENDERMODE_NORMAL )
+        self:GetOwner():GetProp():SetRenderMode(RENDERMODE_NORMAL)
     end
     self:GetOwner():ObjSetPlaydead(false)
     self:GetOwner():ObjEndRagdoll()
 end
 
 if CLIENT then
-    hook.Add( "OnEntityCreated", "objRagdollPlayerColor", function( ent )
+    hook.Add("OnEntityCreated", "objRagdollPlayerColor", function(ent)
         if IsValid(ent) and ent:GetClass() == "prop_playdead" and IsValid(ent:GetOwner()) and ent:GetOwner():IsPlayer() then
             ent.GetPlayerColor = function(self)
                 if IsValid(ent:GetOwner()) and ent:GetOwner():IsPlayer()  and ent:GetOwner().GetPlayerColor then

@@ -1,4 +1,4 @@
-surface.CreateFont( "HideFont",
+surface.CreateFont("HideFont",
 {
 	font = "Helvetica",
 	size = 256,
@@ -8,7 +8,7 @@ surface.CreateFont( "HideFont",
 })
 
 -- the font I will use for info
-surface.CreateFont( "InfoFont",
+surface.CreateFont("InfoFont",
 {
 	font = "Helvetica",
 	size = 16,
@@ -19,60 +19,60 @@ surface.CreateFont( "InfoFont",
 
 
 local function hideTimerHUD()
-	if( !LocalPlayer():Alive() ) then return end
-	if( round.state != ROUND_IN ) then return end
-	if( !round.startTime ) then return end
+	if (!LocalPlayer():Alive()) then return end
+	if (round.state != ROUND_IN) then return end
+	if (!round.startTime) then return end
 
 	local textToDraw = round.startTime + round.timePad + OBJHUNT_HIDE_TIME - CurTime()
-	textToDraw = math.Round( textToDraw, 0 )
+	textToDraw = math.Round(textToDraw, 0)
 
-	if( textToDraw < 0 ) then return end
+	if (textToDraw < 0) then return end
 
-	if( LocalPlayer():Team() == TEAM_HUNTERS ) then
-		surface.SetFont( "HideFont" )
+	if (LocalPlayer():Team() == TEAM_HUNTERS) then
+		surface.SetFont("HideFont")
 
-		surface.SetDrawColor( 0, 0, 0, 255 )
-		surface.DrawRect( 0, 0, ScrW(), ScrH() )
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawRect(0, 0, ScrW(), ScrH())
 
 		-- Determine some useful coordinates
-		local width, height = surface.GetTextSize( textToDraw )
+		local width, height = surface.GetTextSize(textToDraw)
 		local startX = ScrW()/2 - width/2
 		local startY = ScrH()/2 - height/2
 
-		surface.SetTextColor( 255, 255, 255, 255 )
+		surface.SetTextColor(255, 255, 255, 255)
 		surface.SetTextPos(startX, startY)
-		surface.DrawText( textToDraw )
-	elseif( LocalPlayer():Team() == TEAM_PROPS ) then
+		surface.DrawText(textToDraw)
+	elseif (LocalPlayer():Team() == TEAM_PROPS) then
 		textToDraw = "Hunters Released in "..textToDraw
-		surface.SetFont( "InfoFont" )
+		surface.SetFont("InfoFont")
 		-- Determine some useful coordinates
-		local width = surface.GetTextSize( textToDraw )
+		local width = surface.GetTextSize(textToDraw)
 		local height = 16
 		local padding = 5
 		local startX = ScrW()/2 - width/2
 		local startY = 2*padding
 
-		surface.SetDrawColor( 127, 127, 127, 200 )
+		surface.SetDrawColor(127, 127, 127, 200)
 		surface.DrawRect(
 			startX - padding,
 			startY - padding,
 			width + 2*padding,
 			height + 2*padding
 		)
-		surface.SetDrawColor( PANEL_BORDER )
+		surface.SetDrawColor(PANEL_BORDER)
 		surface.DrawOutlinedRect(
 			startX - padding,
 			startY - padding,
 			width + 2*padding,
 			height + 2*padding
 		)
-		surface.SetTextColor( 255, 255, 255, 255 )
+		surface.SetTextColor(255, 255, 255, 255)
 		surface.SetTextPos(startX, startY)
-		surface.DrawText( textToDraw )
+		surface.DrawText(textToDraw)
 	end
 end
 
-hook.Add( "HUDPaintBackground", "Hide Timer", hideTimerHUD )
+hook.Add("HUDPaintBackground", "Hide Timer", hideTimerHUD)
 
 
 

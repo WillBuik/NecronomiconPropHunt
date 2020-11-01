@@ -1,6 +1,6 @@
 if AUTOTAUNT_ENABLED then
 
-	surface.CreateFont( "AutoTauntFont",
+	surface.CreateFont("AutoTauntFont",
 	{
 		font = "coolvetica",
 		size = 30,
@@ -16,19 +16,19 @@ if AUTOTAUNT_ENABLED then
 	local lightGray = Color(80, 80, 80, opacity)
 	local brightWhite = Color(255, 255, 255, 255)
 
-	function draw.Circle( x, y, radius, seg )
+	function draw.Circle(x, y, radius, seg)
 		local cir = {}
 
-		table.insert( cir, { x = x, y = y, u = 0.5, v = 0.5 } )
+		table.insert(cir, { x = x, y = y, u = 0.5, v = 0.5 })
 		for i = 0, seg do
-			local a = math.rad( ( i / seg ) * -360 )
-			table.insert( cir, { x = x + math.sin( a ) * radius, y = y + math.cos( a ) * radius, u = math.sin( a ) / 2 + 0.5, v = math.cos( a ) / 2 + 0.5 } )
+			local a = math.rad((i / seg) * -360)
+			table.insert(cir, { x = x + math.sin(a) * radius, y = y + math.cos(a) * radius, u = math.sin(a) / 2 + 0.5, v = math.cos(a) / 2 + 0.5 })
 		end
 
-		local a = math.rad( 0 ) -- This is need for non absolute segment counts
-		table.insert( cir, { x = x + math.sin( a ) * radius, y = y + math.cos( a ) * radius, u = math.sin( a ) / 2 + 0.5, v = math.cos( a ) / 2 + 0.5 } )
+		local a = math.rad(0) -- This is need for non absolute segment counts
+		table.insert(cir, { x = x + math.sin(a) * radius, y = y + math.cos(a) * radius, u = math.sin(a) / 2 + 0.5, v = math.cos(a) / 2 + 0.5 })
 
-		surface.DrawPoly( cir )
+		surface.DrawPoly(cir)
 	end
 
 	function loadExtraHuds()
@@ -39,7 +39,7 @@ if AUTOTAUNT_ENABLED then
 	end
 
 	function validateProp(ply)
-		return (ply:IsValid() && ply:Alive() && ply:Team() == TEAM_PROPS )
+		return (ply:IsValid() && ply:Alive() && ply:Team() == TEAM_PROPS)
 	end
 
 	function autotauntHud()
@@ -49,7 +49,7 @@ if AUTOTAUNT_ENABLED then
 		local paddingL = 100
 
 		-- Check if the player is valid, alive, and is a prop
-		if ( !validateProp(ply) ) then return end
+		if (!validateProp(ply)) then return end
 
 		local radius = 50
 		local timer = 30.00
@@ -75,7 +75,7 @@ if AUTOTAUNT_ENABLED then
 		-- This is the outer circle
 		surface.SetDrawColor(lightGray)
 		draw.NoTexture()
-		draw.Circle( x, y, radius, radius)
+		draw.Circle(x, y, radius, radius)
 
 		-- This is the growing inner circle
 		local color = nil
@@ -89,13 +89,13 @@ if AUTOTAUNT_ENABLED then
 		end
 		surface.SetDrawColor(color)
 		draw.NoTexture()
-		draw.Circle( x, y, timerRadius , radius)
+		draw.Circle(x, y, timerRadius , radius)
 		draw.SimpleText("Auto-Taunt", "AutoTauntFont", x, y - radius, brightWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	end
 
 
-	hook.Add("HUDPaint", "Load Additional HUDS", loadExtraHuds )
-	hook.Add("AutoTauntHUDRerender", "Re-render Auto Taunt HUD", autotauntHud )
+	hook.Add("HUDPaint", "Load Additional HUDS", loadExtraHuds)
+	hook.Add("AutoTauntHUDRerender", "Re-render Auto Taunt HUD", autotauntHud)
 
 end

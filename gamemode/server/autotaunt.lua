@@ -7,7 +7,7 @@ if AUTOTAUNT_ENABLED then
 		--Render the Auto-taunt HUD
 
 		for _,ply in pairs(players) do
-			local taunt = table.Random( PROP_TAUNTS )
+			local taunt = table.Random(PROP_TAUNTS)
 
 			if ply:Alive() && ply:Team() == TEAM_PROPS then
 				if ply.lastTaunt != nil then
@@ -18,7 +18,7 @@ if AUTOTAUNT_ENABLED then
 						--Send the Taunt to the player
 						local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
 						local pitch = math.random()*pRange + TAUNT_MIN_PITCH
-						SendTaunt(ply, taunt, pitch )
+						SendTaunt(ply, taunt, pitch)
 					end
 				end
 			end
@@ -29,7 +29,7 @@ if AUTOTAUNT_ENABLED then
 		timer.Create("AutoTauntTimer", 0.1, 0, runAutoTaunter)
 	end
 
-	hook.Add( "Initialize", "Set Map Time",  function ()
+	hook.Add("Initialize", "Set Map Time",  function ()
 		mapStartTime = os.time()
 		CreateAutoTauntTimer()
 	end)
@@ -41,10 +41,10 @@ if AUTOTAUNT_ENABLED then
 			ply.autoTauntInterval = OBJHUNT_AUTOTAUNT_INTERVAL + OBJHUNT_HIDE_TIME
 			ply.lastTaunt = CurTime()
 
-			net.Start( "AutoTaunt Update" )
-				net.WriteUInt( ply:EntIndex(), 8 )
-				net.WriteFloat( ply.lastTaunt )
-				net.WriteFloat( ply.autoTauntInterval )
+			net.Start("AutoTaunt Update")
+				net.WriteUInt(ply:EntIndex(), 8)
+				net.WriteFloat(ply.lastTaunt)
+				net.WriteFloat(ply.autoTauntInterval)
 			net.Broadcast()
 		end
 

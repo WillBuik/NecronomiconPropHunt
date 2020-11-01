@@ -39,7 +39,7 @@ net.Receive("RAM_MapVoteStart", function()
     
     MapVote.EndTime = CurTime() + net.ReadUInt(32)
     
-    if(IsValid(MapVote.Panel)) then
+    if (IsValid(MapVote.Panel)) then
         MapVote.Panel:Remove()
     end
     
@@ -50,19 +50,19 @@ end)
 net.Receive("RAM_MapVoteUpdate", function()
     local update_type = net.ReadUInt(3)
     
-    if(update_type == MapVote.UPDATE_VOTE) then
+    if (update_type == MapVote.UPDATE_VOTE) then
         local ply = net.ReadEntity()
         
-        if(IsValid(ply)) then
+        if (IsValid(ply)) then
             local map_id = net.ReadUInt(32)
             MapVote.Votes[ply:SteamID()] = map_id
         
-            if(IsValid(MapVote.Panel)) then
+            if (IsValid(MapVote.Panel)) then
                 MapVote.Panel:AddVoter(ply)
             end
         end
-    elseif(update_type == MapVote.UPDATE_WIN) then      
-        if(IsValid(MapVote.Panel)) then
+    elseif (update_type == MapVote.UPDATE_WIN) then      
+        if (IsValid(MapVote.Panel)) then
             MapVote.Panel:Flash(net.ReadUInt(32))
         end
     end
@@ -165,7 +165,7 @@ local shield_mat = Material("icon16/shield.png")
 
 function PANEL:AddVoter(voter)
     for k, v in pairs(self.Voters) do
-        if(v.Player and v.Player == voter) then
+        if (v.Player and v.Player == voter) then
             return false
         end
     end
@@ -192,7 +192,7 @@ function PANEL:AddVoter(voter)
     icon_container.Paint = function(s, w, h)
         draw.RoundedBox(4, 0, 0, w, h, Color(255, 0, 0, 80))
         
-        if(icon_container.img) then
+        if (icon_container.img) then
             surface.SetMaterial(icon_container.img)
             surface.SetDrawColor(Color(255, 255, 255))
             surface.DrawTexturedRect(2, 2, 16, 16)
@@ -208,25 +208,25 @@ function PANEL:Think()
     end
     
     for k, v in pairs(self.Voters) do
-        if(not IsValid(v.Player)) then
+        if (not IsValid(v.Player)) then
             v:Remove()
         else
-            if(not MapVote.Votes[v.Player:SteamID()]) then
+            if (not MapVote.Votes[v.Player:SteamID()]) then
                 v:Remove()
             else
                 local bar = self:GetMapButton(MapVote.Votes[v.Player:SteamID()])
                 
-                if(MapVote.HasExtraVotePower(v.Player)) then
+                if (MapVote.HasExtraVotePower(v.Player)) then
                     bar.NumVotes = bar.NumVotes + 2
                 else
                     bar.NumVotes = bar.NumVotes + 1
                 end
                 
-                if(IsValid(bar)) then
+                if (IsValid(bar)) then
                     local CurrentPos = Vector(v.x, v.y, 0)
                     local NewPos = Vector((bar.x + bar:GetWide()) - 21 * bar.NumVotes - 2, bar.y + (bar:GetTall() * 0.5 - 10), 0)
                     
-                    if(not v.CurPos or v.CurPos ~= NewPos) then
+                    if (not v.CurPos or v.CurPos ~= NewPos) then
                         v:MoveTo(NewPos.x, NewPos.y, 0.3)
                         v.CurPos = NewPos
                     end
@@ -263,7 +263,7 @@ function PANEL:SetMaps(maps)
             button.Paint = function(s, w, h)
                 local col = Color(255, 255, 255, 10)
                 
-                if(button.bgColor) then
+                if (button.bgColor) then
                     col = button.bgColor
                 end
                 
@@ -290,7 +290,7 @@ end
 
 function PANEL:GetMapButton(id)
     for k, v in pairs(self.mapList:GetItems()) do
-        if(v.ID == id) then return v end
+        if (v.ID == id) then return v end
     end
     
     return false
@@ -311,13 +311,13 @@ function PANEL:Flash(id)
 
     local bar = self:GetMapButton(id)
     
-    if(IsValid(bar)) then
-        timer.Simple( 0.0, function() bar.bgColor = Color( 0, 255, 255 ) surface.PlaySound( "hl1/fvox/blip.wav" ) end )
-        timer.Simple( 0.2, function() bar.bgColor = nil end )
-        timer.Simple( 0.4, function() bar.bgColor = Color( 0, 255, 255 ) surface.PlaySound( "hl1/fvox/blip.wav" ) end )
-        timer.Simple( 0.6, function() bar.bgColor = nil end )
-        timer.Simple( 0.8, function() bar.bgColor = Color( 0, 255, 255 ) surface.PlaySound( "hl1/fvox/blip.wav" ) end )
-        timer.Simple( 1.0, function() bar.bgColor = Color( 100, 100, 100 ) end )
+    if (IsValid(bar)) then
+        timer.Simple(0.0, function() bar.bgColor = Color(0, 255, 255) surface.PlaySound("hl1/fvox/blip.wav") end)
+        timer.Simple(0.2, function() bar.bgColor = nil end)
+        timer.Simple(0.4, function() bar.bgColor = Color(0, 255, 255) surface.PlaySound("hl1/fvox/blip.wav") end)
+        timer.Simple(0.6, function() bar.bgColor = nil end)
+        timer.Simple(0.8, function() bar.bgColor = Color(0, 255, 255) surface.PlaySound("hl1/fvox/blip.wav") end)
+        timer.Simple(1.0, function() bar.bgColor = Color(100, 100, 100) end)
     end
 end
 

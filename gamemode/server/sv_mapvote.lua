@@ -5,14 +5,14 @@ util.AddNetworkString("RAM_MapVoteCancel")
 MapVote.Continued = false
 
 net.Receive("RAM_MapVoteUpdate", function(len, ply)
-    if(MapVote.Allow) then
-        if(IsValid(ply)) then
+    if (MapVote.Allow) then
+        if (IsValid(ply)) then
             local update_type = net.ReadUInt(3)
             
-            if(update_type == MapVote.UPDATE_VOTE) then
+            if (update_type == MapVote.UPDATE_VOTE) then
                 local map_id = net.ReadUInt(32)
                 
-                if(MapVote.CurrentMaps[map_id]) then
+                if (MapVote.CurrentMaps[map_id]) then
                     MapVote.Votes[ply:SteamID()] = map_id
                     
                     net.Start("RAM_MapVoteUpdate")
@@ -37,7 +37,7 @@ function MapVote.Start(length, current, limit, prefix)
     if not prefix then
         local info = file.Read(GAMEMODE.Folder.."/"..GAMEMODE.FolderName..".txt", "GAME")
 
-        if(info) then
+        if (info) then
             local info = util.KeyValuesToTable(info)
             prefix = info.maps
         else
@@ -59,10 +59,10 @@ function MapVote.Start(length, current, limit, prefix)
 
     for k, map in RandomPairs(maps) do
         local mapstr = map:sub(1, -5):lower()
-        if(not current and game.GetMap():lower()..".bsp" == map) then continue end
+        if (not current and game.GetMap():lower()..".bsp" == map) then continue end
 
         if is_expression then
-            if(string.find(map, prefix)) then -- This might work (from gamemode.txt)
+            if (string.find(map, prefix)) then -- This might work (from gamemode.txt)
                 vote_maps[#vote_maps + 1] = map:sub(1, -5)
                 amt = amt + 1
             end
@@ -76,7 +76,7 @@ function MapVote.Start(length, current, limit, prefix)
             end
         end
         
-        if(limit and amt >= limit) then break end
+        if (limit and amt >= limit) then break end
     end
     
     net.Start("RAM_MapVoteStart")
@@ -98,13 +98,13 @@ function MapVote.Start(length, current, limit, prefix)
         local map_results = {}
         
         for k, v in pairs(MapVote.Votes) do
-            if(not map_results[v]) then
+            if (not map_results[v]) then
                 map_results[v] = 0
             end
             
             for k2, v2 in pairs(player.GetAll()) do
-                if(v2:SteamID() == k) then
-                    if(MapVote.HasExtraVotePower(v2)) then
+                if (v2:SteamID() == k) then
+                    if (MapVote.HasExtraVotePower(v2)) then
                         map_results[v] = map_results[v] + 2
                     else
                         map_results[v] = map_results[v] + 1

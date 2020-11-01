@@ -69,7 +69,7 @@ function SWEP:Throw()
 
         timer.Simple(1, function()
         ent:Ignite(1, 0)
-        end )
+        end)
 
         timer.Simple(2, function()
             local explosion = ents.Create("env_explosion")
@@ -83,14 +83,14 @@ function SWEP:Throw()
 
             for _,ply in pairs(team.GetPlayers(TEAM_PROPS)) do
                 if (ply:Alive() and ply:GetPos():DistToSqr(entobj:GetPos()) < self.AbilityRange^2) then
-                    local taunt = table.Random( PROP_TAUNTS )
+                    local taunt = table.Random(PROP_TAUNTS)
                     local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
                     local pitch = math.random()*pRange + TAUNT_MIN_PITCH
-                    SendTaunt(ply, taunt, pitch )
+                    SendTaunt(ply, taunt, pitch)
                 end
             end
             ent:Remove()
-        end )
+        end)
     end
 end
 
@@ -100,7 +100,7 @@ function SWEP:PrimaryAttack()
 		if !self.Owner:Alive() or self:GetOwner():GetActiveWeapon():GetClass() ~= "weapon_obj_tauntgranade" then return end
 		self:Reload()
 		self:SendWeaponAnim(ACT_VM_DRAW)
-	end )
+	end)
 	self:Throw()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	self:TakePrimaryAmmo(self.Primary.TakeAmmo)
