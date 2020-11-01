@@ -14,9 +14,9 @@ resources["client"] = { "client", "gui" }
 local function resourceLoader(dirs, includeFunc)
     for _, addDir in pairs(dirs) do
         print("-- " .. addDir)
-        local csFiles, _ = file.Find(GM.BaseDir..addDir.."/*", "LUA")
+        local csFiles, _ = file.Find(GM.BaseDir .. addDir .. "/*", "LUA")
         for _, csFile in ipairs(csFiles) do
-               includeFunc(addDir.."/"..csFile)
+               includeFunc(addDir .. "/" .. csFile)
             print(" + " .. csFile)
         end
     end
@@ -30,14 +30,14 @@ if SERVER then
     -- add the taunts in
     for _,t in pairs(PROP_TAUNTS) do
         --if not file.Exists("sound/"..t, "MOD") then
-            print ("Adding prop taunt "..t)
+            print ("Adding prop taunt " .. t)
         --    resource.AddFile("sound/"..t)
         --else
         --    print ("Prop taunt "..t.." not found.")
         --end
     end
     for _,t in pairs(HUNTER_TAUNTS) do
-        if file.Exists("sound/"..t, "MOD") then
+        if file.Exists("sound/" .. t, "MOD") then
         --    resource.AddSingleFile("sound/"..t)
         end
     end
@@ -52,7 +52,7 @@ if file.Exists(GM.BaseDir .. "maps/" .. game.GetMap() .. ".lua", "LUA") then
     print("-- maps")
     print(" + " .. game.GetMap() .. ".lua")
     include("maps/" .. game.GetMap() .. ".lua")
-    if SERVER then AddCSLuaFile("maps/"..game.GetMap()..".lua") end
+    if SERVER then AddCSLuaFile("maps/" .. game.GetMap() .. ".lua") end
 end
 
 function playerCanBeEnt(ply, ent)

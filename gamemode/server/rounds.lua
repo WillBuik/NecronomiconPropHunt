@@ -172,7 +172,7 @@ hook.Add("Initialize", "Begin round functions", function()
 end)
 
 hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
-    print("Round "..round.current.." is Starting")
+    print("Round " .. round.current .. " is Starting")
 
     -- send data to clients
     SendRoundUpdate(function() return net.Broadcast() end)
@@ -195,7 +195,7 @@ hook.Add("OBJHUNT_RoundEnd", "Handle props winning", function()
     -- tell all the props that they won, good job props
     SendRoundUpdate(function() return net.Broadcast() end)
     for _, v in pairs(player.GetAll()) do
-        v:PrintMessage(HUD_PRINTCENTER, round.winner.." Win!")
+        v:PrintMessage(HUD_PRINTCENTER, round.winner .. " Win!")
         -- give everyone god mode until round starts again
         v:GodEnable()
     end

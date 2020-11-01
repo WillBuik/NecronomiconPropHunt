@@ -49,7 +49,7 @@ function SWEP:Throw()
         util.SpriteTrail(ent, 0, Color(0, 255, 0), false, 16, 16, 0.5, 1 / (15 + 1) * 0.5, "trails/laser.vmt")
 
         local ang = ply:EyeAngles()
-        local src = ply:GetPos() + (ply:Crouching() and ply:GetViewOffsetDucked() or ply:GetViewOffset())+ (ang:Forward() * 8) + (ang:Right() * 10)
+        local src = ply:GetPos() + (ply:Crouching() and ply:GetViewOffsetDucked() or ply:GetViewOffset()) + (ang:Forward() * 8) + (ang:Right() * 10)
         local target = ply:GetEyeTraceNoCursor().HitPos
         local tang = (target - src):Angle() -- A target angle to actually throw the grenade to the crosshair instead of fowards
         -- Makes the grenade go upgwards
@@ -59,7 +59,7 @@ function SWEP:Throw()
             tang.p = 360 - tang.p
             tang.p = -10 + tang.p * -((90 + 10) / 90)
         end
-        tang.p=math.Clamp(tang.p, -90, 90) -- Makes the grenade not go backwards :/
+        tang.p = math.Clamp(tang.p, -90, 90) -- Makes the grenade not go backwards :/
         local vel = math.min(800, (90 - tang.p) * 6)
         local thr = tang:Forward() * vel + ply:GetVelocity()
 
@@ -85,7 +85,7 @@ function SWEP:Throw()
                 if (ply:Alive() and ply:GetPos():DistToSqr(entobj:GetPos()) < self.AbilityRange^2) then
                     local taunt = table.Random(PROP_TAUNTS)
                     local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
-                    local pitch = math.random()*pRange + TAUNT_MIN_PITCH
+                    local pitch = math.random() * pRange + TAUNT_MIN_PITCH
                     SendTaunt(ply, taunt, pitch)
                 end
             end

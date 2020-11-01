@@ -58,7 +58,7 @@ if AUTOTAUNT_ENABLED then
         if ply.lastTaunt != nil then
             local tDiff = CurTime() - ply.lastTaunt
             timer = math.Round(ply.autoTauntInterval - tDiff, 0)
-            timerRadius = (tDiff/ply.autoTauntInterval) * radius
+            timerRadius = (tDiff / ply.autoTauntInterval) * radius
         end
 
         local x = surface.ScreenWidth() - paddingL
@@ -79,7 +79,7 @@ if AUTOTAUNT_ENABLED then
 
         -- This is the growing inner circle
         local color = nil
-        local percentage = timerRadius/radius
+        local percentage = timerRadius / radius
         if (percentage > .8) then
             color = brightRed
         elseif (percentage > .6) then

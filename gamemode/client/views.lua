@@ -72,8 +72,8 @@ local function stencilColor(ply, ent)
 
     -- cooldown on switching props
     if (ply.lastPropChange && CurTime() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then
-        local frac = math.Clamp(CurTime() - ply.lastPropChange , 0, PROP_CHOOSE_COOLDOWN)/PROP_CHOOSE_COOLDOWN
-        frac = frac/2
+        local frac = math.Clamp(CurTime() - ply.lastPropChange , 0, PROP_CHOOSE_COOLDOWN) / PROP_CHOOSE_COOLDOWN
+        frac = frac / 2
 
         return LerpColor(frac, BAD_HOVER_COLOR, GOOD_HOVER_COLOR)
     end
@@ -89,7 +89,7 @@ local function getViewEnt(ply)
     trace.mask = MASK_SHOT_HULL
     trace.start = ply.viewOrigin
     if (ply.wantThirdPerson) then
-        trace.endpos = trace.start + ply:GetAngles():Forward() * (THIRDPERSON_DISTANCE+PROP_SELECT_DISTANCE)
+        trace.endpos = trace.start + ply:GetAngles():Forward() * (THIRDPERSON_DISTANCE + PROP_SELECT_DISTANCE)
     else
         trace.endpos = trace.start + ply:GetAngles():Forward() * (PROP_SELECT_DISTANCE)
     end

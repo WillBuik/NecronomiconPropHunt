@@ -36,35 +36,35 @@ local function hideTimerHUD()
 
         -- Determine some useful coordinates
         local width, height = surface.GetTextSize(textToDraw)
-        local startX = ScrW()/2 - width/2
-        local startY = ScrH()/2 - height/2
+        local startX = ScrW() / 2 - width / 2
+        local startY = ScrH() / 2 - height / 2
 
         surface.SetTextColor(255, 255, 255, 255)
         surface.SetTextPos(startX, startY)
         surface.DrawText(textToDraw)
     elseif (LocalPlayer():Team() == TEAM_PROPS) then
-        textToDraw = "Hunters Released in "..textToDraw
+        textToDraw = "Hunters Released in " .. textToDraw
         surface.SetFont("InfoFont")
         -- Determine some useful coordinates
         local width = surface.GetTextSize(textToDraw)
         local height = 16
         local padding = 5
-        local startX = ScrW()/2 - width/2
-        local startY = 2*padding
+        local startX = ScrW() / 2 - width / 2
+        local startY = 2 * padding
 
         surface.SetDrawColor(127, 127, 127, 200)
         surface.DrawRect(
             startX - padding,
             startY - padding,
-            width + 2*padding,
-            height + 2*padding
+            width + 2 * padding,
+            height + 2 * padding
         )
         surface.SetDrawColor(PANEL_BORDER)
         surface.DrawOutlinedRect(
             startX - padding,
             startY - padding,
-            width + 2*padding,
-            height + 2*padding
+            width + 2 * padding,
+            height + 2 * padding
         )
         surface.SetTextColor(255, 255, 255, 255)
         surface.SetTextPos(startX, startY)

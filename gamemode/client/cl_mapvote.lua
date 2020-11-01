@@ -238,7 +238,7 @@ function PANEL:Think()
     
     local timeLeft = math.Round(math.Clamp(MapVote.EndTime - CurTime(), 0, math.huge))
     
-    self.countDown:SetText(tostring(timeLeft or 0).." seconds")
+    self.countDown:SetText(tostring(timeLeft or 0) .. " seconds")
     self.countDown:SizeToContents()
     self.countDown:CenterHorizontal()
 end

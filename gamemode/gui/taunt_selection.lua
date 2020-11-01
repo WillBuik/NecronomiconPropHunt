@@ -35,7 +35,7 @@ local function tauntSelection()
 
 
     tauntPanel = vgui.Create("DPanel")
-        tauntPanel:SetSize(width + padding*4, height + padding*5 + btnHeight*2)
+        tauntPanel:SetSize(width + padding * 4, height + padding * 5 + btnHeight * 2)
         tauntPanel:Center()
         tauntPanel:SetVisible(true)
         tauntPanel:SetDrawBackground(false)
@@ -43,13 +43,13 @@ local function tauntSelection()
 
     local prettyPanel = vgui.Create("DPanel", tauntPanel)
         prettyPanel:SetPos(padding, padding)
-        prettyPanel:SetSize(width + padding*2, height + padding*3 + btnHeight*2)
+        prettyPanel:SetSize(width + padding * 2, height + padding * 3 + btnHeight * 2)
 
     local exitBtn = vgui.Create("DImageButton", tauntPanel)
         exitBtn:SetImage("icon16/cancel.png")
         exitBtn:SizeToContents()
-        local ebw = exitBtn:GetSize()/2
-        exitBtn:SetPos(width + padding*3-ebw, padding-ebw)
+        local ebw = exitBtn:GetSize() / 2
+        exitBtn:SetPos(width + padding * 3 - ebw, padding - ebw)
         exitBtn.DoClick = function()
             tauntPanel:Remove()
         end
@@ -61,7 +61,7 @@ local function tauntSelection()
         pitchSlider:SetDecimals(0)
         pitchSlider:SetValue(LocalPlayer().lastTauntPitch)
         pitchSlider:SetWide(width)
-        pitchSlider:SetPos(padding*2, height + btnHeight + padding*3)
+        pitchSlider:SetPos(padding * 2, height + btnHeight + padding * 3)
 
     local tauntList = vgui.Create("DListView", prettyPanel)
         tauntList:SetMultiSelect(false)
@@ -78,21 +78,21 @@ local function tauntSelection()
     local randomBtn = vgui.Create("DButton", prettyPanel)
         randomBtn:SetText("")
         randomBtn:SetSize(btnWidth, btnHeight)
-        randomBtn:SetPos(padding, height + padding*2)
+        randomBtn:SetPos(padding, height + padding * 2)
         randomBtn.DoClick = function()
             local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
-            playTaunt(table.Random(TAUNTS), math.random()*pRange + TAUNT_MIN_PITCH)
+            playTaunt(table.Random(TAUNTS), math.random() * pRange + TAUNT_MIN_PITCH)
         end
 
     -- Painting
-    prettyPanel.Paint = function(self,w,h)
+    prettyPanel.Paint = function(self, w, h)
         surface.SetDrawColor(PANEL_FILL)
         surface.DrawRect(0, 0, w, h)
         surface.SetDrawColor(PANEL_BORDER)
         surface.DrawOutlinedRect(0, 0, w, h)
     end
 
-    randomBtn.Paint = function(self,w,h)
+    randomBtn.Paint = function(self, w, h)
         local btnColor = Color(0, 0, 255, 100)
 
         if (randomBtn:IsHovered()) then
@@ -100,10 +100,10 @@ local function tauntSelection()
         end
 
         surface.SetFont("Toggle Buttons")
-        surface.SetTextColor(Color(255,255,255,255))
+        surface.SetTextColor(Color(255, 255, 255, 255))
         local text = "Play A Random Taunt"
         local tw, th = surface.GetTextSize(text)
-        surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
+        surface.SetTextPos(w / 2 - tw / 2, h / 2 - th / 2)
         surface.DrawText(text)
         surface.SetDrawColor(btnColor)
         surface.DrawRect(0, 0, w, h)

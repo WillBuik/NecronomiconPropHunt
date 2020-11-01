@@ -139,7 +139,7 @@ function orderedNext(t, state)
         -- fetch the next value
         for i = 1,table.getn(t.__orderedIndex) do
             if t.__orderedIndex[i] == state then
-                key = t.__orderedIndex[i+1]
+                key = t.__orderedIndex[i + 1]
             end
         end
     end

@@ -85,7 +85,7 @@ function SetTeam (ply, chosen)
         player_manager.SetPlayerClass(ply, "player_hunter")
     end
 
-    PrintMessage(HUD_PRINTTALK, ply:Nick().." moved from "..TeamString(oldTeam) .. " to ".. TeamString(ply:Team()))
+    PrintMessage(HUD_PRINTTALK, ply:Nick() .. " moved from " .. TeamString(oldTeam) .. " to " .. TeamString(ply:Team()))
     RemovePlayerProp(ply)
     ply:KillSilent()
     --ply:Spawn()
@@ -98,7 +98,7 @@ function SendTaunt(ply, taunt, pitch)
     if (ply:Team() == TEAM_PROPS && !table.HasValue(PROP_TAUNTS, taunt)) then return end
     if (ply:Team() == TEAM_HUNTERS && !table.HasValue(HUNTER_TAUNTS, taunt)) then return end
 
-    local soundDur = SoundDuration(taunt) * (100/pitch)
+    local soundDur = SoundDuration(taunt) * (100 / pitch)
     ply.nextTaunt = CurTime() + soundDur
     ply.lastTaunt = CurTime()
     ply.autoTauntInterval = OBJHUNT_AUTOTAUNT_INTERVAL + soundDur -- Offset the interval by the sound dur
@@ -137,7 +137,7 @@ function GM:ShowSpare1(ply)
 
     local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
     local taunt = table.Random(TAUNTS)
-    local pitch = math.random()*pRange + TAUNT_MIN_PITCH
+    local pitch = math.random() * pRange + TAUNT_MIN_PITCH
     SendTaunt(ply, taunt, pitch)
 end
 
@@ -179,7 +179,7 @@ end
 local function HurtProp(ply, dmg, attacker)
     if (attacker:Alive()) then
         local gain = math.min(ply:Health(), dmg)
-        gain = gain/2
+        gain = gain / 2
         local newHP = math.Clamp(attacker:Health() + gain, 0, 100)
         attacker:SetHealth(newHP)
     end
@@ -329,24 +329,24 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     ply:SetViewOffset(Vector(0,0,tHeight))
 
     -- scale steps to prop size
-    ply:SetStepSize(math.Round(4+(tHeight)/4))
+    ply:SetStepSize(math.Round(4 + (tHeight) / 4))
 
     -- give bigger props a bonus for being big
     ply:SetJumpPower(PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight))
 
     ply.lastPropChange = os.time()
 
-    local volume = (tHitboxMax.x-tHitboxMin.x)*(tHitboxMax.y-tHitboxMin.y)*(tHitboxMax.z-tHitboxMin.z)
+    local volume = (tHitboxMax.x - tHitboxMin.x) * (tHitboxMax.y - tHitboxMin.y) * (tHitboxMax.z - tHitboxMin.z)
 
     -- the damage percent is what percent of hp the prop currently has
-    ply.dmgPct = math.min(ply.dmgPct, ply:Health()/ply.oldMaxHP)
+    ply.dmgPct = math.min(ply.dmgPct, ply:Health() / ply.oldMaxHP)
 
-    local maxHP = math.Clamp(volume/10, 1, 100)
+    local maxHP = math.Clamp(volume / 10, 1, 100)
 
     ply.oldMaxHP = maxHP
 
     -- just enough to see the HP bar at lowest possible hp
-    local newHP = math.Clamp(maxHP*ply.dmgPct, 2, 100)
+    local newHP = math.Clamp(maxHP * ply.dmgPct, 2, 100)
     ply:SetHealth(newHP)
 
     -- Update the player's mass to be something more reasonable to the prop
@@ -439,17 +439,17 @@ net.Receive("Prop Angle Lock", function(len, ply)
 
         --Adjust Position for no stuck
         local ppos = ply:GetPos()
-        ply:SetPos(Vector(ppos.x,ppos.y,ppos.z-tHitboxMin.z))
+        ply:SetPos(Vector(ppos.x, ppos.y, ppos.z - tHitboxMin.z))
 
         ply:SetHull(tHitboxMin, tHitboxMax)
         ply:SetHullDuck(tHitboxMin, tHitboxMax)
-        local tHeight = tHitboxMax.z-tHitboxMin.z
+        local tHeight = tHitboxMax.z - tHitboxMin.z
 
         -- match the view offset for calcviewing to the height
-        ply:SetViewOffset(Vector(0,0,tHeight))
+        ply:SetViewOffset(Vector(0, 0, tHeight))
 
         -- scale steps to prop size
-        ply:SetStepSize(math.Round(4+(tHeight)/4))
+        ply:SetStepSize(math.Round(4 + (tHeight) / 4))
 
         -- give bigger props a bonus for being big
         ply:SetJumpPower(PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight))

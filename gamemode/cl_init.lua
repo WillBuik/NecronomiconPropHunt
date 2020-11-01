@@ -127,7 +127,7 @@ net.Receive("Taunt Selection", function()
     if not IsValid(ply) then return end
 
     if (ply == LocalPlayer()) then
-        local soundDur = SoundDuration(taunt) * (100/pitch)
+        local soundDur = SoundDuration(taunt) * (100 / pitch)
         ply.nextTaunt = CurTime() + soundDur
         ply.lastTaunt = CurTime()
         ply.lastTauntPitch = pitch

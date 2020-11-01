@@ -28,7 +28,7 @@ local function ObjHUD()
     local height = 150
     local padding = 10
     local iconX = padding
-    local barX = padding*2 + 16
+    local barX = padding * 2 + 16
     local startY = ScrH()
 
     -- random color just to let the icon draw
@@ -62,13 +62,13 @@ local function ObjHUD()
         surface.DrawTexturedRect(iconX, startY, 16 , 16)
 
         -- bar
-        hpFrac = math.Clamp(ply:Health(), 0, 100)/100
+        hpFrac = math.Clamp(ply:Health(), 0, 100) / 100
 
-        local widthOffset = width - (padding*3) - 16
+        local widthOffset = width - (padding * 3) - 16
         surface.SetDrawColor(PANEL_FILL)
         surface.DrawRect(barX, startY, widthOffset, 16)
         surface.SetDrawColor(HP_COLOR)
-        surface.DrawRect(barX, startY, widthOffset*hpFrac, 16)
+        surface.DrawRect(barX, startY, widthOffset * hpFrac, 16)
         surface.SetDrawColor(PANEL_BORDER)
         surface.DrawOutlinedRect(barX, startY, widthOffset, 16)
 
@@ -97,19 +97,19 @@ local function ObjHUD()
         surface.DrawTexturedRect(iconX, startY, 16 , 16)
 
         -- bar
-        local propFrac = math.Clamp(CurTime() - ply.lastPropChange , 0, PROP_CHOOSE_COOLDOWN)/PROP_CHOOSE_COOLDOWN
+        local propFrac = math.Clamp(CurTime() - ply.lastPropChange , 0, PROP_CHOOSE_COOLDOWN) / PROP_CHOOSE_COOLDOWN
         local propColor = LerpColor(propFrac, DEPLETED_COLOR, FULL_COLOR)
 
-        local widthOffset = width - (padding*3) - 16
+        local widthOffset = width - (padding * 3) - 16
         surface.SetDrawColor(PANEL_FILL)
         surface.DrawRect(barX, startY, widthOffset, 16)
         surface.SetDrawColor(propColor)
-        surface.DrawRect(barX, startY, widthOffset*propFrac, 16)
+        surface.DrawRect(barX, startY, widthOffset * propFrac, 16)
         surface.SetDrawColor(PANEL_BORDER)
         surface.DrawOutlinedRect(barX, startY, widthOffset, 16)
 
         --text
-        local textToDraw = PROP_CHOOSE_COOLDOWN - propFrac*PROP_CHOOSE_COOLDOWN
+        local textToDraw = PROP_CHOOSE_COOLDOWN - propFrac * PROP_CHOOSE_COOLDOWN
         textToDraw = math.ceil(textToDraw)
         if (textToDraw != 0) then
             surface.SetFont("barHUD")
@@ -139,19 +139,19 @@ local function ObjHUD()
         surface.DrawTexturedRect(iconX, startY, 16 , 16)
 
         -- bar
-        local tauntFrac = math.Clamp(CurTime() - ply.lastTaunt , 0, ply.lastTauntDuration)/ply.lastTauntDuration
+        local tauntFrac = math.Clamp(CurTime() - ply.lastTaunt , 0, ply.lastTauntDuration) / ply.lastTauntDuration
         local tauntColor = TAUNT_BAR_COLOR
 
-        local widthOffset = width - (padding*3) - 16
+        local widthOffset = width - (padding * 3) - 16
         surface.SetDrawColor(PANEL_FILL)
         surface.DrawRect(barX, startY, widthOffset, 16)
         surface.SetDrawColor(tauntColor)
-        surface.DrawRect(barX, startY, widthOffset*tauntFrac, 16)
+        surface.DrawRect(barX, startY, widthOffset * tauntFrac, 16)
         surface.SetDrawColor(PANEL_BORDER)
         surface.DrawOutlinedRect(barX, startY, widthOffset, 16)
 
         --text
-        local textToDraw = ply.lastTauntDuration - tauntFrac*ply.lastTauntDuration
+        local textToDraw = ply.lastTauntDuration - tauntFrac * ply.lastTauntDuration
         textToDraw = math.ceil(textToDraw)
         if (textToDraw != 0) then
             surface.SetFont("barHUD")
@@ -185,18 +185,18 @@ local function ObjHUD()
             textToDraw = weapon:GetPrintName()
         else
             -- bar
-            local powerupFrac = math.Clamp(CurTime() - weapon.AbilityStartTime, 0, weapon.AbilityDuration)/weapon.AbilityDuration
+            local powerupFrac = math.Clamp(CurTime() - weapon.AbilityStartTime, 0, weapon.AbilityDuration) / weapon.AbilityDuration
 
-            local widthOffset = width - (padding*3) - 16
+            local widthOffset = width - (padding * 3) - 16
             surface.SetDrawColor(PANEL_FILL)
             surface.DrawRect(barX, startY, widthOffset, 16)
             surface.SetDrawColor(POWERUP_COLOR)
-            surface.DrawRect(barX, startY, widthOffset*powerupFrac, 16)
+            surface.DrawRect(barX, startY, widthOffset * powerupFrac, 16)
             surface.SetDrawColor(PANEL_BORDER)
             surface.DrawOutlinedRect(barX, startY, widthOffset, 16)
 
             --text
-            textToDraw = weapon.AbilityDuration - powerupFrac*weapon.AbilityDuration
+            textToDraw = weapon.AbilityDuration - powerupFrac * weapon.AbilityDuration
             textToDraw = math.ceil(textToDraw)
         end
 
@@ -224,7 +224,7 @@ local function RoundHUD()
     local startY = ScrH() - padding - height
     local startX = ScrW() - padding - width
 
-    startX = startX/2
+    startX = startX / 2
 
     -- box with border
     surface.SetDrawColor(ROUND_TIME_COLOR)
@@ -232,7 +232,7 @@ local function RoundHUD()
     surface.SetDrawColor(PANEL_BORDER)
     surface.DrawOutlinedRect(startX, startY, width, height)
 
-    local lineX = startX + width/2
+    local lineX = startX + width / 2
     local lineY = startY + height - 1
     local box1Width = lineX - startX
     local box2Width = startX + width - lineX
@@ -242,13 +242,13 @@ local function RoundHUD()
         surface.SetTextColor(255, 255, 255, 255)
         local textToDraw = "Time"
         local textWidth, textHeight = surface.GetTextSize(textToDraw)
-        local textX = startX + box1Width/2 - textWidth/2
+        local textX = startX + box1Width / 2 - textWidth / 2
         local textY = startY - textHeight
         surface.SetTextPos(textX, textY)
         surface.DrawText(textToDraw)
         textToDraw = "Round"
         textWidth, textHeight = surface.GetTextSize(textToDraw)
-        textX = lineX + box2Width/2 - textWidth/2
+        textX = lineX + box2Width / 2 - textWidth / 2
         surface.SetTextPos(textX, textY)
         surface.DrawText(textToDraw)
 
@@ -264,16 +264,16 @@ local function RoundHUD()
         textToDraw = string.FormattedTime(secs, "%02i:%02i")
 
         textWidth, textHeight = surface.GetTextSize(textToDraw)
-        textX = startX + box1Width/2 - textWidth/2
-        textY = startY + height/2 - textHeight/2
+        textX = startX + box1Width / 2 - textWidth / 2
+        textY = startY + height / 2 - textHeight / 2
         surface.SetTextPos(textX, textY)
         surface.DrawText(textToDraw)
 
         -- Rounds text
-        textToDraw = round.current.."/"..OBJHUNT_ROUNDS
+        textToDraw = round.current .. "/" .. OBJHUNT_ROUNDS
         textWidth, textHeight = surface.GetTextSize(textToDraw)
-        textX = lineX + box2Width/2 - textWidth/2
-        textY = startY + height/2 - textHeight/2
+        textX = lineX + box2Width / 2 - textWidth / 2
+        textY = startY + height / 2 - textHeight / 2
 
         surface.SetTextPos(textX, textY)
         surface.DrawText(textToDraw)
@@ -307,10 +307,10 @@ local function SpectateHUD()
     surface.SetFont("ObjHUDFont")
     surface.SetTextColor(dColor)
     local textWidth, textHeight = surface.GetTextSize(sNick)
-    local textX = ScrW()/2 - textWidth/2
-    local textY = padding*2
-    local width = textWidth + 2*padding
-    local height = textHeight + 2*padding
+    local textX = ScrW() / 2 - textWidth / 2
+    local textY = padding * 2
+    local width = textWidth + 2 * padding
+    local height = textHeight + 2 * padding
     surface.SetTextPos(textX, textY)
     surface.DrawText(sNick)
 

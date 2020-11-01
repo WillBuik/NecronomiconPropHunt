@@ -17,7 +17,7 @@ if AUTOTAUNT_ENABLED then
                     if (lastAutoTaunt > ply.autoTauntInterval) then
                         --Send the Taunt to the player
                         local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
-                        local pitch = math.random()*pRange + TAUNT_MIN_PITCH
+                        local pitch = math.random() * pRange + TAUNT_MIN_PITCH
                         SendTaunt(ply, taunt, pitch)
                     end
                 end

@@ -1,11 +1,11 @@
 local helpPanel
 local padding = 10
-local width = math.max(500, ScrW()/2)
-local height = math.max(500, ScrH()/1.2)
+local width = math.max(500, ScrW() / 2)
+local height = math.max(500, ScrH() / 1.2)
 
 local function helpHUD()
     helpPanel = vgui.Create("DPanel")
-        helpPanel:SetSize(width + padding*4, height + padding*4)
+        helpPanel:SetSize(width + padding * 4, height + padding * 4)
         helpPanel:Center()
         helpPanel:SetVisible(true)
         helpPanel:SetDrawBackground(false)
@@ -13,7 +13,7 @@ local function helpHUD()
 
     local prettyPanel = vgui.Create("DPanel", helpPanel)
         prettyPanel:SetPos(padding, padding)
-        prettyPanel:SetSize(width + padding*2, height + padding*2)
+        prettyPanel:SetSize(width + padding * 2, height + padding * 2)
 
     local htmlPanel = vgui.Create("DPanel", prettyPanel)
         htmlPanel:SetPos(padding, padding)
@@ -27,8 +27,8 @@ local function helpHUD()
     local exitBtn = vgui.Create("DImageButton", helpPanel)
         exitBtn:SetImage("icon16/cancel.png")
         exitBtn:SizeToContents()
-        local ebw = exitBtn:GetSize()/2
-        exitBtn:SetPos(width + padding*3-ebw,0)
+        local ebw = exitBtn:GetSize() / 2
+        exitBtn:SetPos(width + padding * 3 - ebw,0)
         exitBtn.DoClick = function()
             helpPanel:Remove()
         end

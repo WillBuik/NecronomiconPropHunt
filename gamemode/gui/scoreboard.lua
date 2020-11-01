@@ -54,25 +54,25 @@ local PLAYER_LINE =
 
         self.Ping        = self:Add("DLabel")
         self.Ping:Dock(RIGHT)
-        self.Ping:SetWidth(ScrW()/40)
+        self.Ping:SetWidth(ScrW() / 40)
         self.Ping:SetFont("PlayerObjHunt")
         self.Ping:SetContentAlignment(5)
 
         self.Deaths        = self:Add("DLabel")
         self.Deaths:Dock(RIGHT)
-        self.Deaths:SetWidth(ScrW()/40)
+        self.Deaths:SetWidth(ScrW() / 40)
         self.Deaths:SetFont("PlayerObjHunt")
         self.Deaths:SetContentAlignment(5)
 
         self.Kills        = self:Add("DLabel")
         self.Kills:Dock(RIGHT)
-        self.Kills:SetWidth(ScrW()/40)
+        self.Kills:SetWidth(ScrW() / 40)
         self.Kills:SetFont("PlayerObjHunt")
         self.Kills:SetContentAlignment(5)
 
         self:Dock(TOP)
         self:DockPadding(PADDING, PADDING, PADDING, PADDING)
-        self:SetHeight(16 + 3*2)
+        self:SetHeight(16 + 3 * 2)
 
     end,
 
@@ -89,7 +89,7 @@ local PLAYER_LINE =
 
     Think = function(self)
 
-        if (!IsValid(self.Player))then
+        if (!IsValid(self.Player)) then
             self:SetZPos(2000)
             self:Remove()
             return
@@ -131,12 +131,9 @@ local PLAYER_LINE =
         -- so if we set the z order according to kills they'll be ordered that way!
         -- Careful though, it's a signed short internally, so needs to range between -32,768k and +32,767
         --
-        self:SetZPos(-(self.Player:Team()*100) +
+        self:SetZPos(-(self.Player:Team() * 100) +
         (
-            self.NumKills * -ScrW()/40) +
-            self.NumDeaths +
-
-            math.min(string.byte(self.Player:Nick(), -1)/2, 99)
+            self.NumKills * -ScrW() / 40) + self.NumDeaths + math.min(string.byte(self.Player:Nick(), -1) / 2, 99)
         )
     end,
 
@@ -185,7 +182,7 @@ local HUNTERS_BOARD =
 
         self.Header = self:Add("Panel")
         self.Header:Dock(TOP)
-        self.Header:SetHeight(ScrH()/27)
+        self.Header:SetHeight(ScrH() / 27)
 
         self.Header.Paint = function(self, w, h)
         surface.SetDrawColor(TEAM_HUNTERS_COLOR)
@@ -194,18 +191,18 @@ local HUNTERS_BOARD =
 
         self.Name = self.Header:Add("DLabel")
         self.Name:Dock(TOP)
-        self.Name:SetHeight(ScrH()/27)
+        self.Name:SetHeight(ScrH() / 27)
         self.Name:SetText("")
 
-        self.Name.Paint = function(self,w,h)
+        self.Name.Paint = function(self, w, h)
 
         surface.SetFont("ScoreboardObjHunt")
-        surface.SetTextColor(Color(255,255,255,255))
+        surface.SetTextColor(Color(255, 255, 255, 255))
 
         local text = "Hunters"
         local tw, th = surface.GetTextSize(text)
 
-        surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
+        surface.SetTextPos(w / 2 - tw / 2, h / 2 - th / 2)
         surface.DrawText(text)
 
         surface.SetDrawColor(PANEL_BORDER)
@@ -220,15 +217,15 @@ local HUNTERS_BOARD =
 
     PerformLayout = function(self)
 
-        self:SetSize(ScrW()/6, ScrH()/2)
+        self:SetSize(ScrW() / 6, ScrH() / 2)
         self:Dock(LEFT)
-        self:DockMargin(ScrW()/3-2, ScrH()/7, 0, 0)
+        self:DockMargin(ScrW() / 3 - 2, ScrH() / 7, 0, 0)
 
     end,
 
     Paint = function(self, w, h)
-        w = ScrW()/6
-        h = ScrH()/2
+        w = ScrW() / 6
+        h = ScrH() / 2
 
         surface.SetDrawColor(PANEL_FILL)
         surface.DrawRect(0, 0, w, h)
@@ -246,7 +243,7 @@ local HUNTERS_BOARD =
 
         for id, pl in pairs(plyrs) do
 
-        if (pl:Team()==TEAM_HUNTERS) then
+        if (pl:Team() == TEAM_HUNTERS) then
 
             if (IsValid(pl.ScoreEntry)) then continue end
 
@@ -279,36 +276,33 @@ local PROPS_BOARD =
 
         self.Header = self:Add("Panel")
         self.Header:Dock(TOP)
-        self.Header:SetHeight(ScrH()/27)
+        self.Header:SetHeight(ScrH() / 27)
 
         self.Header.Paint = function(self, w, h)
-        surface.SetDrawColor(TEAM_PROPS_COLOR)
-        surface.DrawRect(0, 0, w, h)
+            surface.SetDrawColor(TEAM_PROPS_COLOR)
+            surface.DrawRect(0, 0, w, h)
         end
 
         self.Name = self.Header:Add("DLabel")
         self.Name:Dock(TOP)
-        self.Name:SetHeight(ScrH()/27)
+        self.Name:SetHeight(ScrH() / 27)
         self.Name:SetText("")
 
         self.Name.Paint = function(self, w, h)
+            surface.SetFont("ScoreboardObjHunt")
+            surface.SetTextColor(TEXT_COLOR)
 
-        surface.SetFont("ScoreboardObjHunt")
-        surface.SetTextColor(TEXT_COLOR)
+            local text = "Props"
+            local tw, th = surface.GetTextSize(text)
 
-        local text = "Props"
-        local tw, th = surface.GetTextSize(text)
+            surface.SetTextPos(w / 2 - tw / 2, h / 2 - th / 2)
+            surface.DrawText(text)
 
-        surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
-        surface.DrawText(text)
-
-        surface.SetDrawColor(PANEL_BORDER)
-        surface.DrawOutlinedRect(0, 0, w, h)
-
+            surface.SetDrawColor(PANEL_BORDER)
+            surface.DrawOutlinedRect(0, 0, w, h)
         end
 
         self.Scores = self:Add("DScrollPanel")
-
 
         self.Scores:Dock(FILL)
 
@@ -316,16 +310,16 @@ local PROPS_BOARD =
 
     PerformLayout = function(self)
 
-        self:SetSize(ScrW()/6, ScrH()/2)
+        self:SetSize(ScrW() / 6, ScrH() / 2)
         self:Dock(RIGHT)
-        self:DockMargin(0, ScrH()/7, ScrW()/3-2 , 0)
+        self:DockMargin(0, ScrH() / 7, ScrW() / 3 - 2 , 0)
 
     end,
 
     Paint = function(self, w, h)
 
-        w = ScrW()/6
-        h = ScrH()/2
+        w = ScrW() / 6
+        h = ScrH() / 2
 
         surface.SetDrawColor(PANEL_FILL)
         surface.DrawRect(0, 0, w, h)
@@ -344,24 +338,24 @@ local PROPS_BOARD =
 
         for id, pl in pairs(plyrs) do
 
-        if (pl:Team() == TEAM_PROPS) then
+            if (pl:Team() == TEAM_PROPS) then
 
-            if (IsValid(pl.ScoreEntry)) then continue end
+                if (IsValid(pl.ScoreEntry)) then continue end
 
-            pl.ScoreEntry = vgui.CreateFromTable(PLAYER_LINE, pl.ScoreEntry)
-            pl.ScoreEntry:Setup(pl)
+                pl.ScoreEntry = vgui.CreateFromTable(PLAYER_LINE, pl.ScoreEntry)
+                pl.ScoreEntry:Setup(pl)
 
-            self.Scores:AddItem(pl.ScoreEntry)
+                self.Scores:AddItem(pl.ScoreEntry)
 
-        elseif (IsValid(pl.ScoreEntry)) then
+            elseif (IsValid(pl.ScoreEntry)) then
 
-            if (pl.ScoreEntry:HasParent(self.Scores)) then
+                if (pl.ScoreEntry:HasParent(self.Scores)) then
 
-            pl.ScoreEntry:SetZPos(2000)
-            pl.ScoreEntry:Remove()
+                    pl.ScoreEntry:SetZPos(2000)
+                    pl.ScoreEntry:Remove()
 
+                end
             end
-        end
         end
     end,
 
@@ -373,7 +367,7 @@ local SPECS_BOARD =
 {
     Init = function(self)
 
-        self:SetSize(ScrW()/3, ScrH()/6)
+        self:SetSize(ScrW() / 3, ScrH() / 6)
 
         self.Header = self:Add("DLabel")
         self.Header:SetFont("ScoreboardObjHunt")
@@ -395,7 +389,7 @@ local SPECS_BOARD =
     PerformLayout = function(self)
 
         self:Center()
-        self:AlignBottom(math.floor(ScrH()/5.2))
+        self:AlignBottom(math.floor(ScrH() / 5.2))
 
     end,
 
@@ -405,26 +399,25 @@ local SPECS_BOARD =
 
     Think = function(self)
 
-    Spectators = ""
+        Spectators = ""
 
-    local plyrs = player.GetAll()
+        local plyrs = player.GetAll()
 
-    for id, pl in pairs (plyrs) do
+        for id, pl in pairs (plyrs) do
 
-        if (pl:Team() == 0 || pl:Team() == 1002) then
+            if (pl:Team() == 0 || pl:Team() == 1002) then
 
-            if (Spectators:find(pl:Nick()) == nil) then
+                if (Spectators:find(pl:Nick()) == nil) then
 
-                Spectators = Spectators == "" and pl:Nick() or Spectators .. ", " .. pl:Nick()
+                    Spectators = Spectators == "" and pl:Nick() or Spectators .. ", " .. pl:Nick()
 
+                end
             end
+
         end
 
-
-    end
-
-    self.SpecPlayers:SetText(Spectators)
-    self.SpecPlayers:SizeToContentsY()
+        self.SpecPlayers:SetText(Spectators)
+        self.SpecPlayers:SizeToContentsY()
 
     end,
 }
