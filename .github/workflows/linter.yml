@@ -1,21 +1,16 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Linter
 
 # Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the necronomicon branch
+# events for all branches
 on: [push, pull_request]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  # Linter job
+  linter:
     runs-on: ubuntu-20.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Check out repostitory
       - uses: actions/checkout@v2
      
       # Get GLuaFixer linter from releases
@@ -29,8 +24,6 @@ jobs:
       - name: Unzip GLuaFixer
         run: unzip glualint-1.16.4-linux-stripped.zip
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      # Run GLuaFixer on the repo
+      - name: GLuaFixer Linter
+        run: gluaint $GITHUB_WORKSPACE
