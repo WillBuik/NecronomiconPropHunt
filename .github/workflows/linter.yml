@@ -30,6 +30,10 @@ jobs:
 
       # Run GLuaFixer on the repo
       - name: GLuaFixer Linter
-        run: |
-          cd $GITHUB_WORKSPACE
-          ./glualint .
+        run: ./glualint . | tee linter-results.txt
+      
+      # Upload linter results as artifact
+      - uses: actions/upload-artifact@v2
+        with:
+          name: linter-results
+          path: linter-results.txt
