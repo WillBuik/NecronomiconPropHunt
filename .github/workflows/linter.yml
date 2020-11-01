@@ -26,4 +26,4 @@ jobs:
 
       # Run GLuaFixer on the repo
       - name: GLuaFixer Linter
-        run: gluaint $GITHUB_WORKSPACE
+        run: glualint $GITHUB_WORKSPACE
