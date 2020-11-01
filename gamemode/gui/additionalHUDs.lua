@@ -39,7 +39,7 @@ if AUTOTAUNT_ENABLED then
     end
 
     function validateProp(ply)
-        return (ply:IsValid() && ply:Alive() && ply:Team() == TEAM_PROPS)
+        return (ply:IsValid() and ply:Alive() and ply:Team() == TEAM_PROPS)
     end
 
     function autotauntHud()

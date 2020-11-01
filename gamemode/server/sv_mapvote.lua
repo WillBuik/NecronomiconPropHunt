@@ -46,7 +46,7 @@ function MapVote.Start(length, current, limit, prefix)
 
         is_expression = true
     else
-        if prefix and type(prefix) ~= "table" then
+        if prefix and type(prefix) != "table" then
             prefix = {prefix}
         end
     end

@@ -17,7 +17,7 @@ end
 
 function getViewEnt(ply)
     -- this needs to be here otherwise some people get errors for some unknown reason
-    if (ply.viewOrigin == nil || ply.wantThirdPerson == nil) then return end
+    if (ply.viewOrigin == nil or ply.wantThirdPerson == nil) then return end
 
     local trace = {}
     trace.mask = MASK_SHOT_HULL

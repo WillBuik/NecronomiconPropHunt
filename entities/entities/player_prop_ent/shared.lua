@@ -5,7 +5,7 @@ function ENT:Draw()
 
     local owner = self:GetOwner()
 
-    if !self:IsValid() || !IsValid(owner) then return end
+    if !self:IsValid() or !IsValid(owner) then return end
 
     self:SetPos(owner:GetPos())
 
@@ -34,7 +34,7 @@ function ENT:Draw()
 
     if (CLIENT) then
         -- third person stuff
-        if (LocalPlayer().wantThirdPerson || self:GetOwner() != LocalPlayer()) then
+        if (LocalPlayer().wantThirdPerson or self:GetOwner() != LocalPlayer()) then
             self:DrawModel()
         end
     end

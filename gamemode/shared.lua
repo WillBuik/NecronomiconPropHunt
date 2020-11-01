@@ -57,10 +57,10 @@ end
 
 function playerCanBeEnt(ply, ent)
     -- this caused an issue once
-    if (!ent || !IsValid(ent)) then return false end
+    if (!ent or !IsValid(ent)) then return false end
 
     -- make sure we're living props
-    if (!ply:Alive() || ply:Team() != TEAM_PROPS) then return false end
+    if (!ply:Alive() or ply:Team() != TEAM_PROPS) then return false end
 
     -- make sure ent is a valid prop type
     if (    !table.HasValue(USABLE_PROP_ENTITIES, ent:GetClass())) then return false end
@@ -69,11 +69,11 @@ function playerCanBeEnt(ply, ent)
     if (    !IsValid(ent:GetPhysicsObject())) then return false end
 
     -- make sure we can get the model and class
-    if (    !ent:GetClass() || !ent:GetModel()) then return false end
+    if (    !ent:GetClass() or !ent:GetModel()) then return false end
 
     -- cooldown on switching props
     if (ply:GetProp():GetModel() != "models/player.mdl") then
-        if (ply.lastPropChange && os.time() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then
+        if (ply.lastPropChange and os.time() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then
             return false
         end
     end
@@ -107,12 +107,12 @@ end
 
 -- initial collisions for props
 function initNoCollide(ent1, ent2)
-    if (!IsValid(ent1) || !IsValid(ent2)) then return end
-    if (!ent1:IsPlayer() || !ent2:IsPlayer()) then return end
-    if (ent1:Team() != ent2:Team() && !(ent1:IsFrozen() || ent2:IsFrozen())) then return end
-    if (ent1:Team() == TEAM_PROPS && ent1.GetProp && IsValid(ent1:GetProp()) && ent1:GetProp():GetModel() == "models/player.mdl") then
+    if (!IsValid(ent1) or !IsValid(ent2)) then return end
+    if (!ent1:IsPlayer() or !ent2:IsPlayer()) then return end
+    if (ent1:Team() != ent2:Team() and !(ent1:IsFrozen() or ent2:IsFrozen())) then return end
+    if (ent1:Team() == TEAM_PROPS and ent1.GetProp and IsValid(ent1:GetProp()) and ent1:GetProp():GetModel() == "models/player.mdl") then
         return false
-    elseif (ent2:Team() == TEAM_PROPS && ent2.GetProp && IsValid(ent2:GetProp()) && ent2:GetProp():GetModel() == "models/player.mdl") then
+    elseif (ent2:Team() == TEAM_PROPS and ent2.GetProp and IsValid(ent2:GetProp()) and ent2:GetProp():GetModel() == "models/player.mdl") then
         return false
     end
 end

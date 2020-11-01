@@ -95,17 +95,17 @@ local PLAYER_LINE =
             return
         end
 
-        if (self.NumKills == nil || self.NumKills != self.Player:Frags()) then
+        if (self.NumKills == nil or self.NumKills != self.Player:Frags()) then
             self.NumKills    =    self.Player:Frags()
             self.Kills:SetText(self.NumKills)
         end
 
-        if (self.NumDeaths == nil || self.NumDeaths != self.Player:Deaths()) then
+        if (self.NumDeaths == nil or self.NumDeaths != self.Player:Deaths()) then
             self.NumDeaths    =    self.Player:Deaths()
             self.Deaths:SetText(self.NumDeaths)
         end
 
-        if (self.NumPing == nil || self.NumPing != self.Player:Ping()) then
+        if (self.NumPing == nil or self.NumPing != self.Player:Ping()) then
             self.NumPing    =    self.Player:Ping()
             self.Ping:SetText(self.NumPing)
         end
@@ -113,7 +113,7 @@ local PLAYER_LINE =
         --
         -- Change the icon of the mute button based on state
         --
-        if (self.Muted == nil || self.Muted != self.Player:IsMuted()) then
+        if (self.Muted == nil or self.Muted != self.Player:IsMuted()) then
 
             self.Muted = self.Player:IsMuted()
             if (self.Muted) then
@@ -146,13 +146,13 @@ local PLAYER_LINE =
         --
         -- We draw our background a different colour based on the status of the player
         --
-        if (self.Player:Team() == TEAM_PROPS && self.Player:Alive() && not self.Player:ObjIsPlayDead()) then
+        if (self.Player:Team() == TEAM_PROPS and self.Player:Alive() and not self.Player:ObjIsPlayDead()) then
             surface.SetDrawColor(LerpColor(.5, PLAYER_LINE_COLOR, TEAM_PROPS_COLOR))
             surface.DrawRect(0, 0, w, h)
             surface.SetDrawColor(PANEL_BORDER)
             surface.DrawOutlinedRect(0, 0, w, h)
             return
-        elseif (self.Player:Team() == TEAM_HUNTERS && self.Player:Alive()) then
+        elseif (self.Player:Team() == TEAM_HUNTERS and self.Player:Alive()) then
             surface.SetDrawColor(LerpColor(.5, PLAYER_LINE_COLOR, TEAM_HUNTERS_COLOR))
             surface.DrawRect(0, 0, w, h)
             surface.SetDrawColor(PANEL_BORDER)
@@ -405,7 +405,7 @@ local SPECS_BOARD =
 
         for id, pl in pairs (plyrs) do
 
-            if (pl:Team() == 0 || pl:Team() == 1002) then
+            if (pl:Team() == 0 or pl:Team() == 1002) then
 
                 if (Spectators:find(pl:Nick()) == nil) then
 
@@ -426,7 +426,7 @@ SPECS_BOARD = vgui.RegisterTable(SPECS_BOARD, "DPanel")
 
 function GM:ScoreboardShow()
 
-    if (!IsValid(h_Scoreboard && p_Scoreboard && s_Scoreboard)) then
+    if (!IsValid(h_Scoreboard and p_Scoreboard and s_Scoreboard)) then
 
         h_Scoreboard = vgui.CreateFromTable(HUNTERS_BOARD)
         p_Scoreboard = vgui.CreateFromTable(PROPS_BOARD)
@@ -434,7 +434,7 @@ function GM:ScoreboardShow()
 
     end
 
-    if (IsValid(h_Scoreboard && p_Scoreboard)) then
+    if (IsValid(h_Scoreboard and p_Scoreboard)) then
         h_Scoreboard:Show()
         h_Scoreboard:MakePopup()
         h_Scoreboard:SetKeyboardInputEnabled(false)
@@ -453,7 +453,7 @@ end
 
 function GM:ScoreboardHide()
 
-    if (IsValid(h_Scoreboard && p_Scoreboard)) then
+    if (IsValid(h_Scoreboard and p_Scoreboard)) then
 
         h_Scoreboard:Hide()
         p_Scoreboard:Hide()

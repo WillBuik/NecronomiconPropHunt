@@ -1,7 +1,7 @@
 include("shared.lua")
 
 local function KillTaunt(ply)
-    if (ply.tauntPatch && ply.tauntPatch:IsPlaying()) then
+    if (ply.tauntPatch and ply.tauntPatch:IsPlaying()) then
         ply.tauntPatch:Stop()
     end
 end

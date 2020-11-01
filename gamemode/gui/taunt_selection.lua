@@ -25,7 +25,7 @@ end
 
 
 local function tauntSelection()
-    if (LocalPlayer():Team() != TEAM_PROPS && LocalPlayer():Team() != TEAM_HUNTERS || !LocalPlayer():Alive()) then return end
+    if (LocalPlayer():Team() != TEAM_PROPS and LocalPlayer():Team() != TEAM_HUNTERS or !LocalPlayer():Alive()) then return end
     local TAUNTS
     if (LocalPlayer():Team() == TEAM_PROPS) then
         TAUNTS = PROP_TAUNTS
@@ -114,8 +114,8 @@ local function tauntSelection()
 end
 
 hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
-    if (LocalPlayer():Team() != TEAM_PROPS && LocalPlayer():Team() != TEAM_HUNTERS || !LocalPlayer():Alive()) then return end
-    if (tauntPanel && tauntPanel:IsVisible()) then
+    if (LocalPlayer():Team() != TEAM_PROPS and LocalPlayer():Team() != TEAM_HUNTERS or !LocalPlayer():Alive()) then return end
+    if (tauntPanel and tauntPanel:IsVisible()) then
         tauntPanel:SetVisible(false)
     end
     tauntSelection()
@@ -125,8 +125,8 @@ hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
 end)
 
 hook.Add("OnSpawnMenuClose", "Close the context menu", function()
-    if (LocalPlayer():Team() != TEAM_PROPS && LocalPlayer():Team() != TEAM_HUNTERS || !LocalPlayer():Alive()) then return end
-    if (tauntPanel && !tauntPanel:IsVisible()) then return end
+    if (LocalPlayer():Team() != TEAM_PROPS and LocalPlayer():Team() != TEAM_HUNTERS or !LocalPlayer():Alive()) then return end
+    if (tauntPanel and !tauntPanel:IsVisible()) then return end
     tauntPanel:SetKeyboardInputEnabled(true)
     tauntPanel:SetVisible(false)
 end)

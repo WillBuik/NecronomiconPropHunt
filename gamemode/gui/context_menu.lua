@@ -24,7 +24,7 @@ local function DrawContextMenu()
     mainPanel = vgui.Create("DPanel")
     mainPanel:SetPos(ScrW() - width, ScrH() + height)
 
-    if (LocalPlayer():Team() == TEAM_PROPS ||
+    if (LocalPlayer():Team() == TEAM_PROPS or
         LocalPlayer():Team() == TEAM_HUNTERS) then
         totalBtns = totalBtns + 1
         local thirdPersonBtn = vgui.Create("DButton", mainPanel)
@@ -195,10 +195,10 @@ local function DrawContextMenu()
 end
 
 hook.Add("OnContextMenuOpen", "Display the context menu", function()
-    if (LocalPlayer():Team() != TEAM_PROPS &&
-        LocalPlayer():Team() != TEAM_HUNTERS ||
+    if (LocalPlayer():Team() != TEAM_PROPS and
+        LocalPlayer():Team() != TEAM_HUNTERS or
         !LocalPlayer():Alive()) then return end
-    if (mainPanel && mainPanel:IsVisible()) then
+    if (mainPanel and mainPanel:IsVisible()) then
         mainPanel:SetVisible(false)
     end
     DrawContextMenu()
@@ -211,8 +211,8 @@ hook.Add("OnContextMenuOpen", "Display the context menu", function()
 end)
 
 hook.Add("OnContextMenuClose", "Close the context menu", function()
-    if (LocalPlayer():Team() != TEAM_PROPS &&
-        LocalPlayer():Team() != TEAM_HUNTERS ||
+    if (LocalPlayer():Team() != TEAM_PROPS and
+        LocalPlayer():Team() != TEAM_HUNTERS or
         !LocalPlayer():Alive()) then return end
 
     mainPanel:MoveTo(posXClose, posY, deltaTime, 0, 1)

@@ -53,7 +53,7 @@ local function ObjHUD()
     surface.DrawText(textToDraw)
 
     -- HP GUI
-    if (ply:Alive() && (ply:Team() == TEAM_PROPS || ply:Team() == TEAM_HUNTERS)) then
+    if (ply:Alive() and (ply:Team() == TEAM_PROPS or ply:Team() == TEAM_HUNTERS)) then
         startY = startY - padding - 16
 
         -- icon
@@ -84,9 +84,9 @@ local function ObjHUD()
     end
 
     -- PROP COOLDOWN GUI
-    if (ply:Alive() && ply:Team() == TEAM_PROPS) then
+    if (ply:Alive() and ply:Team() == TEAM_PROPS) then
         -- this needs to be here otherwise some people get errors for some unknown reason
-        if (ply.viewOrigin == nil || ply.wantThirdPerson == nil) then return end
+        if (ply.viewOrigin == nil or ply.wantThirdPerson == nil) then return end
         if (ply.lastPropChange == nil) then return end
 
         startY = startY - padding - 16
@@ -123,7 +123,7 @@ local function ObjHUD()
     end
 
     -- TAUNT COOLDOWN GUI
-    if (ply:Alive() && (ply:Team() == TEAM_PROPS || ply:Team() == TEAM_HUNTERS)) then
+    if (ply:Alive() and (ply:Team() == TEAM_PROPS or ply:Team() == TEAM_HUNTERS)) then
         -- defaults
         if (!ply.lastTaunt) then
             LocalPlayer().lastTaunt = 0
@@ -166,11 +166,11 @@ local function ObjHUD()
 
     -- POWERUP GUI
     local weapon = ply:GetActiveWeapon()
-    if (ply:Alive() &&
-        ply:Team() == TEAM_PROPS &&
-        weapon != nil &&
-        weapon.GetIsAbilityUsed &&
-        ((not weapon:GetIsAbilityUsed()) || weapon.AbilityStartTime + weapon.AbilityDuration > CurTime())
+    if (ply:Alive() and
+        ply:Team() == TEAM_PROPS and
+        weapon != nil and
+        weapon.GetIsAbilityUsed and
+        ((not weapon:GetIsAbilityUsed()) or weapon.AbilityStartTime + weapon.AbilityDuration > CurTime())
     ) then
 
         startY = startY - padding - 16

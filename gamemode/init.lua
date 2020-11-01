@@ -95,8 +95,8 @@ end
 function SendTaunt(ply, taunt, pitch)
     if (CurTime() < ply.nextTaunt) then return end
     if (!ply:Alive()) then return end
-    if (ply:Team() == TEAM_PROPS && !table.HasValue(PROP_TAUNTS, taunt)) then return end
-    if (ply:Team() == TEAM_HUNTERS && !table.HasValue(HUNTER_TAUNTS, taunt)) then return end
+    if (ply:Team() == TEAM_PROPS and !table.HasValue(PROP_TAUNTS, taunt)) then return end
+    if (ply:Team() == TEAM_HUNTERS and !table.HasValue(HUNTER_TAUNTS, taunt)) then return end
 
     local soundDur = SoundDuration(taunt) * (100 / pitch)
     ply.nextTaunt = CurTime() + soundDur
@@ -185,7 +185,7 @@ local function HurtProp(ply, dmg, attacker)
     end
 
     ply:SetHealth(ply:Health() - dmg)
-    if (ply:Health() < 1 && ply:Alive()) then
+    if (ply:Health() < 1 and ply:Alive()) then
         ply:KillSilent()
         ply:CreateRagdoll()
         RemovePlayerProp(ply)
@@ -213,7 +213,7 @@ local function DamageHandler(target, dmgInfo)
         if (attacker:Team() == TEAM_HUNTERS) then
             -- since player_prop_ent isn't in USABLE_PROP_ENTS this is sufficient logic to prevent
             -- player owned props from getting hurt
-            if (!target:IsPlayer() && table.HasValue(USABLE_PROP_ENTITIES, target:GetClass()) && attacker:Alive()) then
+            if (!target:IsPlayer() and table.HasValue(USABLE_PROP_ENTITIES, target:GetClass()) and attacker:Alive()) then
                 -- disable stepping on bottles to hurt
                 local dmgType = dmgInfo:GetDamageType()
                 if (dmgType == DMG_CRUSH) then return end
@@ -227,10 +227,10 @@ local function DamageHandler(target, dmgInfo)
                     attacker:Kill()
                     -- default suicide notice
                 end
-            elseif (target:GetOwner():IsPlayer() && target:GetOwner():Team() == TEAM_PROPS && not target:GetOwner():ObjIsPlayDead()) then
+            elseif (target:GetOwner():IsPlayer() and target:GetOwner():Team() == TEAM_PROPS and not target:GetOwner():ObjIsPlayDead()) then
                 local ply = target:GetOwner()
                 HurtProp(ply, dmg, attacker)
-            elseif (target:IsPlayer() && target:Team() == TEAM_PROPS && not target:ObjIsPlayDead()) then
+            elseif (target:IsPlayer() and target:Team() == TEAM_PROPS and not target:ObjIsPlayDead()) then
                 local ply = target
                 HurtProp(ply, dmg, attacker)
             end
@@ -278,7 +278,7 @@ function GM:PlayerUse(ply, ent)
         return true
     end
 
-    if (table.HasValue(DOORS, ent:GetClass()) && CurTime() < ply.nextDoorTrigger) then
+    if (table.HasValue(DOORS, ent:GetClass()) and CurTime() < ply.nextDoorTrigger) then
         return false
     else
         ply.lastDoorTrigger = CurTime()
@@ -293,12 +293,12 @@ end
 function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
 
     local tHitboxMin, tHitboxMax
-    if (!hbMin || !hbMax) then
+    if (!hbMin or !hbMax) then
         local obj = ent:GetPhysicsObject()
         if (!IsValid(obj)) then
             return false, "Invalid physobject" end
         tHitboxMin, tHitboxMax = obj:GetAABB()
-        if (!tHitboxMin || !tHitboxMax) then return false, "Invalid Hull" end
+        if (!tHitboxMin or !tHitboxMax) then return false, "Invalid Hull" end
     else
         tHitboxMin = hbMin
         tHitboxMax = hbMax
@@ -376,7 +376,7 @@ net.Receive("Selected Prop", function(len, ply)
     local ent = net.ReadEntity()
 
     local tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds(0, 0)
-    if (ply.pickupProp || !playerCanBeEnt(ply, ent)) then return end
+    if (ply.pickupProp or !playerCanBeEnt(ply, ent)) then return end
     local oldHP = ply:GetProp().health
     SetPlayerProp(ply, ent, PROP_CHOSEN_SCALE)
     ply:GetProp().health = oldHP
@@ -541,7 +541,7 @@ end)
 
 --[[ remove the ent prop ]]--
 function RemovePlayerProp(ply)
-    if (ply.GetProp && IsValid(ply:GetProp())) then
+    if (ply.GetProp and IsValid(ply:GetProp())) then
         ply:GetProp():Remove()
         ply:SetProp(nil)
     end
@@ -581,7 +581,7 @@ function GM:PlayerCanSeePlayersChat(text, teamOnly, listener, speaker)
 end
 
 function GM:PlayerCanPickupWeapon(ply, wep)
-    return ply:Team() == TEAM_HUNTERS || (ply:Team() == TEAM_PROPS && wep:IsScripted())
+    return ply:Team() == TEAM_HUNTERS or (ply:Team() == TEAM_PROPS and wep:IsScripted())
 end
 
 function GM:AllowPlayerPickup(ply, ent)

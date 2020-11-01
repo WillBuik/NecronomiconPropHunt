@@ -2,7 +2,7 @@ function GetLivingPlayers(onTeam)
     local allPly = team.GetPlayers(onTeam)
     local livingPly = {}
     for _, v in pairs(allPly) do
-        if (IsValid(v) && v:Alive()) then
+        if (IsValid(v) and v:Alive()) then
             livingPly[#livingPly + 1] = v
         end
     end
@@ -23,9 +23,9 @@ function isStuck(ply)
 
     ent = trace.Entity
     -- should never be stuck in world
-    --if ent && (ent:IsWorld() || ent:IsValid()) then
+    --if ent and (ent:IsWorld() or ent:IsValid()) then
 
-    if (ent && ent:IsValid()) then
+    if (ent and ent:IsValid()) then
         return true
     end
 
@@ -39,7 +39,7 @@ function WouldBeStuck(ply, prop)
     td.endpos = pos
     td.filter = { ply, ply:GetProp() }
     local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
-    if (!hbMin || !hbMax) then return true end
+    if (!hbMin or !hbMax) then return true end
     local hbMin = Vector(math.Round(hbMin.x),math.Round(hbMin.y),math.Round(hbMin.z))
     local hbMax = Vector(math.Round(hbMax.x),math.Round(hbMax.y),math.Round(hbMax.z))
     -- Adjust height
@@ -51,7 +51,7 @@ function WouldBeStuck(ply, prop)
     local trace = util.TraceHull(td)
 
     ent = trace.Entity
-    if ent && (ent:IsWorld() || ent:IsValid()) then
+    if ent and (ent:IsWorld() or ent:IsValid()) then
         return true
     end
 
@@ -63,7 +63,7 @@ function GetClosestTaunter(ply)
     local closestPlyTaunting = nil
     for _, prop in pairs(props) do
         if (prop.nextTaunt > CurTime()) then
-            if (closestPlyTaunting == nil ||
+            if (closestPlyTaunting == nil or
                 ply:GetPos():DistToSqr(prop:GetPos()) < ply:GetPos():DistToSqr(closestPlyTaunting:GetPos())) then
                 closestPlyTaunting = prop
             end

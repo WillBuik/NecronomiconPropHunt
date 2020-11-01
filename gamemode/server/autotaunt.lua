@@ -9,7 +9,7 @@ if AUTOTAUNT_ENABLED then
         for _,ply in pairs(players) do
             local taunt = table.Random(PROP_TAUNTS)
 
-            if ply:Alive() && ply:Team() == TEAM_PROPS then
+            if ply:Alive() and ply:Team() == TEAM_PROPS then
                 if ply.lastTaunt != nil then
                     local lastAutoTaunt = math.Round(CurTime() - ply.lastTaunt)
 

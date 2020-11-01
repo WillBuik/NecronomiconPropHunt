@@ -226,7 +226,7 @@ function PANEL:Think()
                     local CurrentPos = Vector(v.x, v.y, 0)
                     local NewPos = Vector((bar.x + bar:GetWide()) - 21 * bar.NumVotes - 2, bar.y + (bar:GetTall() * 0.5 - 10), 0)
                     
-                    if (not v.CurPos or v.CurPos ~= NewPos) then
+                    if (not v.CurPos or v.CurPos != NewPos) then
                         v:MoveTo(NewPos.x, NewPos.y, 0.3)
                         v.CurPos = NewPos
                     end

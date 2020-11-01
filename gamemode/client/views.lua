@@ -12,7 +12,7 @@ hook.Add("CalcView", "ObjHunt CalcView", function(ply, pos, angles, fov)
     view.drawviewer = ply.wantThirdPerson
 
     -- blinding the player
-    if (ply:Team() == TEAM_HUNTERS) && (round.state == 2) && ((CurTime() - round.startTime) < OBJHUNT_HIDE_TIME) then
+    if (ply:Team() == TEAM_HUNTERS) and (round.state == 2) and ((CurTime() - round.startTime) < OBJHUNT_HIDE_TIME) then
         view.origin = Vector(0, 0, 34343)
         return view
 
@@ -40,7 +40,7 @@ hook.Add("CalcView", "ObjHunt CalcView", function(ply, pos, angles, fov)
         ply.viewOrigin = view.origin
         return view
     elseif (ply:Team() == TEAM_PROPS) then
-        local height = math.max(ply.propHeight || 64, VIEW_MIN_Z)
+        local height = math.max(ply.propHeight or 64, VIEW_MIN_Z)
         view.origin = ply:GetPos() + Vector(0,0, height)
         ply.viewOrigin = view.origin
         return view
@@ -49,7 +49,7 @@ end)
 
 local function stencilColor(ply, ent)
     -- make sure we're living props
-    if (!ply:Alive() || ply:Team() != TEAM_PROPS) then return false end
+    if (!ply:Alive() or ply:Team() != TEAM_PROPS) then return false end
 
     -- make sure it's a valid object
     if (    !IsValid(ent)) then return false end
@@ -71,7 +71,7 @@ local function stencilColor(ply, ent)
     if (WouldBeStuck(ply, ent)) then return BAD_HOVER_COLOR end
 
     -- cooldown on switching props
-    if (ply.lastPropChange && CurTime() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then
+    if (ply.lastPropChange and CurTime() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then
         local frac = math.Clamp(CurTime() - ply.lastPropChange , 0, PROP_CHOOSE_COOLDOWN) / PROP_CHOOSE_COOLDOWN
         frac = frac / 2
 
@@ -83,7 +83,7 @@ end
 
 local function getViewEnt(ply)
     -- this needs to be here otherwise some people get errors for some unknown reason
-    if (ply.viewOrigin == nil || ply.wantThirdPerson == nil) then return end
+    if (ply.viewOrigin == nil or ply.wantThirdPerson == nil) then return end
 
     local trace = {}
     trace.mask = MASK_SHOT_HULL
@@ -110,7 +110,7 @@ end)
 hook.Add("PlayerTick", "New Player Use", function(ply)
     if (ply:Team() != TEAM_PROPS) then return end
     if (ply:KeyPressed(IN_USE)) then
-        if (!ply.lastPropChange || os.time() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then return end
+        if (!ply.lastPropChange or os.time() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then return end
         local prop = getViewEnt(ply)
         local sColor = stencilColor(LocalPlayer(), prop)
         if (sColor == GOOD_HOVER_COLOR) then
@@ -125,7 +125,7 @@ end)
 hook.Add("PreDrawHalos", "Prop Taunt Wallhacks", function()
     if (LocalPlayer():Team() != TEAM_PROPS) then return end
     local ply = LocalPlayer()
-    if (ply.lastTaunt && CurTime() < ply.lastTaunt + ply.lastTauntDuration) then
+    if (ply.lastTaunt and CurTime() < ply.lastTaunt + ply.lastTauntDuration) then
         halo.Add(GetLivingPlayers(TEAM_HUNTERS), Color(255,0,0), 0, 0, 1, true, true)
 
         for _, propPly in pairs(GetLivingPlayers(TEAM_PROPS)) do

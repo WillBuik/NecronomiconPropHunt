@@ -1,7 +1,7 @@
 hook.Add("PlayerButtonDown", "LockRotationKeyPress", function(ply, button)
-    if (button == KEY_R &&
-         ply:Team() == TEAM_PROPS &&
-         ply:Alive() &&
+    if (button == KEY_R and
+         ply:Team() == TEAM_PROPS and
+         ply:Alive() and
          IsValid(ply:GetProp())
     ) then
         net.Start("Prop Angle Lock")
@@ -12,9 +12,9 @@ hook.Add("PlayerButtonDown", "LockRotationKeyPress", function(ply, button)
 end)
 
 hook.Add("PlayerButtonDown", "EnableTiltKeyPress", function(ply, button)
-    if (button == KEY_T &&
-         ply:Team() == TEAM_PROPS &&
-         ply:Alive() &&
+    if (button == KEY_T and
+         ply:Team() == TEAM_PROPS and
+         ply:Alive() and
          IsValid(ply:GetProp())
     ) then
         net.Start("Prop Pitch Enable")
@@ -24,8 +24,8 @@ hook.Add("PlayerButtonDown", "EnableTiltKeyPress", function(ply, button)
 end)
 
 hook.Add("KeyPress", "PressShiftRollHunter", function(ply, key)
-    if (key == IN_SPEED &&
-         ply:Team() == TEAM_HUNTERS &&
+    if (key == IN_SPEED and
+         ply:Team() == TEAM_HUNTERS and
          ply:Alive()
     ) then
         ply:Freeze(true)
@@ -36,8 +36,8 @@ hook.Add("KeyPress", "PressShiftRollHunter", function(ply, key)
 end)
 
 hook.Add("KeyRelease", "ReleaseShiftRollHunter", function(ply, key)
-    if (key == IN_SPEED &&
-         ply:Team() == TEAM_HUNTERS &&
+    if (key == IN_SPEED and
+         ply:Team() == TEAM_HUNTERS and
          ply:Alive()
     ) then
         ply:Freeze(false)

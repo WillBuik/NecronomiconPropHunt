@@ -8,7 +8,7 @@ surface.CreateFont("Nametags",
 })
 
 hook.Add("PostDrawOpaqueRenderables", "Draw Nametags", function()
-    if (LocalPlayer():Team() != TEAM_HUNTERS &&
+    if (LocalPlayer():Team() != TEAM_HUNTERS and
         LocalPlayer():Team() != TEAM_PROPS) then return end
 
     local toTag = GetLivingPlayers(LocalPlayer():Team())
@@ -44,7 +44,7 @@ hook.Add("PostDrawOpaqueRenderables", "Draw Nametags", function()
 
         local name = v:Nick()
 
-        if (v:ObjIsDisguised() && LocalPlayer():Team() == TEAM_HUNTERS) then
+        if (v:ObjIsDisguised() and LocalPlayer():Team() == TEAM_HUNTERS) then
             pos = v:GetPos() + LocalPlayer():GetViewOffset() + cOffset
             name = v:ObjGetDisguiseName()
         end

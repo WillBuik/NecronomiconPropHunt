@@ -70,13 +70,13 @@ local function WaitRound()
     -- wait for everyone to connect and what not
     local mapTime = CurTime()
     local spectators = team.GetPlayers(TEAM_SPECTATOR)
-    if (mapTime < OBJHUNT_PRE_ROUND_TIME && #spectators != 0) then return end
+    if (mapTime < OBJHUNT_PRE_ROUND_TIME and #spectators != 0) then return end
 
     -- make sure we have at least one player on each team
     local hunters = team.GetPlayers(TEAM_HUNTERS)
     local props = team.GetPlayers(TEAM_PROPS)
 
-    if (#props == 0 || #hunters == 0) then return end
+    if (#props == 0 or #hunters == 0) then return end
 
     round.state = ROUND_START
 end
@@ -129,7 +129,7 @@ local function InRound()
     end
 
     -- unfreeze the hunters after their time is up
-    if (roundTime > OBJHUNT_HIDE_TIME && hunters[1]:IsFrozen()) then
+    if (roundTime > OBJHUNT_HIDE_TIME and hunters[1]:IsFrozen()) then
         for _, v in pairs(hunters) do
             v:Freeze(false)
         end
@@ -147,7 +147,7 @@ local function EndRound()
     -- make sure we have at least one player on each team
     local hunters = team.GetPlayers(TEAM_HUNTERS)
     local props = team.GetPlayers(TEAM_PROPS)
-    if (#props == 0 || #hunters == 0) then return end
+    if (#props == 0 or #hunters == 0) then return end
 
     -- start the round after we've waiting long enough
     local waitTime = CurTime() - round.endTime

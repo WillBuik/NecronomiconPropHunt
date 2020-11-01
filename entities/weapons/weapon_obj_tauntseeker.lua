@@ -73,7 +73,7 @@ end
 function SWEP:PrimaryAttack()
     if !self:CanPrimaryAttack() then return end
     timer.Simple(1.5, function()
-        if !self.Owner:Alive() or self:GetOwner():GetActiveWeapon():GetClass() ~= "weapon_obj_tauntseeker" then return end
+        if !self.Owner:Alive() or self:GetOwner():GetActiveWeapon():GetClass() != "weapon_obj_tauntseeker" then return end
         self:Reload()
         self:SendWeaponAnim(ACT_VM_DRAW)
     end)
