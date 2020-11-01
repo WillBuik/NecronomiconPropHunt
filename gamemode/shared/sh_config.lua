@@ -85,26 +85,26 @@ PROP_DEFAULT_JUMP_POWER = 260
 
 -- entities that are capable of being chosen by props
 USABLE_PROP_ENTITIES = {
-	"prop_physics",
-	"prop_physics_multiplayer",
-	"prop_physics_override"
+    "prop_physics",
+    "prop_physics_multiplayer",
+    "prop_physics_override"
 }
 
 BANNED_PROPS = {
-	"models/props/cs_office/tv_plasma.mdl",
-	"models/props_c17/chair02a.mdl",
-	"models/props/cs_office/fire_extinguisher.mdl",
-	"models/props/cs_office/snowman_arm.mdl",
-	"models/props/cs_assault/money.mdl",
-	"models/props/cs_assault/dollar.mdl",
-	"models/props_c17/door01_left.mdl",
-	"models/props_c17/signpole001.mdl"
+    "models/props/cs_office/tv_plasma.mdl",
+    "models/props_c17/chair02a.mdl",
+    "models/props/cs_office/fire_extinguisher.mdl",
+    "models/props/cs_office/snowman_arm.mdl",
+    "models/props/cs_assault/money.mdl",
+    "models/props/cs_assault/dollar.mdl",
+    "models/props_c17/door01_left.mdl",
+    "models/props_c17/signpole001.mdl"
 }
 
 DOORS = {
-	"func_door",
-	"func_door_rotating",
-	"prop_door_rotating"
+    "func_door",
+    "func_door_rotating",
+    "prop_door_rotating"
 }
 --[[=====================]]--
 --[[COLORS AND HUD CONFIG]]--

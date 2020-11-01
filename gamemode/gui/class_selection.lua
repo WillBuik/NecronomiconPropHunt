@@ -1,183 +1,183 @@
 surface.CreateFont("Sharp HUD",
 {
-	font = "Helvetica",
-	size = 32,
-	weight = 800,
-	antialias = true,
-	outline = false,
-	shadow = true,
+    font = "Helvetica",
+    size = 32,
+    weight = 800,
+    antialias = true,
+    outline = false,
+    shadow = true,
 })
 
 local function SendTeam(chosen)
-	net.Start("Class Selection")
-		net.WriteUInt(chosen, 32)
-	net.SendToServer()
+    net.Start("Class Selection")
+        net.WriteUInt(chosen, 32)
+    net.SendToServer()
 end
 
 local function classSelection()
-	local padding = 10
-	local btnHeight = 30
-	local btnWidth  = 80
-	local width   = 4*btnWidth + 5*padding
-	local height  = btnHeight + 2*padding
-	local totalBtns = 0
+    local padding = 10
+    local btnHeight = 30
+    local btnWidth  = 80
+    local width   = 4*btnWidth + 5*padding
+    local height  = btnHeight + 2*padding
+    local totalBtns = 0
 
-	local classPanel = vgui.Create("DPanel")
-		classPanel:SetSize(width+padding*2, ScrH())
-		classPanel:Center()
-		classPanel:SetVisible(true)
-		classPanel:SetDrawBackground(false)
-		classPanel:MakePopup()
+    local classPanel = vgui.Create("DPanel")
+        classPanel:SetSize(width+padding*2, ScrH())
+        classPanel:Center()
+        classPanel:SetVisible(true)
+        classPanel:SetDrawBackground(false)
+        classPanel:MakePopup()
 
-	local prettyPanel = vgui.Create("DPanel", classPanel)
-		prettyPanel:SetPos(padding, padding)
-		prettyPanel:SetSize(width, height)
-		prettyPanel:Center()
-
-    totalBtns = totalBtns + 1
-	local anyBtn = vgui.Create("DButton", prettyPanel)
-		anyBtn:SetText("")
-		anyBtn:SetSize(btnWidth, btnHeight)
-		anyBtn:SetPos(padding*totalBtns + btnWidth*(totalBtns - 1), padding)
-		anyBtn.DoClick = function()
-			SendTeam(TEAM_ANY)
-			classPanel:Remove()
-		end
+    local prettyPanel = vgui.Create("DPanel", classPanel)
+        prettyPanel:SetPos(padding, padding)
+        prettyPanel:SetSize(width, height)
+        prettyPanel:Center()
 
     totalBtns = totalBtns + 1
-	local hunterBtn = vgui.Create("DButton", prettyPanel)
-		hunterBtn:SetText("")
-		hunterBtn:SetSize(btnWidth, btnHeight)
-		hunterBtn:SetPos(padding*totalBtns + btnWidth*(totalBtns - 1), padding)
-		hunterBtn.DoClick = function()
-			SendTeam(TEAM_HUNTERS)
-			classPanel:Remove()
-		end
+    local anyBtn = vgui.Create("DButton", prettyPanel)
+        anyBtn:SetText("")
+        anyBtn:SetSize(btnWidth, btnHeight)
+        anyBtn:SetPos(padding*totalBtns + btnWidth*(totalBtns - 1), padding)
+        anyBtn.DoClick = function()
+            SendTeam(TEAM_ANY)
+            classPanel:Remove()
+        end
 
     totalBtns = totalBtns + 1
-	local propBtn = vgui.Create("DButton", prettyPanel)
-		propBtn:SetText("")
-		propBtn:SetSize(btnWidth, btnHeight)
-		propBtn:SetPos(padding*totalBtns + btnWidth*(totalBtns - 1), padding)
-		propBtn.DoClick = function()
-			SendTeam(TEAM_PROPS)
-			classPanel:Remove()
-		end
+    local hunterBtn = vgui.Create("DButton", prettyPanel)
+        hunterBtn:SetText("")
+        hunterBtn:SetSize(btnWidth, btnHeight)
+        hunterBtn:SetPos(padding*totalBtns + btnWidth*(totalBtns - 1), padding)
+        hunterBtn.DoClick = function()
+            SendTeam(TEAM_HUNTERS)
+            classPanel:Remove()
+        end
 
     totalBtns = totalBtns + 1
-	local specBtn = vgui.Create("DButton", prettyPanel)
-		specBtn:SetText("")
-		specBtn:SetSize(btnWidth, btnHeight)
-		specBtn:SetPos(padding*totalBtns + btnWidth*(totalBtns - 1), padding)
-		specBtn.DoClick = function()
-			SendTeam(TEAM_SPECTATOR)
-			classPanel:Remove()
-		end
+    local propBtn = vgui.Create("DButton", prettyPanel)
+        propBtn:SetText("")
+        propBtn:SetSize(btnWidth, btnHeight)
+        propBtn:SetPos(padding*totalBtns + btnWidth*(totalBtns - 1), padding)
+        propBtn.DoClick = function()
+            SendTeam(TEAM_PROPS)
+            classPanel:Remove()
+        end
 
-	local exitBtn = vgui.Create("DImageButton", classPanel)
-		exitBtn:SetImage("icon16/cancel.png")
-		exitBtn:SizeToContents()
-		local ebw = exitBtn:GetSize()/2
-		local px, py = prettyPanel:GetPos()
-		exitBtn:SetPos(width + padding - ebw, py - ebw)
-		exitBtn.DoClick = function()
-			classPanel:Remove()
-		end
+    totalBtns = totalBtns + 1
+    local specBtn = vgui.Create("DButton", prettyPanel)
+        specBtn:SetText("")
+        specBtn:SetSize(btnWidth, btnHeight)
+        specBtn:SetPos(padding*totalBtns + btnWidth*(totalBtns - 1), padding)
+        specBtn.DoClick = function()
+            SendTeam(TEAM_SPECTATOR)
+            classPanel:Remove()
+        end
 
-	classPanel.Paint = function(self, w, h)
-		Derma_DrawBackgroundBlur(self, CurTime())
+    local exitBtn = vgui.Create("DImageButton", classPanel)
+        exitBtn:SetImage("icon16/cancel.png")
+        exitBtn:SizeToContents()
+        local ebw = exitBtn:GetSize()/2
+        local px, py = prettyPanel:GetPos()
+        exitBtn:SetPos(width + padding - ebw, py - ebw)
+        exitBtn.DoClick = function()
+            classPanel:Remove()
+        end
 
-		surface.SetFont("Sharp HUD")
-		surface.SetTextColor(255, 255, 255, 255)
-		local textToDraw = "Select Your Team"
-		local tw, th = surface.GetTextSize(textToDraw)
-		local px, py = prettyPanel:GetPos()
-		surface.SetTextPos(px, py-th)
-		surface.DrawText(textToDraw)
-	end
+    classPanel.Paint = function(self, w, h)
+        Derma_DrawBackgroundBlur(self, CurTime())
 
-	prettyPanel.Paint = function(self,w,h)
-		surface.SetDrawColor(PANEL_FILL)
-		surface.DrawRect(0, 0, width, height)
-		surface.SetDrawColor(PANEL_BORDER)
-		surface.DrawOutlinedRect(0, 0, width, height)
-	end
+        surface.SetFont("Sharp HUD")
+        surface.SetTextColor(255, 255, 255, 255)
+        local textToDraw = "Select Your Team"
+        local tw, th = surface.GetTextSize(textToDraw)
+        local px, py = prettyPanel:GetPos()
+        surface.SetTextPos(px, py-th)
+        surface.DrawText(textToDraw)
+    end
 
-	hunterBtn.Paint = function(self,w,h)
-		local btnColor = table.Copy(TEAM_HUNTERS_COLOR)
+    prettyPanel.Paint = function(self,w,h)
+        surface.SetDrawColor(PANEL_FILL)
+        surface.DrawRect(0, 0, width, height)
+        surface.SetDrawColor(PANEL_BORDER)
+        surface.DrawOutlinedRect(0, 0, width, height)
+    end
 
-		if (hunterBtn:IsHovered()) then
-			btnColor.a = btnColor.a + 50
-		end
+    hunterBtn.Paint = function(self,w,h)
+        local btnColor = table.Copy(TEAM_HUNTERS_COLOR)
 
-		surface.SetFont("Toggle Buttons")
-		surface.SetTextColor(Color(255,255,255,255))
-		local text = "Hunter"
-		local tw, th = surface.GetTextSize(text)
-		surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
-		surface.DrawText(text)
-		surface.SetDrawColor(btnColor)
-		surface.DrawRect(0, 0, w, h)
-		surface.SetDrawColor(PANEL_BORDER)
-		surface.DrawOutlinedRect(0, 0, w, h)
-	end
+        if (hunterBtn:IsHovered()) then
+            btnColor.a = btnColor.a + 50
+        end
 
-	propBtn.Paint = function(self,w,h)
-		local btnColor = table.Copy(TEAM_PROPS_COLOR)
+        surface.SetFont("Toggle Buttons")
+        surface.SetTextColor(Color(255,255,255,255))
+        local text = "Hunter"
+        local tw, th = surface.GetTextSize(text)
+        surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
+        surface.DrawText(text)
+        surface.SetDrawColor(btnColor)
+        surface.DrawRect(0, 0, w, h)
+        surface.SetDrawColor(PANEL_BORDER)
+        surface.DrawOutlinedRect(0, 0, w, h)
+    end
 
-		if (propBtn:IsHovered()) then
-			btnColor.a = btnColor.a + 50
-		end
+    propBtn.Paint = function(self,w,h)
+        local btnColor = table.Copy(TEAM_PROPS_COLOR)
 
-		surface.SetFont("Toggle Buttons")
-		surface.SetTextColor(Color(255,255,255,255))
-		local text = "Prop"
-		local tw, th = surface.GetTextSize(text)
-		surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
-		surface.DrawText(text)
-		surface.SetDrawColor(btnColor)
-		surface.DrawRect(0, 0, w, h)
-		surface.SetDrawColor(PANEL_BORDER)
-		surface.DrawOutlinedRect(0, 0, w, h)
-	end
+        if (propBtn:IsHovered()) then
+            btnColor.a = btnColor.a + 50
+        end
 
-	specBtn.Paint = function(self,w,h)
-		local btnColor = table.Copy(PANEL_FILL)
+        surface.SetFont("Toggle Buttons")
+        surface.SetTextColor(Color(255,255,255,255))
+        local text = "Prop"
+        local tw, th = surface.GetTextSize(text)
+        surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
+        surface.DrawText(text)
+        surface.SetDrawColor(btnColor)
+        surface.DrawRect(0, 0, w, h)
+        surface.SetDrawColor(PANEL_BORDER)
+        surface.DrawOutlinedRect(0, 0, w, h)
+    end
 
-		if (specBtn:IsHovered()) then
-			btnColor.a = btnColor.a + 50
-		end
+    specBtn.Paint = function(self,w,h)
+        local btnColor = table.Copy(PANEL_FILL)
 
-		surface.SetFont("Toggle Buttons")
-		surface.SetTextColor(Color(255,255,255,255))
-		local text = "Spectator"
-		local tw, th = surface.GetTextSize(text)
-		surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
-		surface.DrawText(text)
-		surface.SetDrawColor(btnColor)
-		surface.DrawRect(0, 0, w, h)
-		surface.SetDrawColor(PANEL_BORDER)
-		surface.DrawOutlinedRect(0, 0, w, h)
-	end
+        if (specBtn:IsHovered()) then
+            btnColor.a = btnColor.a + 50
+        end
 
-	anyBtn.Paint = function(self,w,h)
-		local btnColor = table.Copy(TEAM_ANY_COLOR)
+        surface.SetFont("Toggle Buttons")
+        surface.SetTextColor(Color(255,255,255,255))
+        local text = "Spectator"
+        local tw, th = surface.GetTextSize(text)
+        surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
+        surface.DrawText(text)
+        surface.SetDrawColor(btnColor)
+        surface.DrawRect(0, 0, w, h)
+        surface.SetDrawColor(PANEL_BORDER)
+        surface.DrawOutlinedRect(0, 0, w, h)
+    end
 
-		if (anyBtn:IsHovered()) then
-			btnColor.a = btnColor.a + 50
-		end
+    anyBtn.Paint = function(self,w,h)
+        local btnColor = table.Copy(TEAM_ANY_COLOR)
 
-		surface.SetFont("Toggle Buttons")
-		surface.SetTextColor(Color(255,255,255,255))
-		local text = "Any"
-		local tw, th = surface.GetTextSize(text)
-		surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
-		surface.DrawText(text)
-		surface.SetDrawColor(btnColor)
-		surface.DrawRect(0, 0, w, h)
-		surface.SetDrawColor(PANEL_BORDER)
-		surface.DrawOutlinedRect(0, 0, w, h)
-	end
+        if (anyBtn:IsHovered()) then
+            btnColor.a = btnColor.a + 50
+        end
+
+        surface.SetFont("Toggle Buttons")
+        surface.SetTextColor(Color(255,255,255,255))
+        local text = "Any"
+        local tw, th = surface.GetTextSize(text)
+        surface.SetTextPos(w/2 - tw/2, h/2 - th/2)
+        surface.DrawText(text)
+        surface.SetDrawColor(btnColor)
+        surface.DrawRect(0, 0, w, h)
+        surface.SetDrawColor(PANEL_BORDER)
+        surface.DrawOutlinedRect(0, 0, w, h)
+    end
 
 end
 

@@ -13,11 +13,11 @@ PLAYER.AvoidPlayers     = false
 PLAYER.lastTaunt     = 0.0
 
 function PLAYER:Spawn()
-	self.Player:Spectate(OBS_MODE_ROAMING)
+    self.Player:Spectate(OBS_MODE_ROAMING)
 end
 
 function PLAYER:Loadout()
-	self.Player:RemoveAllAmmo()
+    self.Player:RemoveAllAmmo()
 end
 
 player_manager.RegisterClass("player_spectator", PLAYER, "player_default")

@@ -28,7 +28,7 @@ SWEP.AbilityRange = 300
 SWEP.Secondary.Ammo = "none"
 
 function SWEP:Initialize()
-	self:SetWeaponHoldType(self.HoldType)
+    self:SetWeaponHoldType(self.HoldType)
 end
 
 function SWEP:Think()
@@ -46,12 +46,12 @@ function SWEP:Throw()
         ent:SetMoveType(MOVETYPE_VPHYSICS)
         ent:SetSolid(SOLID_BBOX)
         ent:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
-        util.SpriteTrail(ent, 0, Color(0,255,0), false, 16, 16, 0.5, 1/(15+1)*0.5, "trails/laser.vmt")
+        util.SpriteTrail(ent, 0, Color(0, 255, 0), false, 16, 16, 0.5, 1 / (15 + 1) * 0.5, "trails/laser.vmt")
 
         local ang = ply:EyeAngles()
         local src = ply:GetPos() + (ply:Crouching() and ply:GetViewOffsetDucked() or ply:GetViewOffset())+ (ang:Forward() * 8) + (ang:Right() * 10)
         local target = ply:GetEyeTraceNoCursor().HitPos
-        local tang = (target-src):Angle() -- A target angle to actually throw the grenade to the crosshair instead of fowards
+        local tang = (target - src):Angle() -- A target angle to actually throw the grenade to the crosshair instead of fowards
         -- Makes the grenade go upgwards
         if tang.p < 90 then
             tang.p = -10 + tang.p * ((90 + 10) / 90)
@@ -59,7 +59,7 @@ function SWEP:Throw()
             tang.p = 360 - tang.p
             tang.p = -10 + tang.p * -((90 + 10) / 90)
         end
-        tang.p=math.Clamp(tang.p,-90,90) -- Makes the grenade not go backwards :/
+        tang.p=math.Clamp(tang.p, -90, 90) -- Makes the grenade not go backwards :/
         local vel = math.min(800, (90 - tang.p) * 6)
         local thr = tang:Forward() * vel + ply:GetVelocity()
 
@@ -95,17 +95,17 @@ function SWEP:Throw()
 end
 
 function SWEP:PrimaryAttack()
-	if !self:CanPrimaryAttack() then return end
-	timer.Simple(1.5, function()
-		if !self.Owner:Alive() or self:GetOwner():GetActiveWeapon():GetClass() ~= "weapon_obj_tauntgranade" then return end
-		self:Reload()
-		self:SendWeaponAnim(ACT_VM_DRAW)
-	end)
-	self:Throw()
-	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-	self:TakePrimaryAmmo(self.Primary.TakeAmmo)
-	self.Owner:DoAttackEvent()
-	self:SendWeaponAnim(ACT_VM_THROW)
+    if !self:CanPrimaryAttack() then return end
+    timer.Simple(1.5, function()
+        if !self.Owner:Alive() or self:GetOwner():GetActiveWeapon():GetClass() ~= "weapon_obj_tauntgranade" then return end
+        self:Reload()
+        self:SendWeaponAnim(ACT_VM_DRAW)
+    end)
+    self:Throw()
+    self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+    self:TakePrimaryAmmo(self.Primary.TakeAmmo)
+    self.Owner:DoAttackEvent()
+    self:SendWeaponAnim(ACT_VM_THROW)
 end
 
 function SWEP:SecondaryAttack()

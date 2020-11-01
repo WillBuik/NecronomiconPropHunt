@@ -28,13 +28,13 @@ function SWEP:Ability()
     end
 
     if IsValid(closestHunter) then
-		net.Start("Death Notice")
-			net.WriteString(closestHunter:Nick())
-			net.WriteUInt(closestHunter:Team(), 16)
-			net.WriteString("found")
-			net.WriteString(ply:Nick())
-			net.WriteUInt(ply:Team(), 16)
-		net.Broadcast()
+        net.Start("Death Notice")
+            net.WriteString(closestHunter:Nick())
+            net.WriteUInt(closestHunter:Team(), 16)
+            net.WriteString("found")
+            net.WriteString(ply:Nick())
+            net.WriteUInt(ply:Team(), 16)
+        net.Broadcast()
     end
 
     ply:GetProp():SetRenderMode(RENDERMODE_NONE)

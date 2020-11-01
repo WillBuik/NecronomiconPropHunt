@@ -10,7 +10,7 @@ MapVote.Config = {}
 -- CONFIG
 
 function MapVote.HasExtraVotePower(ply)
-	return false
+    return false
 end
 
 
