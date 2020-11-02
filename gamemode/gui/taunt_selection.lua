@@ -38,7 +38,7 @@ local function tauntSelection()
         tauntPanel:SetSize(width + padding * 4, height + padding * 5 + btnHeight * 2)
         tauntPanel:Center()
         tauntPanel:SetVisible(true)
-        tauntPanel:SetDrawBackground(false)
+        tauntPanel:SetPaintBackground(false)
         tauntPanel:MakePopup()
 
     local prettyPanel = vgui.Create("DPanel", tauntPanel)

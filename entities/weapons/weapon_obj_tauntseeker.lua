@@ -38,7 +38,7 @@ function SWEP:FireBall()
     if CLIENT then return end
 
     local props = team.GetPlayers(TEAM_PROPS)
-    local closestPropTaunting = GetClosestTaunter(self.Owner)
+    local closestPropTaunting = GetClosestTaunter(self.GetOwner())
 
     local posToShoot = Vector(0,0,0)
     if closestPropTaunting != nil then
@@ -52,15 +52,15 @@ function SWEP:FireBall()
         0
   ))
 
-    local forward = self.Owner:EyeAngles():Forward()
+    local forward = self.GetOwner():EyeAngles():Forward()
 
     local ent = ents.Create("prop_combine_ball")
     if (IsValid(ent)) then
-        ent:SetPos(self.Owner:GetShootPos() + forward * 32)
-        ent:SetAngles(self.Owner:EyeAngles())
-        posToShoot:Sub(self.Owner:GetShootPos())
+        ent:SetPos(self.GetOwner():GetShootPos() + forward * 32)
+        ent:SetAngles(self.GetOwner():EyeAngles())
+        posToShoot:Sub(self.GetOwner():GetShootPos())
         ent:Spawn()
-        ent:SetOwner(self.Owner)
+        ent:SetOwner(self.GetOwner())
         ent:SetSaveValue("m_flRadius", 12)
         ent:SetSaveValue("m_nState", 3)
         ent:SetSaveValue("m_nMaxBounces", 1)
@@ -77,14 +77,14 @@ end
 function SWEP:PrimaryAttack()
     if !self:CanPrimaryAttack() then return end
     timer.Simple(1.5, function()
-        if !self.Owner:Alive() or self:GetOwner():GetActiveWeapon():GetClass() != "weapon_obj_tauntseeker" then return end
+        if !self.GetOwner():Alive() or self:GetOwner():GetActiveWeapon():GetClass() != "weapon_obj_tauntseeker" then return end
         self:Reload()
         self:SendWeaponAnim(ACT_VM_DRAW)
     end)
     self:FireBall()
     self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
     self:TakePrimaryAmmo(self.Primary.TakeAmmo)
-    self.Owner:DoAttackEvent()
+    self.GetOwner():DoAttackEvent()
     self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 end
 

@@ -99,7 +99,7 @@ function FindSpotFor( ply, prop, hbMin, hbMax)
     for _, approachPos in pairs(waysToApproach) do
 	    td.start = pos
         local trace = util.TraceHull( td )
-        if (!tr.Hit || (tr.HitPos != tr.StartPos) then
+        if (!tr.Hit || tr.HitPos != tr.StartPos) then
             return tr.HitPos
         end
     end

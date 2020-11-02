@@ -203,7 +203,7 @@ hook.Add("OnContextMenuOpen", "Display the context menu", function()
     end
     DrawContextMenu()
 
-    timer.Destroy("hide context menu")
+    timer.Remove("hide context menu")
     mainPanel:MoveTo(posXOpen, posY, deltaTime, 0, 1)
     mainPanel:SetVisible(true)
     mainPanel:MakePopup()
@@ -218,7 +218,7 @@ hook.Add("OnContextMenuClose", "Close the context menu", function()
     mainPanel:MoveTo(posXClose, posY, deltaTime, 0, 1)
     mainPanel:SetKeyboardInputEnabled(true)
     -- make sure it's not open before we kill it
-    timer.Destroy("hide context menu")
+    timer.Remove("hide context menu")
     timer.Create("hide context menu",deltaTime, 1, function ()
         mainPanel:SetVisible(false)
     end)

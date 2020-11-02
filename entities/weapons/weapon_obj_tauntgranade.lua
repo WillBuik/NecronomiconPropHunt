@@ -37,9 +37,10 @@ end
 function SWEP:Throw()
     if SERVER then
         local ent = ents.Create("prop_physics")
+        local ply = self:GetOwner()
         ent:SetModel("models/weapons/w_bugbait.mdl")
-        ent:SetOwner(self.Owner)
-        ent:SetPos(self.Owner:EyePos() + (self.Owner:GetAimVector() * 16))
+        ent:SetOwner(ply)
+        ent:SetPos(ply:EyePos() + (ply:GetAimVector() * 16))
         ent:Spawn()
         ent:SetMaterial("super_bouncy")
         ent:PhysicsInit(SOLID_VPHYSICS)
@@ -48,8 +49,8 @@ function SWEP:Throw()
         ent:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
         util.SpriteTrail(ent, 0, Color(0, 255, 0), false, 16, 16, 0.5, 1 / (15 + 1) * 0.5, "trails/laser.vmt")
 
-        local src = self.Owner:GetShootPos()
-        local target = self.Owner:GetEyeTraceNoCursor().HitPos
+        local src = ply:GetShootPos()
+        local target = ply:GetEyeTraceNoCursor().HitPos
         local tang = (target - src):Angle() -- A target angle to actually throw the grenade to the crosshair instead of fowards
         -- Makes the grenade go upgwards
         if tang.p < 90 then
@@ -60,7 +61,7 @@ function SWEP:Throw()
         end
         tang.p = math.Clamp(tang.p, -90, 90) -- Makes the grenade not go backwards :/
         local vel = math.min(800, (90 - tang.p) * 6)
-        local thr = tang:Forward() * vel + self.Owner:GetVelocity()
+        local thr = tang:Forward() * vel + ply:GetVelocity()
 
         local entobj = ent:GetPhysicsObject()
         entobj:SetVelocity(thr)
@@ -73,7 +74,7 @@ function SWEP:Throw()
         timer.Simple(2, function()
             local explosion = ents.Create("env_explosion")
             explosion:SetPos(entobj:GetPos())
-            explosion:SetOwner(self.Owner)
+            explosion:SetOwner(ply)
             explosion:Spawn()
             explosion:SetKeyValue("iMagnitude", 0)
             explosion:SetKeyValue("DamageForce", 0)
@@ -96,14 +97,14 @@ end
 function SWEP:PrimaryAttack()
     if !self:CanPrimaryAttack() then return end
     timer.Simple(1.5, function()
-        if !self.Owner:Alive() or self:GetOwner():GetActiveWeapon():GetClass() != "weapon_obj_tauntgranade" then return end
+        if !self:GetOwner():Alive() or self:GetOwner():GetActiveWeapon():GetClass() != "weapon_obj_tauntgranade" then return end
         self:Reload()
         self:SendWeaponAnim(ACT_VM_DRAW)
     end)
     self:Throw()
     self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
     self:TakePrimaryAmmo(self.Primary.TakeAmmo)
-    self.Owner:DoAttackEvent()
+    self:GetOwner():DoAttackEvent()
     self:SendWeaponAnim(ACT_VM_THROW)
 end
 

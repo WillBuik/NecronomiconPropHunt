@@ -48,7 +48,7 @@ net.Receive("Class Selection", function(len, ply)
     SetTeam(ply, chosen)
 end)
 
-function SetTeam (ply, chosen)
+function SetTeam(ply, chosen)
     local playerTable = {}
     local oldTeam = ply:Team()
 
@@ -227,10 +227,10 @@ local function DamageHandler(target, dmgInfo)
                     attacker:Kill()
                     -- default suicide notice
                 end
-            elseif (target:GetOwner():IsPlayer() and target:GetOwner():Team() == TEAM_PROPS and not target:GetOwner():ObjIsPlayDead()) then
+            elseif (target:GetOwner():IsPlayer() and target:GetOwner():Team() == TEAM_PROPS and !target:GetOwner():ObjIsPlayDead()) then
                 local ply = target:GetOwner()
                 HurtProp(ply, dmg, attacker)
-            elseif (target:IsPlayer() and target:Team() == TEAM_PROPS and not target:ObjIsPlayDead()) then
+            elseif (target:IsPlayer() and target:Team() == TEAM_PROPS and !target:ObjIsPlayDead()) then
                 local ply = target
                 HurtProp(ply, dmg, attacker)
             end
@@ -329,7 +329,7 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     ply:SetViewOffset(Vector(0,0,tHeight))
 
     -- scale steps to prop size
-    ply:SetStepSize(math.Round(4 + (tHeight) / 4))
+    ply:SetStepSize(math.Round(4 + tHeight / 4))
 
     -- give bigger props a bonus for being big
     ply:SetJumpPower(PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight))
@@ -375,7 +375,6 @@ end
 net.Receive("Selected Prop", function(len, ply)
     local ent = net.ReadEntity()
 
-    local tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds(0, 0)
     if (ply.pickupProp or !playerCanBeEnt(ply, ent)) then return end
     local oldHP = ply:GetProp().health
     SetPlayerProp(ply, ent, PROP_CHOSEN_SCALE)
@@ -449,7 +448,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
         ply:SetViewOffset(Vector(0, 0, tHeight))
 
         -- scale steps to prop size
-        ply:SetStepSize(math.Round(4 + (tHeight) / 4))
+        ply:SetStepSize(math.Round(4 + tHeight / 4))
 
         -- give bigger props a bonus for being big
         ply:SetJumpPower(PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight))
@@ -533,9 +532,9 @@ end)
 
 --[[ When a player Removes a prop with the ability ]]--
 net.Receive("Remove Prop", function(len, ply)
-    local prop = net.ReadEntity()
-    if (IsValid(prop)) then
-        prop:Remove()
+    local propToRemove = net.ReadEntity()
+    if (IsValid(propToRemove)) then
+        propToRemove:Remove()
     end
 end)
 

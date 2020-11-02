@@ -26,7 +26,7 @@ local function classSelection()
         classPanel:SetSize(width + padding * 2, ScrH())
         classPanel:Center()
         classPanel:SetVisible(true)
-        classPanel:SetDrawBackground(false)
+        classPanel:SetPaintBackground(false)
         classPanel:MakePopup()
 
     local prettyPanel = vgui.Create("DPanel", classPanel)

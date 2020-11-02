@@ -8,7 +8,7 @@ local function helpHUD()
         helpPanel:SetSize(width + padding * 4, height + padding * 4)
         helpPanel:Center()
         helpPanel:SetVisible(true)
-        helpPanel:SetDrawBackground(false)
+        helpPanel:SetPaintBackground(false)
         helpPanel:MakePopup()
 
     local prettyPanel = vgui.Create("DPanel", helpPanel)

@@ -3,6 +3,7 @@ if AUTOTAUNT_ENABLED then
     local function runAutoTaunter()
         local players = team.GetPlayers(TEAM_PROPS)
         local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
+        local pitch = math.random() * pRange + TAUNT_MIN_PITCH
 
         --Render the Auto-taunt HUD
 
@@ -16,8 +17,6 @@ if AUTOTAUNT_ENABLED then
                     --Check if the lastAutoTaunt exceeds the autoTauntInterval
                     if (lastAutoTaunt > ply.autoTauntInterval) then
                         --Send the Taunt to the player
-                        local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
-                        local pitch = math.random() * pRange + TAUNT_MIN_PITCH
                         SendTaunt(ply, taunt, pitch)
                     end
                 end
