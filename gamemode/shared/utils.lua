@@ -40,8 +40,8 @@ function WouldBeStuck(ply, prop)
     td.filter = { ply, ply:GetProp() }
     local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
     if (!hbMin or !hbMax) then return true end
-    local hbMin = Vector(math.Round(hbMin.x),math.Round(hbMin.y),math.Round(hbMin.z))
-    local hbMax = Vector(math.Round(hbMax.x),math.Round(hbMax.y),math.Round(hbMax.z))
+    hbMin = Vector(math.Round(hbMin.x),math.Round(hbMin.y),math.Round(hbMin.z))
+    hbMax = Vector(math.Round(hbMax.x),math.Round(hbMax.y),math.Round(hbMax.z))
     -- Adjust height
     hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
     hbMin = Vector(hbMin.x,hbMin.y,0)
@@ -77,8 +77,7 @@ function FindSpotFor( ply, prop, hbMin, hbMax)
 	local td = {}
 	td.endpos = pos
 	td.filter = { ply, ply:GetProp() }
-	local hbMin, hbMax = prop:GetHitBoxBounds( 0, 0 )
-	if( !hbMin || !hbMax ) then return true end
+	if ( !hbMin or !hbMax ) then return true end
 	-- Adjust height
 	hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
 	hbMin = Vector(hbMin.x,hbMin.y,0)
@@ -87,7 +86,7 @@ function FindSpotFor( ply, prop, hbMin, hbMax)
 	td.maxs = hbMax
 
     local approachDistance = 20
-	local waysToApproach = {
+    local waysToApproach = {
 	    pos,
 	    pos + Vector(0, 0, approachDistance),
 	    pos + Vector(0, 0, -approachDistance),
@@ -97,14 +96,14 @@ function FindSpotFor( ply, prop, hbMin, hbMax)
 	    pos + Vector(-approachDistance, 0, 0)
 	}
     for _, approachPos in pairs(waysToApproach) do
-	    td.start = pos
+        td.start = pos
         local trace = util.TraceHull( td )
-        if (!tr.Hit || tr.HitPos != tr.StartPos) then
-            return tr.HitPos
+        if (!trace.Hit or trace.HitPos != trace.StartPos) then
+            return trace.HitPos
         end
     end
 
-	return nil
+    return nil
 end
 
 function LerpColor(frac,from,to)
@@ -172,7 +171,7 @@ function orderedNext(t, state)
         key = t.__orderedIndex[1]
     else
         -- fetch the next value
-        for i = 1,table.getn(t.__orderedIndex) do
+        for i = 1, #(t.__orderedIndex) do
             if t.__orderedIndex[i] == state then
                 key = t.__orderedIndex[i + 1]
             end

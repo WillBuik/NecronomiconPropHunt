@@ -39,7 +39,7 @@ if AUTOTAUNT_ENABLED then
     end
 
     function validateProp(ply)
-        return (ply:IsValid() and ply:Alive() and ply:Team() == TEAM_PROPS)
+        return ply:IsValid() and ply:Alive() and ply:Team() == TEAM_PROPS
     end
 
     function autotauntHud()
@@ -61,8 +61,8 @@ if AUTOTAUNT_ENABLED then
             timerRadius = (tDiff / ply.autoTauntInterval) * radius
         end
 
-        local x = surface.ScreenWidth() - paddingL
-        local y = surface.ScreenHeight() - padding
+        local x = surface.ScrW() - paddingL
+        local y = surface.ScrH() - padding
 
         --Set the text Position and Text
         local timertext = tostring(timer)
@@ -70,7 +70,7 @@ if AUTOTAUNT_ENABLED then
             timertext = "!"
         end
         draw.SimpleText(timertext, "ObjHUDFont", x, y, brightWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        
+
 
         -- This is the outer circle
         surface.SetDrawColor(lightGray)

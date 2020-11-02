@@ -37,7 +37,6 @@ end
 function SWEP:FireBall()
     if CLIENT then return end
 
-    local props = team.GetPlayers(TEAM_PROPS)
     local closestPropTaunting = GetClosestTaunter(self.GetOwner())
 
     local posToShoot = Vector(0,0,0)

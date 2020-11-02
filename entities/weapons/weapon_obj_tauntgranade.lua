@@ -81,12 +81,12 @@ function SWEP:Throw()
             explosion:Fire("Explode", 0, 0)
             explosion:EmitSound("weapons/bugbait/bugbait_squeeze1.wav", 100, 100)
 
-            for _,ply in pairs(team.GetPlayers(TEAM_PROPS)) do
-                if (ply:Alive() and ply:GetPos():DistToSqr(entobj:GetPos()) < self.AbilityRange^2) then
+            local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
+            for _, propPlayer in pairs(team.GetPlayers(TEAM_PROPS)) do
+                if (propPlayer:Alive() and propPlayer:GetPos():DistToSqr(entobj:GetPos()) < self.AbilityRange^2) then
                     local taunt = table.Random(PROP_TAUNTS)
-                    local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
                     local pitch = math.random() * pRange + TAUNT_MIN_PITCH
-                    SendTaunt(ply, taunt, pitch)
+                    SendTaunt(propPlayer, taunt, pitch)
                 end
             end
             ent:Remove()
