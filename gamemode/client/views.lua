@@ -91,7 +91,7 @@ local function getViewEnt(ply)
     if (ply.wantThirdPerson) then
         trace.endpos = trace.start + ply:GetAngles():Forward() * (THIRDPERSON_DISTANCE + PROP_SELECT_DISTANCE)
     else
-        trace.endpos = trace.start + ply:GetAngles():Forward() * (PROP_SELECT_DISTANCE)
+        trace.endpos = trace.start + ply:GetAngles():Forward() * PROP_SELECT_DISTANCE
     end
     trace.filter = { ply:GetProp(), ply }
     tr = util.TraceLine(trace)

@@ -32,9 +32,8 @@ hook.Add("PostDrawOpaqueRenderables", "Draw Nametags", function()
         local cOffset = Vector(0, 0, 10)
         local pos = v:GetPos() + v:GetViewOffset() + cOffset
 
-        local pDiff = v:GetPos() - LocalPlayer():GetPos()
-
         -- 'Sprite' like angles based on positional angles
+        -- local pDiff = v:GetPos() - LocalPlayer():GetPos()
         -- angle between local player and target player
         --local pAng = (pDiff):Angle():Right():Angle()
         --local angle = Angle(0,0,90) + pAng

@@ -297,10 +297,8 @@ end
 function PANEL:Paint()
     --Derma_DrawBackgroundBlur(self)
 
-    local CenterY = ScrH() / 2
-    local CenterX = ScrW() / 2
-
     surface.SetDrawColor(0, 0, 0, 200)
+    -- TODO: We might want to move this to the center by dividing X and Y by 2
     surface.DrawRect(0, 0, ScrW(), ScrH())
 end
 

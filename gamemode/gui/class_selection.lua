@@ -84,7 +84,7 @@ local function classSelection()
         surface.SetFont("Sharp HUD")
         surface.SetTextColor(255, 255, 255, 255)
         local textToDraw = "Select Your Team"
-        local tw, th = surface.GetTextSize(textToDraw)
+        local _, th = surface.GetTextSize(textToDraw)
         surface.SetTextPos(padding, padding - th)
         surface.DrawText(textToDraw)
     end
