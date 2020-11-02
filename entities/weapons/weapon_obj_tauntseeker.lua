@@ -49,7 +49,7 @@ function SWEP:FireBall()
     posToShoot:Add(Vector(
         math.random(-self.AbilityAccuracy, self.AbilityAccuracy),
         math.random(-self.AbilityAccuracy, self.AbilityAccuracy),
-        math.random(-self.AbilityAccuracy, self.AbilityAccuracy)
+        0
   ))
 
     local forward = self.Owner:EyeAngles():Forward()
