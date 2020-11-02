@@ -48,9 +48,9 @@ function SWEP:Throw()
         ent:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
         util.SpriteTrail(ent, 0, Color(0, 255, 0), false, 16, 16, 0.5, 1 / (15 + 1) * 0.5, "trails/laser.vmt")
 
-        local ang = ply:EyeAngles()
-        local src = ply:GetPos() + (ply:Crouching() and ply:GetViewOffsetDucked() or ply:GetViewOffset()) + (ang:Forward() * 8) + (ang:Right() * 10)
-        local target = ply:GetEyeTraceNoCursor().HitPos
+        local ang = self.Owner:EyeAngles()
+        local src = self.Owner:GetPos() + (self.Owner:Crouching() and self.Owner:GetViewOffsetDucked() or self.Owner:GetViewOffset()) + (ang:Forward() * 8) + (ang:Right() * 10)
+        local target = self.Owner:GetEyeTraceNoCursor().HitPos
         local tang = (target - src):Angle() -- A target angle to actually throw the grenade to the crosshair instead of fowards
         -- Makes the grenade go upgwards
         if tang.p < 90 then
@@ -61,7 +61,7 @@ function SWEP:Throw()
         end
         tang.p = math.Clamp(tang.p, -90, 90) -- Makes the grenade not go backwards :/
         local vel = math.min(800, (90 - tang.p) * 6)
-        local thr = tang:Forward() * vel + ply:GetVelocity()
+        local thr = tang:Forward() * vel + self.Owner:GetVelocity()
 
         local entobj = ent:GetPhysicsObject()
         entobj:SetVelocity(thr)
