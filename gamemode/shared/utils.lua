@@ -73,28 +73,28 @@ function GetClosestTaunter(ply)
 end
 
 function FindSpotFor( ply, prop, hbMin, hbMax)
-	local pos = ply:GetPos()
-	local td = {}
-	td.endpos = pos
-	td.filter = { ply, ply:GetProp() }
-	if ( !hbMin or !hbMax ) then return true end
-	-- Adjust height
-	hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
-	hbMin = Vector(hbMin.x,hbMin.y,0)
+    local pos = ply:GetPos()
+    local td = {}
+    td.endpos = pos
+    td.filter = { ply, ply:GetProp() }
+    if ( !hbMin or !hbMax ) then return true end
+    -- Adjust height
+    hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
+    hbMin = Vector(hbMin.x,hbMin.y,0)
 
-	td.mins = hbMin
-	td.maxs = hbMax
+    td.mins = hbMin
+    td.maxs = hbMax
 
     local approachDistance = 20
     local waysToApproach = {
-	    pos,
-	    pos + Vector(0, 0, approachDistance),
-	    pos + Vector(0, 0, -approachDistance),
-	    pos + Vector(0, approachDistance, 0),
-	    pos + Vector(0, -approachDistance, 0),
-	    pos + Vector(approachDistance, 0, 0),
-	    pos + Vector(-approachDistance, 0, 0)
-	}
+        pos,
+        pos + Vector(0, 0, approachDistance),
+        pos + Vector(0, 0, -approachDistance),
+        pos + Vector(0, approachDistance, 0),
+        pos + Vector(0, -approachDistance, 0),
+        pos + Vector(approachDistance, 0, 0),
+        pos + Vector(-approachDistance, 0, 0)
+    }
     for _, approachPos in pairs(waysToApproach) do
         td.start = pos
         local trace = util.TraceHull( td )
@@ -171,7 +171,7 @@ function orderedNext(t, state)
         key = t.__orderedIndex[1]
     else
         -- fetch the next value
-        for i = 1, #(t.__orderedIndex) do
+        for i = 1, #t.__orderedIndex do
             if t.__orderedIndex[i] == state then
                 key = t.__orderedIndex[i + 1]
             end
