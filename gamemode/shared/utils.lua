@@ -72,6 +72,41 @@ function GetClosestTaunter(ply)
     return closestPlyTaunting
 end
 
+function FindSpotFor( ply, prop, hbMin, hbMax)
+	local pos = ply:GetPos()
+	local td = {}
+	td.endpos = pos
+	td.filter = { ply, ply:GetProp() }
+	local hbMin, hbMax = prop:GetHitBoxBounds( 0, 0 )
+	if( !hbMin || !hbMax ) then return true end
+	-- Adjust height
+	hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
+	hbMin = Vector(hbMin.x,hbMin.y,0)
+
+	td.mins = hbMin
+	td.maxs = hbMax
+
+    local approachDistance = 20
+	local waysToApproach = {
+	    pos,
+	    pos + Vector(0, 0, approachDistance),
+	    pos + Vector(0, 0, -approachDistance),
+	    pos + Vector(0, approachDistance, 0),
+	    pos + Vector(0, -approachDistance, 0),
+	    pos + Vector(approachDistance, 0, 0),
+	    pos + Vector(-approachDistance, 0, 0)
+	}
+    for _, approachPos in pairs(waysToApproach) do
+	    td.start = pos
+        local trace = util.TraceHull( td )
+        if (!tr.Hit || (tr.HitPos != tr.StartPos) then
+            return tr.HitPos
+        end
+    end
+
+	return nil
+end
+
 function LerpColor(frac,from,to)
     return Color(
         Lerp(frac,from.r,to.r),

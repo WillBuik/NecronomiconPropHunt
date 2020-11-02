@@ -427,7 +427,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
         lockStatus = false
     end
 
-    if (ply.GetProp) then
+    if (IsValid(ply:GetProp())) then
         -- We should investigate why this angle doesn't naturally stay in sync
         ply:GetProp():SetAngles(propAngle)
         local tHitboxMinUnrotated, tHitboxMaxUnrotated = ply:GetProp():GetHitBoxBounds(0, 0)
@@ -438,8 +438,8 @@ net.Receive("Prop Angle Lock", function(len, ply)
         tHitboxMax = Vector(math.Round(tHitboxMax.x),math.Round(tHitboxMax.y),math.Round(tHitboxMax.z))
 
         --Adjust Position for no stuck
-        local ppos = ply:GetPos()
-        ply:SetPos(Vector(ppos.x, ppos.y, ppos.z - tHitboxMin.z))
+        local foundSpot = FindSpotFor(ply, prop, tHitboxMin, tHitboxMax)
+        ply:SetPos(foundSpot)
 
         ply:SetHull(tHitboxMin, tHitboxMax)
         ply:SetHullDuck(tHitboxMin, tHitboxMax)
