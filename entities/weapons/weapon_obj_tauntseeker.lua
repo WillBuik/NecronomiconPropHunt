@@ -23,7 +23,7 @@ SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
 SWEP.Primary.Delay = 1.5
 
-SWEP.AbilityAccuracy = 1000
+SWEP.AbilityAccuracy = 300
 
 SWEP.Secondary.Ammo = "none"
 
