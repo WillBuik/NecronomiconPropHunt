@@ -38,7 +38,7 @@ function MapVote.Start(length, current, limit, prefix)
         local info = file.Read(GAMEMODE.Folder .. "/" .. GAMEMODE.FolderName .. ".txt", "GAME")
 
         if (info) then
-            local info = util.KeyValuesToTable(info)
+            info = util.KeyValuesToTable(info)
             prefix = info.maps
         else
             error("MapVote Prefix can not be loaded from gamemode")

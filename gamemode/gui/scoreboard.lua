@@ -146,7 +146,7 @@ local PLAYER_LINE =
         --
         -- We draw our background a different colour based on the status of the player
         --
-        if (self.Player:Team() == TEAM_PROPS and self.Player:Alive() and not self.Player:ObjIsPlayDead()) then
+        if (self.Player:Team() == TEAM_PROPS and self.Player:Alive() and !self.Player:ObjIsPlayDead()) then
             surface.SetDrawColor(LerpColor(.5, PLAYER_LINE_COLOR, TEAM_PROPS_COLOR))
             surface.DrawRect(0, 0, w, h)
             surface.SetDrawColor(PANEL_BORDER)
@@ -185,8 +185,8 @@ local HUNTERS_BOARD =
         self.Header:SetHeight(ScrH() / 27)
 
         self.Header.Paint = function(self, w, h)
-        surface.SetDrawColor(TEAM_HUNTERS_COLOR)
-        surface.DrawRect(0, 0, w, h)
+            surface.SetDrawColor(TEAM_HUNTERS_COLOR)
+            surface.DrawRect(0, 0, w, h)
         end
 
         self.Name = self.Header:Add("DLabel")

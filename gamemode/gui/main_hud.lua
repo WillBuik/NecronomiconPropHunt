@@ -25,7 +25,7 @@ local function ObjHUD()
     if (!ply:IsValid()) then return end
 
     local width = 200
-    local height = 150
+    --local height = 150
     local padding = 10
     local iconX = padding
     local barX = padding * 2 + 16
@@ -35,22 +35,23 @@ local function ObjHUD()
     surface.SetDrawColor(PANEL_BORDER)
 
     -- INFO GUI
-    startY = startY - padding - 16
+    do
+        startY = startY - padding - 16
 
-    -- icon
-    local infoMat = Material("icon16/information.png", "unlitgeneric")
-    surface.SetMaterial(infoMat)
-    surface.DrawTexturedRect(iconX, startY, 16 , 16)
+        -- icon
+        local infoMat = Material("icon16/information.png", "unlitgeneric")
+        surface.SetMaterial(infoMat)
+        surface.DrawTexturedRect(iconX, startY, 16 , 16)
 
-    --text
-    surface.SetFont("barHUD")
-    surface.SetTextColor(255, 255, 255, 255)
-    local textToDraw = "Press F1 For Information"
-    local textWidth, textHeight = surface.GetTextSize(textToDraw)
-    local textX = barX
-    local textY = startY
-    surface.SetTextPos(textX, textY)
-    surface.DrawText(textToDraw)
+        --text
+        surface.SetFont("barHUD")
+        surface.SetTextColor(255, 255, 255, 255)
+        local textToDraw = "Press F1 For Information"
+        local textX = barX
+        local textY = startY
+        surface.SetTextPos(textX, textY)
+        surface.DrawText(textToDraw)
+    end
 
     -- HP GUI
     if (ply:Alive() and (ply:Team() == TEAM_PROPS or ply:Team() == TEAM_HUNTERS)) then
@@ -76,7 +77,6 @@ local function ObjHUD()
         surface.SetFont("barHUD")
         surface.SetTextColor(255, 255, 255, 255)
         local textToDraw = LocalPlayer():Health()
-        local textWidth, textHeight = surface.GetTextSize(textToDraw)
         local textX = barX + 3
         local textY = startY
         surface.SetTextPos(textX, textY)
@@ -114,7 +114,6 @@ local function ObjHUD()
         if (textToDraw != 0) then
             surface.SetFont("barHUD")
             surface.SetTextColor(255, 255, 255, 255)
-            local textWidth, textHeight = surface.GetTextSize(textToDraw)
             local textX = barX + 3
             local textY = startY
             surface.SetTextPos(textX, textY)
@@ -156,7 +155,6 @@ local function ObjHUD()
         if (textToDraw != 0) then
             surface.SetFont("barHUD")
             surface.SetTextColor(255, 255, 255, 255)
-            local textWidth, textHeight = surface.GetTextSize(textToDraw)
             local textX = barX + 3
             local textY = startY
             surface.SetTextPos(textX, textY)
@@ -170,7 +168,7 @@ local function ObjHUD()
         ply:Team() == TEAM_PROPS and
         weapon != nil and
         weapon.GetIsAbilityUsed and
-        ((not weapon:GetIsAbilityUsed()) or weapon.AbilityStartTime + weapon.AbilityDuration > CurTime())
+        (!weapon:GetIsAbilityUsed() or weapon.AbilityStartTime + weapon.AbilityDuration > CurTime())
     ) then
 
         startY = startY - padding - 16
@@ -181,7 +179,7 @@ local function ObjHUD()
         surface.DrawTexturedRect(iconX, startY, 16 , 16)
 
         local textToDraw = ""
-        if (not weapon:GetIsAbilityUsed()) then
+        if (!weapon:GetIsAbilityUsed()) then
             textToDraw = weapon:GetPrintName()
         else
             -- bar
@@ -203,7 +201,6 @@ local function ObjHUD()
         --text
         surface.SetFont("barHUD")
         surface.SetTextColor(255, 255, 255, 255)
-        local textWidth, textHeight = surface.GetTextSize(textToDraw)
         local textX = barX
         local textY = startY
         surface.SetTextPos(textX, textY)
@@ -306,15 +303,11 @@ local function SpectateHUD()
     local dColor = LerpColor(.70, fColor, Color(255,255,255,255))
     surface.SetFont("ObjHUDFont")
     surface.SetTextColor(dColor)
-    local textWidth, textHeight = surface.GetTextSize(sNick)
+    local textWidth,_ = surface.GetTextSize(sNick)
     local textX = ScrW() / 2 - textWidth / 2
     local textY = padding * 2
-    local width = textWidth + 2 * padding
-    local height = textHeight + 2 * padding
     surface.SetTextPos(textX, textY)
     surface.DrawText(sNick)
-
-
 end
 
 hook.Add("HUDPaint", "Main ObjHunt HUD", ObjHUD)
