@@ -73,9 +73,9 @@ function GetClosestTaunter(ply)
 end
 
 function FindSpotFor( ply, prop, hbMin, hbMax)
-    local pos = ply:GetPos()
+    local goalPos = ply:GetPos()
     local td = {}
-    td.endpos = pos
+    td.endpos = goalPos
     td.filter = { ply, ply:GetProp() }
     if ( !hbMin or !hbMax ) then return true end
     -- Adjust height
@@ -85,25 +85,36 @@ function FindSpotFor( ply, prop, hbMin, hbMax)
     td.mins = hbMin
     td.maxs = hbMax
 
-    local approachDistance = 50
+    local approachX = (hbMax.x - hbMin.x)/2
+    local approachY = (hbMax.y - hbMin.y)/2
+    local approachZ = (hbMax.z - hbMin.z)/2
     local waysToApproach = {
-        pos,
-        pos + Vector(0, 0, approachDistance),
-        -- no negative z
-        pos + Vector(0, approachDistance, 0),
-        pos + Vector(0, -approachDistance, 0),
-        pos + Vector(approachDistance, 0, 0),
-        pos + Vector(-approachDistance, 0, 0)
+        pos + Vector(0, 0, approachZ),
+        pos + Vector(0, approachY, 0),
+        pos + Vector(0, -approachY, 0),
+        pos + Vector(approachX, 0, 0),
+        pos + Vector(-approachX, 0, 0),
+        pos + Vector(0, approachY, approachZ),
+        pos + Vector(0, -approachY, approachZ),
+        pos + Vector(approachX, 0, approachZ),
+        pos + Vector(-approachX, 0, approachZ)
+        pos + Vector(approachX, approachY, approachZ),
+        pos + Vector(-approachX, approachY, approachZ),
+        pos + Vector(approachX, -approachY, approachZ),
+        pos + Vector(-approachX, -approachY, approachZ)
     }
+    local closestToGoal = nil
     for _, approachPos in pairs(waysToApproach) do
         td.start = approachPos
         local trace = util.TraceHull( td )
-        if (!trace.Hit or trace.HitPos != trace.StartPos) then
-            return trace.HitPos
+        if (trace.HitPos != trace.StartPos and
+            (closestToGoal == nil or goalPos:DistToSqr(trace.HitPos) < goalPos:DistToSqr(closestToGoal))
+        ) then
+            closestToGoal = trace.HitPos
         end
     end
 
-    return nil
+    return closestToGoal
 end
 
 function LerpColor(frac,from,to)
