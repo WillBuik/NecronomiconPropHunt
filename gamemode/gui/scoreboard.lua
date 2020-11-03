@@ -184,7 +184,7 @@ local HUNTERS_BOARD =
         self.Header:Dock(TOP)
         self.Header:SetHeight(ScrH() / 27)
 
-        self.Header.Paint = function(self, w, h)
+        self.Header.Paint = function(self_, w, h)
             surface.SetDrawColor(TEAM_HUNTERS_COLOR)
             surface.DrawRect(0, 0, w, h)
         end
@@ -194,19 +194,19 @@ local HUNTERS_BOARD =
         self.Name:SetHeight(ScrH() / 27)
         self.Name:SetText("")
 
-        self.Name.Paint = function(self, w, h)
+        self.Name.Paint = function(self_, w, h)
 
-        surface.SetFont("ScoreboardObjHunt")
-        surface.SetTextColor(Color(255, 255, 255, 255))
+            surface.SetFont("ScoreboardObjHunt")
+            surface.SetTextColor(Color(255, 255, 255, 255))
 
-        local text = "Hunters"
-        local tw, th = surface.GetTextSize(text)
+            local text = "Hunters"
+            local tw, th = surface.GetTextSize(text)
 
-        surface.SetTextPos(w / 2 - tw / 2, h / 2 - th / 2)
-        surface.DrawText(text)
+            surface.SetTextPos(w / 2 - tw / 2, h / 2 - th / 2)
+            surface.DrawText(text)
 
-        surface.SetDrawColor(PANEL_BORDER)
-        surface.DrawOutlinedRect(0, 0, w, h)
+            surface.SetDrawColor(PANEL_BORDER)
+            surface.DrawOutlinedRect(0, 0, w, h)
 
         end
 
@@ -278,7 +278,7 @@ local PROPS_BOARD =
         self.Header:Dock(TOP)
         self.Header:SetHeight(ScrH() / 27)
 
-        self.Header.Paint = function(self, w, h)
+        self.Header.Paint = function(self_, w, h)
             surface.SetDrawColor(TEAM_PROPS_COLOR)
             surface.DrawRect(0, 0, w, h)
         end
@@ -288,7 +288,7 @@ local PROPS_BOARD =
         self.Name:SetHeight(ScrH() / 27)
         self.Name:SetText("")
 
-        self.Name.Paint = function(self, w, h)
+        self.Name.Paint = function(self_, w, h)
             surface.SetFont("ScoreboardObjHunt")
             surface.SetTextColor(TEXT_COLOR)
 
