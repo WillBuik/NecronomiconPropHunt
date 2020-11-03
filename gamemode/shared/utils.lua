@@ -85,7 +85,7 @@ function FindSpotFor( ply, prop, hbMin, hbMax)
     td.mins = hbMin
     td.maxs = hbMax
 
-    local approachDistance = 20
+    local approachDistance = 50
     local waysToApproach = {
         pos,
         pos + Vector(0, 0, approachDistance),
