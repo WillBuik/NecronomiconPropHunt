@@ -61,8 +61,8 @@ if AUTOTAUNT_ENABLED then
             timerRadius = (tDiff / ply.autoTauntInterval) * radius
         end
 
-        local x = surface.ScrW() - paddingL
-        local y = surface.ScrH() - padding
+        local x = ScrW() - paddingL
+        local y = ScrH() - padding
 
         --Set the text Position and Text
         local timertext = tostring(timer)
