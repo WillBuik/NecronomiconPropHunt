@@ -30,9 +30,9 @@ local function classSelection()
     classPanel:MakePopup()
 
     local prettyPanel = vgui.Create("DPanel", classPanel)
-    prettyPanel:SetPos(padding, padding)
     prettyPanel:SetSize(width, height)
     prettyPanel:Center()
+    local px, py = prettyPanel:GetPos()
 
     local makeTeamBtn = function(team, teamText, teamColor)
         totalBtns = totalBtns + 1
@@ -73,7 +73,7 @@ local function classSelection()
     exitBtn:SetImage("icon16/cancel.png")
     exitBtn:SizeToContents()
     local ebw = exitBtn:GetSize() / 2
-    exitBtn:SetPos(width + padding - ebw, padding - ebw)
+    exitBtn:SetPos(width + px - ebw, height + py - ebw)
     exitBtn.DoClick = function()
         classPanel:Remove()
     end
@@ -85,7 +85,7 @@ local function classSelection()
         surface.SetTextColor(255, 255, 255, 255)
         local textToDraw = "Select Your Team"
         local _, th = surface.GetTextSize(textToDraw)
-        surface.SetTextPos(padding, padding - th)
+        surface.SetTextPos(px, py - th)
         surface.DrawText(textToDraw)
     end
 
