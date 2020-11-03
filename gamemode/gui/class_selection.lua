@@ -64,10 +64,10 @@ local function classSelection()
         end
     end
 
-    makeTeamBtn(TEAM_ANY, TEAM_ANY_COLOR, "Any")
-    makeTeamBtn(TEAM_HUNTERS, TEAM_HUNTERS_COLOR, "Hunter")
-    makeTeamBtn(TEAM_PROPS, TEAM_PROPS_COLOR, "Prop")
-    makeTeamBtn(TEAM_SPECTATOR, PANEL_FILL, "Spectator")
+    makeTeamBtn(TEAM_ANY, "Any", TEAM_ANY_COLOR)
+    makeTeamBtn(TEAM_HUNTERS, "Hunter", TEAM_HUNTERS_COLOR)
+    makeTeamBtn(TEAM_PROPS, "Prop", TEAM_PROPS_COLOR)
+    makeTeamBtn(TEAM_SPECTATOR, "Spectator", PANEL_FILL)
 
     local exitBtn = vgui.Create("DImageButton", classPanel)
     exitBtn:SetImage("icon16/cancel.png")
