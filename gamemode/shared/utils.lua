@@ -96,7 +96,7 @@ function FindSpotFor( ply, prop, hbMin, hbMax)
         pos + Vector(-approachDistance, 0, 0)
     }
     for _, approachPos in pairs(waysToApproach) do
-        td.start = pos
+        td.start = approachPos
         local trace = util.TraceHull( td )
         if (!trace.Hit or trace.HitPos != trace.StartPos) then
             return trace.HitPos
