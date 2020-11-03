@@ -2,7 +2,7 @@
 --[[GENERAL CONFIG]]--
 --[[==============]]--
 
--- the team numbers ( this value generally should not have to be changed )
+-- the team numbers (this value generally should not have to be changed)
 TEAM_PROPS      = 1
 TEAM_HUNTERS    = 2
 
@@ -37,7 +37,7 @@ AUTOTAUNT_ENABLED = true
 OBJHUNT_AUTOTAUNT_INTERVAL = 45
 
 -- The damage hunters will take for shooting the wrong prop
--- Set this negative if you want dynamic damage ( hit 50 damage take 50 damage )
+-- Set this negative if you want dynamic damage (hit 50 damage take 50 damage)
 HUNTER_DAMAGE_PENALTY = 5
 
 -- Can players talk between teams or only amongst?
@@ -53,8 +53,8 @@ ROUND_END   = 3
 VIEW_MIN_Z = 5
 
 -- the default hitbox for the initial prop
-PROP_DEFAULT_HB_MIN = Vector( -10,-10,0 )
-PROP_DEFAULT_HB_MAX = Vector( 10,10,35 )
+PROP_DEFAULT_HB_MIN = Vector(-10,-10,0)
+PROP_DEFAULT_HB_MAX = Vector(10,10,35)
 
 -- the default scale for the initial prop
 PROP_DEFAULT_SCALE = 0.5
@@ -85,26 +85,26 @@ PROP_DEFAULT_JUMP_POWER = 260
 
 -- entities that are capable of being chosen by props
 USABLE_PROP_ENTITIES = {
-	"prop_physics",
-	"prop_physics_multiplayer",
-	"prop_physics_override"
+    "prop_physics",
+    "prop_physics_multiplayer",
+    "prop_physics_override"
 }
 
 BANNED_PROPS = {
-	"models/props/cs_office/tv_plasma.mdl",
-	"models/props_c17/chair02a.mdl",
-	"models/props/cs_office/fire_extinguisher.mdl",
-	"models/props/cs_office/snowman_arm.mdl",
-	"models/props/cs_assault/money.mdl",
-	"models/props/cs_assault/dollar.mdl",
-	"models/props_c17/door01_left.mdl",
-	"models/props_c17/signpole001.mdl"
+    "models/props/cs_office/tv_plasma.mdl",
+    "models/props_c17/chair02a.mdl",
+    "models/props/cs_office/fire_extinguisher.mdl",
+    "models/props/cs_office/snowman_arm.mdl",
+    "models/props/cs_assault/money.mdl",
+    "models/props/cs_assault/dollar.mdl",
+    "models/props_c17/door01_left.mdl",
+    "models/props_c17/signpole001.mdl"
 }
 
 DOORS = {
-	"func_door",
-	"func_door_rotating",
-	"prop_door_rotating"
+    "func_door",
+    "func_door_rotating",
+    "prop_door_rotating"
 }
 --[[=====================]]--
 --[[COLORS AND HUD CONFIG]]--
@@ -119,25 +119,25 @@ PANEL_FILL = Color(200,200,200,20)
 PANEL_BORDER = Color(200,200,200,255)
 
 -- team colors displayed on the scoreboard
-PLAYER_LINE_COLOR = Color( 85, 85, 85 )
-TEAM_PROPS_COLOR = Color( 255, 0, 0, 100 )
-TEAM_HUNTERS_COLOR = Color( 0, 0, 255, 100 )
-TEAM_PROPS_CHAT_COLOR = Color( 255, 0, 0, 255 )
-TEAM_HUNTERS_CHAT_COLOR = Color( 0, 0, 255, 255 )
+PLAYER_LINE_COLOR = Color(85, 85, 85)
+TEAM_PROPS_COLOR = Color(255, 0, 0, 100)
+TEAM_HUNTERS_COLOR = Color(0, 0, 255, 100)
+TEAM_PROPS_CHAT_COLOR = Color(255, 0, 0, 255)
+TEAM_HUNTERS_CHAT_COLOR = Color(0, 0, 255, 255)
 TEAM_ANY_COLOR = Color(180, 0, 180, 100)
 
 -- context menu elements
-ON_COLOR = Color( 0, 255, 0, 100 )
-OFF_COLOR = Color( 255, 0, 0, 100 )
+ON_COLOR = Color(0, 255, 0, 100)
+OFF_COLOR = Color(255, 0, 0, 100)
 
 -- HUD elements
-HP_COLOR = Color( 255, 0, 0, 150 )
-POWERUP_COLOR = Color( 255, 215, 0, 150 )
-DEPLETED_COLOR = Color( 255, 0, 0, 150 )
-FULL_COLOR = Color( 0, 255, 0, 150 )
-ROUND_TIME_COLOR = Color( 85, 85, 85, 200 )
-TAUNT_BAR_COLOR = Color( 0, 255, 255, 150 )
-TEXT_COLOR = Color( 255, 255, 255, 255 )
+HP_COLOR = Color(255, 0, 0, 150)
+POWERUP_COLOR = Color(255, 215, 0, 150)
+DEPLETED_COLOR = Color(255, 0, 0, 150)
+FULL_COLOR = Color(0, 255, 0, 150)
+ROUND_TIME_COLOR = Color(85, 85, 85, 200)
+TAUNT_BAR_COLOR = Color(0, 255, 255, 150)
+TEXT_COLOR = Color(255, 255, 255, 255)
 
 --[[================]]--
 --[[ABILITIES CONFIG]]--

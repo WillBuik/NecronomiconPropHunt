@@ -1,0 +1,3 @@
+[submodule "GLuaFixer"]
+	path = GLuaFixer
+	url = https://github.com/FPtje/GLuaFixer.git

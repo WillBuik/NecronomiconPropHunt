@@ -1,5 +1,5 @@
-local plymeta = FindMetaTable( "Player" )
-if ( not plymeta ) then return end
+local plymeta = FindMetaTable("Player")
+if (not plymeta) then return end
 
 function plymeta:ObjSetDisguised(state)
     self:SetNWBool("objAbilityIsDisguised", state)

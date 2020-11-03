@@ -19,23 +19,23 @@ function SWEP:Ability()
     end
     if SERVER then
         ply:SetModel(TEAM_HUNTERS_DEFAULT_MODEL)
-        ply:SetRenderMode( RENDERMODE_NORMAL )
-        ply:GetProp():SetRenderMode( RENDERMODE_NONE )
+        ply:SetRenderMode(RENDERMODE_NORMAL)
+        ply:GetProp():SetRenderMode(RENDERMODE_NONE)
         ply:Give("weapon_obj_smgdummy")
         ply:SelectWeapon("weapon_obj_smgdummy")
     end
 end
 
 function SWEP:AbilityCleanup()
-    if not IsValid( self:GetOwner() ) then return end
+    if not IsValid(self:GetOwner()) then return end
     local ply = self:GetOwner()
     ply:ObjSetDisguised(false)
     if SERVER then
         ply:StripWeapon("weapon_obj_smgdummy")
-        player_manager.RunClass( ply, "SetModel" )
+        player_manager.RunClass(ply, "SetModel")
         if (IsValid(ply:GetProp())) then
-            ply:GetProp():SetRenderMode( RENDERMODE_NORMAL )
+            ply:GetProp():SetRenderMode(RENDERMODE_NORMAL)
         end
-        ply:SetRenderMode( RENDERMODE_NONE )
+        ply:SetRenderMode(RENDERMODE_NONE)
     end
 end

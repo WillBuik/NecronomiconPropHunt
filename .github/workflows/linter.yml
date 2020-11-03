@@ -1,0 +1,33 @@
+name: Linter
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events for all branches
+on: [push, pull_request]
+
+jobs:
+  # Linter job
+  linter:
+    runs-on: ubuntu-18.04
+
+    steps:
+      # Check out repostitory
+      - uses: actions/checkout@v2
+      
+      # Get dependencies
+      - name: Get Dependencies
+        run: sudo apt install libffi6
+     
+      # Get GLuaFixer linter from releases
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: "FPtje/GLuaFixer"
+          version: "tags/1.16.4"
+          file: "glualint-1.16.4-linux-stripped.zip"
+
+      # Unzip GLuaFixer binary
+      - name: Unzip GLuaFixer
+        run: unzip glualint-1.16.4-linux-stripped.zip
+
+      # Run GLuaFixer on the repo
+      - name: GLuaFixer Linter
+        run: ./glualint .

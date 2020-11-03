@@ -1,5 +1,5 @@
-local plymeta = FindMetaTable( "Player" )
-if ( not plymeta ) then return end
+local plymeta = FindMetaTable("Player")
+if (not plymeta) then return end
 
 function plymeta:ObjStartRagdoll(velocityBoost, velocityMultiplier)
     velocityBoost = velocityBoost or Vector(0, 0, 0)
