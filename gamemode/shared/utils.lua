@@ -89,7 +89,7 @@ function FindSpotFor( ply, prop, hbMin, hbMax)
     local waysToApproach = {
         pos,
         pos + Vector(0, 0, approachDistance),
-        pos + Vector(0, 0, -approachDistance),
+        -- no negative z
         pos + Vector(0, approachDistance, 0),
         pos + Vector(0, -approachDistance, 0),
         pos + Vector(approachDistance, 0, 0),
