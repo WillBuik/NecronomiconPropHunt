@@ -438,7 +438,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
 
         --Adjust Position for no stuck
         local foundSpot = FindSpotFor(ply, prop, tHitboxMin, tHitboxMax)
-        ply:SetPos(foundSpot + Vector(0,0, -tHitboxMin.z))
+        ply:SetPos(foundSpot) --+ Vector(0,0, -tHitboxMin.z))
 
         ply:SetHull(tHitboxMin, tHitboxMax)
         ply:SetHullDuck(tHitboxMin, tHitboxMax)

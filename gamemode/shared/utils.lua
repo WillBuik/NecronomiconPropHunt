@@ -79,8 +79,8 @@ function FindSpotFor( ply, prop, hbMin, hbMax)
     td.filter = { ply, ply:GetProp() }
     if ( !hbMin or !hbMax ) then return true end
     -- Adjust height
-    hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
-    hbMin = Vector(hbMin.x,hbMin.y,0)
+--     hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
+--     hbMin = Vector(hbMin.x,hbMin.y,0)
 
     td.mins = hbMin
     td.maxs = hbMax
