@@ -107,9 +107,9 @@ hook.Add("PreDrawHalos", "Selectable Prop Halos", function()
 end)
 
 --[[ when the player tries to select a prop ]]--
-hook.Add("PlayerTick", "New Player Use", function(ply)
+hook.Add("KeyPress", "New Player Use", function(ply, key)
     if (ply:Team() != TEAM_PROPS) then return end
-    if (ply:KeyPressed(IN_USE)) then
+    if (key == IN_USE) then
         if (!ply.lastPropChange or os.time() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then return end
         local prop = getViewEnt(ply)
         local sColor = stencilColor(LocalPlayer(), prop)
