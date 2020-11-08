@@ -72,11 +72,18 @@ function GetClosestTaunter(ply)
     return closestPlyTaunting
 end
 
-function FindSpotFor( ply, prop, hbMin, hbMax)
+function FindSpotFor(ply, prop)
+    local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
+    return FindSpotFor(ply, hbMin, hbMax)
+
+function FindSpotFor( ply, hbMin, hbMax)
     local goalPos = ply:GetPos()
     local td = {}
     td.endpos = goalPos
-    td.filter = { ply, ply:GetProp() }
+    td.filter = { ply }
+    if (IsValid(ply:GetProp())) then
+        table.insert(td.filter, ply:GetProp())
+    end
     if ( !hbMin or !hbMax ) then return true end
     -- Adjust height
 --     hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)

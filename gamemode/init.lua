@@ -318,8 +318,8 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     tHitboxMax = Vector(math.Round(tHitboxMax.x),math.Round(tHitboxMax.y),math.Round(tHitboxMax.z))
 
     --Adjust Position for no stuck
-    local ppos = ply:GetPos()
-    ply:SetPos(Vector(ppos.x,ppos.y,ppos.z-tHitboxMin.z))
+    local foundSpot = FindSpotFor(ply, prop, tHitboxMin, tHitboxMax)
+    ply:SetPos(foundSpot) -- + Vector(0,0, -tHitboxMin.z))
 
     ply:SetHull(tHitboxMin, tHitboxMax)
     ply:SetHullDuck(tHitboxMin, tHitboxMax)
@@ -438,7 +438,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
 
         --Adjust Position for no stuck
         local foundSpot = FindSpotFor(ply, prop, tHitboxMin, tHitboxMax)
-        ply:SetPos(foundSpot) --+ Vector(0,0, -tHitboxMin.z))
+        ply:SetPos(foundSpot) -- + Vector(0,0, -tHitboxMin.z))
 
         ply:SetHull(tHitboxMin, tHitboxMax)
         ply:SetHullDuck(tHitboxMin, tHitboxMax)
