@@ -115,7 +115,7 @@ function FindSpotFor(ply, hbMin, hbMax)
         pos + Vector(0, approachY, approachZ),
         pos + Vector(0, -approachY, approachZ),
         pos + Vector(approachX, 0, approachZ),
-        pos + Vector(-approachX, 0, approachZ)
+        pos + Vector(-approachX, 0, approachZ),
         pos + Vector(approachX, approachY, approachZ),
         pos + Vector(-approachX, approachY, approachZ),
         pos + Vector(approachX, -approachY, approachZ),
