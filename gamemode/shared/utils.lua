@@ -93,14 +93,12 @@ function FindSpotFor(ply, hbMin, hbMax)
     td.mins = hbMin
     td.maxs = hbMax
 
-    local approachX = (hbMax.x - hbMin.x)/2
-    local approachY = (hbMax.y - hbMin.y)/2
-    local approachZ = (hbMax.z - hbMin.z)/2
+    local approachVec = (hbMax - hbMin) / 2
 
     -- Approaching from the z direction will almost always work so try it first
-    local defaultApproach = pos + Vector(0, 0, approachZ)
+    local defaultApproach = pos + Vector(0, 0, approachVec.z)
     do
-        td.start = approachPos
+        td.start = defaultApproach
         local trace = util.TraceHull( td )
         if (trace.HitPos != trace.StartPos) then
             return trace.HitPos
@@ -108,18 +106,18 @@ function FindSpotFor(ply, hbMin, hbMax)
     end
 
     local altWaysToApproach = {
-        pos + Vector(0, approachY, 0),
-        pos + Vector(0, -approachY, 0),
-        pos + Vector(approachX, 0, 0),
-        pos + Vector(-approachX, 0, 0),
-        pos + Vector(0, approachY, approachZ),
-        pos + Vector(0, -approachY, approachZ),
-        pos + Vector(approachX, 0, approachZ),
-        pos + Vector(-approachX, 0, approachZ),
-        pos + Vector(approachX, approachY, approachZ),
-        pos + Vector(-approachX, approachY, approachZ),
-        pos + Vector(approachX, -approachY, approachZ),
-        pos + Vector(-approachX, -approachY, approachZ)
+        pos + Vector(0, approachVec.y, 0),
+        pos + Vector(0, -approachVec.y, 0),
+        pos + Vector(approachVec.x, 0, 0),
+        pos + Vector(-approachVec.x, 0, 0),
+        pos + Vector(0, approachVec.y, approachVec.z),
+        pos + Vector(0, -approachVec.y, approachVec.z),
+        pos + Vector(approachVec.x, 0, approachVec.z),
+        pos + Vector(-approachVec.x, 0, approachVec.z),
+        pos + Vector(approachVec.x, approachVec.y, approachVec.z),
+        pos + Vector(-approachVec.x, approachVec.y, approachVec.z),
+        pos + Vector(approachVec.x, -approachVec.y, approachVec.z),
+        pos + Vector(-approachVec.x, -approachVec.y, approachVec.z)
     }
     local closestToGoal = nil
     for _, approachPos in pairs(altWaysToApproach) do
