@@ -75,8 +75,9 @@ end
 function FindSpotFor(ply, prop)
     local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
     return FindSpotFor(ply, hbMin, hbMax)
+end
 
-function FindSpotFor( ply, hbMin, hbMax)
+function FindSpotFor(ply, hbMin, hbMax)
     local goalPos = ply:GetPos()
     local td = {}
     td.endpos = goalPos
