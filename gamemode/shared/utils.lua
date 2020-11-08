@@ -95,8 +95,18 @@ function FindSpotFor( ply, hbMin, hbMax)
     local approachX = (hbMax.x - hbMin.x)/2
     local approachY = (hbMax.y - hbMin.y)/2
     local approachZ = (hbMax.z - hbMin.z)/2
-    local waysToApproach = {
-        pos + Vector(0, 0, approachZ),
+
+    -- Approaching from the z direction will almost always work so try it first
+    local defaultApproach = pos + Vector(0, 0, approachZ)
+    do
+        td.start = approachPos
+        local trace = util.TraceHull( td )
+        if (trace.HitPos != trace.StartPos) then
+            return trace.HitPos
+        end
+    end
+
+    local altWaysToApproach = {
         pos + Vector(0, approachY, 0),
         pos + Vector(0, -approachY, 0),
         pos + Vector(approachX, 0, 0),
@@ -111,7 +121,7 @@ function FindSpotFor( ply, hbMin, hbMax)
         pos + Vector(-approachX, -approachY, approachZ)
     }
     local closestToGoal = nil
-    for _, approachPos in pairs(waysToApproach) do
+    for _, approachPos in pairs(altWaysToApproach) do
         td.start = approachPos
         local trace = util.TraceHull( td )
         if (trace.HitPos != trace.StartPos and
