@@ -96,7 +96,7 @@ function FindSpotFor(ply, hbMin, hbMax)
     local approachVec = (hbMax - hbMin) / 2
 
     -- Approaching from the z direction will almost always work so try it first
-    local defaultApproach = pos + Vector(0, 0, approachVec.z)
+    local defaultApproach = goalPos + Vector(0, 0, approachVec.z)
     do
         td.start = defaultApproach
         local trace = util.TraceHull( td )
@@ -106,18 +106,18 @@ function FindSpotFor(ply, hbMin, hbMax)
     end
 
     local altWaysToApproach = {
-        pos + Vector(0, approachVec.y, 0),
-        pos + Vector(0, -approachVec.y, 0),
-        pos + Vector(approachVec.x, 0, 0),
-        pos + Vector(-approachVec.x, 0, 0),
-        pos + Vector(0, approachVec.y, approachVec.z),
-        pos + Vector(0, -approachVec.y, approachVec.z),
-        pos + Vector(approachVec.x, 0, approachVec.z),
-        pos + Vector(-approachVec.x, 0, approachVec.z),
-        pos + Vector(approachVec.x, approachVec.y, approachVec.z),
-        pos + Vector(-approachVec.x, approachVec.y, approachVec.z),
-        pos + Vector(approachVec.x, -approachVec.y, approachVec.z),
-        pos + Vector(-approachVec.x, -approachVec.y, approachVec.z)
+        goalPos + Vector(0, approachVec.y, 0),
+        goalPos + Vector(0, -approachVec.y, 0),
+        goalPos + Vector(approachVec.x, 0, 0),
+        goalPos + Vector(-approachVec.x, 0, 0),
+        goalPos + Vector(0, approachVec.y, approachVec.z),
+        goalPos + Vector(0, -approachVec.y, approachVec.z),
+        goalPos + Vector(approachVec.x, 0, approachVec.z),
+        goalPos + Vector(-approachVec.x, 0, approachVec.z),
+        goalPos + Vector(approachVec.x, approachVec.y, approachVec.z),
+        goalPos + Vector(-approachVec.x, approachVec.y, approachVec.z),
+        goalPos + Vector(approachVec.x, -approachVec.y, approachVec.z),
+        goalPos + Vector(-approachVec.x, -approachVec.y, approachVec.z)
     }
     local closestToGoal = nil
     for _, approachPos in pairs(altWaysToApproach) do
