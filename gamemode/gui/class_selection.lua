@@ -73,7 +73,7 @@ local function classSelection()
     exitBtn:SetImage("icon16/cancel.png")
     exitBtn:SizeToContents()
     local ebw = exitBtn:GetSize() / 2
-    exitBtn:SetPos(width + px - ebw, height + py - ebw)
+    exitBtn:SetPos(width + px - ebw, py - ebw)
     exitBtn.DoClick = function()
         classPanel:Remove()
     end
