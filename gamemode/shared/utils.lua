@@ -93,7 +93,7 @@ function FindSpotFor(ply, hbMin, hbMax)
     td.mins = hbMin
     td.maxs = hbMax
 
-    local approachVec = (hbMax - hbMin)
+    local approachVec = (hbMax - hbMin) * 1.5
 
     -- Approaching from the z direction will almost always work so try it first
     local defaultApproach = goalPos + Vector(0, 0, approachVec.z)
