@@ -72,7 +72,7 @@ function GetClosestTaunter(ply)
     return closestPlyTaunting
 end
 
-function FindSpotFor(ply, prop)
+function FindSpotForProp(ply, prop)
     local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
     return FindSpotFor(ply, hbMin, hbMax)
 end

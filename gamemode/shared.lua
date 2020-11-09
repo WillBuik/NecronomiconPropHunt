@@ -78,7 +78,7 @@ function playerCanBeEnt(ply, ent)
         end
     end
 
-    if (FindSpotFor(ply, ent) == nil) then return false end
+    if (FindSpotForProp(ply, ent) == nil) then return false end
 
     return true
 end
