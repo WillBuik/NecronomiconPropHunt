@@ -12,6 +12,7 @@ SWEP.AutoSwitchTo = false
 SWEP.AutoSwitchFrom = true
 
 SWEP.HoldType = "grenade"
+SWEP.UseHands = true
 SWEP.ViewModelFOV = 54
 SWEP.ViewModel = "models/weapons/c_bugbait.mdl"
 SWEP.WorldModel = "models/weapons/w_bugbait.mdl"

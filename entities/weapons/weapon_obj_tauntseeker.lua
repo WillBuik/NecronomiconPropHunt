@@ -12,6 +12,7 @@ SWEP.AutoSwitchTo = false
 SWEP.AutoSwitchFrom = true
 
 SWEP.HoldType = "ar2"
+SWEP.UseHands = true
 SWEP.ViewModelFOV = 54
 SWEP.ViewModel = "models/weapons/c_irifle.mdl"
 SWEP.WorldModel = "models/weapons/w_irifle.mdl"
@@ -64,6 +65,7 @@ function SWEP:FireBall()
         ent:SetSaveValue("m_nState", 3)
         ent:SetSaveValue("m_nMaxBounces", 1)
         ent:SetSaveValue("m_nBounceCount", 1)
+        ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
         local phys = ent:GetPhysicsObject()
         phys:SetVelocity(posToShoot:GetNormalized() * 50)
         timer.Simple(3, function()

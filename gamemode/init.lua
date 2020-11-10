@@ -290,32 +290,17 @@ function GM:PlayerUse(ply, ent)
 end
 
 --[[ sets the players prop, run PlayerCanBeEnt before using this ]]--
-function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
-
-    local tHitboxMin, tHitboxMax
-    if (!hbMin or !hbMax) then
-        local obj = ent:GetPhysicsObject()
-        if (!IsValid(obj)) then
-            return false, "Invalid physobject" end
-        tHitboxMin, tHitboxMax = obj:GetAABB()
-        if (!tHitboxMin or !tHitboxMax) then return false, "Invalid Hull" end
-    else
-        tHitboxMin = hbMin
-        tHitboxMax = hbMax
-    end
+function SetPlayerProp(ply, ent, scale)
 
     -- scaling
     ply:GetProp():SetModelScale(scale, 0)
-
 
     ply:GetProp():SetModel(ent:GetModel())
     ply:GetProp():SetSkin(ent:GetSkin())
     ply:GetProp():SetAngles(ply:GetAngles())
     ply:GetProp():SetSolid(SOLID_VPHYSICS)
 
-    -- we round to reduce getting stuck
-    tHitboxMin = Vector(math.Round(tHitboxMin.x),math.Round(tHitboxMin.y),math.Round(tHitboxMin.z))
-    tHitboxMax = Vector(math.Round(tHitboxMax.x),math.Round(tHitboxMax.y),math.Round(tHitboxMax.z))
+    local tHitboxMin, tHitboxMax = PropHitbox(ply)
 
     --Adjust Position for no stuck
     local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
@@ -398,7 +383,7 @@ hook.Add("PlayerSpawn", "Set ObjHunt model", function (ply)
             ply:GetProp():Spawn()
             ply:GetProp():SetOwner(ply)
             -- custom initial hb
-            SetPlayerProp(ply, ply:GetProp(), PROP_DEFAULT_SCALE, PROP_DEFAULT_HB_MIN, PROP_DEFAULT_HB_MAX)
+            SetPlayerProp(ply, ply:GetProp(), PROP_DEFAULT_SCALE)
         end)
 
         -- this fixes ent culling when head in ceiling
@@ -429,12 +414,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
     if (IsValid(ply:GetProp())) then
         -- We should investigate why this angle doesn't naturally stay in sync
         ply:GetProp():SetAngles(propAngle)
-        local tHitboxMinUnrotated, tHitboxMaxUnrotated = ply:GetProp():GetHitBoxBounds(0, 0)
-        local tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMinUnrotated, tHitboxMaxUnrotated)
-
-        -- we round to reduce getting stuck
-        tHitboxMin = Vector(math.Round(tHitboxMin.x),math.Round(tHitboxMin.y),math.Round(tHitboxMin.z))
-        tHitboxMax = Vector(math.Round(tHitboxMax.x),math.Round(tHitboxMax.y),math.Round(tHitboxMax.z))
+        local tHitboxMin, tHitboxMax = PropHitbox(ply)
 
         --Adjust Position for no stuck
         local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)

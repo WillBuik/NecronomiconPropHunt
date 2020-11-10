@@ -25,7 +25,6 @@ function ENT:Draw()
     -- angle locking stuff
     if (!owner.wantAngleLock) then
         self:SetAngles(propAngle)
-        self.lockedAngle = propAngle
     else
         self:SetAngles(owner.lockedAngle)
     end

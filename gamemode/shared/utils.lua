@@ -72,6 +72,18 @@ function GetClosestTaunter(ply)
     return closestPlyTaunting
 end
 
+function PropHitbox(ply)
+    local tHitboxMin, tHitboxMax = prop:GetHitBoxBounds(0, 0)
+    if (ply.lockedAngle) then
+        tHitboxMin, tHitboxMax = prop:GetRotatedAABB(tHitboxMin, tHitboxMax)
+     end
+
+    -- we round to reduce getting stuck
+    tHitboxMin = Vector(math.Round(tHitboxMin.x), math.Round(tHitboxMin.y), math.Round(tHitboxMin.z))
+    tHitboxMax = Vector(math.Round(tHitboxMax.x), math.Round(tHitboxMax.y), math.Round(tHitboxMax.z))
+    return tHitboxMin, tHitboxMax
+end
+
 function FindSpotForProp(ply, prop)
     local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
     return FindSpotFor(ply, hbMin, hbMax)
@@ -93,7 +105,7 @@ function FindSpotFor(ply, hbMin, hbMax)
     td.mins = hbMin
     td.maxs = hbMax
 
-    local approachVec = (hbMax - hbMin) * 1.5
+    local approachVec = (hbMax - hbMin) * 2
 
     -- Approaching from the z direction will almost always work so try it first
     local defaultApproach = goalPos + Vector(0, 0, approachVec.z)
