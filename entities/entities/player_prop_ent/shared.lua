@@ -47,6 +47,6 @@ function ENT:Think()
 
         --Adjust Position for no stuck
         local foundSpot = FindSpotFor(owner, tHitboxMin, tHitboxMax)
-        ply:SetPos(foundSpot) -- + Vector(0,0, -tHitboxMin.z))
+        owner:SetPos(foundSpot) -- + Vector(0,0, -tHitboxMin.z))
     end
 end
