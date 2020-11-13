@@ -297,7 +297,7 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     ply:GetProp():SetSolid(SOLID_VPHYSICS)
 
     local tHitboxMin, tHitboxMax = hbMin, hbMax
-    if (hbMin == nil || hbMax == nil) then
+    if (hbMin == nil or hbMax == nil) then
         tHitboxMin, tHitboxMax = PropHitbox(ply)
     end
 
