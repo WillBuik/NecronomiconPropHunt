@@ -74,7 +74,7 @@ end
 
 function PropHitbox(ply)
     local tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds(0, 0)
-    if (ply.lockedAngle) then
+    if (ply.wantAngleLock) then
         tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMin, tHitboxMax)
      end
 
