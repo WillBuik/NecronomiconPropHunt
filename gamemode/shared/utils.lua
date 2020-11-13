@@ -105,19 +105,19 @@ function FindSpotFor(ply, hbMin, hbMax)
     td.mins = hbMin
     td.maxs = hbMax
 
-    local approachVec = (hbMax - hbMin) * 2
 
-    -- Approaching from the z direction will almost always work so try it first
-    local defaultApproach = goalPos + Vector(0, 0, approachVec.z)
+    -- Just checking if it's locked to begin with will almost always work so try it first
     do
-        td.start = defaultApproach
+        td.start = goalPos
         local trace = util.TraceHull( td )
-        if (trace.HitPos != trace.StartPos) then
+        if (!trace.Hit) then
             return trace.HitPos
         end
     end
 
+    local approachVec = (hbMax - hbMin) * 2
     local altWaysToApproach = {
+        goalPos + Vector(0, 0, approachVec.z)
         goalPos + Vector(0, approachVec.y, 0),
         goalPos + Vector(0, -approachVec.y, 0),
         goalPos + Vector(approachVec.x, 0, 0),
