@@ -48,11 +48,6 @@ net.Receive("Reset Prop", function(length)
     LocalPlayer().wantThirdPerson = false
 end)
 
-net.Receive("Hunter Roll BROADCAST", function(length)
-    local ply = net.ReadEntity()
-    ply:SetEyeAngles(net.ReadAngle())
-end)
-
 round = {}
 net.Receive("Round Update", function()
     round.state     = net.ReadInt(8)

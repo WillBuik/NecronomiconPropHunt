@@ -43,10 +43,6 @@ function GM:ShowHelp(ply)
     net.Send(ply)
 end
 
-net.Receive("Class Selection", function(len, ply)
-    local chosen = net.ReadUInt(32)
-    SetTeam(ply, chosen)
-end)
 
 function SetTeam(ply, chosen)
     local playerTable = {}
@@ -115,18 +111,6 @@ function SendTaunt(ply, taunt, pitch)
     net.Broadcast()
 end
 
-net.Receive("Update Taunt Times", function()
-    local id = net.ReadUInt(8)
-    local ply = player.GetByID(id)
-    local nextTaunt = net.ReadFloat()
-    local lastTaunt = net.ReadFloat()
-    local autoTauntInterval = net.ReadFloat()
-
-    ply.nextTaunt = nextTaunt
-    ply.lastTaunt = lastTaunt
-    ply.autoTauntInterval = autoTauntInterval
-end)
-
 function GM:ShowSpare1(ply)
     local TAUNTS
     if (ply:Team() == TEAM_PROPS) then
@@ -140,13 +124,6 @@ function GM:ShowSpare1(ply)
     local pitch = math.random() * pRange + TAUNT_MIN_PITCH
     SendTaunt(ply, taunt, pitch)
 end
-
-net.Receive("Taunt Selection", function(len, ply)
-    local taunt = net.ReadString()
-    local pitch = net.ReadUInt(8)
-    SendTaunt(ply, taunt, pitch)
-end)
-
 
 function GM:PlayerSetModel(ply)
     class = player_manager.GetPlayerClass(ply)
@@ -242,29 +219,6 @@ hook.Add("EntityTakeDamage", "forward dmg to new system", function(target, dmg)
     DamageHandler(target, dmg)
 end)
 
---[[ All network strings should be precached HERE ]]--
-hook.Add("Initialize", "Precache all network strings", function()
-    util.AddNetworkString("Death Notice")
-    util.AddNetworkString("Class Selection")
-    util.AddNetworkString("Taunt Selection")
-    util.AddNetworkString("Help")
-    util.AddNetworkString("Round Update")
-    util.AddNetworkString("Player Death")
-    util.AddNetworkString("Prop Update")
-    util.AddNetworkString("Reset Prop")
-    util.AddNetworkString("Selected Prop")
-    util.AddNetworkString("Prop Angle Lock")
-    util.AddNetworkString("Prop Angle Snap")
-    util.AddNetworkString("Prop Pitch Enable")
-    util.AddNetworkString("Hunter Roll")
-    util.AddNetworkString("Hunter Roll BROADCAST")
-    util.AddNetworkString("AutoTaunt Update")
-    util.AddNetworkString("Update Taunt Times")
-    util.AddNetworkString("Remove Prop")
-end)
-
---[[ Map Time ]]--
-
 --[[ Door Exploit fix ]]--
 function GM:PlayerUse(ply, ent)
     -- default value
@@ -355,16 +309,6 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
 
 end
 
---[[ When a player presses +use on a prop ]]--
-net.Receive("Selected Prop", function(len, ply)
-    local ent = net.ReadEntity()
-
-    if (ply.pickupProp or !playerCanBeEnt(ply, ent)) then return end
-    local oldHP = ply:GetProp().health
-    SetPlayerProp(ply, ent, PROP_CHOSEN_SCALE)
-    ply:GetProp().health = oldHP
-end)
-
 --[[ When a player on team_props spawns ]]--
 hook.Add("PlayerSpawn", "Set ObjHunt model", function (ply)
     -- default prop should be able to step wherever
@@ -399,93 +343,6 @@ hook.Add("PlayerSpawn", "Set ObjHunt model", function (ply)
 
 end)
 
---[[ When a player wants to lock world angles on their prop ]]--
-net.Receive("Prop Angle Lock", function(len, ply)
-    local lockStatus = net.ReadBit()
-    local propAngle = net.ReadAngle()
-    -- this is literally retarded
-    if (lockStatus == 1) then
-        lockStatus = true
-    else
-        lockStatus = false
-    end
-
-    ply:SetPropAngleLocked(lockStatus)
-    ply:SetPropLockedAngle(propAngle)
-
-    if (IsValid(ply:GetProp())) then
-        -- We should investigate why this angle doesn't naturally stay in sync
-        ply:GetProp():SetAngles(propAngle)
-        local tHitboxMin, tHitboxMax = PropHitbox(ply)
-
-        --Adjust Position for no stuck
-        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
-        ply:SetPos(foundSpot)
-
-        ply:SetHull(tHitboxMin, tHitboxMax)
-        ply:SetHullDuck(tHitboxMin, tHitboxMax)
-        local tHeight = tHitboxMax.z - tHitboxMin.z
-
-        -- match the view offset for calcviewing to the height
-        ply:SetViewOffset(Vector(0, 0, tHeight))
-
-        -- scale steps to prop size
-        ply:SetStepSize(math.Round(4 + tHeight / 4))
-
-        -- give bigger props a bonus for being big
-        ply:SetJumpPower(PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight))
-
-        net.Start("Prop Update")
-            net.WriteVector(tHitboxMax)
-            net.WriteVector(tHitboxMin)
-        net.Send(ply)
-    end
-end)
-
---[[ When a player wants toggle world angle snapping on their prop ]]--
-net.Receive("Prop Angle Snap", function(len, ply)
-    local snapStatus = net.ReadBit()
-    -- this is literally retarded
-    if (snapStatus == 1) then
-        snapStatus = true
-    else
-        snapStatus = false
-    end
-
-    ply:SetPropAngleSnapped(snapStatus)
-end)
-
---[[ When a player wants enable pitch on their prop ]]--
-net.Receive("Prop Pitch Enable", function(len, ply)
-    -- Especially shouldn't use slurs against the mentally ill when you don't know how types work
-    local enableStatus = net.ReadBit() == 1
-
-    ply:SetPropPitchEnabled(enableStatus)
-end)
-
-net.Receive("Hunter Roll", function(len, ply)
-    local shouldRoll = net.ReadBit() == 1
-
-    local closestPlyTaunting = GetClosestTaunter(ply)
-    local newPitch = 0
-    if (closestPlyTaunting != nil) then
-        local vectorBetween = closestPlyTaunting:GetPos() - ply:GetPos()
-        local pitchFromAngle = vectorBetween:Angle().p
-        newPitch = pitchFromAngle / (math.abs(pitchFromAngle))
-    end
-    local oldAngle = ply:EyeAngles()
-    local newAngle = Angle(newPitch, oldAngle.y, 0)
-    if (shouldRoll) then
-       newAngle:Add(Angle(0,0, -90))
-    end
-    ply:SetEyeAngles(newAngle)
-
-    net.Start("Hunter Roll BROADCAST")
-        net.WriteEntity(ply)
-        net.WriteAngle(newAngle)
-    net.Broadcast()
-end)
-
 hook.Add("PlayerDisconnected", "Remove ent prop on dc", function(ply)
     RemovePlayerProp(ply)
 end)
@@ -497,14 +354,6 @@ hook.Add("PlayerDeath", "Remove ent prop on death", function(ply)
     RemovePlayerProp(ply)
     if (ply:IsFrozen()) then
         ply:Freeze(false)
-    end
-end)
-
---[[ When a player Removes a prop with the ability ]]--
-net.Receive("Remove Prop", function(len, ply)
-    local propToRemove = net.ReadEntity()
-    if (IsValid(propToRemove)) then
-        propToRemove:Remove()
     end
 end)
 

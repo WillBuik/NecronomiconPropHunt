@@ -5,7 +5,6 @@ hook.Add("PlayerButtonDown", "LockRotationKeyPress", function(ply, button)
          IsValid(ply:GetProp())
     ) then
         net.Start("Prop Angle Lock")
-            net.WriteBit(!ply:IsPropAngleLocked())
             net.WriteAngle(ply:GetProp():GetAngles())
         net.SendToServer()
     end
@@ -18,7 +17,6 @@ hook.Add("PlayerButtonDown", "EnableTiltKeyPress", function(ply, button)
          IsValid(ply:GetProp())
     ) then
         net.Start("Prop Pitch Enable")
-            net.WriteBit(!LocalPlayer():IsPropPitchEnabled())
         net.SendToServer()
     end
 end)
