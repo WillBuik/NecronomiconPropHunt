@@ -302,7 +302,7 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
 
     local tHitboxMin, tHitboxMax = hbMin, hbMax
     if (hbMin == nil || hbMax == nil) then
-        tHitboxMin, tHitboxMax = PropHitbox(ply)
+        tHitboxMin, tHitboxMax = ent:GetPhysicsObject():GetAABB()--PropHitbox(ply)
     end
 
     --Adjust Position for no stuck
