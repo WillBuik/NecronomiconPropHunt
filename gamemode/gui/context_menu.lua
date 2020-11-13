@@ -70,7 +70,7 @@ local function DrawContextMenu()
         worldAngleBtn:SetSize(width - 2 * padding, btnHeight)
         worldAngleBtn.DoClick = function()
             net.Start("Prop Angle Lock")
-                net.WriteBit(!LocalPlayer().wantAngleLock)
+                net.WriteBit(!LocalPlayer():IsPropAngleLocked())
                 net.WriteAngle(LocalPlayer():GetProp():GetAngles())
             net.SendToServer()
         end
@@ -78,7 +78,7 @@ local function DrawContextMenu()
         -- painting
         worldAngleBtn.Paint = function(self, w, h)
             local btnColor
-            if (LocalPlayer().wantAngleLock) then
+            if (LocalPlayer():IsPropAngleLocked()) then
                 btnColor = table.Copy(ON_COLOR)
             else
                 btnColor = table.Copy(OFF_COLOR)
@@ -110,14 +110,14 @@ local function DrawContextMenu()
         snapAngleBtn.DoClick = function()
             if (!IsValid(LocalPlayer():GetProp())) then return end
             net.Start("Prop Angle Snap")
-                net.WriteBit(!LocalPlayer().wantAngleSnap)
+                net.WriteBit(!LocalPlayer():IsPropAngleSnapped())
             net.SendToServer()
         end
 
         -- painting
         snapAngleBtn.Paint = function(self, w, h)
             local btnColor
-            if (LocalPlayer().wantAngleSnap) then
+            if (LocalPlayer():IsPropAngleSnapped()) then
                 btnColor = table.Copy(ON_COLOR)
             else
                 btnColor = table.Copy(OFF_COLOR)

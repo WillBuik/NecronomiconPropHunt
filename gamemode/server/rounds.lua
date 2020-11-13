@@ -176,13 +176,17 @@ hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
 
     -- send data to clients
     SendRoundUpdate(function() return net.Broadcast() end)
-    -- reset previous round data
-    net.Start("Clear Round State")
-    net.Broadcast()
 
     for _, v in pairs(player.GetAll()) do
         -- remove god mode from everyone
         v:GodDisable()
+
+        -- reset previous round data
+        v:SetPropAngleLocked(false)
+        v:SetPropLockedAngle(Angle(0,0,0))
+        v:SetPropPitchEnabled(false)
+        v:SetPropAngleSnapped(false)
+
         -- freeze all the hunters
         if (v:Team() == TEAM_HUNTERS) then
             v:Freeze(true)

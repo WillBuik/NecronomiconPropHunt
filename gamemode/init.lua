@@ -244,7 +244,6 @@ end)
 
 --[[ All network strings should be precached HERE ]]--
 hook.Add("Initialize", "Precache all network strings", function()
-    util.AddNetworkString("Clear Round State")
     util.AddNetworkString("Death Notice")
     util.AddNetworkString("Class Selection")
     util.AddNetworkString("Taunt Selection")
@@ -255,11 +254,8 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("Reset Prop")
     util.AddNetworkString("Selected Prop")
     util.AddNetworkString("Prop Angle Lock")
-    util.AddNetworkString("Prop Angle Lock BROADCAST")
     util.AddNetworkString("Prop Angle Snap")
-    util.AddNetworkString("Prop Angle Snap BROADCAST")
     util.AddNetworkString("Prop Pitch Enable")
-    util.AddNetworkString("Prop Pitch Enable BROADCAST")
     util.AddNetworkString("Hunter Roll")
     util.AddNetworkString("Hunter Roll BROADCAST")
     util.AddNetworkString("AutoTaunt Update")
@@ -302,12 +298,12 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
 
     local tHitboxMin, tHitboxMax = hbMin, hbMax
     if (hbMin == nil || hbMax == nil) then
-        tHitboxMin, tHitboxMax = ent:GetPhysicsObject():GetAABB()--PropHitbox(ply)
+        tHitboxMin, tHitboxMax = PropHitbox(ply)
     end
 
     --Adjust Position for no stuck
     local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
-    ply:SetPos(foundSpot) -- + Vector(0,0, -tHitboxMin.z))
+    ply:SetPos(foundSpot)
 
     ply:SetHull(tHitboxMin, tHitboxMax)
     ply:SetHullDuck(tHitboxMin, tHitboxMax)
@@ -414,6 +410,9 @@ net.Receive("Prop Angle Lock", function(len, ply)
         lockStatus = false
     end
 
+    ply:SetPropAngleLocked(lockStatus)
+    ply:SetPropLockedAngle(propAngle)
+
     if (IsValid(ply:GetProp())) then
         -- We should investigate why this angle doesn't naturally stay in sync
         ply:GetProp():SetAngles(propAngle)
@@ -421,7 +420,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
 
         --Adjust Position for no stuck
         local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
-        ply:SetPos(foundSpot) -- + Vector(0,0, -tHitboxMin.z))
+        ply:SetPos(foundSpot)
 
         ply:SetHull(tHitboxMin, tHitboxMax)
         ply:SetHullDuck(tHitboxMin, tHitboxMax)
@@ -441,12 +440,6 @@ net.Receive("Prop Angle Lock", function(len, ply)
             net.WriteVector(tHitboxMin)
         net.Send(ply)
     end
-
-    net.Start("Prop Angle Lock BROADCAST")
-        net.WriteEntity(ply)
-        net.WriteBit(lockStatus)
-        net.WriteAngle(propAngle)
-    net.Broadcast()
 end)
 
 --[[ When a player wants toggle world angle snapping on their prop ]]--
@@ -459,10 +452,7 @@ net.Receive("Prop Angle Snap", function(len, ply)
         snapStatus = false
     end
 
-    net.Start("Prop Angle Snap BROADCAST")
-        net.WriteEntity(ply)
-        net.WriteBit(snapStatus)
-    net.Broadcast()
+    ply:SetPropAngleSnapped(snapStatus)
 end)
 
 --[[ When a player wants enable pitch on their prop ]]--

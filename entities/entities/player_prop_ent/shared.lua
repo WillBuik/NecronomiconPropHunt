@@ -13,7 +13,7 @@ function ENT:Draw()
     -- snap to 45 degree increments on yaw, and dissallow pitch unless enablePitch is turned on
 
     -- angle snapping stuff
-    if (owner.wantAngleSnap) then
+    if (owner:IsPropAngleSnapped()) then
         propAngle:SnapTo("y",45)
     end
 
@@ -23,10 +23,10 @@ function ENT:Draw()
     end
 
     -- angle locking stuff
-    if (!owner.wantAngleLock) then
+    if (!owner:IsPropAngleLocked()) then
         self:SetAngles(propAngle)
     else
-        self:SetAngles(owner.lockedAngle)
+        self:SetAngles(owner:GetPropLockedAngle())
     end
 
 
@@ -41,12 +41,4 @@ end
 
 function ENT:Think()
     self:Draw()
-    if (SERVER) then
-        local owner = self:GetOwner()
-        local tHitboxMin, tHitboxMax = PropHitbox(owner)
-
-        --Adjust Position for no stuck
-        local foundSpot = FindSpotFor(owner, tHitboxMin, tHitboxMax)
-        owner:SetPos(foundSpot) -- + Vector(0,0, -tHitboxMin.z))
-    end
 end

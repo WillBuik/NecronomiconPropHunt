@@ -28,20 +28,4 @@ function PLAYER:SetupDataTables()
     self.Player:NetworkVar("Entity", 0, "Prop");
 end
 
-function PLAYER:GetPropLockedAngle()
-    return self.Player:GetNWAngle("PropLockedAngle", Angle(0,0,0))
-end
-
-function PLAYER:SetPropLockedAngle(angle)
-    self.Player:SetNWAngle("PropLockedAngle", angle)
-end
-
-function PLAYER:IsPropAngleLocked()
-    return self.Player:GetNWBool("PropAngleLocked", false)
-end
-
-function PLAYER:SetPropLockedAngle(isLocked)
-    return self.Player:SetNWBool("PropLockedAngle", isLocked)
-end
-
 player_manager.RegisterClass("player_prop", PLAYER, "player_default")

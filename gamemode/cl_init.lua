@@ -24,8 +24,6 @@ net.Receive("Prop Update", function(length)
     -- initialize stuff here
     if (LocalPlayer().firstProp) then
         LocalPlayer().wantThirdPerson = true
-        LocalPlayer().wantAngleLock = false
-        LocalPlayer().wantAngleSnap = false
         LocalPlayer().lastPropChange = 0
         LocalPlayer().nextTaunt = 0
         LocalPlayer().lastTaunt = CurTime()
@@ -48,30 +46,6 @@ net.Receive("Reset Prop", function(length)
     LocalPlayer():ResetHull()
     LocalPlayer().firstProp       = true
     LocalPlayer().wantThirdPerson = false
-    LocalPlayer().wantAngleLock   = nil
-end)
-
-net.Receive("Prop Angle Lock BROADCAST", function(length)
-    local ply = net.ReadEntity()
-    local lockStatus = net.ReadBit()
-    ply.lockedAngle = net.ReadAngle()
-
-    if (lockStatus == 1) then
-        ply.wantAngleLock = true
-    else
-        ply.wantAngleLock = false
-    end
-end)
-
-net.Receive("Prop Angle Snap BROADCAST", function(length)
-    local ply = net.ReadEntity()
-    local snapStatus = net.ReadBit()
-
-    if (snapStatus == 1) then
-        ply.wantAngleSnap = true
-    else
-        ply.wantAngleSnap = false
-    end
 end)
 
 net.Receive("Hunter Roll BROADCAST", function(length)
@@ -99,15 +73,6 @@ net.Receive("Death Notice", function()
 
     killicon.AddFont("kill", "Sharp HUD", verb, Color(255,255,255,255))
     GAMEMODE:AddDeathNotice(attacker, attackerTeam, "kill", victim, victimTeam)
-end)
-
-net.Receive("Clear Round State", function()
-    LocalPlayer().wantAngleLock = false
-    LocalPlayer().wantAngleSnap = false
-    for _, v in pairs(player.GetAll()) do
-        v.wantAngleLock = false
-        v.wantAngleSnap = false
-    end
 end)
 
 net.Receive("Taunt Selection", function()

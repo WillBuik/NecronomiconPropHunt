@@ -5,7 +5,7 @@ hook.Add("PlayerButtonDown", "LockRotationKeyPress", function(ply, button)
          IsValid(ply:GetProp())
     ) then
         net.Start("Prop Angle Lock")
-            net.WriteBit(!ply.wantAngleLock)
+            net.WriteBit(!ply:IsPropAngleLocked())
             net.WriteAngle(ply:GetProp():GetAngles())
         net.SendToServer()
     end
