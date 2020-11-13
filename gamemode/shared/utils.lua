@@ -117,7 +117,7 @@ function FindSpotFor(ply, hbMin, hbMax)
 
     local approachVec = (hbMax - hbMin) * 2
     local altWaysToApproach = {
-        goalPos + Vector(0, 0, approachVec.z)
+        goalPos + Vector(0, 0, approachVec.z),
         goalPos + Vector(0, approachVec.y, 0),
         goalPos + Vector(0, -approachVec.y, 0),
         goalPos + Vector(approachVec.x, 0, 0),
