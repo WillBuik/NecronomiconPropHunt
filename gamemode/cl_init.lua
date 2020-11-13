@@ -26,7 +26,6 @@ net.Receive("Prop Update", function(length)
         LocalPlayer().wantThirdPerson = true
         LocalPlayer().wantAngleLock = false
         LocalPlayer().wantAngleSnap = false
-        LocalPlayer().wantPitchEnable = false
         LocalPlayer().lastPropChange = 0
         LocalPlayer().nextTaunt = 0
         LocalPlayer().lastTaunt = CurTime()
@@ -50,7 +49,6 @@ net.Receive("Reset Prop", function(length)
     LocalPlayer().firstProp       = true
     LocalPlayer().wantThirdPerson = false
     LocalPlayer().wantAngleLock   = nil
-    LocalPlayer().wantPitchEnable = false
 end)
 
 net.Receive("Prop Angle Lock BROADCAST", function(length)
@@ -74,11 +72,6 @@ net.Receive("Prop Angle Snap BROADCAST", function(length)
     else
         ply.wantAngleSnap = false
     end
-end)
-
-net.Receive("Prop Pitch Enable BROADCAST", function(length)
-    local ply = net.ReadEntity()
-    ply.wantPitchEnable = net.ReadBit() == 1
 end)
 
 net.Receive("Hunter Roll BROADCAST", function(length)
@@ -114,7 +107,6 @@ net.Receive("Clear Round State", function()
     for _, v in pairs(player.GetAll()) do
         v.wantAngleLock = false
         v.wantAngleSnap = false
-        v.wantPitchEnable = false
     end
 end)
 

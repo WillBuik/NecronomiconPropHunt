@@ -18,7 +18,7 @@ function ENT:Draw()
     end
 
     -- Disable pitch movement
-    if (!owner.wantPitchEnable) then
+    if (!owner.IsPropPitchEnabled()) then
         propAngle:SnapTo("p",180)
     end
 

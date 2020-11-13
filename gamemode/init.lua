@@ -467,10 +467,7 @@ net.Receive("Prop Pitch Enable", function(len, ply)
     -- Especially shouldn't use slurs against the mentally ill when you don't know how types work
     local enableStatus = net.ReadBit() == 1
 
-    net.Start("Prop Pitch Enable BROADCAST")
-        net.WriteEntity(ply)
-        net.WriteBit(enableStatus)
-    net.Broadcast()
+    ply.SetPropPitchEnabled(enableStatus)
 end)
 
 net.Receive("Hunter Roll", function(len, ply)
