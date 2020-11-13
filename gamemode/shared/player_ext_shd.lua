@@ -40,3 +40,19 @@ end
 function plymeta:SetPropPitchEnabled(isEnabled)
     self:SetNWBool("PropPitchEnabled", isEnabled)
 end
+
+function plymeta:GetPropLockedAngle()
+    return self:GetNWAngle("PropLockedAngle", Angle(0,0,0))
+end
+
+function plymeta:SetPropLockedAngle(angle)
+    self:SetNWAngle("PropLockedAngle", angle)
+end
+
+function plymeta:IsPropAngleLocked()
+    return self:GetNWBool("PropAngleLocked", false)
+end
+
+function plymeta:SetPropLockedAngle(isLocked)
+    return self:SetNWBool("PropLockedAngle", isLocked)
+end

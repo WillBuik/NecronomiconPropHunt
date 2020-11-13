@@ -290,7 +290,7 @@ function GM:PlayerUse(ply, ent)
 end
 
 --[[ sets the players prop, run PlayerCanBeEnt before using this ]]--
-function SetPlayerProp(ply, ent, scale)
+function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
 
     -- scaling
     ply:GetProp():SetModelScale(scale, 0)
@@ -301,6 +301,9 @@ function SetPlayerProp(ply, ent, scale)
     ply:GetProp():SetSolid(SOLID_VPHYSICS)
 
     local tHitboxMin, tHitboxMax = PropHitbox(ply)
+    if (hbMin != nil && hbMax != nil) then
+       tHitboxMin, tHitboxMax = hbMin, hbMax
+    end
 
     --Adjust Position for no stuck
     local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
@@ -383,7 +386,7 @@ hook.Add("PlayerSpawn", "Set ObjHunt model", function (ply)
             ply:GetProp():Spawn()
             ply:GetProp():SetOwner(ply)
             -- custom initial hb
-            SetPlayerProp(ply, ply:GetProp(), PROP_DEFAULT_SCALE)
+            SetPlayerProp(ply, ply:GetProp(), PROP_DEFAULT_SCALE, PROP_DEFAULT_HB_MIN, PROP_DEFAULT_HB_MAX)
         end)
 
         -- this fixes ent culling when head in ceiling
@@ -467,7 +470,7 @@ net.Receive("Prop Pitch Enable", function(len, ply)
     -- Especially shouldn't use slurs against the mentally ill when you don't know how types work
     local enableStatus = net.ReadBit() == 1
 
-    ply.SetPropPitchEnabled(enableStatus)
+    ply:SetPropPitchEnabled(enableStatus)
 end)
 
 net.Receive("Hunter Roll", function(len, ply)

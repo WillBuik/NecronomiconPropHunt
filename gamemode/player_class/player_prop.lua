@@ -44,5 +44,4 @@ function PLAYER:SetPropLockedAngle(isLocked)
     return self.Player:SetNWBool("PropLockedAngle", isLocked)
 end
 
-
 player_manager.RegisterClass("player_prop", PLAYER, "player_default")
