@@ -18,7 +18,7 @@ hook.Add("PlayerButtonDown", "EnableTiltKeyPress", function(ply, button)
          IsValid(ply:GetProp())
     ) then
         net.Start("Prop Pitch Enable")
-            net.WriteBit(!LocalPlayer().IsPropPitchEnabled())
+            net.WriteBit(!LocalPlayer():IsPropPitchEnabled())
         net.SendToServer()
     end
 end)
