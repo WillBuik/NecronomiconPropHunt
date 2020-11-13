@@ -32,3 +32,11 @@ end
 function plymeta:ObjIsPlayDead()
     return self:GetNWBool("objAbilityIsPlaydead", false)
 end
+
+function plymeta:IsPropPitchEnabled()
+    return self.Player:GetNWBool("PropPitchEnabled", false)
+end
+
+function plymeta:SetPropPitchEnabled(isEnabled)
+    self.Player:SetNWBool("PropPitchEnabled", isEnabled)
+end

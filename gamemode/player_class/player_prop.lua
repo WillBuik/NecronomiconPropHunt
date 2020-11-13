@@ -33,7 +33,7 @@ function PLAYER:GetPropLockedAngle()
 end
 
 function PLAYER:SetPropLockedAngle(angle)
-    return self.Player:SetNWAngle("PropLockedAngle", angle)
+    self.Player:SetNWAngle("PropLockedAngle", angle)
 end
 
 function PLAYER:IsPropAngleLocked()
@@ -44,12 +44,5 @@ function PLAYER:SetPropLockedAngle(isLocked)
     return self.Player:SetNWBool("PropLockedAngle", isLocked)
 end
 
-function PLAYER:IsPropPitchEnabled()
-    return self.Player:GetNWBool("PropPitchEnabled", false)
-end
-
-function PLAYER:SetPropPitchEnabled(isEnabled)
-    return self.Player:SetNWBool("PropPitchEnabled", isEnabled)
-end
 
 player_manager.RegisterClass("player_prop", PLAYER, "player_default")
