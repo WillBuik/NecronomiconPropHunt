@@ -85,7 +85,7 @@ function PropHitbox(ply)
 end
 
 function FindSpotForProp(ply, prop)
-    local hbMin, hbMax = prop:GetPhysicsObject():GetAABB()
+    local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
     return FindSpotFor(ply, hbMin, hbMax)
 end
 
