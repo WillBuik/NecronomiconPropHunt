@@ -300,9 +300,9 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     ply:GetProp():SetAngles(ply:GetAngles())
     ply:GetProp():SetSolid(SOLID_VPHYSICS)
 
-    local tHitboxMin, tHitboxMax = PropHitbox(ply)
-    if (hbMin != nil && hbMax != nil) then
-       tHitboxMin, tHitboxMax = hbMin, hbMax
+    local tHitboxMin, tHitboxMax = hbMin, hbMax
+    if (hbMin == nil || hbMax == nil) then
+        tHitboxMin, tHitboxMax = PropHitbox(ply)
     end
 
     --Adjust Position for no stuck
