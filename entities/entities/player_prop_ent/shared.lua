@@ -42,10 +42,11 @@ end
 function ENT:Think()
     self:Draw()
     if (SERVER) then
-        local tHitboxMin, tHitboxMax = PropHitbox(ply)
+        local owner = self:GetOwner()
+        local tHitboxMin, tHitboxMax = PropHitbox(owner)
 
         --Adjust Position for no stuck
-        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
+        local foundSpot = FindSpotFor(owner, tHitboxMin, tHitboxMax)
         ply:SetPos(foundSpot) -- + Vector(0,0, -tHitboxMin.z))
     end
 end
