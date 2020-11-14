@@ -118,16 +118,4 @@ net.Receive("Prop Roll", function(len, ply)
     local propAngle = net.ReadAngle()
     local newRollAngle = (ply:GetPropRollAngle() + rollAngleToAdd + 180) % 360 - 180
     ply:SetPropRollAngle(newRollAngle)
-    if (IsValid(ply:GetProp())) then
-        -- We should investigate why this angle doesn't naturally stay in sync
-        propAngle:Add(Angle(0, 0, newRollAngle))
-        ply:GetProp():SetAngles(propAngle)
-        local tHitboxMin, tHitboxMax = PropHitbox(ply)
-
-        --Adjust Position for no stuck
-        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
-        ply:SetPos(foundSpot)
-
-        UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
-    end
 end)

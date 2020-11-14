@@ -424,7 +424,6 @@ function GM:PlayerButtonUp(ply, button)
     end
 end
 
-hook.Add("InputMouseApply", "testMouseWheel", function(cmd, x, y, ang)
-    testVal = testVal + cmd:GetMouseWheel() * 2 --any scale number you want to use
-    print(testVal)
-end)
+function GM:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
+    return ply:Team() == TEAM_PROPS
+end
