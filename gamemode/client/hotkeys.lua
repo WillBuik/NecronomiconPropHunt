@@ -44,3 +44,17 @@ hook.Add("KeyRelease", "ReleaseShiftRollHunter", function(ply, key)
         net.SendToServer()
     end
 end)
+
+hook.Add("InputMouseApply", "propRoll", function(cmd, x, y, ang)
+    local rollAngle = cmd:GetMouseWheel() * 5
+    if ( ply:Team() == TEAM_PROPS and
+         ply:Alive() and
+         IsValid(ply:GetProp())
+    ) then
+        net.Start("Prop Roll")
+            net.WriteInt(rollAngle, 16)
+        net.SendToServer()
+    end
+    cmd:SetMouseWheel(0)
+    return true
+end)

@@ -22,6 +22,9 @@ function ENT:Draw()
         propAngle:SnapTo("p",180)
     end
 
+    -- Disable pitch movement
+    propAngle:Add(Angle(0, 0, owner:GetPropRollAngle()))
+
     -- angle locking stuff
     if (!owner:IsPropAngleLocked()) then
         self:SetAngles(propAngle)
@@ -29,11 +32,9 @@ function ENT:Draw()
         self:SetAngles(owner:GetPropLockedAngle())
     end
 
-
-
     if (CLIENT) then
         -- third person stuff
-        if (LocalPlayer().wantThirdPerson or self:GetOwner() != LocalPlayer()) then
+        if (LocalPlayer().wantThirdPerson or owner != LocalPlayer()) then
             self:DrawModel()
         end
     end

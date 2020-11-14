@@ -17,6 +17,7 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("AutoTaunt Update")
     util.AddNetworkString("Update Taunt Times")
     util.AddNetworkString("Remove Prop")
+    util.AddNetworkString("Prop Roll")
 end)
 
 net.Receive("Class Selection", function(len, ply)
@@ -67,23 +68,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
         local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
         ply:SetPos(foundSpot)
 
-        ply:SetHull(tHitboxMin, tHitboxMax)
-        ply:SetHullDuck(tHitboxMin, tHitboxMax)
-        local tHeight = tHitboxMax.z - tHitboxMin.z
-
-        -- match the view offset for calcviewing to the height
-        ply:SetViewOffset(Vector(0, 0, tHeight))
-
-        -- scale steps to prop size
-        ply:SetStepSize(math.Round(4 + tHeight / 4))
-
-        -- give bigger props a bonus for being big
-        ply:SetJumpPower(PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight))
-
-        net.Start("Prop Update")
-            net.WriteVector(tHitboxMax)
-            net.WriteVector(tHitboxMin)
-        net.Send(ply)
+        UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
     end
 end)
 
@@ -120,5 +105,24 @@ net.Receive("Remove Prop", function(len, ply)
     local propToRemove = net.ReadEntity()
     if (IsValid(propToRemove)) then
         propToRemove:Remove()
+    end
+end)
+
+--[[ Adjust the prop roll angle ]]--
+net.Receive("Prop Roll", function(len, ply)
+    local rollAngleToAdd = net.ReadInt(16)
+    local newRollAngle = (ply:GetPropRollAngle() + rollAngleToAdd + 180) % 360 - 180
+    ply:SetPropRollAngle(newRollAngle)
+    if (IsValid(ply:GetProp())) then
+        -- We should investigate why this angle doesn't naturally stay in sync
+        local propAngle = ply:EyeAngles() + Angle(0, 0, newRollAngle)
+        ply:GetProp():SetAngles(propAngle)
+        local tHitboxMin, tHitboxMax = PropHitbox(ply)
+
+        --Adjust Position for no stuck
+        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
+        ply:SetPos(foundSpot)
+
+        UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
     end
 end)

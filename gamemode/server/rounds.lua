@@ -186,6 +186,7 @@ hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
         v:SetPropLockedAngle(Angle(0,0,0))
         v:SetPropPitchEnabled(false)
         v:SetPropAngleSnapped(false)
+        v:SetPropRollAngle(0)
 
         -- freeze all the hunters
         if (v:Team() == TEAM_HUNTERS) then

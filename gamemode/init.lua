@@ -259,12 +259,9 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
     ply:SetPos(foundSpot)
 
-    ply:SetHull(tHitboxMin, tHitboxMax)
-    ply:SetHullDuck(tHitboxMin, tHitboxMax)
-    local tHeight = tHitboxMax.z-tHitboxMin.z
+    UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
 
-    -- match the view offset for calcviewing to the height
-    ply:SetViewOffset(Vector(0,0,tHeight))
+    local tHeight = tHitboxMax.z-tHitboxMin.z
 
     -- scale steps to prop size
     ply:SetStepSize(math.Round(4 + tHeight / 4))
@@ -301,12 +298,20 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
         mass = math.Clamp(mass, 0, 100)
         ply:GetPhysicsObject():SetMass(mass)
     end
+end
 
-    net.Start("Prop Update")
-        net.WriteVector(tHitboxMax)
-        net.WriteVector(tHitboxMin)
-    net.Send(ply)
+function UpdatePlayerPropHitbox(ply, hbMin, hbMax)
+        ply:SetHull(tHitboxMin, tHitboxMax)
+        ply:SetHullDuck(tHitboxMin, tHitboxMax)
+        local tHeight = tHitboxMax.z-tHitboxMin.z
 
+        -- match the view offset for calcviewing to the height
+        ply:SetViewOffset(Vector(0,0,tHeight))
+
+        net.Start("Prop Update")
+            net.WriteVector(tHitboxMax)
+            net.WriteVector(tHitboxMin)
+        net.Send(ply)
 end
 
 --[[ When a player on team_props spawns ]]--
@@ -418,3 +423,8 @@ function GM:PlayerButtonUp(ply, button)
         ply.pickupProp = false
     end
 end
+
+hook.Add("InputMouseApply", "testMouseWheel", function(cmd, x, y, ang)
+    testVal = testVal + cmd:GetMouseWheel() * 2 --any scale number you want to use
+    print(testVal)
+end)

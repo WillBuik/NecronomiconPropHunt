@@ -64,3 +64,11 @@ end
 function plymeta:SetPropAngleSnapped(isSnapped)
     return self:SetNWBool("PropAngleSnapped", isSnapped)
 end
+
+function plymeta:GetPropRollAngle()
+    return self:GetNWInt("PropRollAngle", 0)
+end
+
+function plymeta:SetPropRollAngle(angle)
+    self:GetNWInt("PropRollAngle", angle)
+end
