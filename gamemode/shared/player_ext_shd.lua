@@ -54,7 +54,7 @@ function plymeta:IsPropAngleLocked()
 end
 
 function plymeta:SetPropAngleLocked(isLocked)
-    return self:SetNWBool("PropLockedAngle", isLocked)
+    return self:SetNWBool("PropAngleLocked", isLocked)
 end
 
 function plymeta:IsPropAngleSnapped()
