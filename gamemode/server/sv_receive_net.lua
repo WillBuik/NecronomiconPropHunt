@@ -56,9 +56,10 @@ end)
 --[[ When a player wants to lock world angles on their prop ]]--
 net.Receive("Prop Angle Lock", function(len, ply)
     local shouldAngleLock = net.ReadBit() == 1
+    print(shouldAngleLock)
     local propAngle = net.ReadAngle()
-    ply:SetPropLockedAngle(propAngle)
     ply:SetPropAngleLocked(shouldAngleLock)
+    ply:SetPropLockedAngle(propAngle)
 
     if (IsValid(ply:GetProp())) then
         -- We should investigate why this angle doesn't naturally stay in sync
