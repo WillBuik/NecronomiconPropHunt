@@ -70,5 +70,5 @@ function plymeta:GetPropRollAngle()
 end
 
 function plymeta:SetPropRollAngle(angle)
-    self:GetNWInt("PropRollAngle", angle)
+    self:SetNWInt("PropRollAngle", angle)
 end
