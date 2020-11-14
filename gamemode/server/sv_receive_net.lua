@@ -62,7 +62,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
 
     if (IsValid(ply:GetProp())) then
         -- We should investigate why this angle doesn't naturally stay in sync
-        propAngle = Angle(propAngle.p, propAngle.y, ply:GetPropRollAngle()))
+        propAngle = Angle(propAngle.p, propAngle.y, ply:GetPropRollAngle())
         ply:GetProp():SetAngles(propAngle)
         local tHitboxMin, tHitboxMax = PropHitbox(ply)
 
@@ -120,7 +120,7 @@ net.Receive("Prop Roll", function(len, ply)
     ply:SetPropRollAngle(newRollAngle)
     if (IsValid(ply:GetProp()) and ply:IsPropAngleLocked()) then
         -- We should investigate why this angle doesn't naturally stay in sync
-        propAngle = Angle(propAngle.p, propAngle.y, ply:GetPropRollAngle()))
+        propAngle = Angle(propAngle.p, propAngle.y, ply:GetPropRollAngle())
         ply:GetProp():SetAngles(propAngle)
         local tHitboxMin, tHitboxMax = PropHitbox(ply)
 
