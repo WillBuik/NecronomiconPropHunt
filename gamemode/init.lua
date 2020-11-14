@@ -301,16 +301,16 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
 end
 
 function UpdatePlayerPropHitbox(ply, hbMin, hbMax)
-        ply:SetHull(tHitboxMin, tHitboxMax)
-        ply:SetHullDuck(tHitboxMin, tHitboxMax)
-        local tHeight = tHitboxMax.z-tHitboxMin.z
+        ply:SetHull(hbMin, hbMax)
+        ply:SetHullDuck(hbMin, hbMax)
+        local height = hbMax.z - hbMin.z
 
         -- match the view offset for calcviewing to the height
-        ply:SetViewOffset(Vector(0,0,tHeight))
+        ply:SetViewOffset(Vector(0,0,height))
 
         net.Start("Prop Update")
-            net.WriteVector(tHitboxMax)
-            net.WriteVector(tHitboxMin)
+            net.WriteVector(hbMax)
+            net.WriteVector(hbMin)
         net.Send(ply)
 end
 
