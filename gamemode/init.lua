@@ -424,6 +424,6 @@ function GM:PlayerButtonUp(ply, button)
     end
 end
 
-function GM:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
+function GM:PlayerSwitchWeapon(ply, oldWeapon, newWeapon)
     return ply:Team() == TEAM_PROPS
 end
