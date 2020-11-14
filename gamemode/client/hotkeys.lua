@@ -56,6 +56,7 @@ hook.Add("InputMouseApply", "propRoll", function(cmd, x, y, ang)
     ) then
         net.Start("Prop Roll")
             net.WriteInt(rollAngle, 16)
+            net.WriteAngle(LocalPlayer():GetProp():GetAngles())
         net.SendToServer()
         cmd:SetMouseWheel(0)
         return true
