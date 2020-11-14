@@ -114,9 +114,9 @@ end)
 --[[ Adjust the prop roll angle ]]--
 net.Receive("Prop Roll", function(len, ply)
     local rollAngleToAdd = net.ReadInt(16)
-    local newRollAngle = (ply:GetPropRollAngle() + rollAngleToAdd + 180) % 360 - 180
-    print(newRollAngle)
-    ply:SetPropRollAngle(newRollAngle)
+    --local newRollAngle = (ply:GetPropRollAngle() + rollAngleToAdd + 180) % 360 - 180
+    print(ply:GetPropRollAngle() + rollAngleToAdd)
+    ply:SetPropRollAngle(ply:GetPropRollAngle() + rollAngleToAdd)
     if (IsValid(ply:GetProp())) then
         -- We should investigate why this angle doesn't naturally stay in sync
         local propAngle = ply:EyeAngles() + Angle(0, 0, newRollAngle)
