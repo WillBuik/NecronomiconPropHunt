@@ -55,9 +55,10 @@ end)
 
 --[[ When a player wants to lock world angles on their prop ]]--
 net.Receive("Prop Angle Lock", function(len, ply)
+    local shouldAngleLock = net.ReadBit() == 1
     local propAngle = net.ReadAngle()
     ply:SetPropLockedAngle(propAngle)
-    ply:SetPropAngleLocked(!ply:IsPropAngleLocked())
+    ply:SetPropAngleLocked(shouldAngleLock)
 
     if (IsValid(ply:GetProp())) then
         -- We should investigate why this angle doesn't naturally stay in sync
@@ -74,7 +75,8 @@ end)
 
 --[[ When a player wants enable pitch on their prop ]]--
 net.Receive("Prop Pitch Enable", function(len, ply)
-    ply:SetPropPitchEnabled(!ply:IsPropPitchEnabled())
+    local shouldPitchEnable = net.ReadBit() == 1
+    ply:SetPropPitchEnabled(shouldPitchEnable)
 end)
 
 net.Receive("Hunter Roll", function(len, ply)
@@ -97,7 +99,8 @@ end)
 
 --[[ When a player wants toggle world angle snapping on their prop ]]--
 net.Receive("Prop Angle Snap", function(len, ply)
-    ply:SetPropAngleSnapped(!ply:IsPropAngleSnapped())
+    local shouldAngleSnap = net.ReadBit() == 1
+    ply:SetPropAngleSnapped(shouldAngleSnap)
 end)
 
 --[[ When a player Removes a prop with the ability ]]--

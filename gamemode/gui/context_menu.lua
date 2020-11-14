@@ -70,6 +70,7 @@ local function DrawContextMenu()
         worldAngleBtn:SetSize(width - 2 * padding, btnHeight)
         worldAngleBtn.DoClick = function()
             net.Start("Prop Angle Lock")
+                net.WriteBit(!ply:IsPropAngleLocked())
                 net.WriteAngle(LocalPlayer():GetProp():GetAngles())
             net.SendToServer()
         end
@@ -109,6 +110,7 @@ local function DrawContextMenu()
         snapAngleBtn.DoClick = function()
             if (!IsValid(LocalPlayer():GetProp())) then return end
             net.Start("Prop Angle Snap")
+                net.WriteBit(!ply:IsPropAngleSnapped())
             net.SendToServer()
         end
 
@@ -147,6 +149,7 @@ local function DrawContextMenu()
         pitchEnableBtn.DoClick = function()
             if (!IsValid(LocalPlayer():GetProp())) then return end
             net.Start("Prop Pitch Enable")
+                net.WriteBit(!ply:IsPropPitchEnabled())
             net.SendToServer()
         end
 
