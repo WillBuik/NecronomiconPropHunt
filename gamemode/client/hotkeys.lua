@@ -51,7 +51,7 @@ hook.Add("InputMouseApply", "propRoll", function(cmd, x, y, ang)
     local rollAngle = cmd:GetMouseWheel() * 5
     if ( LocalPlayer():Team() == TEAM_PROPS and
          LocalPlayer():Alive() and
-         IsValid(ply:GetProp())
+         IsValid(LocalPlayer():GetProp())
     ) then
         net.Start("Prop Roll")
             net.WriteInt(rollAngle, 16)
