@@ -42,6 +42,7 @@ function plymeta:ObjStartRagdoll(velocityBoost, velocityMultiplier)
 
     --self:Spectate(OBS_MODE_CHASE)
     --self:SpectateEntity(ragdoll)
+    self:Freeze(true)
     self:ObjSetRagdolled(true)
     for _, wep in pairs(self:GetWeapons()) do
         wep:SetNoDraw(true)
@@ -53,6 +54,7 @@ end
 function plymeta:ObjEndRagdoll()
     self:SetParent()
     --self:UnSpectate()
+    self:Freeze(false)
     self:ObjSetRagdolled(false)
     for _, wep in pairs(self:GetWeapons()) do
         wep:SetNoDraw(false)
