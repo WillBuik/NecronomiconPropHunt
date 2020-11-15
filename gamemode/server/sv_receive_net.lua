@@ -104,14 +104,6 @@ net.Receive("Prop Angle Snap", function(len, ply)
     ply:SetPropAngleSnapped(shouldAngleSnap)
 end)
 
---[[ When a player Removes a prop with the ability ]]--
-net.Receive("Remove Prop", function(len, ply)
-    local propToRemove = net.ReadEntity()
-    if (IsValid(propToRemove)) then
-        propToRemove:Remove()
-    end
-end)
-
 --[[ Adjust the prop roll angle ]]--
 net.Receive("Prop Roll", function(len, ply)
     local rollAngleToAdd = net.ReadInt(16)

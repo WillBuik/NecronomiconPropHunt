@@ -36,12 +36,8 @@ function SWEP:Think()
 end
 
 function SWEP:FireBall(closestPropTaunting)
-    if CLIENT then return end
 
-    local posToShoot = Vector(0,0,0)
-    if closestPropTaunting != nil then
-        posToShoot = closestPropTaunting:GetPos()
-    end
+    local posToShoot = closestPropTaunting:GetPos()
 
     -- A little uncertaintity
     posToShoot:Add(Vector(
@@ -74,7 +70,7 @@ function SWEP:FireBall(closestPropTaunting)
 end
 
 function SWEP:PrimaryAttack()
-    if !self:CanPrimaryAttack() then return end
+    if !self:CanPrimaryAttack() or CLIENT then return end
     local closestPropTaunting = GetClosestTaunter(self:GetOwner())
     if !closestPropTaunting then return end
     timer.Simple(1.5, function()
