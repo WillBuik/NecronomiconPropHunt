@@ -35,7 +35,7 @@ end
 function SWEP:Think()
 end
 
-function SWEP:FireBall()
+function SWEP:FireBall(closestPropTaunting)
     if CLIENT then return end
 
     local closestPropTaunting = GetClosestTaunter(self:GetOwner())
@@ -65,7 +65,7 @@ function SWEP:FireBall()
         ent:SetSaveValue("m_nState", 3)
         ent:SetSaveValue("m_nMaxBounces", 1)
         ent:SetSaveValue("m_nBounceCount", 1)
-        ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+        ent:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
         local phys = ent:GetPhysicsObject()
         phys:SetVelocity(posToShoot:GetNormalized() * 50)
         timer.Simple(3, function()
@@ -77,12 +77,14 @@ end
 
 function SWEP:PrimaryAttack()
     if !self:CanPrimaryAttack() then return end
+    local closestPropTaunting = GetClosestTaunter(self:GetOwner())
+    if !closestPropTaunting then return end
     timer.Simple(1.5, function()
         if !self:GetOwner():Alive() or self:GetOwner():GetActiveWeapon():GetClass() != "weapon_obj_tauntseeker" then return end
         self:Reload()
         self:SendWeaponAnim(ACT_VM_DRAW)
     end)
-    self:FireBall()
+    self:FireBall(closestPropTaunting)
     self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
     self:TakePrimaryAmmo(self.Primary.TakeAmmo)
     self:GetOwner():DoAttackEvent()
