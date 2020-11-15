@@ -17,10 +17,12 @@ function SWEP:Ability()
         local _, playerPropHBMax = PropHitbox(ply)
         local heldPropHBMin, _ = propHeld:GetHitBoxBounds(0, 0)
         propHeld:SetAngles(Angle(0, math.random(-180, 180), 0))
+        print(propHeld:GetPos())
         propHeld:SetPos(Vector(
             ply:GetPos().x,
             ply:GetPos().y,
             ply:GetPos().z + playerPropHBMax.z - heldPropHBMin.z
         ))
+        print(propHeld:GetPos())
     end
 end

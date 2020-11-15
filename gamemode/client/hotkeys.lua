@@ -48,7 +48,7 @@ hook.Add("KeyRelease", "ReleaseShiftRollHunter", function(ply, key)
 end)
 
 hook.Add("InputMouseApply", "propRoll", function(cmd, x, y, ang)
-    local rollAngle = cmd:GetMouseWheel() * 5
+    local rollAngle = cmd:GetMouseWheel() * 15
     if ( LocalPlayer():Team() == TEAM_PROPS and
          LocalPlayer():Alive() and
          IsValid(LocalPlayer():GetProp()) and
