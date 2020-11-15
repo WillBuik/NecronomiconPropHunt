@@ -149,8 +149,8 @@ ABILITIES = {
 --     "weapon_obj_cloak",
 --     "weapon_obj_disguise",
 --     "weapon_obj_remove",
---     "weapon_obj_playdead",
-    "weapon_obj_stack"
+     "weapon_obj_playdead",
+     "weapon_obj_stack"
 }
 
 --[[============]]--
