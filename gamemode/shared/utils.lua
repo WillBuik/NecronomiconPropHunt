@@ -195,6 +195,7 @@ function FloorMagnitude(x)
         return math.floor(x)
     else
         return math.ceil(x)
+    end
 end
 
 --[[
