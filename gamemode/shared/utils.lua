@@ -79,8 +79,8 @@ function PropHitbox(ply)
      end
 
     -- we round to reduce getting stuck
-    tHitboxMin = Vector(math.Round(tHitboxMin.x), math.Round(tHitboxMin.y), math.Round(tHitboxMin.z))
-    tHitboxMax = Vector(math.Round(tHitboxMax.x), math.Round(tHitboxMax.y), math.Round(tHitboxMax.z))
+    tHitboxMin = Vector(FloorMagnitude(tHitboxMin.x), FloorMagnitude(tHitboxMin.y), FloorMagnitude(tHitboxMin.z))
+    tHitboxMax = Vector(FloorMagnitude(tHitboxMax.x), FloorMagnitude(tHitboxMax.y), FloorMagnitude(tHitboxMax.z))
     return tHitboxMin, tHitboxMax
 end
 
@@ -188,6 +188,13 @@ function GetViewEntSv(ply)
     trace.filter = { ply:GetProp(), ply }
     tr = util.TraceLine(trace)
     return tr.Entity
+end
+
+function FloorMagnitude(x)
+    if x > 0 then
+        return math.floor(x)
+    else
+        return math.ceil(x)
 end
 
 --[[

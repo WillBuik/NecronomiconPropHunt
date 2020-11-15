@@ -143,8 +143,6 @@ TEXT_COLOR = Color(255, 255, 255, 255)
 --[[ABILITIES CONFIG]]--
 --[[================]]--
 
-ONE_IN_HOW_MANY_GET_ABILITY = 2
-
 ABILITIES = {
     "weapon_obj_cloak",
     "weapon_obj_disguise",
