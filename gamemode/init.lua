@@ -423,7 +423,3 @@ function GM:PlayerButtonUp(ply, button)
         ply.pickupProp = false
     end
 end
-
-function GM:PlayerSwitchWeapon(ply, oldWeapon, newWeapon)
-    return ply:Team() == TEAM_PROPS
-end
