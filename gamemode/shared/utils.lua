@@ -181,12 +181,9 @@ function RoundToTime(round)
 end
 
 function GetViewEntSv(ply)
-    -- this needs to be here otherwise some people get errors for some unknown reason
-    if (ply.viewOrigin == nil) then return end
-
     local trace = {}
     trace.mask = MASK_SHOT_HULL
-    trace.start = ply.viewOrigin
+    trace.start = ply:GetShootPos()
     trace.endpos = trace.start + ply:GetAngles():Forward() * (THIRDPERSON_DISTANCE + PROP_SELECT_DISTANCE)
     trace.filter = { ply:GetProp(), ply }
     tr = util.TraceLine(trace)
