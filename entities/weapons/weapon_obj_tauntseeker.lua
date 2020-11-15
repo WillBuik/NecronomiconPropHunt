@@ -38,8 +38,6 @@ end
 function SWEP:FireBall(closestPropTaunting)
     if CLIENT then return end
 
-    local closestPropTaunting = GetClosestTaunter(self:GetOwner())
-
     local posToShoot = Vector(0,0,0)
     if closestPropTaunting != nil then
         posToShoot = closestPropTaunting:GetPos()

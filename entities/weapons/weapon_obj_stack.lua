@@ -11,13 +11,13 @@ function SWEP:Ability()
     if SERVER then
         local propHeld = ply:GetEntityInUse()
         if !IsValid(propHeld) then return "Nothing held" end
-        local playerPropHBMin, playerPropHBMax = PropHitbox(ply)
-        local heldPropHBMin, heldPropHBMax = propHeld:GetHitBoxBounds(0, 0)
+        local _, playerPropHBMax = PropHitbox(ply)
+        local heldPropHBMin, _ = propHeld:GetHitBoxBounds(0, 0)
         propHeld:SetAngles(Angle(0, math.random(-180, 180), 0))
         propHeld:SetPos(Vector(
             ply:GetPos().x,
             ply:GetPos().y,
-            ply:GetPos().z + playerPropHBMax - heldPropHBMin
+            ply:GetPos().z + playerPropHBMax.z - heldPropHBMin.z
         ))
     end
 end
