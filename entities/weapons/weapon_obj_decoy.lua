@@ -16,7 +16,7 @@ function SWEP:Ability()
     local spawnPos = self:GetOwner():GetPos()
 
     for _ = 1,self.AbilityDecoyCount do
-        local decoy = ents.Create("npc_alyx")
+        local decoy = ents.Create("npc_kleiner")
         if not IsValid(decoy) then break end
         decoy:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
         decoy:NavSetRandomGoal(500, Vector(math.random(), math.random(), spawnPos.z))

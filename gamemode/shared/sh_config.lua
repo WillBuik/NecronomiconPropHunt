@@ -149,7 +149,7 @@ ABILITIES = {
 --     "weapon_obj_remove",
 --     "weapon_obj_playdead",
 --     "weapon_obj_stack",
-    "weapon_obj_popup",
+--     "weapon_obj_popup",
     "weapon_obj_decoy"
 }
 
