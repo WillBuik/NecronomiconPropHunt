@@ -78,9 +78,6 @@ function PropHitbox(ply)
         tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMin, tHitboxMax)
      end
 
-    -- we round to reduce getting stuck
---     tHitboxMin = Vector(FloorMagnitude(tHitboxMin.x), FloorMagnitude(tHitboxMin.y), FloorMagnitude(tHitboxMin.z))
---     tHitboxMax = Vector(FloorMagnitude(tHitboxMax.x), FloorMagnitude(tHitboxMax.y), FloorMagnitude(tHitboxMax.z))
     return tHitboxMin, tHitboxMax
 end
 
