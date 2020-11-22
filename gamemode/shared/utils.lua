@@ -73,12 +73,7 @@ function GetClosestTaunter(ply)
 end
 
 function PropHitbox(ply)
-    local tHitboxMin, tHitboxMax
-    if SERVER then
-        tHitboxMin, tHitboxMax = ply:GetProp():GetPhysicsObject():GetAABB()
-    else
-        tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds(0, 0)
-    end
+    local tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds(0, 0)
     if (ply:IsPropAngleLocked()) then
         tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMin, tHitboxMax)
      end
