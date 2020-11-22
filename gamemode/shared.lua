@@ -117,7 +117,6 @@ function initNoCollide(ent1, ent2)
     elseif (ent1:GetClass() == "npc_kleiner" or ent2:GetClass() == "npc_kleiner") then
         return false
     end
-)
 end
 hook.Add("ShouldCollide", "Initial Nocollide For Props", initNoCollide)
 
