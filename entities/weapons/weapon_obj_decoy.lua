@@ -18,7 +18,7 @@ function SWEP:Ability()
     for _ = 1,self.AbilityDecoyCount do
         local decoy = ents.Create("npc_kleiner")
         if not IsValid(decoy) then break end
-        decoy:SetCollisionGroup(COLLISION_GROUP_NPC_SCRIPTED)
+        decoy:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
         decoy:NavSetRandomGoal(500, Vector(math.random(), math.random(), spawnPos.z))
         decoy:SetModel(self:GetOwner():GetProp():GetModel())
         hbMins, hbMaxs = self:GetOwner():GetProp():GetHitBoxBounds(0, 0)
@@ -30,5 +30,5 @@ function SWEP:Ability()
     end
 
     self:GetOwner():SetAngles(Angle(math.random(), math.random(), 0))
-    self:GetOwner():SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
+    self:GetOwner():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 end

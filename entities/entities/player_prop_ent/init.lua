@@ -4,5 +4,5 @@ include("shared.lua")
 
 function ENT:Initialize()
     self:SetModel("models/player.mdl")
-    self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+    self:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
 end
