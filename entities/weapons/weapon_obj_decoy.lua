@@ -22,7 +22,7 @@ function SWEP:Ability()
         decoy:NavSetRandomGoal(500, Vector(math.random(), math.random(), spawnPos.z))
         decoy:SetModel(self:GetOwner():GetProp():GetModel())
         hbMins, hbMaxs = self:GetOwner():GetProp():GetHitBoxBounds(0, 0)
-        decoy:SetCollisionBounds(hbMins, hbMaxs)
+        --decoy:SetCollisionBounds(hbMins, hbMaxs)
         decoy:SetPos(spawnPos)
         decoy:Spawn()
         decoy:Activate()
@@ -30,5 +30,5 @@ function SWEP:Ability()
     end
 
     self:GetOwner():SetAngles(Angle(math.random(), math.random(), 0))
-    self:GetOwner():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+    self:GetOwner():SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
 end
