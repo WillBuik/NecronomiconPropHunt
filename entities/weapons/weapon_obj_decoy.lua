@@ -30,5 +30,5 @@ function SWEP:Ability()
     end
 
     self:GetOwner():SetAngles(Angle(math.random(), math.random(), 0))
-    self:GetOwner():SetCollisionGroup(COLLISION_GROUP_NPC_SCRIPTED)
+    self:GetOwner():SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
 end
