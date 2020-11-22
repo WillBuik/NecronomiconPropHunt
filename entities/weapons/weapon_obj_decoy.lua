@@ -18,7 +18,7 @@ function SWEP:Ability()
     for _ = 1,self.AbilityDecoyCount do
         local decoy = ents.Create("npc_kleiner")
         if not IsValid(decoy) then break end
-        decoy:SetCollisionGroup(COLLISION_GROUP_WORLD)
+        decoy:SetCollisionGroup(COLLISION_GROUP_NPC_SCRIPTED)
         decoy:NavSetRandomGoal(500, Vector(math.random(), math.random(), spawnPos.z))
         decoy:SetModel(self:GetOwner():GetProp():GetModel())
         hbMins, hbMaxs = self:GetOwner():GetProp():GetHitBoxBounds(0, 0)
