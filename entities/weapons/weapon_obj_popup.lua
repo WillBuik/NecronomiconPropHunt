@@ -21,15 +21,12 @@ function SWEP:Ability()
     local ply = self:GetOwner()
 
     for _,v in pairs(targets) do
-        local distanceRatio = v:GetPos():Distance(ply:GetPos()) / self.AbilityRange
-        timer.Simple(distanceRatio * self.AbilityCastTime, function()
-            if IsValid(v) then
-                v:EmitSound("weapons/error.wav")
-                net.Start("clientpopupopen")
-                net.WriteUInt(self.AbilityPopupNumber, 8)
-                net.Send(v)
-            end
-        end)
+        if IsValid(v) and v:GetPos():Distance(ply:GetPos()) < self.AbilityRange then
+            v:EmitSound("weapons/error.wav")
+            net.Start("clientpopupopen")
+            net.WriteUInt(self.AbilityPopupNumber, 8)
+            net.Send(v)
+        end
     end
 end
 
