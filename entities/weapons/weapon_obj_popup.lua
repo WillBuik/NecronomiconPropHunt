@@ -26,6 +26,7 @@ function SWEP:Ability()
             if IsValid(v) then
                 v:EmitSound("weapons/error.wav")
                 net.Start("clientpopupopen")
+                net.WriteUInt(self.AbilityPopupNumber, 8)
                 net.Send(v)
             end
         end)
@@ -34,15 +35,16 @@ end
 
 if CLIENT then
     net.Receive("clientpopupopen", function(len , ply)
-        for _ = 1,self.AbilityPopupNumber do
+        local numPopups = net.ReadUInt(8)
+        for _ = 1,numPopups do
             local popupnumber = math.random (1,10)
 
             if popupnumber == 1 then
                 local popup1 = vgui.Create("DFrame")
-                local pos1 = math.random(1,ScrW()-440)
-                local pos2 = math.random(1,ScrH()-414)
+                local pos1 = math.random(1, ScrW() - 440)
+                local pos2 = math.random(1, ScrH() - 414)
                 popup1:SetPos(pos1,pos2)
-                popup1:SetSize(440,414)
+                popup1:SetSize(440, 414)
                 popup1:ShowCloseButton(false)
                 popup1:MakePopup()
 
@@ -63,10 +65,10 @@ if CLIENT then
                 end
             elseif popupnumber == 2 then
                 local popup2 = vgui.Create("DFrame")
-                local pos3 = math.random(1,ScrW()-750)
-                local pos4 = math.random(1,ScrH()-795)
-                popup2:SetPos(pos3,pos4)
-                popup2:SetSize(750,795)
+                local pos3 = math.random(1,ScrW() - 750)
+                local pos4 = math.random(1,ScrH() - 795)
+                popup2:SetPos(pos3, pos4)
+                popup2:SetSize(750, 795)
                 popup2:ShowCloseButton(false)
                 popup2:MakePopup()
 
@@ -83,8 +85,8 @@ if CLIENT then
                 end
             elseif popupnumber == 3 then
                 local popup3 = vgui.Create("DFrame")
-                local pos5 = math.random(1,ScrW()-790)
-                local pos6 = math.random(1,ScrH()-353)
+                local pos5 = math.random(1,ScrW() - 790)
+                local pos6 = math.random(1,ScrH() - 353)
                 popup3:SetPos(pos5,pos6)
                 popup3:SetSize(790,353)
                 popup3:ShowCloseButton(false)
@@ -107,8 +109,8 @@ if CLIENT then
                 end
             elseif popupnumber == 4 then
                 local popup4 = vgui.Create("DFrame")
-                local pos7 = math.random(1,ScrW()-550)
-                local pos8 = math.random(1,ScrH()-346)
+                local pos7 = math.random(1,ScrW() - 550)
+                local pos8 = math.random(1,ScrH() - 346)
                 popup4:SetPos(pos7,pos8)
                 popup4:SetSize(550,346)
                 popup4:ShowCloseButton(false)
@@ -131,8 +133,8 @@ if CLIENT then
                 end
             elseif popupnumber == 5 then
                 local popup5 = vgui.Create("DFrame")
-                local pos9 = math.random(1,ScrW()-320)
-                local pos10 = math.random(1,ScrH()-220)
+                local pos9 = math.random(1,ScrW() - 320)
+                local pos10 = math.random(1,ScrH() - 220)
                 popup5:SetPos(pos9,pos10)
                 popup5:SetSize(320,220)
                 popup5:ShowCloseButton(false)
@@ -154,8 +156,8 @@ if CLIENT then
                 end
             elseif popupnumber == 6 then
                 local popup6 = vgui.Create("DFrame")
-                local pos11 = math.random(1,ScrW()-600)
-                local pos12 = math.random(1,ScrH()-453)
+                local pos11 = math.random(1,ScrW() - 600)
+                local pos12 = math.random(1,ScrH() - 453)
                 popup6:SetPos(pos11,pos12)
                 popup6:SetSize(600,453)
                 popup6:ShowCloseButton(false)
@@ -178,8 +180,8 @@ if CLIENT then
                 end
             elseif popupnumber == 7 then
                 local popup7 = vgui.Create("DFrame")
-                local pos13 = math.random(1,ScrW()-551)
-                local pos14 = math.random(1,ScrH()-344)
+                local pos13 = math.random(1,ScrW() - 551)
+                local pos14 = math.random(1,ScrH() - 344)
                 popup7:SetPos(pos13,pos14)
                 popup7:SetSize(551,344)
                 popup7:ShowCloseButton(false)
@@ -203,8 +205,8 @@ if CLIENT then
                 end
             elseif popupnumber == 8 then
                 local popup8 = vgui.Create("DFrame")
-                local pos15 = math.random(1,ScrW()-640)
-                local pos16 = math.random(1,ScrH()-360)
+                local pos15 = math.random(1,ScrW() - 640)
+                local pos16 = math.random(1,ScrH() - 360)
                 popup8:SetPos(pos15,pos16)
                 popup8:SetSize(640,360)
                 popup8:ShowCloseButton(false)
@@ -228,8 +230,8 @@ if CLIENT then
                 end
             elseif popupnumber == 9 then
                 local popup9 = vgui.Create("DFrame")
-                local pos17 = math.random(1,ScrW()-472)
-                local pos18 = math.random(1,ScrH()-376)
+                local pos17 = math.random(1,ScrW() - 472)
+                local pos18 = math.random(1,ScrH() - 376)
                 popup9:SetPos(pos17,pos18)
                 popup9:SetSize(472,376)
                 popup9:ShowCloseButton(false)
@@ -252,8 +254,8 @@ if CLIENT then
                 end
             elseif popupnumber == 10 then
                 local popup10 = vgui.Create("DFrame")
-                local pos19 = math.random(1,ScrW()-670)
-                local pos20 = math.random(1,ScrH()-356)
+                local pos19 = math.random(1,ScrW() - 670)
+                local pos20 = math.random(1,ScrH() - 356)
                 popup10:SetPos(pos19,pos20)
                 popup10:SetSize(670,356)
                 popup10:ShowCloseButton(false)
