@@ -114,7 +114,7 @@ function initNoCollide(ent1, ent2)
         return false
     elseif (ent2:Team() == TEAM_PROPS and ent2.GetProp and IsValid(ent2:GetProp()) and ent2:GetProp():GetModel() == "models/player.mdl") then
         return false
-    elseif (ent1:GetClass() == "npc_kleiner" or ent2:GetClass() == "npc_kleiner") do
+    elseif (ent1:GetClass() == "npc_kleiner" or ent2:GetClass() == "npc_kleiner") then
         return false
     end
 )
