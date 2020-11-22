@@ -18,6 +18,7 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("Update Taunt Times")
     util.AddNetworkString("Remove Prop")
     util.AddNetworkString("Prop Roll")
+    util.AddNetworkString("clientpopupopen")
 end)
 
 net.Receive("Class Selection", function(len, ply)
