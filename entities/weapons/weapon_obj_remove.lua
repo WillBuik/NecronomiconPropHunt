@@ -13,5 +13,5 @@ function SWEP:Ability()
     if !IsValid(prop) then
         return "Not looking at anything"
     end
-    propToRemove:Remove()
+    prop:Remove()
 end
