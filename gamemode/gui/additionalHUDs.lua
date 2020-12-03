@@ -52,14 +52,10 @@ if AUTOTAUNT_ENABLED then
         if (!validateProp(ply)) then return end
 
         local radius = 50
-        local timer = 30.00
-        local timerRadius = 0
-
-        if ply.lastTaunt != nil then
-            local tDiff = CurTime() - ply.lastTaunt
-            timer = math.Round(ply.autoTauntInterval - tDiff, 0)
-            timerRadius = (tDiff / ply.autoTauntInterval) * radius
-        end
+        local timer = math.Round(ply:GetNextAutoTauntTime() - CurTime(), 0)
+        local autoTauntInterval = ply:GetNextAutoTauntTime() - ply:GetLastTauntTime()
+        local timeSinceLastTaunt = CurTime() - ply:GetLastTauntTime()
+        local timerRadius = (timeSinceLastTaunt / autoTauntInterval) * radius
 
         local x = ScrW() - paddingL
         local y = ScrH() - padding

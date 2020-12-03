@@ -13,9 +13,6 @@ function GM:PlayerInitialSpawn(ply)
     end
 
     ply:SetCustomCollisionCheck(true)
-    ply.nextTaunt = 0
-    ply.lastTaunt = CurTime()
-    ply.autoTauntInterval = OBJHUNT_AUTOTAUNT_INTERVAL + OBJHUNT_HIDE_TIME
     net.Start("Class Selection")
         -- Just used as a hook
     net.Send(ply)
@@ -95,19 +92,17 @@ function SendTaunt(ply, taunt, pitch)
     if (ply:Team() == TEAM_HUNTERS and !table.HasValue(HUNTER_TAUNTS, taunt)) then return end
 
     local soundDur = SoundDuration(taunt) * (100 / pitch)
-    ply.nextTaunt = CurTime() + soundDur
-    ply.lastTaunt = CurTime()
-    ply.autoTauntInterval = OBJHUNT_AUTOTAUNT_INTERVAL + soundDur -- Offset the interval by the sound dur
+    ply:SetLastTauntTime(CurTime())
+    ply:SetLastTauntDuration(soundDur)
+    ply:SetLastTauntPitch(pitch)
 
     local filter = RecipientFilter();
     filter:AddPlayer(ply);
 
-    net.Start("Taunt Selection")
+    net.Start("Taunt Selection BROADCAST")
         net.WriteString(taunt)
         net.WriteUInt(pitch, 8)
         net.WriteUInt(ply:EntIndex(), 8)
-        net.WriteFloat(ply.lastTaunt)
-        net.WriteFloat(ply.autoTauntInterval)
     net.Broadcast()
 end
 

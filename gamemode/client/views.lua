@@ -123,10 +123,10 @@ end)
 
 -- Show hunters through walls when the props are taunting
 hook.Add("PreDrawHalos", "Prop Taunt Wallhacks", function()
-    if (LocalPlayer():Team() != TEAM_PROPS) then return end
     local ply = LocalPlayer()
-    if (ply.lastTaunt and CurTime() < ply.lastTaunt + ply.lastTauntDuration) then
-        halo.Add(GetLivingPlayers(TEAM_HUNTERS), Color(255,0,0), 0, 0, 1, true, true)
+    if (ply:Team() != TEAM_PROPS) then return end
+    if (CurTime() < ply:GetNextTauntAvailableTime()) then
+    halo.Add(GetLivingPlayers(TEAM_HUNTERS), Color(255,0,0), 0, 0, 1, true, true)
 
         for _, propPly in pairs(GetLivingPlayers(TEAM_PROPS)) do
             if (propPly != ply and propPly.GetProp) then

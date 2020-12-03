@@ -18,31 +18,17 @@ net.Receive("Prop Update", function(length)
     local propHeight = tHitboxMax.z - tHitboxMin.z
     LocalPlayer().propHeight = propHeight
     LocalPlayer().lastPropChange = CurTime()
-    --LocalPlayer().lastTaunt = CurTime()
-    --LocalPlayer().autoTauntInterval = 100
 
     -- initialize stuff here
     if (LocalPlayer().firstProp) then
         LocalPlayer().wantThirdPerson = true
         LocalPlayer().lastPropChange = 0
-        LocalPlayer().nextTaunt = 0
-        LocalPlayer().lastTaunt = CurTime()
-        LocalPlayer().lastTauntDuration = 1
-        LocalPlayer().lastTauntPitch = 100
         LocalPlayer().firstProp = false
-        LocalPlayer().autoTauntInterval = OBJHUNT_AUTOTAUNT_INTERVAL + OBJHUNT_HIDE_TIME
     end
 
 end)
 
 net.Receive("Reset Prop", function(length)
-    -- taunt default
-    LocalPlayer().nextTaunt = 0
-    LocalPlayer().lastTaunt = CurTime()
-    LocalPlayer().lastTauntDuration = 1
-    LocalPlayer().lastTauntPitch = 100
-    LocalPlayer().autoTauntInterval = OBJHUNT_AUTOTAUNT_INTERVAL + OBJHUNT_HIDE_TIME
-
     LocalPlayer():ResetHull()
     LocalPlayer().firstProp       = true
     LocalPlayer().wantThirdPerson = false
@@ -70,29 +56,13 @@ net.Receive("Death Notice", function()
     GAMEMODE:AddDeathNotice(attacker, attackerTeam, "kill", victim, victimTeam)
 end)
 
-net.Receive("Taunt Selection", function()
+net.Receive("Taunt Selection BROADCAST", function()
     local taunt = net.ReadString()
     local pitch = net.ReadUInt(8)
     local id = net.ReadUInt(8)
     local ply = player.GetByID(id)
 
     if not IsValid(ply) then return end
-
-    if (ply == LocalPlayer()) then
-        local soundDur = SoundDuration(taunt) * (100 / pitch)
-        ply.nextTaunt = CurTime() + soundDur
-        ply.lastTaunt = CurTime()
-        ply.lastTauntPitch = pitch
-        ply.lastTauntDuration = soundDur
-        ply.autoTauntInterval = OBJHUNT_AUTOTAUNT_INTERVAL + soundDur
-
-        net.Start("Update Taunt Times")
-            net.WriteUInt(id, 8)
-            net.WriteFloat(ply.nextTaunt)
-            net.WriteFloat(ply.lastTaunt)
-            net.WriteFloat(ply.autoTauntInterval)
-            net.SendToServer()
-    end
 
     local s = Sound(taunt)
 
@@ -117,15 +87,7 @@ net.Receive("Taunt Selection", function()
 end)
 
 net.Receive("AutoTaunt Update", function()
-    local id = net.ReadUInt(8)
-    local ply = player.GetByID(id)
-    local lastTaunt = net.ReadFloat()
-    local autoTauntInterval = net.ReadFloat()
-    if (ply == LocalPlayer()) then
-        ply.lastTaunt = lastTaunt
-        ply.autoTauntInterval = autoTauntInterval
-        hook.Run("AutoTauntHUDRerender")
-    end
+    hook.Run("AutoTauntHUDRerender")
 end)
 
 net.Receive("Player Death", function()

@@ -188,6 +188,11 @@ hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
         v:SetPropAngleSnapped(false)
         v:SetPropRollAngle(0)
 
+        -- taunt data
+        v:SetLastTauntTime(CurTime() + OBJHUNT_HIDE_TIME)
+        v:SetLastTauntDuration(OBJHUNT_AUTOTAUNT_BASE_INTERVAL * (2 + math.random()))
+        v:SetLastTauntPitch(100)
+
         -- freeze all the hunters
         if (v:Team() == TEAM_HUNTERS) then
             v:Freeze(true)

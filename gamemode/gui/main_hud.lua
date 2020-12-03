@@ -123,12 +123,8 @@ local function ObjHUD()
 
     -- TAUNT COOLDOWN GUI
     if (ply:Alive() and (ply:Team() == TEAM_PROPS or ply:Team() == TEAM_HUNTERS)) then
-        -- defaults
-        if (!ply.lastTaunt) then
-            LocalPlayer().lastTaunt = 0
-            LocalPlayer().lastTauntDuration = 1
-            LocalPlayer().lastTauntPitch = 100
-        end
+        local lastTauntTime = ply:GetLastTauntTime()
+        local lastTauntDuration = ply:GetLastTauntDuration()
 
         startY = startY - padding - 16
 
@@ -138,7 +134,7 @@ local function ObjHUD()
         surface.DrawTexturedRect(iconX, startY, 16 , 16)
 
         -- bar
-        local tauntFrac = math.Clamp(CurTime() - ply.lastTaunt , 0, ply.lastTauntDuration) / ply.lastTauntDuration
+        local tauntFrac = math.Clamp(CurTime() - lastTauntTime , 0, lastTauntDuration) / lastTauntDuration
         local tauntColor = TAUNT_BAR_COLOR
 
         local widthOffset = width - (padding * 3) - 16
@@ -150,7 +146,7 @@ local function ObjHUD()
         surface.DrawOutlinedRect(barX, startY, widthOffset, 16)
 
         --text
-        local textToDraw = ply.lastTauntDuration - tauntFrac * ply.lastTauntDuration
+        local textToDraw = lastTauntDuration - tauntFrac * lastTauntDuration
         textToDraw = math.ceil(textToDraw)
         if (textToDraw != 0) then
             surface.SetFont("barHUD")

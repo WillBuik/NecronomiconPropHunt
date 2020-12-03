@@ -33,8 +33,8 @@ OBJHUNT_HIDE_TIME = 30
 -- This enables autotaunt
 AUTOTAUNT_ENABLED = true
 
--- Auto taunting interval in seconds
-OBJHUNT_AUTOTAUNT_INTERVAL = 45
+-- Auto taunting base interval in seconds (we also factor in the length of the taunt
+OBJHUNT_AUTOTAUNT_BASE_INTERVAL = 15
 
 -- The damage hunters will take for shooting the wrong prop
 -- Set this negative if you want dynamic damage (hit 50 damage take 50 damage)

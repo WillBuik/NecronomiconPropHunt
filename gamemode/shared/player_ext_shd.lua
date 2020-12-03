@@ -72,3 +72,35 @@ end
 function plymeta:SetPropRollAngle(angle)
     self:SetNWInt("PropRollAngle", angle)
 end
+
+function plymeta:GetLastTauntTime()
+    return self:GetNWFloat("LastTauntTime", 0)
+end
+
+function plymeta:SetLastTauntTime(time)
+    self:SetNWFloat("LastTauntTime", time)
+end
+
+function plymeta:GetLastTauntDuration()
+    return self:GetNWFloat("LastTauntDuration", 1)
+end
+
+function plymeta:SetLastTauntDuration(dur)
+    self:SetNWFloat("LastTauntDuration", dur)
+end
+
+function plymeta:GetLastTauntPitch()
+    return self:GetNWInt("LastTauntPitch", 100)
+end
+
+function plymeta:SetLastTauntPitch(pitch)
+    self:SetNWInt("LastTauntPitch", pitch)
+end
+
+function plymeta:GetNextTauntAvailableTime()
+    return self:GetLastTauntTime() + self:GetLastTauntDuration()
+end
+
+function plymeta:GetNextAutoTauntTime()
+    return self:GetLastTauntTime() + 1.5 * self:GetLastTauntDuration() + OBJHUNT_AUTOTAUNT_BASE_INTERVAL
+end

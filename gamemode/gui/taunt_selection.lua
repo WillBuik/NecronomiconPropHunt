@@ -7,12 +7,9 @@ local tauntPanel
 local pitchSlider
 
 local function playTaunt(taunt, pitch)
-    if (!LocalPlayer().nextTaunt) then
-        LocalPlayer().nextTaunt = 0
-    end
 
     -- only play if the last taunt has ended
-    if (CurTime() < LocalPlayer().nextTaunt) then return end
+    if (CurTime() < LocalPlayer():GetNextTauntAvailableTime()) then return end
     if (!LocalPlayer():Alive()) then return end
 
     net.Start("Taunt Selection")
@@ -59,7 +56,7 @@ local function tauntSelection()
         pitchSlider:SetMin(TAUNT_MIN_PITCH)
         pitchSlider:SetMax(TAUNT_MAX_PITCH)
         pitchSlider:SetDecimals(0)
-        pitchSlider:SetValue(LocalPlayer().lastTauntPitch)
+        pitchSlider:SetValue(LocalPlayer():GetLastTauntPitch())
         pitchSlider:SetWide(width)
         pitchSlider:SetPos(padding * 2, height + btnHeight + padding * 3)
 

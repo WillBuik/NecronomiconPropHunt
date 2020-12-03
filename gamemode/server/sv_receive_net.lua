@@ -4,6 +4,7 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("Death Notice")
     util.AddNetworkString("Class Selection")
     util.AddNetworkString("Taunt Selection")
+    util.AddNetworkString("Taunt Selection BROADCAST")
     util.AddNetworkString("Help")
     util.AddNetworkString("Round Update")
     util.AddNetworkString("Player Death")
@@ -15,7 +16,6 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("Prop Pitch Enable")
     util.AddNetworkString("Hunter Roll")
     util.AddNetworkString("AutoTaunt Update")
-    util.AddNetworkString("Update Taunt Times")
     util.AddNetworkString("Remove Prop")
     util.AddNetworkString("Prop Roll")
     util.AddNetworkString("Popup Open")
@@ -40,18 +40,6 @@ net.Receive("Selected Prop", function(len, ply)
     local oldHP = ply:GetProp().health
     SetPlayerProp(ply, ent, PROP_CHOSEN_SCALE)
     ply:GetProp().health = oldHP
-end)
-
-net.Receive("Update Taunt Times", function()
-    local id = net.ReadUInt(8)
-    local ply = player.GetByID(id)
-    local nextTaunt = net.ReadFloat()
-    local lastTaunt = net.ReadFloat()
-    local autoTauntInterval = net.ReadFloat()
-
-    ply.nextTaunt = nextTaunt
-    ply.lastTaunt = lastTaunt
-    ply.autoTauntInterval = autoTauntInterval
 end)
 
 --[[ When a player wants to lock world angles on their prop ]]--
