@@ -66,6 +66,11 @@ net.Receive("Taunt Selection BROADCAST", function()
 
     local s = Sound(taunt)
 
+    local soundDur = SoundDuration(taunt) * (100 / pitch)
+    net.Start("Update Taunt Times")
+        net.WriteFloat(soundDur)
+    net.SendToServer()
+
     -- need to delete the gc function so my ents remain
     ply.tauntPatch = CreateSound(ply, s)
     if (ply.tauntPatch.__gc) then
