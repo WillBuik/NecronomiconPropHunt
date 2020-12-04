@@ -87,7 +87,6 @@ local function ObjHUD()
     if (ply:Alive() and ply:Team() == TEAM_PROPS) then
         -- this needs to be here otherwise some people get errors for some unknown reason
         if (ply.viewOrigin == nil or ply.wantThirdPerson == nil) then return end
-        if (ply.lastPropChange == nil) then return end
 
         startY = startY - padding - 16
 
@@ -97,7 +96,7 @@ local function ObjHUD()
         surface.DrawTexturedRect(iconX, startY, 16 , 16)
 
         -- bar
-        local propFrac = math.Clamp(CurTime() - ply.lastPropChange , 0, PROP_CHOOSE_COOLDOWN) / PROP_CHOOSE_COOLDOWN
+        local propFrac = math.Clamp(CurTime() - ply:GetPropLastChange() , 0, PROP_CHOOSE_COOLDOWN) / PROP_CHOOSE_COOLDOWN
         local propColor = LerpColor(propFrac, DEPLETED_COLOR, FULL_COLOR)
 
         local widthOffset = width - (padding * 3) - 16

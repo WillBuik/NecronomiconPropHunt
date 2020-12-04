@@ -102,7 +102,6 @@ end)
 --[[ Adjust the prop roll angle ]]--
 net.Receive("Prop Roll", function(len, ply)
     local rollAngleToAdd = net.ReadInt(16)
-    local propAngle = net.ReadAngle()
     local newRollAngle = (ply:GetPropRollAngle() + rollAngleToAdd + 180) % 360 - 180
     ply:SetPropRollAngle(newRollAngle)
 end)

@@ -259,7 +259,12 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     -- give bigger props a bonus for being big
     ply:SetJumpPower(PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight))
 
-    ply.lastPropChange = os.time()
+    if (ply:GetProp() == ent) then
+        -- In the case of the first Prop let's leave the Last Change Time at 0 so no cooldown
+        ply:SetPropLastChange(0)
+    else
+        ply:SetPropLastChange(CurTime())
+    end
 
     local volume = (tHitboxMax.x - tHitboxMin.x) * (tHitboxMax.y - tHitboxMin.y) * (tHitboxMax.z - tHitboxMin.z)
 

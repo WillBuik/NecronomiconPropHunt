@@ -73,6 +73,14 @@ function plymeta:SetPropRollAngle(angle)
     self:SetNWInt("PropRollAngle", angle)
 end
 
+function plymeta:GetPropLastChange()
+    return self:GetNWFloat("PropLastChange", 0)
+end
+
+function plymeta:SetPropLastChange(time)
+    self:SetNWInt("PropLastChange", time)
+end
+
 function plymeta:GetLastTauntTime()
     return self:GetNWFloat("LastTauntTime", 0)
 end

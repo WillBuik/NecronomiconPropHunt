@@ -17,20 +17,17 @@ net.Receive("Prop Update", function(length)
     -- prop height for views, change time for cooldown
     local propHeight = tHitboxMax.z - tHitboxMin.z
     LocalPlayer().propHeight = propHeight
-    LocalPlayer().lastPropChange = CurTime()
 
-    -- initialize stuff here
-    if (LocalPlayer().firstProp) then
+    -- initialize third person if first prop
+    local firstProp = LocalPlayer():GetPropLastChange() == 0
+    if (firstProp) then
         LocalPlayer().wantThirdPerson = true
-        LocalPlayer().lastPropChange = 0
-        LocalPlayer().firstProp = false
     end
 
 end)
 
 net.Receive("Reset Prop", function(length)
     LocalPlayer():ResetHull()
-    LocalPlayer().firstProp       = true
     LocalPlayer().wantThirdPerson = false
 end)
 
@@ -67,7 +64,7 @@ net.Receive("Taunt Selection BROADCAST", function()
     if (ply == LocalPlayer()) then
         local soundDur = SoundDuration(taunt) * (100 / pitch)
         net.Start("Taunt Duration")
-        net.WriteFloat(soundDur)
+            net.WriteFloat(soundDur)
         net.SendToServer()
     end
 

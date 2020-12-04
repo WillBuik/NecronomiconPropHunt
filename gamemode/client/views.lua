@@ -71,8 +71,8 @@ local function stencilColor(ply, ent)
     if (FindSpotForProp(ply, ent) == nil) then return BAD_HOVER_COLOR end
 
     -- cooldown on switching props
-    if (ply.lastPropChange and CurTime() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then
-        local frac = math.Clamp(CurTime() - ply.lastPropChange , 0, PROP_CHOOSE_COOLDOWN) / PROP_CHOOSE_COOLDOWN
+    if (CurTime() < ply:GetPropLastChange() + PROP_CHOOSE_COOLDOWN) then
+        local frac = math.Clamp(CurTime() - ply:GetPropLastChange() , 0, PROP_CHOOSE_COOLDOWN) / PROP_CHOOSE_COOLDOWN
         frac = frac / 2
 
         return LerpColor(frac, BAD_HOVER_COLOR, GOOD_HOVER_COLOR)
@@ -110,7 +110,7 @@ end)
 hook.Add("KeyPress", "New Player Use", function(ply, key)
     if (ply:Team() != TEAM_PROPS) then return end
     if (key == IN_USE) then
-        if (!ply.lastPropChange or os.time() - ply.lastPropChange < PROP_CHOOSE_COOLDOWN) then return end
+        if (CurTime() < ply:GetPropLastChange() + PROP_CHOOSE_COOLDOWN) then return end
         local prop = getViewEnt(ply)
         local sColor = stencilColor(LocalPlayer(), prop)
         if (sColor == GOOD_HOVER_COLOR) then
