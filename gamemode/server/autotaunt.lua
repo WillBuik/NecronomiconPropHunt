@@ -30,6 +30,9 @@ if AUTOTAUNT_ENABLED then
         local players = team.GetPlayers(TEAM_PROPS)
         for _,ply in pairs(players) do
 
+            ply:SetLastTauntTime(CurTime() + OBJHUNT_HIDE_TIME +  OBJHUNT_AUTOTAUNT_BASE_INTERVAL * (1 + math.random()))
+            ply:SetLastTauntDuration(1)
+
             net.Start("AutoTaunt Update")
             net.Send(ply)
         end
