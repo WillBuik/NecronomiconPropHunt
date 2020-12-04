@@ -86,7 +86,7 @@ end
 
 -- [[ Taunts ]] --
 function SendTaunt(ply, taunt, pitch)
-    if (CurTime() < ply.nextTaunt) then return end
+    if (CurTime() < ply:GetNextTauntAvailableTime()) then return end
     if (!ply:Alive()) then return end
     if (ply:Team() == TEAM_PROPS and !table.HasValue(PROP_TAUNTS, taunt)) then return end
     if (ply:Team() == TEAM_HUNTERS and !table.HasValue(HUNTER_TAUNTS, taunt)) then return end
