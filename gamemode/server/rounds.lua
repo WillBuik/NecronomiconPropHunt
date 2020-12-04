@@ -190,7 +190,7 @@ hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
 
         -- taunt data
         v:SetLastTauntTime(CurTime() + OBJHUNT_HIDE_TIME)
-        v:SetLastTauntDuration(OBJHUNT_AUTOTAUNT_BASE_INTERVAL * (2 + math.random()))
+        v:SetLastTauntDuration(OBJHUNT_AUTOTAUNT_BASE_INTERVAL * math.random())
         v:SetLastTauntPitch(100)
 
         -- freeze all the hunters

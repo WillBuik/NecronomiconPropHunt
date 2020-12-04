@@ -67,7 +67,7 @@ net.Receive("Taunt Selection BROADCAST", function()
     local s = Sound(taunt)
 
     local soundDur = SoundDuration(taunt) * (100 / pitch)
-    net.Start("Update Taunt Times")
+    net.Start("Taunt Duration")
         net.WriteFloat(soundDur)
     net.SendToServer()
 
