@@ -92,6 +92,8 @@ function SendTaunt(ply, taunt, pitch)
     if (ply:Team() == TEAM_HUNTERS and !table.HasValue(HUNTER_TAUNTS, taunt)) then return end
 
     local soundDur = SoundDuration(taunt) * (100 / pitch)
+    print(SoundDuration(taunt))
+    ply.nextTaunt = 0
     ply:SetLastTauntTime(CurTime())
     ply:SetLastTauntDuration(soundDur)
     ply:SetLastTauntPitch(pitch)

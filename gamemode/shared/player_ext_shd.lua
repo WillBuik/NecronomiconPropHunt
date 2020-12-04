@@ -102,5 +102,5 @@ function plymeta:GetNextTauntAvailableTime()
 end
 
 function plymeta:GetNextAutoTauntTime()
-    return self:GetLastTauntTime() + self:GetLastTauntDuration() //+ OBJHUNT_AUTOTAUNT_BASE_INTERVAL
+    return self:GetLastTauntTime() + 1.5 * self:GetLastTauntDuration() + OBJHUNT_AUTOTAUNT_BASE_INTERVAL
 end
