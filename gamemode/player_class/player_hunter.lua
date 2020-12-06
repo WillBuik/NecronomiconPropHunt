@@ -19,7 +19,7 @@ PLAYER.UnDuckSpeed       = 0.1
 function PLAYER:Loadout()
 
     self.Player:RemoveAllAmmo()
-    self.Player:GiveAmmo(256,    "Pistol", true)
+    self.Player:GiveAmmo(256, "Pistol", true)
     self.Player:GiveAmmo(256, "SMG1")
     self.Player:GiveAmmo(64, "Buckshot")
     self.Player:GiveAmmo(24, "357")
@@ -32,8 +32,8 @@ function PLAYER:Loadout()
     self.Player:Give("item_ar2_grenade")
     self.Player:Give("weapon_frag")
     self.Player:Give("weapon_357")
-    self.Player:Give("weapon_obj_tauntgranade")
-    self.Player:Give("weapon_obj_tauntseeker")
+    self.Player:Give("weapon_hunter_special_tauntgranade")
+    self.Player:Give("weapon_hunter_special_tauntseeker")
 
 end
 

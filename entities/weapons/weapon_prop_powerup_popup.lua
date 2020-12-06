@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_obj_base"
+SWEP.Base = "weapon_prop_powerup_base"
 SWEP.Name = "Popup"
 SWEP.PrintName = "Popup"
 

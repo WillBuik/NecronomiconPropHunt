@@ -147,12 +147,12 @@ TEXT_COLOR = Color(255, 255, 255, 255)
 --[[================]]--
 
 ABILITIES = {
-    "weapon_obj_cloak",
-    "weapon_obj_disguise",
-    "weapon_obj_remove",
-    "weapon_obj_playdead",
-    "weapon_obj_stack",
-    "weapon_obj_popup"
+    "weapon_prop_powerup_cloak",
+    "weapon_prop_powerup_disguise",
+    "weapon_prop_powerup_remove",
+    "weapon_prop_powerup_playdead",
+    "weapon_prop_powerup_stack",
+    "weapon_prop_powerup_popup"
 --     "weapon_obj_decoy"
 }
 
