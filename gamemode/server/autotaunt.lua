@@ -21,10 +21,10 @@ if AUTOTAUNT_ENABLED then
         timer.Create("AutoTauntTimer", 0.1, 0, runAutoTaunter)
     end
 
-    hook.Add("Initialize", "Set Map Time",  function ()
-        mapStartTime = os.time()
-        CreateAutoTauntTimer()
-    end)
+--     hook.Add("Initialize", "Set Map Time",  function ()
+--         mapStartTime = os.time()
+--         CreateAutoTauntTimer()
+--     end)
 
     hook.Add("OBJHUNT_RoundStart", "Restart the Timer", function ()
         local players = team.GetPlayers(TEAM_PROPS)
