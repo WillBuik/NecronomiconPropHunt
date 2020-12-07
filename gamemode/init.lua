@@ -141,16 +141,12 @@ local function BroadcastPlayerDeath(ply)
     SafeRemoveEntityDelayed(ragdoll, 5)
 end
 
-
--- how damage to props is handled
-local function HurtProp(ply, dmg, attacker)
-    if (attacker:Alive()) then
-        local gain = math.min(ply:Health(), dmg)
-        gain = gain / 2
-        local newHP = math.Clamp(attacker:Health() + gain, 0, 100)
-        attacker:SetHealth(newHP)
-    end
-
+-- NOTE: damage from hunters should go through HurtProp, which first rewards
+-- the attacker based on damage dealt and then calls this procedure.  This
+-- procedure merely:
+--   - deals the damage
+--   - performs prop-specific on-death effects if new health <= 0
+function HurtPropAndCheckForDeath(ply, dmg, attacker)
     ply:SetHealth(ply:Health() - dmg)
     if (ply:Health() < 1 and ply:Alive()) then
         ply:KillSilent()
@@ -167,6 +163,18 @@ local function HurtProp(ply, dmg, attacker)
         attacker:AddFrags(1)
         ply:AddDeaths(1)
     end
+end
+
+-- how damage to props is handled
+local function HurtProp(ply, dmg, attacker)
+    if (attacker:Alive()) then
+        local gain = math.min(ply:Health(), dmg)
+        gain = gain / 2
+        local newHP = math.Clamp(attacker:Health() + gain, 0, 100)
+        attacker:SetHealth(newHP)
+    end
+
+    HurtPropAndCheckForDeath(ply, dmg, attacker)
 end
 
 -- new damage system
