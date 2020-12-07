@@ -61,8 +61,8 @@ net.Receive("Taunt Selection BROADCAST", function()
 
     if not IsValid(ply) then return end
 
-    if (ply == LocalPlayer()) then
-        local soundDur = SoundDuration(taunt) * (100 / pitch)
+    local soundDur = SoundDuration(taunt) * (100 / pitch)
+    if (soundDur > 0) then
         net.Start("Taunt Duration")
             net.WriteFloat(soundDur)
         net.SendToServer()
