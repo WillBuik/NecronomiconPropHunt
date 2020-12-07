@@ -188,11 +188,6 @@ hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
         v:SetPropAngleSnapped(false)
         v:SetPropRollAngle(0)
 
-        -- taunt data
-        v:SetLastTauntTime(0)
-        v:SetLastTauntDuration(1)
-        v:SetLastTauntPitch(100)
-
         -- freeze all the hunters
         if (v:Team() == TEAM_HUNTERS) then
             v:Freeze(true)
@@ -208,6 +203,11 @@ hook.Add("OBJHUNT_RoundEnd", "Handle props winning", function()
         v:PrintMessage(HUD_PRINTCENTER, round.winner .. " Win!")
         -- give everyone god mode until round starts again
         v:GodEnable()
+
+        -- taunt data
+        v:SetLastTauntTime(0)
+        v:SetLastTauntDuration(1)
+        v:SetLastTauntPitch(100)
     end
 end)
 
