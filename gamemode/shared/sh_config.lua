@@ -156,6 +156,22 @@ ABILITIES = {
 --     "weapon_obj_decoy"
 }
 
+--[[=============]]--
+--[[BREATH CONFIG]]--
+--[[=============]]--
+
+-- Button to hold
+BREATH_BUTTON = KEY_LSHIFT
+
+-- Damage suffered immediately upon pressing BREATH_BUTTON
+BREATH_INIT_HEALTH_PENALTY = 2
+
+-- Damage suffered periodically while holding your breath, and how often (in
+-- seconds) to deal it.  The first periodic penalty happens
+-- BREATH_PERIODIC_HEALTH_PENALTY_RATE after pressing BREATH_BUTTON.
+BREATH_PERIODIC_HEALTH_PENALTY = 1
+BREATH_PERIODIC_HEALTH_PENALTY_RATE = 0.5
+
 --[[============]]--
 --[[TAUNT CONFIG]]--
 --[[============]]--

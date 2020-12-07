@@ -2,17 +2,21 @@ if AUTOTAUNT_ENABLED then
 
     local function runAutoTaunter()
         local players = team.GetPlayers(TEAM_PROPS)
-        local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
-        local pitch = math.random() * pRange + TAUNT_MIN_PITCH
-
-        --Render the Auto-taunt HUD
+        local now = CurTime()
 
         for _,ply in pairs(players) do
-            local taunt = table.Random(PROP_TAUNTS)
 
-            if ply:Alive() and ply:Team() == TEAM_PROPS and CurTime() > ply:GetNextAutoTauntTime() then
-                --Send the Taunt to the player
-                SendTaunt(ply, taunt, pitch)
+            if ply:Alive() and ply:Team() == TEAM_PROPS then
+
+                doHoldBreath(ply, now)
+
+                if now > ply:GetNextAutoTauntTime() then
+                    local taunt = table.Random(PROP_TAUNTS)
+                    local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
+                    local pitch = math.random() * pRange + TAUNT_MIN_PITCH
+                    --Send the Taunt to the player
+                    SendTaunt(ply, taunt, pitch)
+                end
             end
         end
     end
