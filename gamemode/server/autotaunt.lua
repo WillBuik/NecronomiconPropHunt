@@ -23,8 +23,6 @@ if AUTOTAUNT_ENABLED then
 
     hook.Add("Initialize", "Set Map Time",  function ()
         mapStartTime = os.time()
-        ply:SetLastTauntTime(CurTime() + OBJHUNT_HIDE_TIME +  OBJHUNT_AUTOTAUNT_BASE_INTERVAL * (1 + math.random()))
-        ply:SetLastTauntDuration(1)
         CreateAutoTauntTimer()
     end)
 
