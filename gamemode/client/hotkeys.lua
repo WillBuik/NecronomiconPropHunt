@@ -47,12 +47,12 @@ hook.Add("KeyRelease", "ReleaseShiftRollHunter", function(ply, key)
     end
 end)
 
-function GM:PlayerBindPress(ply, bind, pressed) {
+function GM:PlayerBindPress(ply, bind, pressed)
     local rollIncriment = 15
     if (ply:Team() == TEAM_PROPS and
         ply:Alive() and
         IsValid(ply:GetProp()) and 
-        and pressed
+        pressed
     ) then
         if (bind == "invnext") then
             net.Start("Prop Roll")
