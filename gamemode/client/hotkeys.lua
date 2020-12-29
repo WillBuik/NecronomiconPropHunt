@@ -48,7 +48,6 @@ hook.Add("KeyRelease", "ReleaseShiftRollHunter", function(ply, key)
 end)
 
 function GM:PlayerBindPress(ply, bind, pressed)
-    local rollIncriment = 15
     if (ply:Team() == TEAM_PROPS and
         ply:Alive() and
         IsValid(ply:GetProp()) and 
@@ -66,4 +65,4 @@ function GM:PlayerBindPress(ply, bind, pressed)
             return true
         end
     end
-}
+end
