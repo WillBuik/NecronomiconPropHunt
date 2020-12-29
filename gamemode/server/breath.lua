@@ -60,13 +60,12 @@ if AUTOTAUNT_ENABLED then
             ply:SetLastTauntTime(ply:GetLastTauntTime() + delta)
             ply.BreathHoldOffsetTime = now
 
-            local hurt = 0
-            while ply.LastSuffocationTime + BREATH_PERIODIC_HEALTH_PENALTY_RATE < now do
-                hurt = hurt + BREATH_PERIODIC_HEALTH_PENALTY
-                ply.LastSuffocationTime = ply.LastSuffocationTime + BREATH_PERIODIC_HEALTH_PENALTY_RATE
+            local suffocationCount = math.floor((now - ply.LastSuffocationTime) / BREATH_PERIODIC_HEALTH_PENALTY_RATE)
+            if suffocationCount > 0 then
+                local hurt = suffocationCount * BREATH_PERIODIC_HEALTH_PENALTY
+                ply.LastSuffocationTime = ply.LastSuffocationTime + (suffocationCount * BREATH_PERIODIC_HEALTH_PENALTY_RATE)
+                HurtPropAndCheckForDeath(ply, hurt, ply)
             end
-
-            HurtPropAndCheckForDeath(ply, hurt, ply)
         end
 
     end
