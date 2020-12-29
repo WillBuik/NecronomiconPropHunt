@@ -86,6 +86,9 @@ OBJHUNT_TEAM_PROPS_CAN_MOVE_PROPS = true
 -- Increase the default prop jump height to make it so props can get on tables
 PROP_DEFAULT_JUMP_POWER = 260
 
+-- The incriment of the prop roll for each tick on the mouse wheel
+PROP_ROLL_INCRIMENT = 15
+
 -- entities that are capable of being chosen by props
 USABLE_PROP_ENTITIES = {
     "prop_physics",

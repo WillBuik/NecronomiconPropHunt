@@ -47,17 +47,23 @@ hook.Add("KeyRelease", "ReleaseShiftRollHunter", function(ply, key)
     end
 end)
 
-hook.Add("InputMouseApply", "propRoll", function(cmd, x, y, ang)
-    local rollAngle = cmd:GetMouseWheel() * 15
-    if ( LocalPlayer():Team() == TEAM_PROPS and
-         LocalPlayer():Alive() and
-         IsValid(LocalPlayer():GetProp()) and
-         rollAngle != 0
+function GM:PlayerBindPress(ply, bind, pressed) {
+    local rollIncriment = 15
+    if (ply:Team() == TEAM_PROPS and
+        ply:Alive() and
+        IsValid(ply:GetProp()) and 
+        and pressed
     ) then
-        net.Start("Prop Roll")
-            net.WriteInt(rollAngle, 16)
-        net.SendToServer()
-        cmd:SetMouseWheel(0)
-        return true
+        if (bind == "invnext") then
+            net.Start("Prop Roll")
+                net.WriteInt(PROP_ROLL_INCRIMENT, 16)
+                net.SendToServer()
+            return true
+        elseif (bind == "invprev") then
+            net.Start("Prop Roll")
+            net.WriteInt(-1 * PROP_ROLL_INCRIMENT, 16)
+            net.SendToServer()
+            return true
+        end
     end
-end)
+}
