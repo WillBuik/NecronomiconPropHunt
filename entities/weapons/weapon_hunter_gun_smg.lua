@@ -20,16 +20,14 @@ SWEP.Primary.Delay         = 0.07
 SWEP.Primary.Cone          = 0.02
 SWEP.Primary.ClipSize      = 45
 SWEP.Primary.Automatic     = true
-SWEP.Primary.DefaultClip    = 45
-SWEP.Primary.Ammo           = "smg1"
-SWEP.Secondary.Ammo         = "SMG1_Grenade"
-SWEP.Primary.Sound          = Sound("Weapon_SMG1.Single")
 
-
+SWEP.Primary.DefaultClip   = 45
+SWEP.Primary.Ammo          = "smg1"
+SWEP.Secondary.Ammo        = "SMG1_Grenade"
+SWEP.Primary.Sound         = Sound("Weapon_SMG1.Single")
 SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/c_smg1.mdl"
 SWEP.WorldModel            = "models/weapons/v_smg1.mdl"
-
 
 local reloadfix = 0
 local canglf = 1
@@ -38,8 +36,7 @@ local up = 0
 local firclik = 1
 local wai = 0
 
-
-//Now for yet another God Damn workaround
+-- Now for yet another God Damn workaround
 function SWEP:Think()
    if ( self:GetClass() == "hl2smg" && Entity( 1 ):KeyDown( IN_USE ) && not (Entity( 1 ):KeyDown( IN_SPEED ))) then
       if (up == 0 && canglf == 1) then
@@ -54,13 +51,8 @@ function SWEP:Think()
                         local ent = ents.Create( "grenade_ar2" )
                         self:TakeSecondaryAmmo(1)
                         if ( IsValid( ent ) ) then
-                            if (self:GetIronSights()) then
-                                ent:SetPos(self:GetOwner():EyePos() + ( self:GetOwner():GetAimVector() * 16 ))
-                                ent:SetVelocity(self:GetOwner():GetAimVector() * 1200)
-                            else
-                                ent:SetPos( self:GetOwner():GetShootPos() + ang:Forward() + ang:Right() * 4 - ang:Up())
-                                ent:SetVelocity(self:GetOwner():GetAimVector() * 1000)
-                            end
+                     ent:SetPos( self:GetOwner():GetShootPos() + ang:Forward() + ang:Right() * 4 - ang:Up())
+                     ent:SetVelocity(self:GetOwner():GetAimVector() * 1000)
                         ent:SetAngles( ang )
                         ent:SetOwner( self.GetOwner() )
                         ent:Spawn()
