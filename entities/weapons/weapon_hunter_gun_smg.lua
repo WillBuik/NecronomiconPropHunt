@@ -21,6 +21,9 @@ SWEP.Primary.Cone          = 0.02
 SWEP.Primary.ClipSize      = 45
 SWEP.Primary.Automatic     = true
 
+SWEP.Secondary.ClipSize     = 5
+SWEP.Secondary.DefaultClip  = 5
+
 SWEP.Primary.DefaultClip   = 45
 SWEP.Primary.Ammo          = "smg1"
 SWEP.Secondary.Ammo        = "SMG1_Grenade"
