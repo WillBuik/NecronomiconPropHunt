@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-DEFINE_BASECLASS "weapon_tttbase"
+DEFINE_BASECLASS "weapon_hunter_gun_base"
 
 SWEP.HoldType              = "shotgun"
 
@@ -15,7 +15,6 @@ if CLIENT then
 end
 
 SWEP.Base                  = "weapon_hunter_gun_base"
-
 
 SWEP.Primary.Ammo          = "Buckshot"
 SWEP.Primary.Damage        = 11
@@ -33,7 +32,6 @@ SWEP.Primary.Recoil        = 7
 SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/v_shotgun.mdl"
 SWEP.WorldModel            = "models/weapons/w_shotgun.mdl"
-
 
 function SWEP:SetupDataTables()
    self:NetworkVar("Bool", 0, "Reloading")
