@@ -3,13 +3,13 @@ AddCSLuaFile()
 SWEP.HoldType              = "smg"
 
 if CLIENT then
-   SWEP.PrintName          = "SMG"
-   SWEP.Slot               = 3
+    SWEP.PrintName          = "SMG"
+    SWEP.Slot               = 3
 
-   SWEP.ViewModelFlip      = false
-   SWEP.ViewModelFOV       = 54
+    SWEP.ViewModelFlip      = false
+    SWEP.ViewModelFOV       = 54
 
-   SWEP.IconLetter         = "n"
+    SWEP.IconLetter         = "n"
 end
 
 SWEP.Base                  = "weapon_hunter_gun_base"
@@ -99,5 +99,3 @@ function SWEP:Think()
     self:Think2()
     self:CalculateRatios(CLIENT)
 end
-
-
