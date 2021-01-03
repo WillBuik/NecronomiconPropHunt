@@ -10,6 +10,11 @@ SWEP.AbilityModelScaleTimes = 10
 SWEP.AbilityDuration = math.log(SWEP.AbilityModelScaleTimes)
 SWEP.AbilityDescription = "Creates an explosion after $AbilityDuration seconds that kills nearby props and the user."
 
+SWEP.WepSelectIcon = -1;
+SWEP.DrawWeaponInfoBox = false;
+
+function SWEP:DrawWeaponSelection() end
+
 function SWEP:Ability()
     if CLIENT then return end
 

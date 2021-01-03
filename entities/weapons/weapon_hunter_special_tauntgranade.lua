@@ -29,6 +29,11 @@ SWEP.AbilityRange = 300
 
 SWEP.Secondary.Ammo = "none"
 
+SWEP.WepSelectIcon = -1;
+SWEP.DrawWeaponInfoBox = false;
+
+function SWEP:DrawWeaponSelection() end
+
 function SWEP:Initialize()
     self:SetWeaponHoldType(self.HoldType)
 end
