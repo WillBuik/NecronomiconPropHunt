@@ -27,11 +27,14 @@ function SWEP:Ability()
         explode:Fire( "Explode", 0, 0 )
         explode:EmitSound( "BaseExplosionEffect.Sound", 100, 100 )
     end)
+
+    self:AbilityTimerIfValidOwnerAndAlive(1, 1, true, function()
+        self:GetOwner():Kill()
+    end)
 end
 
 function SWEP:AbilityCleanup()
     if IsValid(self:GetOwner()) then
-        self:GetOwner():Kill()
         self:GetOwner():SetModelScale(1, 0.1)
         self:GetOwner():SetColor(Color( 255, 255, 255, 255))
     end
