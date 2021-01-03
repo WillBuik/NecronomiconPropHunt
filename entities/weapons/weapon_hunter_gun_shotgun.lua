@@ -63,13 +63,12 @@ function SWEP:StartReload()
       return false
    end
 
-   local wep = self
-
-   if wep:Clip1() >= self.Primary.ClipSize then
+   if self:Clip1() >= self.Primary.ClipSize then
       return false
    end
 
-   wep:SendWeaponAnim(ACT_SHOTGUN_RELOAD_START)
+   self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_START)
+   self:EmitSound("Weapon_SMG1.Double")
 
    self:SetReloadTimer(CurTime() + wep:SequenceDuration())
 
@@ -99,6 +98,7 @@ end
 function SWEP:FinishReload()
    self:SetReloading(false)
    self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH)
+   self:StopSound("Weapon_SMG1.Double")
 
    self:SetReloadTimer(CurTime() + self:SequenceDuration())
 end
