@@ -33,6 +33,7 @@ SWEP.ViewModel             = "models/weapons/c_smg1.mdl"
 SWEP.WorldModel            = "models/weapons/w_smg1.mdl"
 
 function SWEP:SecondaryAttack()
+    print(self:GetOwner():GetAmmoCount("SMG1_Grenade"))
     if self:GetOwner():GetAmmoCount("SMG1_Grenade") > 0 or CLIENT then return end
     local ang = self:GetOwner():EyeAngles()
     local ent = ents.Create( "grenade_ar2" )
