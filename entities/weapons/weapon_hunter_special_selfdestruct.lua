@@ -3,7 +3,7 @@ AddCSLuaFile()
 SWEP.Base = "weapon_prop_powerup_base"
 SWEP.Name = "Self-Destruct"
 SWEP.PrintName = "SELF-DESRUCT"
-SWEP.Slot = 5
+SWEP.Slot = 4
 SWEP.SlotPos = 5
 SWEP.AbilitySound = {"vo/npc/male01/runforyourlife01.wav", "vo/canals/female01/gunboat_farewell.wav", "vo/canals/male01/stn6_incoming.wav"}
 SWEP.AbilityModelScaleTimes = 10
@@ -26,7 +26,7 @@ function SWEP:Ability()
         explode:SetPos(self:GetOwner():GetPos())
         explode:SetOwner(self:GetOwner())
         explode:Spawn()
-        explode:SetKeyValue("iMagnitude", "256")
+        explode:SetKeyValue("iMagnitude", "200")
         explode:Fire( "Explode", 0, 0 )
         explode:EmitSound( "BaseExplosionEffect.Sound", 100, 100 )
     end)
