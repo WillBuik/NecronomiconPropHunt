@@ -19,6 +19,7 @@ PLAYER.UnDuckSpeed       = 0.1
 function PLAYER:Loadout()
 
     self.Player:RemoveAllAmmo()
+    
     self.Player:Give("weapon_crowbar")
 
     if (math.random() > 0.5) then

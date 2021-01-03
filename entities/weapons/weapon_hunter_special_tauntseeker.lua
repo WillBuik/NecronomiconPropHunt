@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+SWEP.Base = "weapon_base"
+
 SWEP.Name = "Taunt Seeker"
 SWEP.PrintName = "TAUNT SEEKER"
 SWEP.DrawAmmo = true
