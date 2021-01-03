@@ -38,21 +38,21 @@ local wai = 0
 
 -- Now for yet another God Damn workaround
 function SWEP:Think()
-   if ( self:GetClass() == "hl2smg" && Entity( 1 ):KeyDown( IN_USE ) && not (Entity( 1 ):KeyDown( IN_SPEED ))) then
-      if (up == 0 && canglf == 1) then
+    if ( self:GetClass() == "hl2smg" && Entity( 1 ):KeyDown( IN_USE ) && not (Entity( 1 ):KeyDown( IN_SPEED ))) then
+        if (up == 0 && canglf == 1) then
             self:EmitSound("Weapon_smg_gl1")
-                up = 1
-            end
-            self:SetNextPrimaryFire(CurTime() + 0.1)
-            if (( Entity( 1 ):GetAmmoCount( 9 ) ) > 0) then
-                if (Entity( 1 ):KeyDown( IN_ATTACK )) then
-                    if (canglf == 1 && SERVER) then
-                        local ang = self:GetOwner():EyeAngles()
-                        local ent = ents.Create( "grenade_ar2" )
-                        self:TakeSecondaryAmmo(1)
-                        if ( IsValid( ent ) ) then
-                     ent:SetPos( self:GetOwner():GetShootPos() + ang:Forward() + ang:Right() * 4 - ang:Up())
-                     ent:SetVelocity(self:GetOwner():GetAimVector() * 1000)
+            up = 1
+        end
+        self:SetNextPrimaryFire(CurTime() + 0.1)
+        if (( Entity( 1 ):GetAmmoCount( 9 ) ) > 0) then
+            if (Entity( 1 ):KeyDown( IN_ATTACK )) then
+                if (canglf == 1 && SERVER) then
+                    local ang = self:GetOwner():EyeAngles()
+                    local ent = ents.Create( "grenade_ar2" )
+                    self:TakeSecondaryAmmo(1)
+                    if ( IsValid( ent ) ) then
+                        ent:SetPos( self:GetOwner():GetShootPos() + ang:Forward() + ang:Right() * 4 - ang:Up())
+                        ent:SetVelocity(self:GetOwner():GetAimVector() * 1000)
                         ent:SetAngles( ang )
                         ent:SetOwner( self.GetOwner() )
                         ent:Spawn()
