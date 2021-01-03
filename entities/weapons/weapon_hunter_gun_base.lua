@@ -5,7 +5,7 @@ AddCSLuaFile()
 ---- YE OLDE SWEP STUFF
 
 if CLIENT then
-   SWEP.DrawCrosshair   = false
+   SWEP.DrawCrosshair   = true
    SWEP.ViewModelFOV    = 82
    SWEP.ViewModelFlip   = true
    SWEP.CSMuzzleFlashes = true
@@ -40,7 +40,7 @@ SWEP.Secondary.ClipMax      = -1
 
 SWEP.StoredAmmo = 0
 
-SWEP.DeploySpeed = 1.4
+SWEP.DeploySpeed = 1
 
 SWEP.PrimaryAnim = ACT_VM_PRIMARYATTACK
 SWEP.ReloadAnim = ACT_VM_RELOAD
