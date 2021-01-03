@@ -23,6 +23,7 @@ SWEP.Primary.Ammo = "AR2AltFire"
 SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
 SWEP.Primary.Delay = 1.5
+SWEP.Primary.AutoReload = true
 
 SWEP.AbilityAccuracy = 50
 
