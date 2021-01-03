@@ -36,8 +36,6 @@ SWEP.WorldModel            = "models/weapons/w_shotgun.mdl"
 function SWEP:SetupDataTables()
    self:NetworkVar("Bool", 0, "Reloading")
    self:NetworkVar("Float", 0, "ReloadTimer")
-
-   return BaseClass.SetupDataTables(self)
 end
 
 function SWEP:Reload()
