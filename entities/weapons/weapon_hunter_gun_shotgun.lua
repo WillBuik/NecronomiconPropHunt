@@ -30,7 +30,7 @@ SWEP.Primary.Recoil        = 7
 
 
 SWEP.UseHands              = true
-SWEP.ViewModel             = "models/weapons/v_shotgun.mdl"
+SWEP.ViewModel             = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel            = "models/weapons/w_shotgun.mdl"
 
 function SWEP:SetupDataTables()
