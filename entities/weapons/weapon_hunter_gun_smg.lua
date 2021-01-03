@@ -33,10 +33,10 @@ SWEP.ViewModel             = "models/weapons/c_smg1.mdl"
 SWEP.WorldModel            = "models/weapons/w_smg1.mdl"
 
 function SWEP:SecondaryAttack()
-    if !self:CanSecondaryAttack() or CLIENT then return end
+    if self:GetOwner():GetAmmoCount("SMG1_Grenade") > 0 or CLIENT then return end
     local ang = self:GetOwner():EyeAngles()
     local ent = ents.Create( "grenade_ar2" )
-    self:TakeSecondaryAmmo(1)
+    self:GetOwner():RemoveAmmo( 1, "SMG1_Grenade" )
     if ( IsValid( ent ) ) then
         ent:SetPos( self:GetOwner():GetShootPos() + ang:Forward() + ang:Right() * 4 - ang:Up())
         ent:SetVelocity(self:GetOwner():GetAimVector() * 1000)
