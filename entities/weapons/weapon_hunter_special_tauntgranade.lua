@@ -4,7 +4,7 @@ SWEP.Name = "Taunt Grenade"
 SWEP.PrintName = "TAUNT GRENADE"
 SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = true
-SWEP.Slot = 4
+SWEP.Slot = 3
 SWEP.SlotPos = 4
 
 SWEP.Weight = 5

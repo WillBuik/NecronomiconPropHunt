@@ -4,7 +4,7 @@ SWEP.HoldType              = "smg"
 
 if CLIENT then
     SWEP.PrintName          = "SMG"
-    SWEP.Slot               = 3
+    SWEP.Slot               = 2
 
     SWEP.ViewModelFlip      = false
     SWEP.ViewModelFOV       = 54

@@ -4,7 +4,7 @@ SWEP.HoldType              = "pistol"
 
 if CLIENT then
    SWEP.PrintName          = "REVOLVER"
-   SWEP.Slot               = 2
+   SWEP.Slot               = 1
 
    SWEP.ViewModelFlip      = false
    SWEP.ViewModelFOV       = 54
@@ -14,7 +14,7 @@ end
 
 SWEP.Base                  = "weapon_hunter_gun_base"
 
-SWEP.Primary.Recoil        = 0.8
+SWEP.Primary.Recoil        = 0.9
 SWEP.Primary.Damage        = 50
 SWEP.Primary.Delay         = 0.85
 SWEP.Primary.Cone          = 0.01

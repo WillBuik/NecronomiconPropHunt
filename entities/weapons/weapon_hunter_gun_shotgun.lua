@@ -6,7 +6,7 @@ SWEP.HoldType              = "shotgun"
 
 if CLIENT then
    SWEP.PrintName          = "SHOTGUN"
-   SWEP.Slot               = 3
+   SWEP.Slot               = 2
 
    SWEP.ViewModelFlip      = false
    SWEP.ViewModelFOV       = 54
