@@ -31,7 +31,7 @@ function SWEP:Ability()
         explode:EmitSound( "BaseExplosionEffect.Sound", 100, 100 )
     end)
 
-    self:AbilityTimerIfValidOwnerAndAlive(self.AbilityDuration + 1, 1, true, function()
+    self:AbilityTimerIfValidOwnerAndAlive(self.AbilityDuration + 0.1, 1, true, function()
         self:GetOwner():Kill()
     end)
 end
