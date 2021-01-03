@@ -96,6 +96,6 @@ function SWEP:Think()
         end
         up = 0
     end
-    self:Think2()
-    self:CalculateRatios(CLIENT)
+    --self:Think2()
+    --self:CalculateRatios(CLIENT)
 end

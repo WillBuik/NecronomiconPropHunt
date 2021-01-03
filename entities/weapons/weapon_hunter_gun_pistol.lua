@@ -26,5 +26,5 @@ SWEP.Primary.Sound         = Sound( "Weapon_FiveSeven.Single" )
 
 
 SWEP.UseHands              = true
-SWEP.ViewModel             = "models/weapons/v_Pistol.mdl"
+SWEP.ViewModel             = "models/weapons/c_Pistol.mdl"
 SWEP.WorldModel            = "models/weapons/w_Pistol.mdl"
