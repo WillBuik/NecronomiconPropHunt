@@ -19,7 +19,7 @@ SWEP.WorldModel = "models/weapons/w_bugbait.mdl"
 
 SWEP.Primary.TakeAmmo = 1
 SWEP.Primary.ClipSize = 1
-SWEP.Primary.Ammo = "XBowBolt"
+SWEP.Primary.Ammo = "AR2AltFire"
 SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
 SWEP.Primary.Delay = 1.5

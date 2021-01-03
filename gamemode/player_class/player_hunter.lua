@@ -19,7 +19,7 @@ PLAYER.UnDuckSpeed       = 0.1
 function PLAYER:Loadout()
 
     self.Player:RemoveAllAmmo()
-    
+
     self.Player:Give("weapon_crowbar")
 
     if (math.random() > 0.5) then
@@ -40,7 +40,7 @@ function PLAYER:Loadout()
     end
 
     if (math.random() > 0.5) then
-        self.Player:GiveAmmo(5, "XBowBolt")
+        self.Player:GiveAmmo(5, "AR2AltFire")
         self.Player:Give("weapon_hunter_special_tauntgranade")
     else
         self.Player:GiveAmmo(5, "AR2AltFire")
