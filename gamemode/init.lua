@@ -287,9 +287,9 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     local newHP = math.Clamp(maxHP * ply.dmgPct, 2, 100)
     ply:SetHealth(newHP)
 
-    local speedModifier = ((maxHP / 100) * 0.15) + 0.85 
-    Player:SetWalkSpeed(222 * speedModifier)
-    Player:SetRunSpeed(222 * speedModifier)
+    local speedModifier = ((maxHP / 100) * 0.15) + 0.85
+    ply:SetWalkSpeed(222 * speedModifier)
+    ply:SetRunSpeed(222 * speedModifier)
 
     -- Update the player's mass to be something more reasonable to the prop
     local phys = ent:GetPhysicsObject()
