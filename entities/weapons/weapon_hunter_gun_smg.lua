@@ -38,7 +38,7 @@ function SWEP:SecondaryAttack()
         ent:SetPos( self:GetOwner():GetShootPos() + ang:Forward() + ang:Right() * 4 - ang:Up())
         ent:SetVelocity(self:GetOwner():GetAimVector() * 1000)
         ent:SetAngles( ang )
-        ent:SetOwner( self.GetOwner() )
+        ent:SetOwner( self:GetOwner() )
         ent:Spawn()
         ent:Activate()
     end
