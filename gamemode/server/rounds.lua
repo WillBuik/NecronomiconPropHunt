@@ -169,6 +169,7 @@ hook.Add("Initialize", "Begin round functions", function()
     hook.Add("Tick", "Round orchestrator", function()
         roundHandler[round.state]()
     end)
+    SetGlobalInt("NumPropsOnMap", GetNumValidPropOnMap())
 end)
 
 hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
@@ -188,9 +189,11 @@ hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
         v:SetPropAngleSnapped(false)
         v:SetPropRollAngle(0)
 
-        -- freeze all the hunters
         if (v:Team() == TEAM_HUNTERS) then
+            -- freeze all the hunters
             v:Freeze(true)
+            -- Give ammo to hunters scaled with number of props on map
+            v:GiveAmmo(math.round(GetGlobalInt("NumPropsOnMap", 200) / 40), "AR2AltFire")
         end
     end
 end)

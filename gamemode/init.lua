@@ -317,6 +317,24 @@ function UpdatePlayerPropHitbox(ply, hbMin, hbMax)
         net.Send(ply)
 end
 
+function GetNumValidPropOnMap()
+    local numProps = 0
+    local allEnts = ents.GetAll()
+
+    for _, someEnt in pairs( allEnts ) do
+        if (
+                IsValid(someEnt) and
+                table.HasValue(USABLE_PROP_ENTITIES, someEnt:GetClass()) and
+                IsValid(someEnt:GetPhysicsObject()) and
+                someEnt:GetClass() and
+                someEnt:GetModel()
+            ) then
+            numProps = numProps + 1
+        end
+    end
+    return numProps
+end
+
 --[[ When a player on team_props spawns ]]--
 hook.Add("PlayerSpawn", "Set ObjHunt model", function (ply)
     -- default prop should be able to step wherever
