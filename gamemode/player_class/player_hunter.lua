@@ -34,6 +34,8 @@ function PLAYER:Loadout()
     self.Player:Give("weapon_hunter_gun_revolver")
     self.Player:Give("weapon_hunter_special_tauntgranade")
     self.Player:Give("weapon_hunter_special_tauntseeker")
+    self.Player:Give("weapon_hunter_special_tauntseeker")
+
 
 end
 
