@@ -26,9 +26,6 @@ function SWEP:Ability()
         explode:SetKeyValue("iMagnitude", "112")
         explode:Fire( "Explode", 0, 0 )
         explode:EmitSound( "BaseExplosionEffect.Sound", 100, 100 )
-    end)
-
-    self:AbilityTimerIfValidOwnerAndAlive(1, 1, true, function()
         self:GetOwner():Kill()
     end)
 end
