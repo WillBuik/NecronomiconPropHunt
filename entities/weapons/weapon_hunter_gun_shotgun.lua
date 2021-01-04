@@ -68,9 +68,9 @@ function SWEP:StartReload()
    end
 
    self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_START)
-   self:EmitSound("Weapon_SMG1.Double")
+   self:EmitSound("Weapon_Shotgun.Reload")
 
-   self:SetReloadTimer(CurTime() + wep:SequenceDuration())
+   self:SetReloadTimer(CurTime() + self:SequenceDuration())
 
    self:SetReloading(true)
 
@@ -91,6 +91,7 @@ function SWEP:PerformReload()
    self:SetClip1( self:Clip1() + 1 )
 
    self:SendWeaponAnim(ACT_VM_RELOAD)
+   self:EmitSound("Weapon_Shotgun.Reload")
 
    self:SetReloadTimer(CurTime() + self:SequenceDuration())
 end
@@ -98,7 +99,7 @@ end
 function SWEP:FinishReload()
    self:SetReloading(false)
    self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH)
-   self:StopSound("Weapon_SMG1.Double")
+   self:EmitSound("Weapon_Shotgun.Special1")
 
    self:SetReloadTimer(CurTime() + self:SequenceDuration())
 end
