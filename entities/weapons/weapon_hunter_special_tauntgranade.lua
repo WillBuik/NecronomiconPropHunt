@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+SWEP.Base = "weapon_common_base"
+
 SWEP.Name = "Taunt Grenade"
 SWEP.PrintName = "TAUNT GRENADE"
 SWEP.DrawAmmo = true
@@ -29,10 +31,7 @@ SWEP.AbilityRange = 300
 
 SWEP.Secondary.Ammo = "none"
 
-SWEP.WepSelectIcon = -1;
-SWEP.DrawWeaponInfoBox = false;
-
-function SWEP:DrawWeaponSelection() end
+SWEP.WeaponIconKey = "j" -- Bugbait
 
 function SWEP:Initialize()
     self:SetWeaponHoldType(self.HoldType)

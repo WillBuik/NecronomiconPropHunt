@@ -24,7 +24,8 @@ SWEP.Primary.DefaultClip   = 18
 SWEP.Primary.Ammo          = "Pistol"
 SWEP.Primary.Sound         = Sound( "Weapon_Pistol.Single" )
 
-
 SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/c_Pistol.mdl"
 SWEP.WorldModel            = "models/weapons/w_Pistol.mdl"
+
+SWEP.WeaponIconKey = "d" -- Pistol

@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_base"
+SWEP.Base = "weapon_common_base"
 SWEP.Name = "NONAME"
 
 SWEP.Spawnable = false
@@ -34,6 +34,8 @@ SWEP.AbilityShowTargetHalosCheckLOS = false
 SWEP.AbilityDuration = 0
 SWEP.AbilityStartTime = 0
 SWEP.AbilityDescription = ""
+
+SWEP.WeaponIconKey = "c" -- Crowbar
 
 OBJ_ABILTY_CAST_ERROR_NO_TARGET = 1
 OBJ_ABILTY_CAST_ERROR_INVALID_TARGET = 2

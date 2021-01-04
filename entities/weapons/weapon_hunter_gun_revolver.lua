@@ -28,3 +28,5 @@ SWEP.Primary.Sound         = Sound( "Weapon_357.Single" )
 SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/c_357.mdl"
 SWEP.WorldModel            = "models/weapons/w_357.mdl"
+
+SWEP.WeaponIconKey = "e" -- Revolver

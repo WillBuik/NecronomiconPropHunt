@@ -33,6 +33,8 @@ SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel            = "models/weapons/w_shotgun.mdl"
 
+SWEP.WeaponIconKey = "b" -- Shotgun
+
 function SWEP:SetupDataTables()
    self:NetworkVar("Bool", 0, "Reloading")
    self:NetworkVar("Float", 0, "ReloadTimer")

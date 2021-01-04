@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_base"
+SWEP.Base = "weapon_common_base"
 
 SWEP.Name = "Taunt Seeker"
 SWEP.PrintName = "TAUNT SEEKER"
@@ -31,10 +31,7 @@ SWEP.AbilityAccuracy = 50
 
 SWEP.Secondary.Ammo = "none"
 
-SWEP.WepSelectIcon = -1;
-SWEP.DrawWeaponInfoBox = false;
-
-function SWEP:DrawWeaponSelection() end
+SWEP.WeaponIconKey = "l" -- Granade round launcher
 
 function SWEP:Initialize()
     self:SetWeaponHoldType(self.HoldType)

@@ -32,6 +32,8 @@ SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/c_smg1.mdl"
 SWEP.WorldModel            = "models/weapons/w_smg1.mdl"
 
+SWEP.WeaponIconKey = "a" -- SMG
+
 function SWEP:SecondaryAttack()
     if self:GetOwner():GetAmmoCount("SMG1_Grenade") <= 0 or CLIENT then return end
     local ang = self:GetOwner():EyeAngles()

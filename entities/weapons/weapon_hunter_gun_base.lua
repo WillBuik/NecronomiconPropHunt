@@ -11,7 +11,7 @@ if CLIENT then
    SWEP.CSMuzzleFlashes = true
 end
 
-SWEP.Base = "weapon_base"
+SWEP.Base = "weapon_common_base"
 
 SWEP.IsGrenade = false
 
@@ -136,8 +136,6 @@ end
 function SWEP:GetPrimaryCone()
    return self.Primary.Cone or 0.2
 end
-
-function SWEP:DrawWeaponSelection() end
 
 function SWEP:SecondaryAttack()
 end
