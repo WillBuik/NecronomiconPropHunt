@@ -32,11 +32,10 @@ function SWEP:DrawWeaponSelection( x, y, wide, tall, alpha )
     --surface.SetTexture( self.WepSelectIcon )
 
     -- Lets get a sin wave to make it bounce
-    local fsin = 0
-
-    if ( self.BounceWeaponIcon == true ) then
-        fsin = math.sin( CurTime() * 10 ) * 5
-    end
+    -- local fsin = 0
+    -- if ( self.BounceWeaponIcon == true ) then
+    --     fsin = math.sin( CurTime() * 10 ) * 5
+    -- end
 
     -- Borders
     y = y + 10
