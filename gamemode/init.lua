@@ -91,7 +91,22 @@ function SendTaunt(ply, taunt, pitch)
     if (ply:Team() == TEAM_PROPS and !table.HasValue(PROP_TAUNTS, taunt)) then return end
     if (ply:Team() == TEAM_HUNTERS and !table.HasValue(HUNTER_TAUNTS, taunt)) then return end
 
+    -- NOTE: `NewSoundDuration` uses the "GAME" search path, which includes our
+    -- game mode's content/ folder.  The taunt itself is relative to
+    -- content/sound/, so we have to extend the path with the sound/ prefix.
+    -- Normally, sound-specific APIs don't need to adjust the path in this way;
+    -- for instance, clients won't have to do this when playing the sound.
+    local duration = NewSoundDuration("sound/" .. taunt)
+
+    if (duration <= 0) then
+        print("ERROR: couldn't figure out duration for taunt " .. taunt)
+        return
+    end
+
+    print("Taunt: " .. taunt .. " from " .. ply:Nick() .. " at pitch " .. tostring(pitch) .. "; pre-pitch-adjusted duration is " .. duration .. "s" )
+
     ply:SetLastTauntTime(CurTime())
+    ply:SetLastTauntDuration(duration * (100 / pitch))
     ply:SetLastTauntPitch(pitch)
 
     net.Start("Taunt Selection BROADCAST")
