@@ -110,5 +110,7 @@ function plymeta:GetNextTauntAvailableTime()
 end
 
 function plymeta:GetNextAutoTauntTime()
-    return self:GetLastTauntTime() + OBJHUNT_AUTOTAUNT_DURATION_MODIFIER * (1 + self:GetLastTauntDuration()) + OBJHUNT_AUTOTAUNT_BASE_INTERVAL
+    -- NOTE: +1 on the modifier to ensure that the previous taunt doesn't count
+    -- against the player's time, even if the modifier is 0.
+    return self:GetLastTauntTime() + (OBJHUNT_AUTOTAUNT_DURATION_MODIFIER + 1) * self:GetLastTauntDuration() + OBJHUNT_AUTOTAUNT_BASE_INTERVAL
 end
