@@ -49,6 +49,12 @@ if AUTOTAUNT_ENABLED then
         -- Check if the player is valid, alive, and is a prop
         if (!validateProp(ply)) then return end
 
+        -- Don't draw this HUD until the round starts and hunters are released
+        if (round.state != ROUND_IN) then return end
+        if (!round.startTime) then return end
+        local timeToHunterRelease = round.startTime + round.timePad + OBJHUNT_HIDE_TIME - CurTime()
+        if (timeToHunterRelease > 0) then return end
+
         -- Constants for HUD drawing
         local radius = 50
         local padding = 60
