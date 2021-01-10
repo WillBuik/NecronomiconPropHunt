@@ -19,7 +19,7 @@ function SWEP:Ability()
         prop:SetPos(Vector(
             ply:GetPos().x,
             ply:GetPos().y,
-            ply:GetPos().z + playerPropHBMax.z - propHBMin.z
+            ply:GetPos().z + playerPropHBMax.z - propHBMin.z + 1
         ))
     end
 end

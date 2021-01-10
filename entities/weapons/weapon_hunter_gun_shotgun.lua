@@ -10,21 +10,19 @@ if CLIENT then
 
    SWEP.ViewModelFlip      = false
    SWEP.ViewModelFOV       = 54
-
-   SWEP.IconLetter         = "b"
 end
 
 SWEP.Base                  = "weapon_hunter_gun_base"
 
 SWEP.Primary.Ammo          = "Buckshot"
-SWEP.Primary.Damage        = 11
+SWEP.Primary.Damage        = 8
 SWEP.Primary.Cone          = 0.085
 SWEP.Primary.Delay         = 0.8
 SWEP.Primary.ClipSize      = 8
 SWEP.Primary.ClipMax       = 24
 SWEP.Primary.DefaultClip   = 8
 SWEP.Primary.Automatic     = true
-SWEP.Primary.NumShots      = 8
+SWEP.Primary.NumShots      = 7
 SWEP.Primary.Sound         = Sound( "Weapon_Shotgun.Single" )
 SWEP.Primary.Recoil        = 7
 
@@ -158,7 +156,7 @@ function SWEP:SecondaryAttack()
 
    local ammo = self:Clip1() 
 
-   self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots * ammo, self:GetPrimaryCone() * ammo )
+   self:ShootBullet( self.Primary.Damage / 2, self.Primary.Recoil, self.Primary.NumShots * ammo, self:GetPrimaryCone() * ammo )
 
    self:TakePrimaryAmmo( ammo )
 

@@ -8,16 +8,14 @@ if CLIENT then
 
     SWEP.ViewModelFlip      = false
     SWEP.ViewModelFOV       = 54
-
-    SWEP.IconLetter         = "n"
 end
 
 SWEP.Base                  = "weapon_hunter_gun_base"
 
-SWEP.Primary.Recoil        = 0.3
+SWEP.Primary.Recoil        = 1.15
 SWEP.Primary.Damage        = 4
-SWEP.Primary.Delay         = 0.07
-SWEP.Primary.Cone          = 0.02
+SWEP.Primary.Delay         = 0.065
+SWEP.Primary.Cone          = 0.03
 SWEP.Primary.ClipSize      = 45
 SWEP.Primary.Automatic     = true
 
