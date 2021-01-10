@@ -3,7 +3,7 @@
 -- resolves files relative to the "GAME" search path [2] and not the sound/
 -- folder, so it is not an exact drop-in replacement.
 --
--- Copied from [2] on 2021/1/5.
+-- Copied from [3] on 2021/1/5.
 --
 -- Refs.
 --  [1]: https://github.com/Facepunch/garrysmod-issues/issues/936

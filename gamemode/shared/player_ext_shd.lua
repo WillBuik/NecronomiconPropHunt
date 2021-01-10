@@ -116,7 +116,7 @@ end
 -- issue a taunt.  For example, the player may not issue a new taunt while
 -- their previous taunt is still playing.
 -- (NOTE 2020/1/10: should this variable prevent taunts before the hunters are
--- released?  Today, it does not.
+-- released?  Today, it does not.)
 -- (NOTE 2020/1/10: While I believe we can assign a sensible value like 0 to
 -- this variable before the player's first taunt, it isn't obvious what value
 -- this has at the start of a round.)
