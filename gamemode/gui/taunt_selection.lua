@@ -76,9 +76,9 @@ local function tauntSelection()
             tauntList:AddLine(k, v)
         end
         tauntList.OnClickLine = function(parent, line, isSelected)
-            local pitch = pitchSlider:GetValue()
-            player.lastSelectedPitch = pitch
-            playTaunt(line:GetValue(2), pitch)
+            local selectedPitch = pitchSlider:GetValue()
+            player.lastSelectedPitch = selectedPitch
+            playTaunt(line:GetValue(2), selectedPitch)
         end
 
     local randomBtn = vgui.Create("DButton", prettyPanel)
