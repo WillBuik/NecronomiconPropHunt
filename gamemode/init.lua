@@ -105,9 +105,18 @@ function SendTaunt(ply, taunt, pitch)
 
     print("Taunt: " .. taunt .. " from " .. ply:Nick() .. " at pitch " .. tostring(pitch) .. "; pre-pitch-adjusted duration is " .. duration .. "s" )
 
+    local adjustedDuration = duration * (100 / pitch)
+
     ply:SetLastTauntTime(CurTime())
-    ply:SetLastTauntDuration(duration * (100 / pitch))
+    ply:SetLastTauntDuration(adjustedDuration)
     ply:SetLastTauntPitch(pitch)
+
+    -- NOTE: +1 on the modifier to ensure that the previous taunt doesn't count
+    -- against the player's time, even if the modifier is 0.
+    ply:SetNextAutoTauntDelay(
+        (OBJHUNT_AUTOTAUNT_DURATION_MODIFIER + 1) * adjustedDuration +
+        OBJHUNT_AUTOTAUNT_BASE_INTERVAL
+    )
 
     net.Start("Taunt Selection BROADCAST")
         net.WriteString(taunt)
