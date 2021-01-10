@@ -198,7 +198,7 @@ hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
             -- freeze all the hunters
             v:Freeze(true)
             -- Give ammo to hunters scaled with number of props on map
-            v:GiveAmmo(math.floor(GetGlobalInt("NumPropsOnMap", 200) / 40 + 0.5), "AR2AltFire")
+            v:GiveAmmo(math.floor(GetGlobalInt("NumPropsOnMap", 200) / 20 + 0.5), "AR2AltFire")
         end
     end
 end)
