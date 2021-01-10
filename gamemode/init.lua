@@ -336,7 +336,7 @@ function UpdatePlayerPropHitbox(ply, hbMin, hbMax)
         net.Send(ply)
 end
 
-function GetNumValidPropOnMap()
+function GetNumValidPropsOnMap()
     local numProps = 0
     local allEnts = ents.GetAll()
 
@@ -348,7 +348,7 @@ function GetNumValidPropOnMap()
                 someEnt:GetClass() and
                 someEnt:GetModel()
             ) then
-            numProps = numProps + 1
+                numProps = numProps + 1
         end
     end
     return numProps

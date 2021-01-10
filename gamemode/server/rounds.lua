@@ -130,6 +130,7 @@ local function InRound()
 
     -- unfreeze the hunters after their time is up
     if (roundTime > OBJHUNT_HIDE_TIME and hunters[1]:IsFrozen()) then
+        hook.Call("OBJHUNT_HuntersReleased")
         for _, v in pairs(hunters) do
             v:Freeze(false)
         end
@@ -169,7 +170,7 @@ hook.Add("Initialize", "Begin round functions", function()
     hook.Add("Tick", "Round orchestrator", function()
         roundHandler[round.state]()
     end)
-    SetGlobalInt("NumPropsOnMap", GetNumValidPropOnMap())
+    SetGlobalInt("NumPropsOnMap", GetNumValidPropsOnMap())
 end)
 
 hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
@@ -188,6 +189,10 @@ hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
         v:SetPropPitchEnabled(false)
         v:SetPropAngleSnapped(false)
         v:SetPropRollAngle(0)
+        -- taunt data
+        v:SetLastTauntTime(CurTime())
+        v:SetLastTauntDuration(1)
+        v:SetLastTauntPitch(100)
 
         if (v:Team() == TEAM_HUNTERS) then
             -- freeze all the hunters
@@ -206,11 +211,6 @@ hook.Add("OBJHUNT_RoundEnd", "Handle props winning", function()
         v:PrintMessage(HUD_PRINTCENTER, round.winner .. " Win!")
         -- give everyone god mode until round starts again
         v:GodEnable()
-
-        -- taunt data
-        v:SetLastTauntTime(0)
-        v:SetLastTauntDuration(1)
-        v:SetLastTauntPitch(100)
     end
 end)
 

@@ -16,7 +16,7 @@ function SWEP:Ability()
     end)
 
 
-    local hunters = team.GetPlayers(TEAM_HUNTERS)
+    local hunters = GetLivingPlayers(TEAM_HUNTERS)
     local closestHunter = nil
     local closestDistSq = math.huge
     for _, hunter in pairs(hunters) do

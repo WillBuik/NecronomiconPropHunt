@@ -109,8 +109,14 @@ function plymeta:GetNextTauntAvailableTime()
     return self:GetLastTauntTime() + self:GetLastTauntDuration()
 end
 
+function plymeta:GetNextAutoTauntDelay()
+    return self:GetNWFloat("NextAutoTauntDelay", 1)
+end
+
+function plymeta:SetNextAutoTauntDelay(delay)
+    self:SetNWFloat("NextAutoTauntDelay", delay)
+end
+
 function plymeta:GetNextAutoTauntTime()
-    -- NOTE: +1 on the modifier to ensure that the previous taunt doesn't count
-    -- against the player's time, even if the modifier is 0.
-    return self:GetLastTauntTime() + (OBJHUNT_AUTOTAUNT_DURATION_MODIFIER + 1) * self:GetLastTauntDuration() + OBJHUNT_AUTOTAUNT_BASE_INTERVAL
+    return self:GetLastTauntTime() + self:GetNextAutoTauntDelay()
 end
