@@ -66,7 +66,7 @@ if AUTOTAUNT_ENABLED then
         -- Read/compute relevant auto-taunt state.  The visualization only
         -- depends on the amount of time remaining, which is the most important
         -- number for the player.
-        local timeUntilNextAutoTaunt = ply:GetNextAutoTauntTime() - CurTime()
+        local timeUntilNextAutoTaunt = math.max(ply:GetNextAutoTauntTime() - CurTime(), 0)
         local proportionRemaining = math.min(timeUntilNextAutoTaunt, startCountingAtSeconds) / startCountingAtSeconds
 
         local x = ScrW() - paddingL
