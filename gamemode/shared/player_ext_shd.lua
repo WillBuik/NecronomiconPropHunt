@@ -97,10 +97,11 @@ function plymeta:SetLastTauntTime(time)
     self:SetNWFloat("LastTauntTime", time)
 end
 
--- LastTauntDuration and LastTauntPitch: other properties of the last taunt.
--- The duration is already pitch-adjusted, and represents the true duration
--- that the clip took to play.
--- (NOTE 2020/1/10: the meaning of these variables is extremely unclear before
+-- LastTauntDuration: how long the last taunt played.  If a taunt is currently
+-- playing, this is the duration of the currently-playing taunt.  The duration
+-- is already pitch-adjusted, and represents the true duration that the audio
+-- took to play.
+-- (NOTE 2020/1/10: the meaning of this variable is extremely unclear before
 -- the player's first taunt of the round.)
 
 function plymeta:GetLastTauntDuration()
@@ -109,14 +110,6 @@ end
 
 function plymeta:SetLastTauntDuration(dur)
     self:SetNWFloat("LastTauntDuration", dur)
-end
-
-function plymeta:GetLastTauntPitch()
-    return self:GetNWInt("LastTauntPitch", 100)
-end
-
-function plymeta:SetLastTauntPitch(pitch)
-    self:SetNWInt("LastTauntPitch", pitch)
 end
 
 -- NextTauntAvailableTime: the next timestamp when the player is eligible to

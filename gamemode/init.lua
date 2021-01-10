@@ -109,7 +109,6 @@ function SendTaunt(ply, taunt, pitch)
 
     ply:SetLastTauntTime(CurTime())
     ply:SetLastTauntDuration(adjustedDuration)
-    ply:SetLastTauntPitch(pitch)
 
     -- NOTE: +1 on the modifier to ensure that the previous taunt doesn't count
     -- against the player's time, even if the modifier is 0.
