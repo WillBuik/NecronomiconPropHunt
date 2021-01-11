@@ -89,6 +89,9 @@ PROP_DEFAULT_JUMP_POWER = 260
 -- The incriment of the prop roll for each tick on the mouse wheel
 PROP_ROLL_INCRIMENT = 15
 
+-- Number maps shown to vote on
+MAPS_SHOWN_TO_VOTE = 10
+
 -- entities that are capable of being chosen by props
 USABLE_PROP_ENTITIES = {
     "prop_physics",
