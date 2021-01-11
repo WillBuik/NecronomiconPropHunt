@@ -6,7 +6,7 @@ SWEP.PrintName = "SELF-DESRUCT"
 SWEP.Slot = 4
 SWEP.SlotPos = 3
 SWEP.AbilitySound = {"vo/npc/male01/runforyourlife01.wav"} --, "vo/canals/female01/gunboat_farewell.wav", "vo/canals/male01/stn6_incoming.wav"}
-SWEP.AbilityModelScaleTimes = 4
+SWEP.AbilityModelScaleTimes = 8
 SWEP.AbilityDuration = 4
 SWEP.AbilityDescription = "Creates an explosion after $AbilityDuration seconds that kills nearby props and the user."
 
