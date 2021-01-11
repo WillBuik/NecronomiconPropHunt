@@ -51,12 +51,19 @@ local function tauntSelection()
             tauntPanel:Remove()
         end
 
+    -- Remember what pitch the player last selected in this UI.
+    local pitch = 100
+    local player = LocalPlayer()
+    if (player.lastSelectedPitch != nil) then
+        pitch = player.lastSelectedPitch
+    end
+
     pitchSlider = vgui.Create("DNumSlider", prettyPanel)
         pitchSlider:SetText("Pitch")
         pitchSlider:SetMin(TAUNT_MIN_PITCH)
         pitchSlider:SetMax(TAUNT_MAX_PITCH)
         pitchSlider:SetDecimals(0)
-        pitchSlider:SetValue(LocalPlayer():GetLastTauntPitch())
+        pitchSlider:SetValue(pitch)
         pitchSlider:SetWide(width)
         pitchSlider:SetPos(padding * 2, height + btnHeight + padding * 3)
 
@@ -69,7 +76,9 @@ local function tauntSelection()
             tauntList:AddLine(k, v)
         end
         tauntList.OnClickLine = function(parent, line, isSelected)
-            playTaunt(line:GetValue(2), pitchSlider:GetValue())
+            local selectedPitch = pitchSlider:GetValue()
+            player.lastSelectedPitch = selectedPitch
+            playTaunt(line:GetValue(2), selectedPitch)
         end
 
     local randomBtn = vgui.Create("DButton", prettyPanel)

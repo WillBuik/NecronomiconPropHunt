@@ -81,6 +81,14 @@ function plymeta:SetPropLastChange(time)
     self:SetNWInt("PropLastChange", time)
 end
 
+--[[=====================]]
+--[[ Taunt-related state ]]
+--[[=====================]]
+
+-- LastTauntTime: the timestamp of the last time this player issued a taunt.
+-- (NOTE 2020/1/10: the meaning of this variable is extremely unclear before
+-- the player's first taunt of the round.)
+
 function plymeta:GetLastTauntTime()
     return self:GetNWFloat("LastTauntTime", 0)
 end
@@ -88,6 +96,13 @@ end
 function plymeta:SetLastTauntTime(time)
     self:SetNWFloat("LastTauntTime", time)
 end
+
+-- LastTauntDuration: how long the last taunt played.  If a taunt is currently
+-- playing, this is the duration of the currently-playing taunt.  The duration
+-- is already pitch-adjusted, and represents the true duration that the audio
+-- took to play.
+-- (NOTE 2020/1/10: the meaning of this variable is extremely unclear before
+-- the player's first taunt of the round.)
 
 function plymeta:GetLastTauntDuration()
     return self:GetNWFloat("LastTauntDuration", 1)
@@ -97,17 +112,20 @@ function plymeta:SetLastTauntDuration(dur)
     self:SetNWFloat("LastTauntDuration", dur)
 end
 
-function plymeta:GetLastTauntPitch()
-    return self:GetNWInt("LastTauntPitch", 100)
-end
-
-function plymeta:SetLastTauntPitch(pitch)
-    self:SetNWInt("LastTauntPitch", pitch)
-end
+-- NextTauntAvailableTime: the next timestamp when the player is eligible to
+-- issue a taunt.  For example, the player may not issue a new taunt while
+-- their previous taunt is still playing.
+-- (NOTE 2020/1/10: should this variable prevent taunts before the hunters are
+-- released?  Today, it does not.)
+-- (NOTE 2020/1/10: While I believe we can assign a sensible value like 0 to
+-- this variable before the player's first taunt, it isn't obvious what value
+-- this has at the start of a round.)
 
 function plymeta:GetNextTauntAvailableTime()
     return self:GetLastTauntTime() + self:GetLastTauntDuration()
 end
+
+-- NextAutoTauntDelay: the duration from the last taunt to the next auto-taunt.
 
 function plymeta:GetNextAutoTauntDelay()
     return self:GetNWFloat("NextAutoTauntDelay", 1)
@@ -116,6 +134,9 @@ end
 function plymeta:SetNextAutoTauntDelay(delay)
     self:SetNWFloat("NextAutoTauntDelay", delay)
 end
+
+-- NextAutoTauntTime: the timestamp of the next auto-taunt.  This is always
+-- equal to LastTauntTime + NextAutoTauntDelay.
 
 function plymeta:GetNextAutoTauntTime()
     return self:GetLastTauntTime() + self:GetNextAutoTauntDelay()

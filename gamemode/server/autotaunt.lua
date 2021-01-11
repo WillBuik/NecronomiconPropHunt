@@ -13,12 +13,6 @@ if AUTOTAUNT_ENABLED then
                 local pitch = math.random() * pRange + TAUNT_MIN_PITCH
                 --Send the Taunt to the player
                 SendTaunt(ply, taunt, pitch)
-                -- NOTE: +1 on the modifier to ensure that the previous taunt doesn't count
-                -- against the player's time, even if the modifier is 0.
-                ply:SetNextAutoTauntDelay(
-                    (OBJHUNT_AUTOTAUNT_DURATION_MODIFIER + 1) * ply:GetLastTauntDuration() + 
-                    OBJHUNT_AUTOTAUNT_BASE_INTERVAL
-                )
             end
         end
     end

@@ -45,28 +45,40 @@ if AUTOTAUNT_ENABLED then
     function autotauntHud()
 
         local ply = LocalPlayer()
-        local padding = 60
-        local paddingL = 100
 
         -- Check if the player is valid, alive, and is a prop
         if (!validateProp(ply)) then return end
 
+        -- Don't draw this HUD until the round starts and hunters are released
+        if (round.state != ROUND_IN) then return end
+        if (!round.startTime) then return end
+        local timeToHunterRelease = round.startTime + round.timePad + OBJHUNT_HIDE_TIME - CurTime()
+        if (timeToHunterRelease > 0) then return end
+
+        -- Constants for HUD drawing
         local radius = 50
-        local timer = math.Round(ply:GetNextAutoTauntTime() - CurTime(), 0)
-        local autoTauntInterval = ply:GetNextAutoTauntTime() - ply:GetLastTauntTime()
-        local timeSinceLastTaunt = CurTime() - ply:GetLastTauntTime()
-        local timerRadius = (timeSinceLastTaunt / autoTauntInterval) * radius
+        local padding = 60
+        local paddingL = 100
+        local startCountingAtSeconds = 30 -- all times longer than this are drawn the same
+        local warnAtSecondsRemaining = 12 -- 40% there!
+        local criticalAtSecondsRemaining = 6 -- 80% there!
+
+        -- Read/compute relevant auto-taunt state.  The visualization only
+        -- depends on the amount of time remaining, which is the most important
+        -- number for the player.
+        local timeUntilNextAutoTaunt = math.max(ply:GetNextAutoTauntTime() - CurTime(), 0)
+        local proportionRemaining = math.min(timeUntilNextAutoTaunt, startCountingAtSeconds) / startCountingAtSeconds
 
         local x = ScrW() - paddingL
         local y = ScrH() - padding
 
-        --Set the text Position and Text
+        -- Set the text Position and Text
+        local timer = math.Round(timeUntilNextAutoTaunt, 0)
         local timertext = tostring(timer)
         if timer <= 0 then
             timertext = "!"
         end
         draw.SimpleText(timertext, "ObjHUDFont", x, y, brightWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-
 
         -- This is the outer circle
         surface.SetDrawColor(lightGray)
@@ -74,11 +86,11 @@ if AUTOTAUNT_ENABLED then
         draw.Circle(x, y, radius, radius)
 
         -- This is the growing inner circle
+        local timerRadius = (1 - proportionRemaining) * radius
         local color = nil
-        local percentage = timerRadius / radius
-        if (percentage > .8) then
+        if (timeUntilNextAutoTaunt < criticalAtSecondsRemaining) then
             color = brightRed
-        elseif (percentage > .6) then
+        elseif (timeUntilNextAutoTaunt < warnAtSecondsRemaining) then
             color = brightYellow
         else
             color = brightBlue
