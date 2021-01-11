@@ -167,10 +167,10 @@ roundHandler[ROUND_END]   = EndRound
 
 -- start the round orchestrator when the game has initialized
 hook.Add("Initialize", "Begin round functions", function()
+    SetGlobalInt("NumPropsOnMap", GetNumValidPropsOnMap())
     hook.Add("Tick", "Round orchestrator", function()
         roundHandler[round.state]()
     end)
-    SetGlobalInt("NumPropsOnMap", GetNumValidPropsOnMap())
 end)
 
 hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
