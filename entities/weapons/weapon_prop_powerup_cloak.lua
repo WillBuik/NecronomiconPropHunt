@@ -12,6 +12,8 @@ function SWEP:Ability()
     self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
     if SERVER then
         ply:GetProp():SetRenderMode(RENDERMODE_NONE)
+        -- ply:SetRenderMode( RENDERMODE_TRANSALPHA )
+        -- ply:Fire( "alpha", 4, 0 )
         ply:GetProp():DrawShadow(false)
     end
 end
@@ -22,6 +24,7 @@ function SWEP:AbilityCleanup()
     if SERVER then
         if (IsValid(ply:GetProp())) then
             ply:GetProp():SetRenderMode(RENDERMODE_NORMAL)
+            -- ply:Fire( "alpha", 255, 0 )
             ply:GetProp():DrawShadow(true)
         end
     end

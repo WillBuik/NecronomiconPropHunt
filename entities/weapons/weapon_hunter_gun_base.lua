@@ -42,25 +42,32 @@ SWEP.StoredAmmo = 0
 
 SWEP.DeploySpeed = 1
 
-SWEP.PrimaryAnim = ACT_VM_PRIMARYATTACK
+SWEP.Primary.Anim = ACT_VM_PRIMARYATTACK
 SWEP.ReloadAnim = ACT_VM_RELOAD
 SWEP.Reload.Sound   = Sound( "Weapon_Pistol.Reload" )
 
 -- Shooting functions largely copied from weapon_cs_base
-function SWEP:PrimaryAttack(worldsnd)
+function SWEP:PrimaryAttack()
+   self:PrimaryAttackWithFunction(
+      function ()
+         self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self:GetPrimaryCone() ) 
+      end
+   );
+end
+
+function SWEP:PrimaryAttackWithFunction(fireFunction)
 
    self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
    if not self:CanPrimaryAttack() then return end
 
-   if not worldsnd then
-      self:EmitSound( self.Primary.Sound, self.Primary.SoundLevel )
-   elseif SERVER then
+   if SERVER then
       sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
    end
 
-   self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self:GetPrimaryCone() )
+   self:SendWeaponAnim(self.Primary.Anim)
+   fireFunction()
 
    self:TakePrimaryAmmo( 1 )
 
@@ -101,8 +108,6 @@ function SWEP:CanSecondaryAttack()
 end
 
 function SWEP:ShootBullet( dmg, recoil, numbul, cone )
-
-   self:SendWeaponAnim(self.PrimaryAnim)
 
    self:GetOwner():MuzzleFlash()
    self:GetOwner():SetAnimation( PLAYER_ATTACK1 )

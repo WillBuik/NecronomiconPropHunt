@@ -1,44 +1,31 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_common_base"
+SWEP.Base                  = "weapon_hunter_gun_base"
 
-SWEP.Name = "Taunt Grenade"
-SWEP.PrintName = "TAUNT GRENADE"
-SWEP.DrawAmmo = true
-SWEP.DrawCrosshair = true
-SWEP.Slot = 3
-SWEP.SlotPos = 4
+if CLIENT then
+    SWEP.PrintName          = "TAUNT GRENADE"
+    SWEP.Slot               = 3
 
-SWEP.Weight = 5
-SWEP.AutoSwitchTo = false
-SWEP.AutoSwitchFrom = true
-
-SWEP.HoldType = "grenade"
-SWEP.UseHands = true
-SWEP.ViewModelFOV = 54
-SWEP.ViewModel = "models/weapons/c_bugbait.mdl"
-SWEP.WorldModel = "models/weapons/w_bugbait.mdl"
-
-SWEP.Primary.TakeAmmo = 1
-SWEP.Primary.ClipSize = 1
-SWEP.Primary.Ammo = "AR2AltFire"
-SWEP.Primary.DefaultClip = 1
-SWEP.Primary.Automatic = false
-SWEP.Primary.Delay = 1.5
-SWEP.Primary.AutoReload = true
-
-SWEP.AbilityRange = 300
-
-SWEP.Secondary.Ammo = "none"
-
-SWEP.WeaponIconKey = "j" -- Bugbait
-
-function SWEP:Initialize()
-    self:SetWeaponHoldType(self.HoldType)
+    SWEP.ViewModelFlip      = false
+    SWEP.ViewModelFOV       = 54
 end
 
-function SWEP:Think()
-end
+SWEP.WeaponIconKey         = "j" -- Bugbait
+SWEP.HoldType              = "grenade"
+SWEP.UseHands              = true
+SWEP.ViewModel             = "models/weapons/c_bugbait.mdl"
+SWEP.WorldModel            = "models/weapons/w_bugbait.mdl"
+
+SWEP.Primary.Delay         = 1.5
+SWEP.Primary.ClipSize      = 1
+SWEP.Primary.Automatic     = false
+SWEP.Primary.DefaultClip   = 1
+SWEP.Primary.Ammo          = "AR2AltFire"
+SWEP.Primary.Sound         = Sound( "WeaponFrag.Throw" )
+SWEP.Primary.AutoReload    = true
+SWEP.Primary.Anim          = ACT_VM_THROW
+SWEP.Primary.EffectRange   = 300
+
 
 function SWEP:Throw()
     if SERVER then
@@ -74,7 +61,7 @@ function SWEP:Throw()
         entobj:AddAngleVelocity(Vector(600, math.random(-1200, 1200), 0))
 
         timer.Simple(1, function()
-        ent:Ignite(1, 0)
+            ent:Ignite(1, 0)
         end)
 
         timer.Simple(2, function()
@@ -89,7 +76,7 @@ function SWEP:Throw()
 
             local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
             for _, propPlayer in pairs(GetLivingPlayers(TEAM_PROPS)) do
-                if (propPlayer:GetPos():DistToSqr(entobj:GetPos()) < self.AbilityRange^2) then
+                if (propPlayer:GetPos():DistToSqr(entobj:GetPos()) < self.Primary.EffectRange^2) then
                     local taunt = table.Random(PROP_TAUNTS)
                     local pitch = math.random() * pRange + TAUNT_MIN_PITCH
                     SendTaunt(propPlayer, taunt, pitch)
@@ -101,18 +88,5 @@ function SWEP:Throw()
 end
 
 function SWEP:PrimaryAttack()
-    if !self:CanPrimaryAttack() then return end
-    timer.Simple(1.5, function()
-        if !self:GetOwner():Alive() or self:GetOwner():GetActiveWeapon():GetClass() != "weapon_obj_tauntgranade" then return end
-        self:Reload()
-        self:SendWeaponAnim(ACT_VM_DRAW)
-    end)
-    self:Throw()
-    self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-    self:TakePrimaryAmmo(self.Primary.TakeAmmo)
-    self:GetOwner():DoAttackEvent()
-    self:SendWeaponAnim(ACT_VM_THROW)
-end
-
-function SWEP:SecondaryAttack()
+    self:PrimaryAttackWithFunction(function () self:Throw() end)
 end

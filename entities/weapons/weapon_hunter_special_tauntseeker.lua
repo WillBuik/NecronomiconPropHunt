@@ -1,44 +1,31 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_common_base"
+SWEP.Base                   = "weapon_hunter_gun_base"
 
-SWEP.Name = "Taunt Seeker"
-SWEP.PrintName = "TAUNT SEEKER"
-SWEP.DrawAmmo = true
-SWEP.DrawCrosshair = true
-SWEP.Slot = 3
-SWEP.SlotPos = 5
+if CLIENT then
+    SWEP.PrintName          = "TAUNT SEEKER"
+    SWEP.Slot               = 3
 
-SWEP.Weight = 5
-SWEP.AutoSwitchTo = false
-SWEP.AutoSwitchFrom = true
-
-SWEP.HoldType = "ar2"
-SWEP.UseHands = true
-SWEP.ViewModelFOV = 54
-SWEP.ViewModel = "models/weapons/c_irifle.mdl"
-SWEP.WorldModel = "models/weapons/w_irifle.mdl"
-
-SWEP.Primary.TakeAmmo = 1
-SWEP.Primary.ClipSize = 1
-SWEP.Primary.Ammo = "AR2AltFire"
-SWEP.Primary.DefaultClip = 1
-SWEP.Primary.Automatic = false
-SWEP.Primary.Delay = 1.5
-SWEP.Primary.AutoReload = true
-
-SWEP.AbilityAccuracy = 50
-
-SWEP.Secondary.Ammo = "none"
-
-SWEP.WeaponIconKey = "l" -- Granade round launcher
-
-function SWEP:Initialize()
-    self:SetWeaponHoldType(self.HoldType)
+    SWEP.ViewModelFlip      = false
+    SWEP.ViewModelFOV       = 54
 end
 
-function SWEP:Think()
-end
+SWEP.HoldType              = "ar2"
+SWEP.WeaponIconKey         = "l" -- Granade round launcher
+SWEP.UseHands              = true
+SWEP.ViewModel             = "models/weapons/c_irifle.mdl"
+SWEP.WorldModel            = "models/weapons/w_irifle.mdl"
+
+SWEP.Primary.Recoil        = 6
+SWEP.Primary.Delay         = 1.5
+SWEP.Primary.ClipSize      = 1
+SWEP.Primary.Automatic     = false
+SWEP.Primary.DefaultClip   = 1
+SWEP.Primary.Ammo          = "AR2AltFire"
+SWEP.Primary.Sound         = Sound( "Weapon_AR2.Special1" )
+SWEP.Primary.AutoReload    = true
+SWEP.Primary.Anim          = ACT_VM_SECONDARYATTACK
+SWEP.Primary.Accuracy      = 50
 
 function SWEP:FireBall(closestPropTaunting)
 
@@ -46,10 +33,10 @@ function SWEP:FireBall(closestPropTaunting)
 
     -- A little uncertaintity
     posToShoot:Add(Vector(
-        math.random(-self.AbilityAccuracy, self.AbilityAccuracy),
-        math.random(-self.AbilityAccuracy, self.AbilityAccuracy),
+        math.random(-self.Primary.Accuracy, self.Primary.Accuracy),
+        math.random(-self.Primary.Accuracy, self.Primary.Accuracy),
         0
-  ))
+    ))
 
     local forward = self:GetOwner():EyeAngles():Forward()
 
@@ -75,20 +62,7 @@ function SWEP:FireBall(closestPropTaunting)
 end
 
 function SWEP:PrimaryAttack()
-    if !self:CanPrimaryAttack() or CLIENT then return end
     local closestPropTaunting = GetClosestTaunter(self:GetOwner())
     if !closestPropTaunting then return end
-    timer.Simple(1.5, function()
-        if !self:GetOwner():Alive() or self:GetOwner():GetActiveWeapon():GetClass() != "weapon_obj_tauntseeker" then return end
-        self:Reload()
-        self:SendWeaponAnim(ACT_VM_DRAW)
-    end)
-    self:FireBall(closestPropTaunting)
-    self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-    self:TakePrimaryAmmo(self.Primary.TakeAmmo)
-    self:GetOwner():DoAttackEvent()
-    self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
-end
-
-function SWEP:SecondaryAttack()
+    self:PrimaryAttackWithFunction(function () self:FireBall(closestPropTaunting) end)
 end
