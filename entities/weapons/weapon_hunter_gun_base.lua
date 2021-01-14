@@ -52,7 +52,7 @@ function SWEP:PrimaryAttack()
       function ()
          self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self:GetPrimaryCone() ) 
       end
-   );
+   )
 end
 
 function SWEP:PrimaryAttackWithFunction(fireFunction)
