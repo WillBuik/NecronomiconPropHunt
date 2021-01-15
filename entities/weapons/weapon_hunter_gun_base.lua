@@ -31,6 +31,7 @@ SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = false
 SWEP.Primary.Ammo           = "none"
 SWEP.Primary.ClipMax        = -1
+SWEP.Primary.Anim           = ACT_VM_PRIMARYATTACK
 
 SWEP.Secondary.ClipSize     = -1
 SWEP.Secondary.DefaultClip  = -1
@@ -38,13 +39,13 @@ SWEP.Secondary.Automatic    = false
 SWEP.Secondary.Ammo         = "none"
 SWEP.Secondary.ClipMax      = -1
 
-SWEP.StoredAmmo = 0
+SWEP.StoredAmmo             = 0
 
-SWEP.DeploySpeed = 1
+SWEP.DeploySpeed            = 1
 
-SWEP.Primary.Anim = ACT_VM_PRIMARYATTACK
-SWEP.Reload.Anim = ACT_VM_RELOAD
-SWEP.Reload.Sound   = Sound( "Weapon_Pistol.Reload" )
+SWEP.Reload                 = {}
+SWEP.Reload.Anim            = ACT_VM_RELOAD
+SWEP.Reload.Sound           = Sound( "Weapon_Pistol.Reload" )
 
 -- Shooting functions largely copied from weapon_cs_base
 function SWEP:PrimaryAttack()
