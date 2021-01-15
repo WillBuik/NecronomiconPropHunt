@@ -352,8 +352,8 @@ function GetNumValidPropsOnMap()
         if (
                 IsValid(someEnt) and
                 table.HasValue(USABLE_PROP_ENTITIES, someEnt:GetClass()) and
-                IsValid(someEnt:GetPhysicsObject()) and
-                someEnt:GetClass() and
+                --IsValid(someEnt:GetPhysicsObject()) and
+                --someEnt:GetClass() and
                 someEnt:GetModel()
             ) then
                 numProps = numProps + 1
