@@ -101,6 +101,10 @@ function GM:HUDDrawTargetID()
     return true
 end
 
+function GM:PlayerTick(ply, mv)
+    ply:SetDSP(0)
+end
+
 function GM:PlayerFootstep(ply, pos, foot, sound, volume, rf)
     if (ply:Team() != TEAM_HUNTERS) then return true end
 end
