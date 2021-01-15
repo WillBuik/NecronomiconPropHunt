@@ -16,7 +16,6 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("Prop Pitch Enable")
     util.AddNetworkString("Hunter Roll")
     util.AddNetworkString("AutoTaunt Update")
-    util.AddNetworkString("Remove Prop")
     util.AddNetworkString("Prop Roll")
     util.AddNetworkString("Popup Open")
 end)
@@ -53,13 +52,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
         -- We should investigate why this angle doesn't naturally stay in sync
         propAngle = Angle(propAngle.p, propAngle.y, ply:GetPropRollAngle())
         ply:GetProp():SetAngles(propAngle)
-        local tHitboxMin, tHitboxMax = PropHitbox(ply)
-
-        --Adjust Position for no stuck
-        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
-        ply:SetPos(foundSpot)
-
-        UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
+        ResetPropToProp(ply)
     end
 end)
 

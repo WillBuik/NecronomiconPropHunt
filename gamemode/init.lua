@@ -354,6 +354,16 @@ function UpdatePlayerPropHitbox(ply, hbMin, hbMax)
         net.Send(ply)
 end
 
+function ResetPropToProp(ply)
+        local tHitboxMin, tHitboxMax = PropHitbox(ply)
+
+        --Adjust Position for no stuck
+        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
+        ply:SetPos(foundSpot)
+
+        UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
+end
+
 function GetNumValidPropsOnMap()
     local numProps = 0
     local allEnts = ents.GetAll()

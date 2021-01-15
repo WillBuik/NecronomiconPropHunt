@@ -23,6 +23,11 @@ function SWEP:Ability()
         ply:GetProp():SetRenderMode(RENDERMODE_NONE)
         ply:Give("weapon_prop_util_smgdummy")
         ply:SelectWeapon("weapon_prop_util_smgdummy")
+
+        ply:ResetHull()
+        net.Start("Reset Prop")
+            -- empty, just used for the hook
+        net.Send(ply)
     end
 end
 
@@ -35,6 +40,7 @@ function SWEP:AbilityCleanup()
         player_manager.RunClass(ply, "SetModel")
         if (IsValid(ply:GetProp())) then
             ply:GetProp():SetRenderMode(RENDERMODE_NORMAL)
+            ResetPropToProp(ply)
         end
         ply:SetRenderMode(RENDERMODE_NONE)
     end
