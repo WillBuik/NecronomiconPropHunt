@@ -359,6 +359,7 @@ function GetNumValidPropsOnMap()
                 numProps = numProps + 1
         end
     end
+    print(numProps)
     return numProps
 end
 
