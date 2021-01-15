@@ -69,6 +69,7 @@ end
 local function WaitRound()
     -- wait for everyone to connect and what not
     local mapTime = CurTime()
+    SetGlobalInt("NumPropsOnMap", GetNumValidPropsOnMap())
     local spectators = team.GetPlayers(TEAM_SPECTATOR)
     if (mapTime < OBJHUNT_PRE_ROUND_TIME and #spectators != 0) then return end
 
@@ -167,7 +168,6 @@ roundHandler[ROUND_END]   = EndRound
 
 -- start the round orchestrator when the game has initialized
 hook.Add("Initialize", "Begin round functions", function()
-    SetGlobalInt("NumPropsOnMap", GetNumValidPropsOnMap())
     hook.Add("Tick", "Round orchestrator", function()
         roundHandler[round.state]()
     end)
