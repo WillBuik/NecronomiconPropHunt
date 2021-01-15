@@ -268,8 +268,18 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
 
     ply:GetProp():SetModel(ent:GetModel())
     ply:GetProp():SetSkin(ent:GetSkin())
-    ply:GetProp():SetAngles(ply:GetAngles())
     ply:GetProp():SetSolid(SOLID_VPHYSICS)
+
+    -- We will reset the roll and pitch of a Prop when changing to make for easier escapes
+    ply:SetPropRollAngle(0)
+    if ply:GetPropAngleLocked() then
+        local lockedAngle = ply:GetPropLockedAngle()
+        local newAngle = Angle(0, lockedAngle.y, 0)
+        ply:SetPropLockedAngle(newAngle)
+        ply:GetProp():SetAngles(newAngle)
+    else
+        ply:GetProp():SetAngles(ply:GetAngles())
+    end
 
     local tHitboxMin, tHitboxMax = hbMin, hbMax
     if (hbMin == nil or hbMax == nil) then
