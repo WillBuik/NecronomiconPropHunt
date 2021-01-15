@@ -27,7 +27,8 @@ SWEP.Primary.AutoReload    = true
 SWEP.Primary.Anim          = ACT_VM_SECONDARYATTACK
 SWEP.Primary.Accuracy      = 50
 
-function SWEP:FireBall(entsGlobal, closestPropTaunting)
+function SWEP:FireBall(closestPropTaunting)
+    if CLIENT then return end
 
     local posToShoot = closestPropTaunting:GetPos()
 
@@ -40,7 +41,7 @@ function SWEP:FireBall(entsGlobal, closestPropTaunting)
 
     local forward = self:GetOwner():EyeAngles():Forward()
 
-    local ent = entsGlobal.Create("prop_combine_ball")
+    local ent = ents.Create("prop_combine_ball")
     if (IsValid(ent)) then
         ent:SetPos(self:GetOwner():GetShootPos() + forward * 32)
         ent:SetAngles(self:GetOwner():EyeAngles())
@@ -64,5 +65,5 @@ end
 function SWEP:PrimaryAttack()
     local closestPropTaunting = GetClosestTaunter(self:GetOwner())
     if !closestPropTaunting then return end
-    self:PrimaryAttackWithFunction(function () self:FireBall(ents, closestPropTaunting) end)
+    self:PrimaryAttackWithFunction(function () self:FireBall(closestPropTaunting) end)
 end
