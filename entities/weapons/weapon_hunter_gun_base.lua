@@ -43,9 +43,8 @@ SWEP.StoredAmmo             = 0
 
 SWEP.DeploySpeed            = 1
 
-SWEP.Reload                 = {}
-SWEP.Reload.Anim            = ACT_VM_RELOAD
-SWEP.Reload.Sound           = Sound( "Weapon_Pistol.Reload" )
+SWEP.ReloadAnim            = ACT_VM_RELOAD
+SWEP.ReloadSound           = Sound( "Weapon_Pistol.Reload" )
 
 -- Shooting functions largely copied from weapon_cs_base
 function SWEP:PrimaryAttack()
@@ -153,8 +152,8 @@ end
 
 function SWEP:Reload()
    if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
-   self:EmitSound(self.Reload.Sound )
-   self:DefaultReload(self.Reload.Anim)
+   self:EmitSound(self.ReloadSound )
+   self:DefaultReload(self.ReloadAnim)
 end
 
 
