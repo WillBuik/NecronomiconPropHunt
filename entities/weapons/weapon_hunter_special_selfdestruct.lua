@@ -45,5 +45,6 @@ function SWEP:AbilityCleanup()
     if IsValid(self:GetOwner()) then
         self:GetOwner():SetModelScale(1, 0.1)
         self:GetOwner():SetColor(Color( 255, 255, 255, 255))
+        self:GetOwner():SetPlayerColor(PlayerToAccentColor(self:GetOwner()))
     end
 end

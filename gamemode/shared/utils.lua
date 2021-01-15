@@ -151,6 +151,15 @@ function LerpColor(frac,from,to)
     )
 end
 
+function PlayerToAccentColor(ply)
+    local cubeID = ply:AccountID() ^ 3
+    return Vector(
+        ((cubeID * 3) % 256) / 255,
+        ((cubeID * 5) % 256) / 255,
+        ((cubeID * 7) % 256) / 255
+    )
+end
+
 function TeamString(teamID)
     if (teamID == TEAM_HUNTERS) then
         return "Hunters"
