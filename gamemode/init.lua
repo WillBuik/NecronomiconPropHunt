@@ -363,6 +363,10 @@ function GetNumValidPropsOnMap()
     return numProps
 end
 
+hook.Add("InitPostEntity", "Entities ready, count props", function ()
+    SetGlobalInt("NumPropsOnMap", GetNumValidPropsOnMap())
+end)
+
 --[[ When a player on team_props spawns ]]--
 hook.Add("PlayerSpawn", "Set ObjHunt model", function (ply)
     -- default prop should be able to step wherever

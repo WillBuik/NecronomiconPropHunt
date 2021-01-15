@@ -69,7 +69,6 @@ end
 local function WaitRound()
     -- wait for everyone to connect and what not
     local mapTime = CurTime()
-    SetGlobalInt("NumPropsOnMap", GetNumValidPropsOnMap())
     local spectators = team.GetPlayers(TEAM_SPECTATOR)
     if (mapTime < OBJHUNT_PRE_ROUND_TIME and #spectators != 0) then return end
 
