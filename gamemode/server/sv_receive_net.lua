@@ -14,7 +14,7 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("Prop Angle Lock")
     util.AddNetworkString("Prop Angle Snap")
     util.AddNetworkString("Prop Pitch Enable")
-    util.AddNetworkString("Hunter Roll")
+    util.AddNetworkString("Hunter Hint Updown")
     util.AddNetworkString("AutoTaunt Update")
     util.AddNetworkString("Prop Roll")
     util.AddNetworkString("Popup Open")
@@ -62,22 +62,16 @@ net.Receive("Prop Pitch Enable", function(len, ply)
     ply:SetPropPitchEnabled(shouldPitchEnable)
 end)
 
-net.Receive("Hunter Roll", function(len, ply)
-    local shouldRoll = net.ReadBit() == 1
-
-    local closestPlyTaunting = GetClosestTaunter(ply)
-    local newPitch = 0
-    if (closestPlyTaunting != nil) then
-        local vectorBetween = closestPlyTaunting:GetPos() - ply:GetPos()
-        local pitchFromAngle = vectorBetween:Angle().p
-        newPitch = pitchFromAngle / (math.abs(pitchFromAngle))
+net.Receive("Hunter Hint Updown", function(len, ply)
+    local closestPropTaunting = GetClosestTaunter(ply)
+    if (closestPropTaunting != nil) then
+        hightDiff = (closestPropTaunting:GetPos() - ply:GetPos()).z
+        if (hightDiff > 0) then
+            ply:ViewPunch( Angle( 15, 0, 0 ) ) 
+        elseif (hightDiff < 0) then
+            ply:ViewPunch( Angle( -15, 0, 0 ) ) 
+        end 
     end
-    local oldAngle = ply:EyeAngles()
-    local newAngle = Angle(newPitch, oldAngle.y, 0)
-    if (shouldRoll) then
-       newAngle:Add(Angle(0,0, -90))
-    end
-    ply:SetEyeAngles(newAngle)
 end)
 
 --[[ When a player wants toggle world angle snapping on their prop ]]--

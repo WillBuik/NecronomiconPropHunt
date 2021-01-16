@@ -23,29 +23,16 @@ hook.Add("PlayerButtonDown", "EnableTiltKeyPress", function(ply, button)
     end
 end)
 
-hook.Add("KeyPress", "PressShiftRollHunter", function(ply, key)
+hook.Add("KeyPress", "PressShiftHunterHintUpdown", function(ply, key)
     if (key == IN_SPEED and
          ply:Team() == TEAM_HUNTERS and
          ply:Alive()
     ) then
-        ply:Freeze(true)
-        net.Start("Hunter Roll")
-            net.WriteBit(true)
+        net.Start("Hunter Hint Updown")
         net.SendToServer()
     end
 end)
 
-hook.Add("KeyRelease", "ReleaseShiftRollHunter", function(ply, key)
-    if (key == IN_SPEED and
-         ply:Team() == TEAM_HUNTERS and
-         ply:Alive()
-    ) then
-        ply:Freeze(false)
-        net.Start("Hunter Roll")
-            net.WriteBit(false)
-        net.SendToServer()
-    end
-end)
 
 function GM:PlayerBindPress(ply, bind, pressed)
     if (ply:Team() == TEAM_PROPS and
