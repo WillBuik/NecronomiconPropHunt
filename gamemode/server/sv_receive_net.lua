@@ -65,7 +65,7 @@ end)
 net.Receive("Hunter Hint Updown", function(len, ply)
     local closestPropTaunting = GetClosestTaunter(ply)
     if (closestPropTaunting != nil) then
-        hightDiff = (closestPropTaunting:GetPos() - ply:GetPos()).z
+        hightDiff = closestPropTaunting:GetPos().z - ply:GetPos().z
         if (hightDiff > 0) then
             ply:ViewPunch( Angle( 15, 0, 0 ) ) 
         elseif (hightDiff < 0) then
