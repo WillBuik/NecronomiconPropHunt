@@ -16,12 +16,11 @@ function SWEP:Ability()
     end)
 
 
-    local hunters = GetLivingPlayers(TEAM_HUNTERS)
     local closestHunter = nil
     local closestDistSq = math.huge
-    for _, hunter in pairs(hunters) do
+    for _, hunter in pairs(GetLivingPlayers(TEAM_HUNTERS)) do
         local currentDistSq = ply:GetPos():DistToSqr(hunter:GetPos())
-        if IsValid(hunter) and hunter:Alive() and (currentDistSq < closestDistSq) then
+        if (currentDistSq < closestDistSq) then
             closestHunter = hunter
             closestDistSq = currentDistSq
         end
