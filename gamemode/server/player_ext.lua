@@ -71,7 +71,6 @@ function plymeta:ObjEndRagdoll()
 --         end
 
         local pos = ragdoll:GetPos()
-        pos.z = pos.z + 8 -- So they don't end up in the ground
 
         self:SetModel(ragdoll:GetModel())
         self:SetPos(pos)
@@ -79,6 +78,7 @@ function plymeta:ObjEndRagdoll()
         local yaw = ragdoll:GetAngles().yaw
         self:SetAngles(Angle(0, yaw, 0))
         ragdoll:Remove()
+        ResetPropToProp(self)
     end
 end
 
