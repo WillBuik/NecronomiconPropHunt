@@ -14,7 +14,7 @@ SWEP.Base                  = "weapon_hunter_gun_base"
 
 SWEP.Primary.Recoil        = 1.5
 SWEP.Primary.Damage        = 5
-SWEP.Primary.Delay         = 0.3
+SWEP.Primary.Delay         = 0.065
 SWEP.Primary.Cone          = 0.02
 SWEP.Primary.ClipSize      = 18
 SWEP.Primary.Automatic     = false
