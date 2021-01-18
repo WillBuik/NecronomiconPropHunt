@@ -19,7 +19,7 @@ function SWEP:Ability()
 
         GAMEMODE.PropAbilitySuperHotMode = true
         GAMEMODE.PropAbilitySuperHotModePly = ply
-        GAMEMODE.PropAbilitySuperHotModeEndTime = RealTime() + self.AbilityDuration
+        GAMEMODE.PropAbilitySuperHotModeEndTime = RealTime() + self.AbilityDuration / 0.3
         ply:SetWalkSpeed(ply:GetWalkSpeed() * 6)
         ply:SetRunSpeed(ply:GetRunSpeed() * 6)
         for _, p in pairs(player.GetAll()) do
