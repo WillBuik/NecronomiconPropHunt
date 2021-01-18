@@ -272,7 +272,7 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
 
     -- We will reset the roll and pitch of a Prop when changing to make for easier escapes
     ply:SetPropRollAngle(0)
-    if ply:GetPropAngleLocked() then
+    if ply:IsPropAngleLocked() then
         local lockedAngle = ply:GetPropLockedAngle()
         local newAngle = Angle(0, lockedAngle.y, 0)
         ply:SetPropLockedAngle(newAngle)
