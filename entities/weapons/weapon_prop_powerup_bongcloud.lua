@@ -17,6 +17,11 @@ function SWEP:CreateSmoke()
     local center = self:GetOwner():GetPos() 
     local em = ParticleEmitter(center)
 
+    local smokeparticles = {
+        Model("particle/particle_smokegrenade"),
+        Model("particle/particle_noisesphere")
+     };
+
     for i = 1, self.AbilityRadius do
        local prpos = VectorRand() * self.AbilityRadius
        prpos.z = prpos.z + 32

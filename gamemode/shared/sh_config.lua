@@ -56,8 +56,8 @@ ROUND_END   = 3
 VIEW_MIN_Z = 5
 
 -- the default hitbox for the initial prop
-PROP_DEFAULT_HB_MIN = Vector(-10,-10,-17.5)
-PROP_DEFAULT_HB_MAX = Vector(10,10,17.5)
+PROP_DEFAULT_HB_MIN = Vector(-10,-10,0)
+PROP_DEFAULT_HB_MAX = Vector(10,10,35)
 
 -- the default scale for the initial prop
 PROP_DEFAULT_SCALE = 0.5
