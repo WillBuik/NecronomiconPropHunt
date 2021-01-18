@@ -4,7 +4,8 @@ SWEP.Base = "weapon_prop_powerup_base"
 SWEP.Name = "SUPER HOT"
 SWEP.PrintName = "SUPER HOT"
 
-SWEP.AbilityDuration = 8
+SWEP.AbilityDuration = 6
+SWEP.AbilityTimeScale = 0.3
 SWEP.AbilityDescription = "Not quite like the original.\n\nSlow Motion for everyone, but yourself.\nLasts $AbilityDuration seconds."
 
 local playerSuperHotNWVarName = "propIsSuperHotEnabled"
@@ -19,13 +20,13 @@ function SWEP:Ability()
 
         GAMEMODE.PropAbilitySuperHotMode = true
         GAMEMODE.PropAbilitySuperHotModePly = ply
-        GAMEMODE.PropAbilitySuperHotModeEndTime = RealTime() + self.AbilityDuration / 0.3
+        GAMEMODE.PropAbilitySuperHotModeEndTime = RealTime() + self.AbilityDuration / self.AbilityTimeScale
         ply:SetWalkSpeed(ply:GetWalkSpeed() * 6)
         ply:SetRunSpeed(ply:GetRunSpeed() * 6)
         for _, p in pairs(player.GetAll()) do
             p:SetNWBool(playerSuperHotNWVarName, true)
         end
-        game.SetTimeScale(0.3)
+        game.SetTimeScale(self.AbilityTimeScale)
     end
 end
 
