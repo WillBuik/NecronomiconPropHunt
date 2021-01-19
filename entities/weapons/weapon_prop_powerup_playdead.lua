@@ -4,52 +4,21 @@ SWEP.Base = "weapon_prop_powerup_base"
 SWEP.Name = "Play Dead"
 SWEP.PrintName = "Play Dead"
 
-SWEP.AbilityDuration = 8
-SWEP.AbilityDescription = "Transforms you into a ragdoll for $AbilityDuration seconds."
+SWEP.AbilityDuration = 0
+SWEP.AbilityDescription = "Transforms you into a ragdoll for 8 seconds the next time you take damage."
 
 function SWEP:Ability()
     if CLIENT then return end
 
     local ply = self:GetOwner()
-    self:AbilityTimerIfValidSWEP(self.AbilityDuration, 1, true, function()
-        self:AbilityCleanup()
-    end)
 
-
-    local closestHunter = nil
-    local closestDistSq = math.huge
-    for _, hunter in pairs(GetLivingPlayers(TEAM_HUNTERS)) do
-        local currentDistSq = ply:GetPos():DistToSqr(hunter:GetPos())
-        if (currentDistSq < closestDistSq) then
-            closestHunter = hunter
-            closestDistSq = currentDistSq
-        end
-    end
-
-    if IsValid(closestHunter) then
-        net.Start("Death Notice")
-            net.WriteString(closestHunter:Nick())
-            net.WriteUInt(closestHunter:Team(), 16)
-            net.WriteString("found")
-            net.WriteString(ply:Nick())
-            net.WriteUInt(ply:Team(), 16)
-        net.Broadcast()
-    end
-
-    ply:GetProp():SetRenderMode(RENDERMODE_NONE)
-
-    ply:ObjSetPlaydead(true)
-    ply:ObjStartRagdoll()
+    ply:ObjSetShouldPlaydead(true)
+    ply:PrintMessage(HUD_PRINTTALK, "The next time you take damage, you will play dead.")
 end
 
 function SWEP:AbilityCleanup()
-    if CLIENT then return end
-    if !IsValid(self:GetOwner()) then return end
-    if (IsValid(self:GetOwner():GetProp())) then
-        self:GetOwner():GetProp():SetRenderMode(RENDERMODE_NORMAL)
-    end
-    self:GetOwner():ObjSetPlaydead(false)
-    self:GetOwner():ObjEndRagdoll()
+    self:GetOwner():ObjSetShouldPlaydead(false)
+    self:GetOwner():ObjSetIsPlaydead(false)
 end
 
 if CLIENT then

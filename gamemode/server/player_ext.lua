@@ -82,3 +82,32 @@ function plymeta:ObjEndRagdoll()
     end
 end
 
+function plymeta:FakeDeath(attacker)
+    net.Start("Death Notice")
+        net.WriteString(attacker:Nick())
+        net.WriteUInt(attacker:Team(), 16)
+        net.WriteString("found")
+        net.WriteString(self:Nick())
+        net.WriteUInt(self:Team(), 16)
+    net.Broadcast()
+
+    -- todo: this doesn't work on the dummy prop
+    self:GetProp():SetRenderMode(RENDERMODE_NONE)
+    self:ObjStartRagdoll()
+
+    self:ObjSetShouldPlaydead(false)
+    self:ObjSetPlaydead(true)
+
+    -- un-fake the death after 8 seconds
+    timer.Create("EndFakeDeath", 8, 1, function()
+        self:EndFakeDeath()
+    end)
+end
+
+function plymeta:EndFakeDeath()
+    if (IsValid(self:GetProp())) then
+        self:GetProp():SetRenderMode(RENDERMODE_NORMAL)
+    end
+    self:ObjEndRagdoll()
+    self:ObjSetPlaydead(false)
+end
