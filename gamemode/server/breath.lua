@@ -7,9 +7,9 @@
 --
 -- BASIC DESIGN (2020/12/7)
 --
--- Autotuanting is based on offsets from LastTauntTime.  This is very
--- network-efficient, but it means we have to do some math to push out
--- LastTauntTime while a player holds their breath.
+-- Autotuanting is based on two variables: LastTauntTime (a timestamp) and
+-- NextAutoTauntDelay (a duration).  While a player holds their breath,
+-- this code increases NextAutoTauntDelay to push out the scheduled autotaunt.
 --
 -- Breath state:
 --   BreathHoldOffsetTime (per-player server-side variable)
@@ -22,11 +22,12 @@
 --
 -- Other important state:
 --   LastTauntTime (per-player networked variable, managed server-side)
+--   NextAutoTauntDelay (per-player networked variable, managed server-side)
 --
 -- Periodically, on the server: call doHoldBreath() for each player.  This
 -- should happen at least every BREATH_PERIODIC_HEALTH_PENALTY_RATE seconds.
 -- If the player is holding their breath, doHoldBreath() will:
---   - adjust LastTauntTime to delay the next autotaunt
+--   - adjust NextAutoTauntDelay to delay the next autotaunt
 --   - set BreathHoldOffsetTime = now
 --   - deal damage based on LastSuffocationTime
 --   - update LastSuffocationTime appropriately
@@ -57,7 +58,7 @@ if AUTOTAUNT_ENABLED then
 
         if ply.BreathHoldOffsetTime ~= nil then
             local delta = now - ply.BreathHoldOffsetTime
-            ply:SetLastTauntTime(ply:GetLastTauntTime() + delta)
+            ply:SetNextAutoTauntDelay(ply:GetNextAutoTauntDelay() + delta)
             ply.BreathHoldOffsetTime = now
 
             local suffocationCount = math.floor((now - ply.LastSuffocationTime) / BREATH_PERIODIC_HEALTH_PENALTY_RATE)
