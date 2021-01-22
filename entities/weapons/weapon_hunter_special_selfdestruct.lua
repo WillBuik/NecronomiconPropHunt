@@ -13,7 +13,7 @@ SWEP.AbilityDescription = "Creates an explosion after $AbilityDuration seconds t
 SWEP.WeaponIconKey = "o" -- C4
 
 function SWEP:Ability()
-    if !SERVER then return end
+    if CLIENT then return end
 
     for t = 1, self.AbilityModelScaleTimes do
         self:AbilityTimerIfValidOwnerAndAlive(self.AbilityDuration * (t / self.AbilityModelScaleTimes), 1, true, function()

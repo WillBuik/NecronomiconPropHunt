@@ -11,7 +11,7 @@ SWEP.AbilityDescription = "Not quite like the original.\n\nSlow Motion for every
 local playerSuperHotNWVarName = "propIsSuperHotEnabled"
 
 function SWEP:Ability()
-    if !SERVER then return end
+    if CLIENT then return end
     local ply = self:GetOwner()
     -- dont consume if already activated by someone else
     if GAMEMODE.PropAbilitySuperHotMode then
@@ -30,7 +30,7 @@ function SWEP:Ability()
 end
 
 local function endSuperHotMode()
-    if !SERVER then return end
+    if CLIENT then return end
     local ply = GAMEMODE.PropAbilitySuperHotModePly
     game.SetTimeScale(1)
     ply:SetWalkSpeed(ply:GetWalkSpeed() / 6)

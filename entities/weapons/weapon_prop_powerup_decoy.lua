@@ -11,14 +11,14 @@ SWEP.AbilityDescription = "Spawns $AbilityDecoyCount decoys and sends them in ra
 
 -- This SWEP curently doesn't work for a mirade of reasons: The decoys get stuck in the ground and sometimes eachother, don't have the right model, and refuse to move even if nocliped
 function SWEP:Ability()
-    if !SERVER then return end
+    if CLIENT then return end
 
     local spawnPos = self:GetOwner():GetPos()
 
     self:GetOwner():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
     for _ = 1,self.AbilityDecoyCount do
         local decoy = ents.Create("npc_kleiner")
-        if not IsValid(decoy) then break end
+        if !IsValid(decoy) then break end
         decoy:SetCollisionGroup(COLLISION_GROUP_NPC_SCRIPTED)
         decoy:NavSetRandomGoal(500, Vector(math.random(), math.random(), spawnPos.z))
         --decoy:SetModel(self:GetOwner():GetProp():GetModel())

@@ -10,7 +10,7 @@ SWEP.AbilityPopupNumber = 3
 SWEP.AbilityDescription = "Make $AbilityPopupNumber Popup Ads appear on the screens of Hunters within a range of $AbilityRange."
 
 function SWEP:Ability()
-    if !SERVER then return end
+    if CLIENT then return end
     local targets = self:GetHuntersInRange(self.AbilityRange, true)
     -- dont use ability if no target was found
     if #targets == 0 then

@@ -28,7 +28,7 @@ SWEP.Primary.EffectRange   = 300
 
 
 function SWEP:Throw()
-    if !SERVER then return end
+    if CLIENT then return end
 
     local ent = ents.Create("prop_physics")
     local ply = self:GetOwner()

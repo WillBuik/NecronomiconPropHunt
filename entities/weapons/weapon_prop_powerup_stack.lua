@@ -7,7 +7,7 @@ SWEP.PrintName = "Stack"
 SWEP.AbilityDescription = "Stack the Prop you're hold on top of you for better hiding."
 
 function SWEP:Ability()
-    if !SERVER then return end
+    if CLIENT then return end
     local ply = self:GetOwner()
     local prop = GetViewEntSv(ply)
     if !IsValid(prop) then
