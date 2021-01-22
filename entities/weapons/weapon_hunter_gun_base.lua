@@ -60,7 +60,7 @@ function SWEP:PrimaryAttackWithFunction(fireFunction)
    self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
-   if not self:CanPrimaryAttack() then return end
+   if !self:CanPrimaryAttack() then return end
 
    if SERVER then
       sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
@@ -72,7 +72,7 @@ function SWEP:PrimaryAttackWithFunction(fireFunction)
    self:TakePrimaryAmmo( 1 )
 
    local owner = self:GetOwner()
-   if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
+   if !IsValid(owner) or owner:IsNPC() or (!owner.ViewPunch) then return end
 
    owner:ViewPunch( Angle( util.SharedRandom(self:GetClass(),-0.2,-0.1,0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),-0.1,0.1,1) * self.Primary.Recoil, 0 ) )
 end
@@ -88,7 +88,7 @@ function SWEP:DryFire(setnext)
 end
 
 function SWEP:CanPrimaryAttack()
-   if not IsValid(self:GetOwner()) then return end
+   if !IsValid(self:GetOwner()) then return end
 
    if self:Clip1() <= 0 then
       self:DryFire(self.SetNextPrimaryFire)
@@ -98,7 +98,7 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:CanSecondaryAttack()
-   if not IsValid(self:GetOwner()) then return end
+   if !IsValid(self:GetOwner()) then return end
 
    if self:Clip2() <= 0 then
       self:DryFire(self.SetNextSecondaryFire)
@@ -128,10 +128,10 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    self:GetOwner():FireBullets( bullet )
 
    -- Owner can die after firebullets
-   if (not IsValid(self:GetOwner())) or (not self:GetOwner():Alive()) or self:GetOwner():IsNPC() then return end
+   if (!IsValid(self:GetOwner())) or (!self:GetOwner():Alive()) or self:GetOwner():IsNPC() then return end
 
    if ((game.SinglePlayer() and SERVER) or
-       ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted())) then
+       ((!game.SinglePlayer()) and CLIENT and IsFirstTimePredicted())) then
 
       local eyeang = self:GetOwner():EyeAngles()
       eyeang.pitch = eyeang.pitch - recoil
@@ -181,7 +181,7 @@ function SWEP:Initialize()
 end
 
 function SWEP:CalcViewModel()
-   if (not CLIENT) or (not IsFirstTimePredicted()) then return end
+   if SERVER or !IsFirstTimePredicted() then return end
    self.fCurrentTime = CurTime()
    self.fCurrentSysTime = SysTime()
 end

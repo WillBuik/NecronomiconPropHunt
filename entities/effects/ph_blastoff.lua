@@ -9,7 +9,7 @@ function EFFECT:Init(data)
 end
 
 function EFFECT:Think()
-    if self.EndTime < CurTime() or not IsValid(self:GetOwner()) then
+    if self.EndTime < CurTime() or !IsValid(self:GetOwner()) then
         self.Emitter:Finish()
         return false
     end

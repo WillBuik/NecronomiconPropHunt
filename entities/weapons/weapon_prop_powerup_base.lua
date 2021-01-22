@@ -71,8 +71,8 @@ function SWEP:AbilityCreated()
 end
 
 function SWEP:DrawWorldModel()
-    if not self:GetIsAbilityUsed() and self.AbilityShowTargetHalos and self.AbilityRange and self.AbilityRange > 0 and self:IsCarriedByLocalPlayer() then
-        for _, v in pairs(self:GetHuntersInRange(self.AbilityRange, not self.AbilityShowTargetHalosCheckLOS)) do
+    if !self:GetIsAbilityUsed() and self.AbilityShowTargetHalos and self.AbilityRange and self.AbilityRange > 0 and self:IsCarriedByLocalPlayer() then
+        for _, v in pairs(self:GetHuntersInRange(self.AbilityRange, !self.AbilityShowTargetHalosCheckLOS)) do
             halo.Add({v}, Color(255, 0, 0), 3, 3, 5)
         end
     end
@@ -114,7 +114,7 @@ function SWEP:SecondaryAttack()
 
     local abilityError = self:Ability()
 
-    if not abilityError then
+    if !abilityError then
         if self.AbilitySound then
             local abilitySound
             if istable(self.AbilitySound) then
@@ -165,7 +165,7 @@ function SWEP:AbilityCleanup()
 end
 
 function SWEP:AbilityIsTargetInLOS(target, mask)
-    if not IsValid(self) or not IsValid(self:GetOwner()) or not self:GetOwner():Alive() then return false end
+    if !IsValid(self) or !IsValid(self:GetOwner()) or !self:GetOwner():Alive() then return false end
 
     local losTrace = util.TraceLine({
         start = self:GetOwner():GetPos() + self:GetOwner():OBBCenter(),
@@ -174,7 +174,7 @@ function SWEP:AbilityIsTargetInLOS(target, mask)
         mask = mask or MASK_SOLID_BRUSHONLY
     })
 
-    return not losTrace.Hit
+    return !losTrace.Hit
 end
 
 function SWEP:GetHuntersInRange(range, ignoreLOS)
@@ -200,21 +200,21 @@ end
 
 function SWEP:AbilityTimerIfValidSWEP(dur, reps, removeTimerWithSwep, fn)
     return self:AbilityTimer(dur, reps, removeTimerWithSwep, function()
-        if not IsValid(self) then return end
+        if !IsValid(self) then return end
         fn()
     end)
 end
 
 function SWEP:AbilityTimerIfValidOwner(dur, reps, removeTimerWithSwep, fn)
     return self:AbilityTimer(dur, reps, removeTimerWithSwep, function()
-        if not IsValid(self) or not IsValid(self:GetOwner()) then return end
+        if !IsValid(self) or !IsValid(self:GetOwner()) then return end
         fn()
     end)
 end
 
 function SWEP:AbilityTimerIfValidOwnerAndAlive(dur, reps, removeTimerWithSwep, fn)
     return self:AbilityTimer(dur, reps, removeTimerWithSwep, function()
-        if not IsValid(self) or not IsValid(self:GetOwner()) or not self:GetOwner():Alive() then return end
+        if !IsValid(self) or !IsValid(self:GetOwner()) or !self:GetOwner():Alive() then return end
         fn()
     end)
 end

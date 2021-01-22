@@ -206,10 +206,10 @@ function PANEL:Think()
     end
 
     for k, v in pairs(self.Voters) do
-        if (not IsValid(v.Player)) then
+        if (!IsValid(v.Player)) then
             v:Remove()
         else
-            if (not MapVote.Votes[v.Player:SteamID()]) then
+            if (!MapVote.Votes[v.Player:SteamID()]) then
                 v:Remove()
             else
                 local bar = self:GetMapButton(MapVote.Votes[v.Player:SteamID()])
@@ -223,7 +223,7 @@ function PANEL:Think()
                 if (IsValid(bar)) then
                     local NewPos = Vector((bar.x + bar:GetWide()) - 21 * bar.NumVotes - 2, bar.y + (bar:GetTall() * 0.5 - 10), 0)
 
-                    if (not v.CurPos or v.CurPos != NewPos) then
+                    if (!v.CurPos or v.CurPos != NewPos) then
                         v:MoveTo(NewPos.x, NewPos.y, 0.3)
                         v.CurPos = NewPos
                     end

@@ -53,7 +53,7 @@ if SERVER then
     hook.Add("Think", "SuperHotThink", function()
         if GAMEMODE.PropAbilitySuperHotMode then
             local ply = GAMEMODE.PropAbilitySuperHotModePly
-            if not IsValid(ply) or not ply:Alive() or GAMEMODE.PropAbilitySuperHotModeEndTime < RealTime() then
+            if !IsValid(ply) or !ply:Alive() or GAMEMODE.PropAbilitySuperHotModeEndTime < RealTime() then
                 endSuperHotMode()
             end
         end

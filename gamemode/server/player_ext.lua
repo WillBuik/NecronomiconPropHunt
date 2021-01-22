@@ -1,5 +1,5 @@
 local plymeta = FindMetaTable("Player")
-if (not plymeta) then return end
+if !plymeta then return end
 
 function plymeta:ObjStartRagdoll(velocityBoost, velocityMultiplier)
     velocityBoost = velocityBoost or Vector(0, 0, 0)
@@ -63,7 +63,7 @@ function plymeta:ObjEndRagdoll()
     local ragdoll = self.objRagdoll
     self.objRagdoll = nil -- Gotta do this before spawn or our hook catches it
 
-    if not IsValid(ragdoll) or not ragdoll:IsValid() then -- Something must have removed it, just spawn
+    if !IsValid(ragdoll) or !ragdoll:IsValid() then -- Something must have removed it, just spawn
         return
     else
 --         if self:Alive() then

@@ -59,7 +59,7 @@ net.Receive("Taunt Selection BROADCAST", function()
     local id = net.ReadUInt(8)
     local ply = player.GetByID(id)
 
-    if not IsValid(ply) then return end
+    if !IsValid(ply) then return end
 
     local s = Sound(taunt)
     -- need to delete the gc function so my ents remain

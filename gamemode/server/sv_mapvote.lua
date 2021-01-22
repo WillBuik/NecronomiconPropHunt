@@ -34,7 +34,7 @@ function MapVote.Start(length, current, limit, prefix)
 
     local is_expression = false
 
-    if not prefix then
+    if !prefix then
         local info = file.Read(GAMEMODE.Folder .. "/" .. GAMEMODE.FolderName .. ".txt", "GAME")
 
         if (info) then
@@ -58,7 +58,7 @@ function MapVote.Start(length, current, limit, prefix)
     local amt = 0
 
     for _, map in RandomPairs(maps) do
-        if (not current and game.GetMap():lower() .. ".bsp" == map) then continue end
+        if (!current and game.GetMap():lower() .. ".bsp" == map) then continue end
 
         if is_expression then
             if (string.find(map, prefix)) then -- This might work (from gamemode.txt)
@@ -97,7 +97,7 @@ function MapVote.Start(length, current, limit, prefix)
         local map_results = {}
 
         for k, v in pairs(MapVote.Votes) do
-            if (not map_results[v]) then
+            if (!map_results[v]) then
                 map_results[v] = 0
             end
 

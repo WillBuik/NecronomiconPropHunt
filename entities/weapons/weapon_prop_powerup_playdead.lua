@@ -44,7 +44,7 @@ end
 
 function SWEP:AbilityCleanup()
     if CLIENT then return end
-    if not IsValid(self:GetOwner()) then return end
+    if !IsValid(self:GetOwner()) then return end
     if (IsValid(self:GetOwner():GetProp())) then
         self:GetOwner():GetProp():SetRenderMode(RENDERMODE_NORMAL)
     end

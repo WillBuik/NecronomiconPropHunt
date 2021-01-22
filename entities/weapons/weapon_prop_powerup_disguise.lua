@@ -32,7 +32,7 @@ function SWEP:Ability()
 end
 
 function SWEP:AbilityCleanup()
-    if not IsValid(self:GetOwner()) then return end
+    if !IsValid(self:GetOwner()) then return end
     local ply = self:GetOwner()
     ply:ObjSetDisguised(false)
     if SERVER then
