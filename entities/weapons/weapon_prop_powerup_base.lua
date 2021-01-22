@@ -180,7 +180,7 @@ end
 function SWEP:GetHuntersInRange(range, ignoreLOS)
     local result = {}
     for _,v in pairs(GetLivingPlayers(TEAM_HUNTERS)) do
-        if v:GetPos():Distance(self:GetOwner():GetPos()) < range and (ignoreLOS or self:AbilityIsTargetInLOS(v)) then
+        if v:GetPos():DistToSqr(self:GetOwner():GetPos()) < range^2 and (ignoreLOS or self:AbilityIsTargetInLOS(v)) then
             table.insert(result, v)
         end
     end

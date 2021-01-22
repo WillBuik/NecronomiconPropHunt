@@ -28,7 +28,7 @@ SWEP.Primary.Anim          = ACT_VM_SECONDARYATTACK
 SWEP.Primary.Accuracy      = 70
 
 function SWEP:FireBall(closestPropTaunting)
-    if CLIENT then return end
+    if !SERVER then return end
 
     local posToShoot = closestPropTaunting:GetPos()
 

@@ -8,7 +8,7 @@ SWEP.AbilityDuration = 8
 SWEP.AbilityDescription = "Transforms you into a ragdoll for $AbilityDuration seconds."
 
 function SWEP:Ability()
-    if CLIENT then return end
+    if !SERVER then return end
 
     local ply = self:GetOwner()
     self:AbilityTimerIfValidSWEP(self.AbilityDuration, 1, true, function()
@@ -43,7 +43,7 @@ function SWEP:Ability()
 end
 
 function SWEP:AbilityCleanup()
-    if CLIENT then return end
+    if !SERVER then return end
     if not IsValid(self:GetOwner()) then return end
     if (IsValid(self:GetOwner():GetProp())) then
         self:GetOwner():GetProp():SetRenderMode(RENDERMODE_NORMAL)

@@ -148,9 +148,7 @@ function SWEP:SecondaryAttack()
 
    if not self:CanPrimaryAttack() then return end
 
-   if not worldsnd then
-      self:EmitSound( self.Primary.Sound, self.Primary.SoundLevel )
-   elseif SERVER then
+   if SERVER then
       sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
    end
 

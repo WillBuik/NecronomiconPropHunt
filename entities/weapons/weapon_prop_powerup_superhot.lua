@@ -11,38 +11,36 @@ SWEP.AbilityDescription = "Not quite like the original.\n\nSlow Motion for every
 local playerSuperHotNWVarName = "propIsSuperHotEnabled"
 
 function SWEP:Ability()
+    if !SERVER then return end
     local ply = self:GetOwner()
-    if SERVER then
-        -- dont consume if already activated by someone else
-        if GAMEMODE.PropAbilitySuperHotMode then
-            return OBJ_ABILTY_CAST_ERROR_ALREADY_ACTIVE
-        end
-
-        GAMEMODE.PropAbilitySuperHotMode = true
-        GAMEMODE.PropAbilitySuperHotModePly = ply
-        GAMEMODE.PropAbilitySuperHotModeEndTime = RealTime() + self.AbilityDuration / self.AbilityTimeScale
-        ply:SetWalkSpeed(ply:GetWalkSpeed() * 6)
-        ply:SetRunSpeed(ply:GetRunSpeed() * 6)
-        for _, p in pairs(player.GetAll()) do
-            p:SetNWBool(playerSuperHotNWVarName, true)
-        end
-        game.SetTimeScale(self.AbilityTimeScale)
+    -- dont consume if already activated by someone else
+    if GAMEMODE.PropAbilitySuperHotMode then
+        return OBJ_ABILTY_CAST_ERROR_ALREADY_ACTIVE
     end
+
+    GAMEMODE.PropAbilitySuperHotMode = true
+    GAMEMODE.PropAbilitySuperHotModePly = ply
+    GAMEMODE.PropAbilitySuperHotModeEndTime = RealTime() + self.AbilityDuration / self.AbilityTimeScale
+    ply:SetWalkSpeed(ply:GetWalkSpeed() * 6)
+    ply:SetRunSpeed(ply:GetRunSpeed() * 6)
+    for _, p in pairs(player.GetAll()) do
+        p:SetNWBool(playerSuperHotNWVarName, true)
+    end
+    game.SetTimeScale(self.AbilityTimeScale)
 end
 
 local function endSuperHotMode()
-    if SERVER then
-        local ply = GAMEMODE.PropAbilitySuperHotModePly
-        game.SetTimeScale(1)
-        ply:SetWalkSpeed(ply:GetWalkSpeed() / 6)
-        ply:SetRunSpeed(ply:GetRunSpeed() / 6)
-        for _, p in pairs(player.GetAll()) do
-            p:SetNWBool(playerSuperHotNWVarName, false)
-        end
-
-        GAMEMODE.PropAbilitySuperHotMode = false
-        GAMEMODE.PropAbilitySuperHotModePly = nil
+    if !SERVER then return end
+    local ply = GAMEMODE.PropAbilitySuperHotModePly
+    game.SetTimeScale(1)
+    ply:SetWalkSpeed(ply:GetWalkSpeed() / 6)
+    ply:SetRunSpeed(ply:GetRunSpeed() / 6)
+    for _, p in pairs(player.GetAll()) do
+        p:SetNWBool(playerSuperHotNWVarName, false)
     end
+
+    GAMEMODE.PropAbilitySuperHotMode = false
+    GAMEMODE.PropAbilitySuperHotModePly = nil
 end
 
 function SWEP:AbilityCleanup()

@@ -10,7 +10,7 @@ SWEP.AbilityDuration = 4
 SWEP.AbilityDescription = "Launches all hunters within a range of $AbilityRange into the air after a short delay.\nThe seekers are stuck in the air for at least $AbilityDuration seconds.\n\nDoes not work well indoors."
 
 function SWEP:Ability()
-    if CLIENT then return end
+    if !SERVER then return end
     local targets = self:GetHuntersInRange(self.AbilityRange, true)
     -- dont use ability if no target was found
     if #targets == 0 then
