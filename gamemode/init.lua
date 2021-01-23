@@ -172,17 +172,14 @@ end
 function HurtPropAndCheckForDeath(ply, dmg, attacker)
     ply:SetHealth(ply:Health() - dmg)
     if (ply:Health() < 1 and ply:Alive()) then
-        ply:KillSilent()
+        ply:SetRenderMode(RENDERMODE_NORMAL)
         ply:CreateRagdoll()
-        local ragdoll = ply:GetRagdollEntity()
-        print(ragdoll)
-        for x, y in pairs(ragdoll:GetKeyValues()) do
-            print(x)
-            print(y)
-            print('---')
-        end
-        ragdoll:SetNoDraw(false)
-        ragdoll:DrawShadow(true)
+        -- take a split second before actually killing the player to ensure the
+        -- ragdoll spawns in the right place
+        -- if it works, it isn't stupid, right?
+        timer.Simple(0.1, function()
+            ply:KillSilent()
+        end)
         RemovePlayerProp(ply)
         BroadcastPlayerDeath(ply)
         net.Start("Death Notice")

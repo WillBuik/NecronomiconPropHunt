@@ -26,7 +26,7 @@ function plymeta:ObjStartRagdoll(velocityBoost, velocityMultiplier)
     ragdoll:Spawn()
     ragdoll:Activate()
     self:SetParent(ragdoll) -- So their player ent will match up (position-wise) with where their ragdoll is.
-    -- Set velocity for each peice of the ragdoll
+    -- Set velocity for each piece of the ragdoll
 
     local velocity = (self:GetVelocity() + velocityBoost) * velocityMultiplier
     local j = 1
@@ -92,12 +92,14 @@ function plymeta:FakeDeath(attacker)
     net.Broadcast()
 
     self:GetProp():SetRenderMode(RENDERMODE_NONE)
+    self:GetProp():DrawShadow(false)
     self:ObjStartRagdoll()
 
     self:ObjSetShouldPlaydead(false)
     self:ObjSetPlaydead(true)
 
-    -- pause auto-taunting
+    -- pause auto-taunting for 8 seconds to avoid a dead giveaway (pun intended)
+    self:SetNextAutoTauntDelay(self:GetNextAutoTauntDelay() + 8)
 
     -- un-fake the death after 8 seconds
     timer.Create("EndFakeDeath", 8, 1, function()
@@ -108,6 +110,7 @@ end
 function plymeta:EndFakeDeath()
     if (IsValid(self:GetProp())) then
         self:GetProp():SetRenderMode(RENDERMODE_NORMAL)
+        self:GetProp():DrawShadow(true)
     end
     self:ObjEndRagdoll()
     self:ObjSetPlaydead(false)
