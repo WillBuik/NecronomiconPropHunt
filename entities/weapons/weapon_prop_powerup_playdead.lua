@@ -18,7 +18,7 @@ end
 
 function SWEP:AbilityCleanup()
     self:GetOwner():ObjSetShouldPlaydead(false)
-    self:GetOwner():ObjSetIsPlaydead(false)
+    self:GetOwner():ObjSetPlaydead(false)
 end
 
 if CLIENT then

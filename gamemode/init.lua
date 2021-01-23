@@ -161,7 +161,7 @@ local function BroadcastPlayerDeath(ply)
     net.Broadcast()
     -- remove ragdoll
     local ragdoll = ply:GetRagdollEntity()
-    SafeRemoveEntityDelayed(ragdoll, 5)
+    SafeRemoveEntityDelayed(ragdoll, 8)
 end
 
 -- NOTE: damage from hunters should go through HurtProp, which first rewards
@@ -174,6 +174,15 @@ function HurtPropAndCheckForDeath(ply, dmg, attacker)
     if (ply:Health() < 1 and ply:Alive()) then
         ply:KillSilent()
         ply:CreateRagdoll()
+        local ragdoll = ply:GetRagdollEntity()
+        print(ragdoll)
+        for x, y in pairs(ragdoll:GetKeyValues()) do
+            print(x)
+            print(y)
+            print('---')
+        end
+        ragdoll:SetNoDraw(false)
+        ragdoll:DrawShadow(true)
         RemovePlayerProp(ply)
         BroadcastPlayerDeath(ply)
         net.Start("Death Notice")

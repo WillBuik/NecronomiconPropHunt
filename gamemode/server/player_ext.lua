@@ -91,12 +91,13 @@ function plymeta:FakeDeath(attacker)
         net.WriteUInt(self:Team(), 16)
     net.Broadcast()
 
-    -- todo: this doesn't work on the dummy prop
     self:GetProp():SetRenderMode(RENDERMODE_NONE)
     self:ObjStartRagdoll()
 
     self:ObjSetShouldPlaydead(false)
     self:ObjSetPlaydead(true)
+
+    -- pause auto-taunting
 
     -- un-fake the death after 8 seconds
     timer.Create("EndFakeDeath", 8, 1, function()
