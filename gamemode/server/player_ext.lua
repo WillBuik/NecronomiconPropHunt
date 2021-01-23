@@ -98,11 +98,13 @@ function plymeta:FakeDeath(attacker)
     self:ObjSetShouldPlaydead(false)
     self:ObjSetPlaydead(true)
 
-    -- pause auto-taunting for 8 seconds to avoid a dead giveaway (pun intended)
-    self:SetNextAutoTauntDelay(self:GetNextAutoTauntDelay() + 8)
+    local playdead_duration = 8
 
-    -- un-fake the death after 8 seconds
-    timer.Create("EndFakeDeath", 8, 1, function()
+    -- pause auto-taunting while fake-dead to avoid a dead giveaway (pun intended)
+    self:SetNextAutoTauntDelay(self:GetNextAutoTauntDelay() + playdead_duration)
+
+    -- un-fake the death after a few seconds
+    timer.Create("EndFakeDeath", playdead_duration, 1, function()
         self:EndFakeDeath()
     end)
 end

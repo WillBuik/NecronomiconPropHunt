@@ -161,6 +161,7 @@ local function BroadcastPlayerDeath(ply)
     net.Broadcast()
     -- remove ragdoll
     local ragdoll = ply:GetRagdollEntity()
+    -- ideally this ragdoll stays around the same amount of time as a prop can play dead for
     SafeRemoveEntityDelayed(ragdoll, 8)
 end
 
