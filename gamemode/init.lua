@@ -244,7 +244,6 @@ local function DamageHandler(target, dmgInfo)
                 if (ply:ObjShouldPlaydead()) then
                     ply:FakeDeath(attacker)
                 else
-                    local ply = target
                     HurtProp(ply, dmg, attacker)
                 end
             end
