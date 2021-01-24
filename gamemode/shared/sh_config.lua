@@ -89,6 +89,10 @@ PROP_DEFAULT_JUMP_POWER = 260
 -- The incriment of the prop roll for each tick on the mouse wheel
 PROP_ROLL_INCRIMENT = 15
 
+-- Amount of time a prop's ragdoll is shown after death
+-- Affects both real death and fake "play dead" death
+PROP_RAGDOLL_DURATION = 8
+
 -- Number maps shown to vote on
 MAPS_SHOWN_TO_VOTE = 10
 

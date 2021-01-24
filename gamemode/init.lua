@@ -162,7 +162,7 @@ local function BroadcastPlayerDeath(ply)
     -- remove ragdoll
     local ragdoll = ply:GetRagdollEntity()
     -- ideally this ragdoll stays around the same amount of time as a prop can play dead for
-    SafeRemoveEntityDelayed(ragdoll, 8)
+    SafeRemoveEntityDelayed(ragdoll, PROP_RAGDOLL_DURATION)
 end
 
 -- NOTE: damage from hunters should go through HurtProp, which first rewards
