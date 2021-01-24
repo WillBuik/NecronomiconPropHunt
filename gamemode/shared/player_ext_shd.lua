@@ -25,11 +25,21 @@ function plymeta:ObjIsRagdolled()
     return self:GetNWBool("objAbilityIsRagdolled", false)
 end
 
+-- indicates whether the player has set the Play Dead ability to trigger
+function plymeta:ObjSetShouldPlaydead(state)
+    self:SetNWBool("objPlaydeadEnabled", state)
+end
+
+function plymeta:ObjShouldPlaydead()
+    return self:GetNWBool("objPlaydeadEnabled", false)
+end
+
+-- indicates whether the player is currently playing dead
 function plymeta:ObjSetPlaydead(state)
     self:SetNWBool("objAbilityIsPlaydead", state)
 end
 
-function plymeta:ObjIsPlayDead()
+function plymeta:ObjIsPlaydead()
     return self:GetNWBool("objAbilityIsPlaydead", false)
 end
 

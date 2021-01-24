@@ -161,7 +161,8 @@ local function BroadcastPlayerDeath(ply)
     net.Broadcast()
     -- remove ragdoll
     local ragdoll = ply:GetRagdollEntity()
-    SafeRemoveEntityDelayed(ragdoll, 5)
+    -- ideally this ragdoll stays around the same amount of time as a prop can play dead for
+    SafeRemoveEntityDelayed(ragdoll, PROP_RAGDOLL_DURATION)
 end
 
 -- NOTE: damage from hunters should go through HurtProp, which first rewards
@@ -172,8 +173,14 @@ end
 function HurtPropAndCheckForDeath(ply, dmg, attacker)
     ply:SetHealth(ply:Health() - dmg)
     if (ply:Health() < 1 and ply:Alive()) then
-        ply:KillSilent()
+        ply:SetRenderMode(RENDERMODE_NORMAL)
         ply:CreateRagdoll()
+        -- take a split second before actually killing the player to ensure the
+        -- ragdoll spawns in the right place
+        -- if it works, it isn't stupid, right?
+        timer.Simple(0.1, function()
+            ply:KillSilent()
+        end)
         RemovePlayerProp(ply)
         BroadcastPlayerDeath(ply)
         net.Start("Death Notice")
@@ -225,12 +232,20 @@ local function DamageHandler(target, dmgInfo)
                     attacker:Kill()
                     -- default suicide notice
                 end
-            elseif (target:GetOwner():IsPlayer() and target:GetOwner():Team() == TEAM_PROPS and !target:GetOwner():ObjIsPlayDead()) then
+            elseif (target:GetOwner():IsPlayer() and target:GetOwner():Team() == TEAM_PROPS and !target:GetOwner():ObjIsPlaydead()) then
                 local ply = target:GetOwner()
-                HurtProp(ply, dmg, attacker)
-            elseif (target:IsPlayer() and target:Team() == TEAM_PROPS and !target:ObjIsPlayDead()) then
+                if (ply:ObjShouldPlaydead()) then
+                    ply:FakeDeath(attacker)
+                else
+                    HurtProp(ply, dmg, attacker)
+                end
+            elseif (target:IsPlayer() and target:Team() == TEAM_PROPS and !target:ObjIsPlaydead()) then
                 local ply = target
-                HurtProp(ply, dmg, attacker)
+                if (ply:ObjShouldPlaydead()) then
+                    ply:FakeDeath(attacker)
+                else
+                    HurtProp(ply, dmg, attacker)
+                end
             end
         end
     end

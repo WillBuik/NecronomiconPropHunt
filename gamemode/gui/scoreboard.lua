@@ -146,7 +146,7 @@ local PLAYER_LINE =
         --
         -- We draw our background a different colour based on the status of the player
         --
-        if (self.Player:Team() == TEAM_PROPS and self.Player:Alive() and !self.Player:ObjIsPlayDead()) then
+        if (self.Player:Team() == TEAM_PROPS and self.Player:Alive() and !self.Player:ObjIsPlaydead()) then
             surface.SetDrawColor(LerpColor(.5, PLAYER_LINE_COLOR, TEAM_PROPS_COLOR))
             surface.DrawRect(0, 0, w, h)
             surface.SetDrawColor(PANEL_BORDER)
