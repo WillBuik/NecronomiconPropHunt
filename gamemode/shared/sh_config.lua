@@ -93,6 +93,12 @@ PROP_ROLL_INCRIMENT = 15
 -- Affects both real death and fake "play dead" death
 PROP_RAGDOLL_DURATION = 8
 
+-- Amount of time a player is given to contemplate their own demise before
+-- going into spectator mode
+-- If this is set to 0, the dead player's ragdoll may spawn in the wrong place,
+-- on top of the player they are spectating
+TIME_BEFORE_SPECTATE = 3
+
 -- Number maps shown to vote on
 MAPS_SHOWN_TO_VOTE = 10
 

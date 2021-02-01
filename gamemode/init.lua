@@ -165,6 +165,16 @@ local function BroadcastPlayerDeath(ply)
     SafeRemoveEntityDelayed(ragdoll, PROP_RAGDOLL_DURATION)
 end
 
+local function AnnouncePlayerDeath(ply, attacker)
+    net.Start("Death Notice")
+        net.WriteString(attacker:Nick())
+        net.WriteUInt(attacker:Team(), 16)
+        net.WriteString("found")
+        net.WriteString(ply:Nick())
+        net.WriteUInt(ply:Team(), 16)
+    net.Broadcast()
+end
+
 -- NOTE: damage from hunters should go through HurtProp, which first rewards
 -- the attacker based on damage dealt and then calls this procedure.  This
 -- procedure merely:
@@ -175,23 +185,18 @@ function HurtPropAndCheckForDeath(ply, dmg, attacker)
     if (ply:Health() < 1 and ply:Alive()) then
         ply:SetRenderMode(RENDERMODE_NORMAL)
         ply:CreateRagdoll()
-        -- take a split second before actually killing the player to ensure the
-        -- ragdoll spawns in the right place
-        -- if it works, it isn't stupid, right?
-        timer.Simple(0.1, function()
-            ply:KillSilent()
-        end)
         RemovePlayerProp(ply)
+        ply:KillSilent()
         BroadcastPlayerDeath(ply)
-        net.Start("Death Notice")
-            net.WriteString(attacker:Nick())
-            net.WriteUInt(attacker:Team(), 16)
-            net.WriteString("found")
-            net.WriteString(ply:Nick())
-            net.WriteUInt(ply:Team(), 16)
-        net.Broadcast()
+        AnnouncePlayerDeath(ply, attacker)
+        -- an homage to a fun bug
+        if (math.random() > 0.98) then
+            AnnouncePlayerDeath(ply, attacker)
+            AnnouncePlayerDeath(ply, attacker)
+        end
         attacker:AddFrags(1)
         ply:AddDeaths(1)
+        ply:SetTimeOfDeath(CurTime())
     end
 end
 
@@ -448,6 +453,8 @@ hook.Add("PlayerDeath", "Remove ent prop on death", function(ply)
     if (ply:IsFrozen()) then
         ply:Freeze(false)
     end
+
+    ply:SetTimeOfDeath(CurTime())
 end)
 
 --[[ remove the ent prop ]]--
