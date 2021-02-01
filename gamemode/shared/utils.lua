@@ -89,7 +89,6 @@ end
 function FindSpotFor(ply, hbMin, hbMax)
     local goalPos = ply:GetPos()
     local td = {}
-    td.endpos = goalPos
     td.filter = { ply }
     if (IsValid(ply:GetProp())) then
         table.insert(td.filter, ply:GetProp())
@@ -131,11 +130,34 @@ function FindSpotFor(ply, hbMin, hbMax)
     local closestToGoal = nil
     for _, approachPos in pairs(altWaysToApproach) do
         td.start = approachPos
+        td.endpos = goalPos
+
         local trace = util.TraceHull( td )
         if (trace.HitPos != trace.StartPos and
             (closestToGoal == nil or goalPos:DistToSqr(trace.HitPos) < goalPos:DistToSqr(closestToGoal))
         ) then
-            closestToGoal = trace.HitPos
+
+            -- Double check that the discovered position is clear.  If our
+            -- trace STARTED inside a solid object (like a wall, a ceiling, or
+            -- another prop), then the HitPos will not necessarily equal
+            -- StartPos, even if the trace hull is still colliding with that
+            -- solid object at the end.  (NOTE 2021/1/31: from what I can tell
+            -- by testing, the HitPos reports the location where the hull
+            -- started intersecting a NEW object, not the first position where
+            -- it intersected ANY object.  Objects that the hull intersects at
+            -- the start of the trace affect trace.Hit but not trace.HitPos.)
+            --
+            -- It is better to do this check here, AFTER doing the trace,
+            -- because we actually don't want to exclude traces that start
+            -- inside the ceiling but end up in a clear position on the floor.
+            local candidatePos = trace.HitPos
+            td.start = candidatePos
+            td.endpos = candidatePos
+            trace = util.TraceHull(td, trace)
+            if (!trace.Hit) then
+                closestToGoal = trace.HitPos
+            end
+
         end
     end
 
