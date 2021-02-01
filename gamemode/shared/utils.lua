@@ -94,7 +94,7 @@ function FindSpotFor(ply, hbMin, hbMax)
     if (IsValid(ply:GetProp())) then
         table.insert(td.filter, ply:GetProp())
     end
-    if ( !hbMin or !hbMax ) then return true end
+    if ( !hbMin or !hbMax ) then return nil end
     -- Adjust height
 --     hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
 --     hbMin = Vector(hbMin.x,hbMin.y,0)
