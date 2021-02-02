@@ -9,55 +9,6 @@ function GetLivingPlayers(onTeam)
     return livingPly
 end
 
--- now realised there is a flag to ignore ws, don't use this it's not done....
-function isStuck(ply)
-    local pos = ply:GetPos()
-    local ws = game.GetWorld()
-    local td = {}
-    td.start = pos
-    td.endpos = pos
-    td.filter = { ply, ply.chosenProp, ws }
-    td.mins, td.maxs = ply:GetHitBoxBounds(0,0)
-
-    local trace = util.TraceHull(td)
-
-    ent = trace.Entity
-    -- should never be stuck in world
-    --if ent and (ent:IsWorld() or ent:IsValid()) then
-
-    if (ent and ent:IsValid()) then
-        return true
-    end
-
-    return false
-end
-
-function WouldBeStuck(ply, prop)
-    local pos = ply:GetPos()
-    local td = {}
-    td.start = pos
-    td.endpos = pos
-    td.filter = { ply, ply:GetProp() }
-    local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
-    if (!hbMin or !hbMax) then return true end
-    hbMin = Vector(math.Round(hbMin.x),math.Round(hbMin.y),math.Round(hbMin.z))
-    hbMax = Vector(math.Round(hbMax.x),math.Round(hbMax.y),math.Round(hbMax.z))
-    -- Adjust height
-    hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
-    hbMin = Vector(hbMin.x,hbMin.y,0)
-
-    td.mins = hbMin
-    td.maxs = hbMax
-    local trace = util.TraceHull(td)
-
-    ent = trace.Entity
-    if ent and (ent:IsWorld() or ent:IsValid()) then
-        return true
-    end
-
-    return false
-end
-
 function GetClosestTaunter(ply)
     local props = GetLivingPlayers(TEAM_PROPS)
     local closestPlyTaunting = nil
