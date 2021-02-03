@@ -190,6 +190,7 @@ function FindSpotFor(ply, hbMin, hbMax)
     -- Just checking if it's locked to begin with will almost always work so try it first
     do
         td.start = goalPos
+        td.endpos = goalPos
         local trace = util.TraceHull( td )
         if (!trace.Hit) then
             return trace.HitPos
