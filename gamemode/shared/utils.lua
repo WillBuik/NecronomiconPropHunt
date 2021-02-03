@@ -149,16 +149,25 @@ function FindSpotForProp(ply, prop)
 end
 
 function FindSpotFor(ply, hbMin, hbMax)
-    local goalPos = ply:GetPos()
+    if (!hbMin or !hbMax) then return nil end
+
+    local plyPos = ply:GetPos()
+
+    -- Compute a vertical adjustment to align the bottom of the given hitbox
+    -- with the bottom of the player's current hull.
+    local plyMin, plyMax = ply:GetHull()
+    local playerFloor = math.min(plyMin.z, plyMax.z)
+    local propFloor = math.min(hbMin.z, hbMax.z)
+    local zDelta = playerFloor - propFloor
+
+    -- Initialize some fields of the TraceHull input.  We will be doing several
+    -- traces, but these fields won't change.
+    local goalPos = plyPos + Vector(0, 0, zDelta)
     local td = {}
     td.filter = { ply }
     if (IsValid(ply:GetProp())) then
         table.insert(td.filter, ply:GetProp())
     end
-    if ( !hbMin or !hbMax ) then return nil end
-    -- Adjust height
---     hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
---     hbMin = Vector(hbMin.x,hbMin.y,0)
 
     td.mins = hbMin
     td.maxs = hbMax
