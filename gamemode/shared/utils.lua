@@ -148,6 +148,9 @@ function FindSpotForProp(ply, prop)
     return FindSpotFor(ply, hbMin, hbMax)
 end
 
+-- Find a clear location for the given player, assuming that their new hitbox
+-- and hull will be defined by hbMin,hbMax (vectors relative to the player's
+-- position and angle).
 function FindSpotFor(ply, hbMin, hbMax)
     if (!hbMin or !hbMax) then return nil end
 
@@ -169,9 +172,20 @@ function FindSpotFor(ply, hbMin, hbMax)
         table.insert(td.filter, ply:GetProp())
     end
 
+    -- NOTE: something extremely subtle is happening here.  The hbMin and hbMax
+    -- vectors are relative to the player's current position and angle, but we
+    -- aren't tracing a rotated hull.  Instead, we are ignoring the player's
+    -- rotation and tracing a hull that is axis-aligned in world coordinates.
+    -- This is deliberate!  Garry's Mod (or perhaps the underlying Source
+    -- Engine) has a deep-seated limitation that player collision hulls are
+    -- always axis-aligned in world coordinates.  Therefore, this
+    -- ridiculous-looking trace actually CORRECTLY corresponds to the player's
+    -- future collision hull given hbMin,hbMax, even though it is not rotated.
+    --
+    -- And besides, we couldn't do a trace with a rotated hull even if we
+    -- wanted.  See: https://github.com/Facepunch/garrysmod-requests/issues/748
     td.mins = hbMin
     td.maxs = hbMax
-
 
     -- Just checking if it's locked to begin with will almost always work so try it first
     do
