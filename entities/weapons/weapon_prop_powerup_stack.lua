@@ -14,7 +14,7 @@ function SWEP:Ability()
         return "Not looking at anything"
     end
     local _, playerPropHBMax = PropHitbox(ply)
-    local propHBMin, _ = prop:GetHitBoxBounds(0, 0)
+    local propHBMin, _ = GetHitBoxInModelCoordinates(prop)
     prop:SetAngles(Angle(0, math.random(-180, 180), 0))
     prop:SetPos(Vector(
         ply:GetPos().x,

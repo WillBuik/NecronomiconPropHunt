@@ -24,16 +24,127 @@ function GetClosestTaunter(ply)
 end
 
 function PropHitbox(ply)
-    local tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds(0, 0)
+    local tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply:GetProp())
     if (ply:IsPropAngleLocked()) then
         tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMin, tHitboxMax)
-     end
-
+    end
     return tHitboxMin, tHitboxMax
 end
 
+-- Compute the smallest axis-aligned bounding box that contains all of the
+-- given points.  This is the inverse of AABBToVertices().
+--
+-- Returns mins,maxs of the bounding box, or nil,nil if #points == 0.
+function FitAABB(points)
+    local first = true
+    local mins = nil
+    local maxs = nil
+    for _, pt in pairs(points) do
+        if first then
+            mins = Vector(pt)
+            maxs = Vector(pt)
+            first = false
+        else
+            mins.x = math.min(mins.x, pt.x)
+            mins.y = math.min(mins.y, pt.y)
+            mins.z = math.min(mins.z, pt.z)
+            maxs.x = math.max(maxs.x, pt.x)
+            maxs.y = math.max(maxs.y, pt.y)
+            maxs.z = math.max(maxs.z, pt.z)
+        end
+    end
+    return mins, maxs
+end
+
+-- Convert an axis-aligned bounding box to its list of corners.  This is the
+-- inverse of FitAABB().
+--
+-- Returns the corners of the bounding box as a list of vectors.
+function AABBToVertices(mins, maxs)
+    return {
+        Vector(mins.x, mins.y, mins.z),
+        Vector(mins.x, mins.y, maxs.z),
+        Vector(mins.x, maxs.y, mins.z),
+        Vector(mins.x, maxs.y, maxs.z),
+        Vector(maxs.x, mins.y, mins.z),
+        Vector(maxs.x, mins.y, maxs.z),
+        Vector(maxs.x, maxs.y, mins.z),
+        Vector(maxs.x, maxs.y, maxs.z),
+    }
+end
+
+-- Get the hitbox of an entity, adjusted so that it is relative to the entity
+-- model, not the entity's bones.  Note that ent:GetHitBoxBounds(...) returns
+-- the hit box relative to a bone, and while the bone USUALLY has the same
+-- position and orientation as the model, it does not ALWAYS have the same
+-- position and orientation as the model.
+--
+-- Precondition: ent != nil and IsValid(ent)
+--
+-- Returns: the corners of the entity's hitbox in model coordinates, as a table
+-- of 8 vectors.  (In model coordinates the bounding box might not be
+-- axis-aligned, so we can't just return mins,maxs like ent:GetHitBoxBounds.)
+--
+-- This function returns nil if the entity has no hitbox.
+function GetHitBoxCornersInModelCoordinates(ent)
+    -- NOTE: entities can have multiple hitboxes, but hitbox (0, 0) is usually
+    -- the only one that matters.  This call returns the hitbox in bone
+    -- coordinates.
+    local hbMin, hbMax = ent:GetHitBoxBounds(0, 0)
+
+    if (hbMin and hbMax) then
+        local verts = AABBToVertices(hbMin, hbMax)
+        local boneNo = ent:GetHitBoxBone(0, 0)
+
+        -- Get the bone's world transformation matrix.  That is, for a vector
+        -- V in bone coordinates, boneTransform*V gives V in world coordinates.
+        --
+        -- NOTE 2021/1/31: according to the gmod docs for Entity:GetBonePosition(),
+        -- this call bypasses the "bone cache" and should be more reliable than
+        -- Entity:GetBonePosition().
+        local boneTransform = ent:GetBoneMatrix(boneNo)
+
+        -- Compute the inverse of the entity's transformation matrix.  That is,
+        -- for a vector V in world coordinates, invertEntityTransform*V gives V
+        -- in entity coordinates.  Note that there is a defensive copy because
+        -- Invert() modifies the matrix in-place.  Note also that if the matrix
+        -- is not invertible, we don't try to proceed.
+        local invertEntityTransform = Matrix(ent:GetWorldTransformMatrix())
+        if invertEntityTransform:Invert() then
+
+            -- Compute an overall transformation that converts bone coordinates
+            -- to entity coordinates.  Note that the transformations are listed
+            -- here in the reverse order they are applied:
+            --
+            --   transform * V = invertEntityTransform * boneTransform * V
+            --                 = invertEntityTransform * (boneTransform * V)
+            --                 = worldToEntityCoords(boneToWorldCoords(v))
+            --
+            local transform = invertEntityTransform * boneTransform
+
+            local result = {}
+            for i, v in pairs(verts) do
+                result[i] = transform * v
+            end
+
+            return result
+        end
+    end
+    return nil
+end
+
+-- Get an entity's hitbox as mins,maxs relative to the entity's model, not the
+-- entity's bones.  You should prefer this function over direct calls to
+-- Entity:GetHitBoxBounds() in virtually all cases.
+--
+-- This function fits an AABB around the corners returned by
+-- GetHitBoxCornersInModelCoordinates; see that function for more details.
+function GetHitBoxInModelCoordinates(ent)
+    return FitAABB(GetHitBoxCornersInModelCoordinates(ent) or {})
+end
+
 function FindSpotForProp(ply, prop)
-    local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
+    local hbMin, hbMax = GetHitBoxInModelCoordinates(prop)
     return FindSpotFor(ply, hbMin, hbMax)
 end
 
