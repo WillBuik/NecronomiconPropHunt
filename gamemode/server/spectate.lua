@@ -23,6 +23,10 @@ local function GetSpecEnts(ply)
 end
 
 function GM:PlayerDeathThink(ply)
+    if (CurTime() < ply:GetTimeOfDeath() + TIME_BEFORE_SPECTATE) then
+        return false
+    end
+
     local players = GetSpecEnts(ply)
 
     -- default settings
@@ -59,4 +63,5 @@ end
 hook.Add("PlayerSpawn", "Clear Spectator State", function(ply)
     ply.spectateIndex = nil
     ply.spectateMode = nil
+    ply:SetTimeOfDeath(0)
 end)

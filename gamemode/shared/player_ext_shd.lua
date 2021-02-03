@@ -91,6 +91,14 @@ function plymeta:SetPropLastChange(time)
     self:SetNWInt("PropLastChange", time)
 end
 
+function plymeta:SetTimeOfDeath(time)
+    self:SetNWFloat("TimeOfDeath", time)
+end
+
+function plymeta:GetTimeOfDeath()
+    return self:GetNWFloat("TimeOfDeath", 0)
+end
+
 --[[=====================]]
 --[[ Taunt-related state ]]
 --[[=====================]]
