@@ -9,55 +9,6 @@ function GetLivingPlayers(onTeam)
     return livingPly
 end
 
--- now realised there is a flag to ignore ws, don't use this it's not done....
-function isStuck(ply)
-    local pos = ply:GetPos()
-    local ws = game.GetWorld()
-    local td = {}
-    td.start = pos
-    td.endpos = pos
-    td.filter = { ply, ply.chosenProp, ws }
-    td.mins, td.maxs = ply:GetHitBoxBounds(0,0)
-
-    local trace = util.TraceHull(td)
-
-    ent = trace.Entity
-    -- should never be stuck in world
-    --if ent and (ent:IsWorld() or ent:IsValid()) then
-
-    if (ent and ent:IsValid()) then
-        return true
-    end
-
-    return false
-end
-
-function WouldBeStuck(ply, prop)
-    local pos = ply:GetPos()
-    local td = {}
-    td.start = pos
-    td.endpos = pos
-    td.filter = { ply, ply:GetProp() }
-    local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
-    if (!hbMin or !hbMax) then return true end
-    hbMin = Vector(math.Round(hbMin.x),math.Round(hbMin.y),math.Round(hbMin.z))
-    hbMax = Vector(math.Round(hbMax.x),math.Round(hbMax.y),math.Round(hbMax.z))
-    -- Adjust height
-    hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
-    hbMin = Vector(hbMin.x,hbMin.y,0)
-
-    td.mins = hbMin
-    td.maxs = hbMax
-    local trace = util.TraceHull(td)
-
-    ent = trace.Entity
-    if ent and (ent:IsWorld() or ent:IsValid()) then
-        return true
-    end
-
-    return false
-end
-
 function GetClosestTaunter(ply)
     local props = GetLivingPlayers(TEAM_PROPS)
     local closestPlyTaunting = nil
@@ -73,39 +24,173 @@ function GetClosestTaunter(ply)
 end
 
 function PropHitbox(ply)
-    local tHitboxMin, tHitboxMax = ply:GetProp():GetHitBoxBounds(0, 0)
+    local tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply:GetProp())
     if (ply:IsPropAngleLocked()) then
         tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMin, tHitboxMax)
-     end
-
+    end
     return tHitboxMin, tHitboxMax
 end
 
+-- Compute the smallest axis-aligned bounding box that contains all of the
+-- given points.  This is the inverse of AABBToVertices().
+--
+-- Returns mins,maxs of the bounding box, or nil,nil if #points == 0.
+function FitAABB(points)
+    local first = true
+    local mins = nil
+    local maxs = nil
+    for _, pt in pairs(points) do
+        if first then
+            mins = Vector(pt)
+            maxs = Vector(pt)
+            first = false
+        else
+            mins.x = math.min(mins.x, pt.x)
+            mins.y = math.min(mins.y, pt.y)
+            mins.z = math.min(mins.z, pt.z)
+            maxs.x = math.max(maxs.x, pt.x)
+            maxs.y = math.max(maxs.y, pt.y)
+            maxs.z = math.max(maxs.z, pt.z)
+        end
+    end
+    return mins, maxs
+end
+
+-- Convert an axis-aligned bounding box to its list of corners.  This is the
+-- inverse of FitAABB().
+--
+-- Returns the corners of the bounding box as a list of vectors.
+function AABBToVertices(mins, maxs)
+    return {
+        Vector(mins.x, mins.y, mins.z),
+        Vector(mins.x, mins.y, maxs.z),
+        Vector(mins.x, maxs.y, mins.z),
+        Vector(mins.x, maxs.y, maxs.z),
+        Vector(maxs.x, mins.y, mins.z),
+        Vector(maxs.x, mins.y, maxs.z),
+        Vector(maxs.x, maxs.y, mins.z),
+        Vector(maxs.x, maxs.y, maxs.z),
+    }
+end
+
+-- Get the hitbox of an entity, adjusted so that it is relative to the entity
+-- model, not the entity's bones.  Note that ent:GetHitBoxBounds(...) returns
+-- the hit box relative to a bone, and while the bone USUALLY has the same
+-- position and orientation as the model, it does not ALWAYS have the same
+-- position and orientation as the model.
+--
+-- Precondition: ent != nil and IsValid(ent)
+--
+-- Returns: the corners of the entity's hitbox in model coordinates, as a table
+-- of 8 vectors.  (In model coordinates the bounding box might not be
+-- axis-aligned, so we can't just return mins,maxs like ent:GetHitBoxBounds.)
+--
+-- This function returns nil if the entity has no hitbox.
+function GetHitBoxCornersInModelCoordinates(ent)
+    -- NOTE: entities can have multiple hitboxes, but hitbox (0, 0) is usually
+    -- the only one that matters.  This call returns the hitbox in bone
+    -- coordinates.
+    local hbMin, hbMax = ent:GetHitBoxBounds(0, 0)
+
+    if (hbMin and hbMax) then
+        local verts = AABBToVertices(hbMin, hbMax)
+        local boneNo = ent:GetHitBoxBone(0, 0)
+
+        -- Get the bone's world transformation matrix.  That is, for a vector
+        -- V in bone coordinates, boneTransform*V gives V in world coordinates.
+        --
+        -- NOTE 2021/1/31: according to the gmod docs for Entity:GetBonePosition(),
+        -- this call bypasses the "bone cache" and should be more reliable than
+        -- Entity:GetBonePosition().
+        local boneTransform = ent:GetBoneMatrix(boneNo)
+
+        -- Compute the inverse of the entity's transformation matrix.  That is,
+        -- for a vector V in world coordinates, invertEntityTransform*V gives V
+        -- in entity coordinates.  Note that there is a defensive copy because
+        -- Invert() modifies the matrix in-place.  Note also that if the matrix
+        -- is not invertible, we don't try to proceed.
+        local invertEntityTransform = Matrix(ent:GetWorldTransformMatrix())
+        if invertEntityTransform:Invert() then
+
+            -- Compute an overall transformation that converts bone coordinates
+            -- to entity coordinates.  Note that the transformations are listed
+            -- here in the reverse order they are applied:
+            --
+            --   transform * V = invertEntityTransform * boneTransform * V
+            --                 = invertEntityTransform * (boneTransform * V)
+            --                 = worldToEntityCoords(boneToWorldCoords(v))
+            --
+            local transform = invertEntityTransform * boneTransform
+
+            local result = {}
+            for i, v in pairs(verts) do
+                result[i] = transform * v
+            end
+
+            return result
+        end
+    end
+    return nil
+end
+
+-- Get an entity's hitbox as mins,maxs relative to the entity's model, not the
+-- entity's bones.  You should prefer this function over direct calls to
+-- Entity:GetHitBoxBounds() in virtually all cases.
+--
+-- This function fits an AABB around the corners returned by
+-- GetHitBoxCornersInModelCoordinates; see that function for more details.
+function GetHitBoxInModelCoordinates(ent)
+    return FitAABB(GetHitBoxCornersInModelCoordinates(ent) or {})
+end
+
 function FindSpotForProp(ply, prop)
-    local hbMin, hbMax = prop:GetHitBoxBounds(0, 0)
+    local hbMin, hbMax = GetHitBoxInModelCoordinates(prop)
     return FindSpotFor(ply, hbMin, hbMax)
 end
 
+-- Find a clear location for the given player, assuming that their new hitbox
+-- and hull will be defined by hbMin,hbMax (vectors relative to the player's
+-- position and angle).
 function FindSpotFor(ply, hbMin, hbMax)
-    local goalPos = ply:GetPos()
+    if (!hbMin or !hbMax) then return nil end
+
+    local plyPos = ply:GetPos()
+
+    -- Compute a vertical adjustment to align the bottom of the given hitbox
+    -- with the bottom of the player's current hull.
+    local plyMin, plyMax = ply:GetHull()
+    local playerFloor = math.min(plyMin.z, plyMax.z)
+    local propFloor = math.min(hbMin.z, hbMax.z)
+    local zDelta = playerFloor - propFloor
+
+    -- Initialize some fields of the TraceHull input.  We will be doing several
+    -- traces, but these fields won't change.
+    local goalPos = plyPos + Vector(0, 0, zDelta)
     local td = {}
-    td.endpos = goalPos
     td.filter = { ply }
     if (IsValid(ply:GetProp())) then
         table.insert(td.filter, ply:GetProp())
     end
-    if ( !hbMin or !hbMax ) then return true end
-    -- Adjust height
---     hbMax = Vector(hbMax.x,hbMax.y,hbMax.z + hbMax.z)
---     hbMin = Vector(hbMin.x,hbMin.y,0)
 
+    -- NOTE: something extremely subtle is happening here.  The hbMin and hbMax
+    -- vectors are relative to the player's current position and angle, but we
+    -- aren't tracing a rotated hull.  Instead, we are ignoring the player's
+    -- rotation and tracing a hull that is axis-aligned in world coordinates.
+    -- This is deliberate!  Garry's Mod (or perhaps the underlying Source
+    -- Engine) has a deep-seated limitation that player collision hulls are
+    -- always axis-aligned in world coordinates.  Therefore, this
+    -- ridiculous-looking trace actually CORRECTLY corresponds to the player's
+    -- future collision hull given hbMin,hbMax, even though it is not rotated.
+    --
+    -- And besides, we couldn't do a trace with a rotated hull even if we
+    -- wanted.  See: https://github.com/Facepunch/garrysmod-requests/issues/748
     td.mins = hbMin
     td.maxs = hbMax
-
 
     -- Just checking if it's locked to begin with will almost always work so try it first
     do
         td.start = goalPos
+        td.endpos = goalPos
         local trace = util.TraceHull( td )
         if (!trace.Hit) then
             return trace.HitPos
@@ -131,11 +216,34 @@ function FindSpotFor(ply, hbMin, hbMax)
     local closestToGoal = nil
     for _, approachPos in pairs(altWaysToApproach) do
         td.start = approachPos
+        td.endpos = goalPos
+
         local trace = util.TraceHull( td )
         if (trace.HitPos != trace.StartPos and
             (closestToGoal == nil or goalPos:DistToSqr(trace.HitPos) < goalPos:DistToSqr(closestToGoal))
         ) then
-            closestToGoal = trace.HitPos
+
+            -- Double check that the discovered position is clear.  If our
+            -- trace STARTED inside a solid object (like a wall, a ceiling, or
+            -- another prop), then the HitPos will not necessarily equal
+            -- StartPos, even if the trace hull is still colliding with that
+            -- solid object at the end.  (NOTE 2021/1/31: from what I can tell
+            -- by testing, the HitPos reports the location where the hull
+            -- started intersecting a NEW object, not the first position where
+            -- it intersected ANY object.  Objects that the hull intersects at
+            -- the start of the trace affect trace.Hit but not trace.HitPos.)
+            --
+            -- It is better to do this check here, AFTER doing the trace,
+            -- because we actually don't want to exclude traces that start
+            -- inside the ceiling but end up in a clear position on the floor.
+            local candidatePos = trace.HitPos
+            td.start = candidatePos
+            td.endpos = candidatePos
+            trace = util.TraceHull(td, trace)
+            if (!trace.Hit) then
+                closestToGoal = trace.HitPos
+            end
+
         end
     end
 

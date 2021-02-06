@@ -65,7 +65,7 @@ local function stencilColor(ply, ent)
     if (!ent:GetHitBoxBounds(0,0)) then return false end
 
     -- make sure ent is a valid prop type
-    if (    !table.HasValue(USABLE_PROP_ENTITIES, ent:GetClass())) then return BAD_HOVER_COLOR end
+    if (!table.HasValue(USABLE_PROP_ENTITIES, ent:GetClass())) then return false end
 
     -- make sure ent is a valid prop type
     if (FindSpotForProp(ply, ent) == nil) then return BAD_HOVER_COLOR end
