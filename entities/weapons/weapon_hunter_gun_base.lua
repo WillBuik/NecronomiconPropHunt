@@ -75,6 +75,8 @@ function SWEP:PrimaryAttackWithFunction(fireFunction)
    if !IsValid(owner) or owner:IsNPC() or (!owner.ViewPunch) then return end
 
    owner:ViewPunch( Angle( util.SharedRandom(self:GetClass(),-0.2,-0.1,0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),-0.1,0.1,1) * self.Primary.Recoil, 0 ) )
+   
+   if self:Clip1() == 0 then self:Reload() end
 end
 
 function SWEP:DryFire(setnext)
@@ -152,8 +154,10 @@ end
 
 function SWEP:Reload()
    if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+    local granades = self:GetOwner():GetAmmoCount("SMG1_Grenade")
    self:EmitSound(self.ReloadSound )
    self:DefaultReload(self.ReloadAnim)
+    self:GetOwner():SetAmmo(granades, "SMG1_Grenade")
 end
 
 
