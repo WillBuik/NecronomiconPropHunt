@@ -116,7 +116,7 @@ end
 function SWEP:Think()
    BaseClass.Think(self)
    if self:GetReloading() then
-      if self:GetOwner():KeyDown(IN_ATTACK) then
+      if self:GetOwner():KeyDown(IN_ATTACK) or self:GetOwner():KeyDown(IN_ATTACK2) then
          self:FinishReload()
          return
       end
@@ -154,7 +154,7 @@ function SWEP:SecondaryAttack()
 
    local ammo = self:Clip1() 
 
-   self:ShootBullet( self.Primary.Damage / 2, self.Primary.Recoil, self.Primary.NumShots * ammo, self:GetPrimaryCone() * ammo )
+   self:ShootBullet( self.Primary.Damage / 1.5, self.Primary.Recoil, self.Primary.NumShots * ammo, self:GetPrimaryCone() * ammo )
 
    self:TakePrimaryAmmo( ammo )
 
