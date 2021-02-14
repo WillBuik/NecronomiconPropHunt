@@ -91,6 +91,19 @@ function plymeta:SetPropLastChange(time)
     self:SetNWInt("PropLastChange", time)
 end
 
+function plymeta:GetPropPoints()
+    return self:GetNWFloat("PropPoints", 0)
+end
+
+function plymeta:SetPropPoints(points)
+    self:SetNWInt("PropPoints", points)
+end
+
+function plymeta:AddPropPoints(points)
+    local currentPoints = self:GetPropPoints()
+    self:SetPropPoints(currentPoints + points)
+end
+
 function plymeta:SetTimeOfDeath(time)
     self:SetNWFloat("TimeOfDeath", time)
 end

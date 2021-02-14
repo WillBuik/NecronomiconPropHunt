@@ -21,7 +21,7 @@ if AUTOTAUNT_ENABLED then
         timer.Create("AutoTauntTimer", 0.1, 0, runAutoTaunter)
     end
 
-    hook.Add("OBJHUNT_HuntersReleased", "Restart the Timer", function ()
+    hook.Add("OBJHUNT_HuntersReleased", "Restart the AutoTaunt Timer", function ()
         local players = team.GetPlayers(TEAM_PROPS)
         for _,ply in pairs(players) do
 

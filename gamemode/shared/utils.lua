@@ -23,6 +23,32 @@ function GetClosestTaunter(ply)
     return closestPlyTaunting
 end
 
+function GetClosestHunter(ply)
+    local hunters = GetLivingPlayers(TEAM_HUNTERS)
+    local closestHunter = nil
+    for _, hunter in pairs(hunters) do
+        if (closestHunter == nil or
+            ply:GetPos():DistToSqr(hunter:GetPos()) < ply:GetPos():DistToSqr(closestHunter:GetPos())) then
+                closestHunter = hunter
+        end
+    end
+    return closestHunter
+end
+
+function GetHunterLookingAtYou(ply)
+    local hunters = GetLivingPlayers(TEAM_HUNTERS)
+    for _, hunter in pairs(hunters) do
+        local trace = {}
+        trace.mask = MASK_SHOT_HULL
+        trace.start = hunter:GetShootPos()
+            trace.endpos = trace.start + hunter:GetEyeAngles() * PROP_SELECT_DISTANCE * 3 
+        end
+        trace.filter = { ply }
+        tr = util.TraceLine(trace)
+        if tr.Entity == ply then return hunter end
+    return nil
+end
+
 function PropHitbox(ply)
     local tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply:GetProp())
     if (ply:IsPropAngleLocked()) then

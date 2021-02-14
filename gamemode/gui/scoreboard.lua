@@ -58,11 +58,11 @@ local PLAYER_LINE =
         self.Ping:SetFont("PlayerObjHunt")
         self.Ping:SetContentAlignment(5)
 
-        self.Deaths        = self:Add("DLabel")
-        self.Deaths:Dock(RIGHT)
-        self.Deaths:SetWidth(ScrW() / 40)
-        self.Deaths:SetFont("PlayerObjHunt")
-        self.Deaths:SetContentAlignment(5)
+        self.Points        = self:Add("DLabel")
+        self.Points:Dock(RIGHT)
+        self.Points:SetWidth(ScrW() / 40)
+        self.Points:SetFont("PlayerObjHunt")
+        self.Points:SetContentAlignment(5)
 
         self.Kills        = self:Add("DLabel")
         self.Kills:Dock(RIGHT)
@@ -100,9 +100,9 @@ local PLAYER_LINE =
             self.Kills:SetText(self.NumKills)
         end
 
-        if (self.NumDeaths == nil or self.NumDeaths != self.Player:Deaths()) then
-            self.NumDeaths    =    self.Player:Deaths()
-            self.Deaths:SetText(self.NumDeaths)
+        if (self.NumPoints == nil or self.NumPoints != self.Player:GetPropPoints() then
+            self.NumPoints    =    self.Player:GetPropPoints()
+            self.Points:SetText(self.NumPoints)
         end
 
         if (self.NumPing == nil or self.NumPing != self.Player:Ping()) then
@@ -133,7 +133,7 @@ local PLAYER_LINE =
         --
         self:SetZPos(-(self.Player:Team() * 100) +
         (
-            self.NumKills * -ScrW() / 40) + self.NumDeaths + math.min(string.byte(self.Player:Nick(), -1) / 2, 99)
+            self.NumKills * -ScrW() / 40) + self.NumPoints + math.min(string.byte(self.Player:Nick(), -1) / 2, 99)
         )
     end,
 
