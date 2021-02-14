@@ -262,22 +262,12 @@ end)
 
 --[[ Door Exploit fix ]]--
 function GM:PlayerUse(ply, ent)
-    -- default value
-    if (!ply.lastDoorTrigger) then
-        ply.lastDoorTrigger = CurTime()
-        ply.nextDoorTrigger = CurTime() + (0.5 + math.random())
-        return true
-    end
-
-    if (table.HasValue(DOORS, ent:GetClass()) and CurTime() < ply.nextDoorTrigger) then
+    if (table.HasValue(DOORS, ent:GetClass()) and ply.nextDoorTrigger and CurTime() < ply.nextDoorTrigger) then
         return false
     else
-        ply.lastDoorTrigger = CurTime()
         ply.nextDoorTrigger = CurTime() + (0.5 + math.random())
         return true
     end
-
-
 end
 
 --[[ sets the players prop, run PlayerCanBeEnt before using this ]]--
