@@ -1,7 +1,5 @@
     local function runPropPoints()
         local props = GetLivingPlayers(TEAM_PROPS)
-        local now = CurTime()
-
         for _,ply in pairs(props) do
             -- Only points for standing still
             if ply:GetVelocity() > 1 then return end

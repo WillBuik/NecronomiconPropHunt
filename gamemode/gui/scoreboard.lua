@@ -100,7 +100,7 @@ local PLAYER_LINE =
             self.Kills:SetText(self.NumKills)
         end
 
-        if (self.NumPoints == nil or self.NumPoints != self.Player:GetPropPoints() then
+        if (self.NumPoints == nil or self.NumPoints != self.Player:GetPropPoints()) then
             self.NumPoints    =    self.Player:GetPropPoints()
             self.Points:SetText(self.NumPoints)
         end

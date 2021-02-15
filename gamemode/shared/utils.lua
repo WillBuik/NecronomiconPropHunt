@@ -41,11 +41,11 @@ function GetHunterLookingAtYou(ply)
         local trace = {}
         trace.mask = MASK_SHOT_HULL
         trace.start = hunter:GetShootPos()
-            trace.endpos = trace.start + hunter:GetEyeAngles() * PROP_SELECT_DISTANCE * 3 
-        end
+        trace.endpos = trace.start + hunter:GetEyeAngles() * PROP_SELECT_DISTANCE * 3 
         trace.filter = { ply }
         tr = util.TraceLine(trace)
         if tr.Entity == ply then return hunter end
+    end
     return nil
 end
 
