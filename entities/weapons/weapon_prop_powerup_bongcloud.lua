@@ -17,7 +17,7 @@ function SWEP:Ability()
 end
 
 function SWEP:CreateSmoke()
-    for _,v in player.GetAll() do
+    for _,v in pairs(player.GetAll()) do
         net.Start("Bong Smokecloud")
             net.WriteVector(self:GetOwner():GetPos())
             net.ReadUInt(self.AbilityRadius, 16)
