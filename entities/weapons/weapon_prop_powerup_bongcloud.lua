@@ -17,10 +17,12 @@ function SWEP:Ability()
 end
 
 function SWEP:CreateSmoke()
-    net.Start("Bong Smokecloud")
-        net.WriteVector(self:GetOwner():GetPos())
-        net.ReadUInt(self.AbilityRadius, 16)
-    net.Send(v)
+    for _,v in player.GetAll() do
+        net.Start("Bong Smokecloud")
+            net.WriteVector(self:GetOwner():GetPos())
+            net.ReadUInt(self.AbilityRadius, 16)
+        net.Send(v)
+    end
 end
 
 if CLIENT then
