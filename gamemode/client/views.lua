@@ -20,7 +20,7 @@ hook.Add("CalcView", "ObjHunt CalcView", function(ply, pos, angles, fov)
         local trace = {}
         local addToPlayer
         if (ply:Team() == TEAM_PROPS) then
-            addToPlayer = math.max(math.min(ply.propHeight, 64), VIEW_MIN_Z) 
+            addToPlayer = Vector(0, 0, math.max(math.min(ply.propHeight, 64), VIEW_MIN_Z))
         else
             addToPlayer = Vector(0, 0, 64)
         end
