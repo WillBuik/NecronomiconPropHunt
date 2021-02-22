@@ -286,11 +286,12 @@ function LerpColor(frac,from,to)
 end
 
 function PlayerToAccentColor(ply)
+    if !ply:AccountID() then return Vector(0,0,0) end
     local cubeID = ply:AccountID() ^ 3
     return Vector(
-        ((cubeID * 3) % 256) / 255,
-        ((cubeID * 5) % 256) / 255,
-        ((cubeID * 7) % 256) / 255
+        ((cubeID * 3) % 256) / 255.0,
+        ((cubeID * 5) % 256) / 255.0,
+        ((cubeID * 7) % 256) / 255.0
     )
 end
 
