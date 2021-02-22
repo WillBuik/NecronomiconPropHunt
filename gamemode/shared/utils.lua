@@ -288,7 +288,8 @@ end
 function PlayerToAccentColor(ply)
     if !ply:AccountID() then return Vector(0,0,0) end
     local cubeID = ply:AccountID() ^ 3
-    print(ply:SteamID())
+    print(ply:AccountID())
+    print(cubeID)
     return Vector(
         ((cubeID * 3) % 256) / 255.0,
         ((cubeID * 5) % 256) / 255.0,
