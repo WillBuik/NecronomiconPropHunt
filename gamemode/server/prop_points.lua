@@ -2,7 +2,7 @@
         local props = GetLivingPlayers(TEAM_PROPS)
         for _,ply in pairs(props) do
             -- Only points for standing still
-            if ply:GetVelocity() > 1 then return end
+            if ply:GetVelocity():LengthSqr() > 1 then return end
             local exp = 0
             -- double for taunting
             if ply:GetNextTauntAvailableTime() > CurTime() then exp = exp + 1 end
