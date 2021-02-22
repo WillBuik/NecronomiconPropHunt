@@ -7,8 +7,7 @@
             -- double for taunting
             if ply:GetNextTauntAvailableTime() > CurTime() then exp = exp + 1 end
             -- a hunter is close
-            local closestHunter = ply:GetClosestHunter() 
-            if closestHunter && ply:GetPos():DistToSqr(closestHunter:GetPos()) < 400 ^2 then exp = exp + 1 end
+            if ply:GetPos():DistToSqr(GetClosestHunter(ply):GetPos()) < 400 ^2 then exp = exp + 1 end
             -- a hunter is looking right at you
             if GetHunterLookingAtYou(ply) then exp = exp + 1 end
 
