@@ -66,7 +66,7 @@ PROP_DEFAULT_SCALE = 0.5
 PROP_CHOSEN_SCALE = 1
 
 -- the time in seconds the prop has to wait before they can change prop
-PROP_CHOOSE_COOLDOWN = 5
+PROP_CHOOSE_COOLDOWN = 2
 
 -- the maximum distance at which a prop can be selected
 PROP_SELECT_DISTANCE = 150
