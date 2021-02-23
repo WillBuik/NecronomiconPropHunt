@@ -81,6 +81,7 @@ local function WaitRound()
     -- reset points here for now
     for _, v in pairs(player.GetAll()) do
         v:SetPropPoints(0)
+        v.propHistory = EmptySet()
     end
 
     round.state = ROUND_START

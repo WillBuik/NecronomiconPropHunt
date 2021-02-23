@@ -348,6 +348,8 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
         mass = math.Clamp(mass, 0, 100)
         ply:GetPhysicsObject():SetMass(mass)
     end
+
+    SetAdd(ply.propHistory, ent:GetModel())
 end
 
 function UpdatePlayerPropHitbox(ply, hbMin, hbMax)

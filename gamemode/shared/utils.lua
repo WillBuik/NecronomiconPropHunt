@@ -288,7 +288,7 @@ end
 function PlayerToAccentColor(ply)
     if !ply:AccountID() then return Vector(0,0,0) end
     local cubeID = ply:AccountID() ^ 3
-    local idHash = math.floor(cubeID / 10^(math.floor(math.log10(cubeID) - 10))
+    local idHash = math.floor(cubeID / 10^(math.floor(math.log10(cubeID) - 10)))
     return Vector(
         ((idHash * 3) % 256) / 256,
         ((idHash * 5) % 256) / 256,
@@ -389,4 +389,26 @@ function orderedPairs(t)
     -- Equivalent of the pairs() function on tables. Allows to iterate
     -- in order
     return orderedNext, t, nil
+end
+
+function EmptySet()
+    local newSet = {}
+    newSet["size"] = 0
+    newSet["elements"] = {}
+    return newSet
+end
+
+function SetAdd(set, elem)
+    set["size"] = set["size"] + 1
+    set["elements"][elem] = true
+end
+
+function SetContains(set, elem)
+    if !set then return false end
+    return set["elements"][elem] == true
+end
+
+function SetSize(set)
+    if !set then return 0 end
+    return set["size"]
 end

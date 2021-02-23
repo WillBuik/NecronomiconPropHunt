@@ -18,7 +18,6 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("AutoTaunt Update")
     util.AddNetworkString("Prop Roll")
     util.AddNetworkString("Popup Open")
-    util.AddNetworkString("Bong Smokecloud")
 end)
 
 net.Receive("Class Selection", function(len, ply)
