@@ -11,7 +11,7 @@
             -- a hunter is looking right at you
             if GetHunterLookingAtYou(ply) then exp = exp + 1 end
             -- boost for being a lot of different props
-            exp = exp + 0.2 * SetSize(ply.propHistory)
+            exp = exp + 0.2 * math.sqrt(SetSize(ply.propHistory))
 
             ply:AddPropPoints(2 ^ exp)
         end
