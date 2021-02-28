@@ -42,3 +42,7 @@ function EFFECT:Init(data)
 
     em:Finish()
 end
+
+function EFFECT:Think()
+	return false
+end
