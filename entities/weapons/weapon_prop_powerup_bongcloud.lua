@@ -23,16 +23,20 @@ function SWEP:CreateSmoke(originalCenter)
         effect:SetOrigin(currentCenter)
         effect:SetRadius(self.AbilityRadius)
         effect:SetScale(self.AbilityDuration * 3)
+        print(effect:GetOrigin())
         util.Effect("ph_bongcloud", effect, true, true)
         if !originalCenter then return end
         local differanceVec =
             Vector(currentCenter.x - originalCenter.x , currentCenter.y - originalCenter.y, 0)
+        print(differanceVec) 
         if differanceVec:IsZero() then return end
 
         effect:SetOrigin(AddAngleToXY(differanceVec, 2 * math.pi / 3) + originalCenter)
+        print(effect:GetOrigin())
         util.Effect("ph_bongcloud", effect, true, true)
 
         effect:SetOrigin(AddAngleToXY(differanceVec, -2 * math.pi / 3) + originalCenter)
+        print(effect:GetOrigin())
         util.Effect("ph_bongcloud", effect, true, true)
 end
 
