@@ -1,5 +1,4 @@
 function EFFECT:Init(data)
-    print("bong init")
     self:SetOwner(data:GetEntity())
     local radius = data:GetRadius()
     local fadeoutTime = data:GetScale()
@@ -11,9 +10,6 @@ function EFFECT:Init(data)
         Model("particle/particle_noisesphere")
         } 
 
-    print(radius)
-    print(fadeoutTime)
-    print(self:GetOwner():GetPos())
     for i = 1, radius do
         local prpos = VectorRand() * radius
         prpos.z = prpos.z + 32
