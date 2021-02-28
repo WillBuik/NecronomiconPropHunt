@@ -343,7 +343,7 @@ end
 function AddAngleToXY(vector, rangle)
     local radius = math.sqrt(vector.x, vector.y)
     local theta = math.atan2(vector.y, vector.x) + rangle 
-    return Vector(radius * cos(theta), radius * sin(theta), vector.z)
+    return Vector(radius * math.cos(theta), radius * math.sin(theta), vector.z)
 end
 
 

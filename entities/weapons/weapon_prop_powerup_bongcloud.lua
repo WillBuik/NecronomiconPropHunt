@@ -12,7 +12,7 @@ SWEP.AbilityDescription = "Create clouds of smoke at your location for $AbilityD
 function SWEP:Ability()
     if CLIENT then return end
     self:CreateSmoke()
-    local originalCenter = self:GetOwner().GetPos()
+    local originalCenter = self:GetOwner():GetPos()
     self:AbilityTimerIfValidOwner(self.AbilityDuration / (self.AbilityEmits - 1), self.AbilityEmits - 1, true, function() self:CreateSmoke(originalCenter) end)
 end
 
