@@ -3,7 +3,8 @@ function EFFECT:Init(data)
     self:SetOwner(data:GetEntity())
     local radius = data:GetRadius()
     local fadeoutTime = data:GetScale()
-    local em = ParticleEmitter(self:GetOwner():GetPos())
+    local center = self:GetOwner():GetPos() 
+    local em = ParticleEmitter(center)
 
     local smokeparticles = {
         Model("particle/particle_smokegrenade"),
@@ -45,4 +46,7 @@ end
 
 function EFFECT:Think()
 	return false
+end
+
+function EFFECT:Render()
 end
