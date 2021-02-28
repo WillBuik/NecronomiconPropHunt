@@ -21,6 +21,7 @@ function SWEP:CreateSmoke()
         effect:SetEntity(self:GetOwner())
         effect:SetRadius(self.AbilityRadius)
         effect:SetScale(self.AbilityDuration)
+        print("got to bong")
         util.Effect("ph_bongcloud", effect, true, true)
 end
 
