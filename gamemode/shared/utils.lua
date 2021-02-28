@@ -340,6 +340,13 @@ function FloorMagnitude(x)
     end
 end
 
+function AddAngleToXY(vector, rangle)
+    local radius = math.sqrt(vector.x, vector.y)
+    local theta = math.atan2(vector.y, vector.x) + rangle 
+    return Vector(radius * cos(theta), radius * sin(theta), vector.z)
+end
+
+
 --[[
 Ordered table iterator, allow to iterate on the natural order of the keys of a
 table.

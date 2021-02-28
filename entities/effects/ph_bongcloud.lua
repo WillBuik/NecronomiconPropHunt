@@ -2,7 +2,7 @@ function EFFECT:Init(data)
     self:SetOwner(data:GetEntity())
     local radius = data:GetRadius()
     local fadeoutTime = data:GetScale()
-    local center = self:GetOwner():GetPos() 
+    local center = data:GetOrigin()
     local em = ParticleEmitter(center)
 
     local smokeparticles = {
@@ -22,7 +22,7 @@ function EFFECT:Init(data)
             p:SetVelocity(VectorRand() * math.Rand(900, 1300))
             p:SetLifeTime(0)
             
-            p:SetDieTime(math.Rand(math.max(0, fadeoutTime - 20), fadeoutTime))
+            p:SetDieTime(math.Rand(math.floor(fadeoutTime / 3), fadeoutTime))
 
             p:SetStartSize(math.random(140, 150))
             p:SetEndSize(math.random(1, 40))
@@ -41,7 +41,7 @@ function EFFECT:Init(data)
 end
 
 function EFFECT:Think()
-	return false
+    return false
 end
 
 function EFFECT:Render()
