@@ -21,6 +21,6 @@ function SWEP:CreateSmoke()
         effect:SetEntity(self:GetOwner())
         effect:SetRadius(self.AbilityRadius)
         effect:SetScale(self.AbilityDuration)
-        util.Effect("ph_blastoff", effect, true, true)
+        util.Effect("ph_bongcloud", effect, true, true)
 end
 
