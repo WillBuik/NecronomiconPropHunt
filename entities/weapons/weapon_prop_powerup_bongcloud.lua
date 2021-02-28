@@ -6,7 +6,7 @@ SWEP.PrintName = "Bongcloud"
 
 SWEP.AbilityDuration = 8
 SWEP.AbilityEmits = 4
-SWEP.AbilityRadius = 40
+SWEP.AbilityRadius = 50
 SWEP.AbilityDescription = "Create clouds of smoke at your location for $AbilityDuration seconds."
 
 function SWEP:Ability()
@@ -22,7 +22,7 @@ function SWEP:CreateSmoke(originalCenter)
         effect:SetEntity(self:GetOwner())
         effect:SetOrigin(currentCenter)
         effect:SetRadius(self.AbilityRadius)
-        effect:SetScale(self.AbilityDuration * 2)
+        effect:SetScale(self.AbilityDuration * 3)
         util.Effect("ph_bongcloud", effect, true, true)
         if !originalCenter then return end
         local differanceVec =
