@@ -1,4 +1,5 @@
 function EFFECT:Init(data)
+    print("bong init")
     self:SetOwner(data:GetEntity())
     local radius = data:GetRadius()
     local fadeoutTime = data:GetScale()
