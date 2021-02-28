@@ -19,7 +19,7 @@ end
 function SWEP:CreateSmoke()
         local effect = EffectData()
         effect:SetEntity(self:GetOwner())
-        effect.SetRadius(self.AbilityRadius)
+        effect:SetRadius(self.AbilityRadius)
         effect:SetScale(self.AbilityDuration)
         util.Effect("ph_blastoff", effect, true, true)
 end
