@@ -341,7 +341,7 @@ function FloorMagnitude(x)
 end
 
 function AddAngleToXY(vector, rangle)
-    local radius = math.sqrt(vector.x, vector.y)
+    local radius = math.sqrt(vector.x ^ 2, vector.y ^ 2)
     local theta = math.atan2(vector.y, vector.x) + rangle 
     return Vector(radius * math.cos(theta), radius * math.sin(theta), vector.z)
 end
