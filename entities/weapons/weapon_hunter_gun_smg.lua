@@ -31,7 +31,8 @@ SWEP.ViewModel             = "models/weapons/c_smg1.mdl"
 SWEP.WorldModel            = "models/weapons/w_smg1.mdl"
 
 SWEP.WeaponIconKey = "a" -- SMG
-SWEP.ReloadSound  = Sound("Weapon_SMG1.Reload")
+SWEP.ReloadSound  = "Weapon_SMG1.Reload"
+SWEP.EmptySound  = "Weapon_SMG1.Empty"
 
 function SWEP:SecondaryAttack()
     if self:GetOwner():GetAmmoCount("SMG1_Grenade") <= 0 or CLIENT then return end

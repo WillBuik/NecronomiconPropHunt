@@ -27,4 +27,5 @@ SWEP.ViewModel             = "models/weapons/c_Pistol.mdl"
 SWEP.WorldModel            = "models/weapons/w_Pistol.mdl"
 
 SWEP.WeaponIconKey = "d" -- Pistol
-SWEP.ReloadSound  = Sound( "Weapon_Pistol.Reload" )
+SWEP.ReloadSound  = "Weapon_Pistol.Reload"
+SWEP.EmptySound  = "Weapon_Pistol.Empty"

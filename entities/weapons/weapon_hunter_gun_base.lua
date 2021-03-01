@@ -44,7 +44,8 @@ SWEP.StoredAmmo             = 0
 SWEP.DeploySpeed            = 1
 
 SWEP.ReloadAnim            = ACT_VM_RELOAD
-SWEP.ReloadSound           = Sound( "Weapon_Pistol.Reload" )
+SWEP.ReloadSound           = "Weapon_Pistol.Reload" 
+SWEP.EmptySound            = "Weapon_Pistol.Empty"
 
 -- Shooting functions largely copied from weapon_cs_base
 function SWEP:PrimaryAttack()
@@ -81,7 +82,7 @@ end
 
 function SWEP:DryFire(setnext)
    if CLIENT and LocalPlayer() == self:GetOwner() then
-      self:EmitSound( "Weapon_Pistol.Empty" )
+      self:EmitSound(self.EmptySound)
    end
 
    setnext(self, CurTime() + 0.2)
@@ -155,7 +156,7 @@ end
 function SWEP:Reload()
    if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
     local granades = self:GetOwner():GetAmmoCount("SMG1_Grenade")
-   self:EmitSound(self.ReloadSound )
+   self:EmitSound(self.ReloadSound)
    self:DefaultReload(self.ReloadAnim)
     self:GetOwner():SetAmmo(granades, "SMG1_Grenade")
 end

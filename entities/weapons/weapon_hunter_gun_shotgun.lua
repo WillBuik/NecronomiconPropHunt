@@ -32,6 +32,7 @@ SWEP.ViewModel             = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel            = "models/weapons/w_shotgun.mdl"
 
 SWEP.WeaponIconKey = "b" -- Shotgun
+SWEP.EmptySound  = "Weapon_Shotgun.Empty"
 
 function SWEP:SetupDataTables()
    self:NetworkVar("Bool", 0, "Reloading")
@@ -102,15 +103,6 @@ function SWEP:FinishReload()
    self:EmitSound("Weapon_Shotgun.Special1")
 
    self:SetReloadTimer(CurTime() + self:SequenceDuration())
-end
-
-function SWEP:CanPrimaryAttack()
-   if self:Clip1() <= 0 then
-      self:EmitSound( "Weapon_Shotgun.Empty" )
-      self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-      return false
-   end
-   return true
 end
 
 function SWEP:Think()
