@@ -1,5 +1,4 @@
 function EFFECT:Init(data)
-    print("PUFF")
     self:SetOwner(data:GetEntity())
     local radius = data:GetRadius()
     local fadeoutTime = data:GetScale()

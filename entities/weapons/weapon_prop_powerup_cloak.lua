@@ -11,9 +11,9 @@ function SWEP:Ability()
     if CLIENT then return end
     local ply = self:GetOwner()
     self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
-    ply:GetProp():SetRenderMode(RENDERMODE_NONE)
-    -- ply:SetRenderMode( RENDERMODE_TRANSALPHA )
-    -- ply:Fire( "alpha", 4, 0 )
+    -- ply:GetProp():SetRenderMode(RENDERMODE_NONE)
+    ply:SetRenderMode( RENDERMODE_TRANSALPHA )
+    ply:Fire( "alpha", 4, 0 )
     ply:GetProp():DrawShadow(false)
 end
 
@@ -23,7 +23,7 @@ function SWEP:AbilityCleanup()
     local ply = self:GetOwner()
     if (IsValid(ply:GetProp())) then
         ply:GetProp():SetRenderMode(RENDERMODE_NORMAL)
-        -- ply:Fire( "alpha", 255, 0 )
+        ply:Fire( "alpha", 255, 0 )
         ply:GetProp():DrawShadow(true)
     end
 end
