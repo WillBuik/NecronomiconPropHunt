@@ -221,13 +221,11 @@ hook.Add("OBJHUNT_RoundEnd", "Handle props winning", function()
 end)
 
 hook.Add("OBJHUNT_RoundLimit", "Start map voting", function()
-    timer.Simple(5, function() 
-        -- no longer need the round orchestrator
-        hook.Remove("Tick", "Round orchestrator")
-        MapVote.Start(30, false, MAPS_SHOWN_TO_VOTE, {"cs_", "ph_", "gm_ww"})
+    -- no longer need the round orchestrator
+    hook.Remove("Tick", "Round orchestrator")
+    MapVote.Start(30, false, MAPS_SHOWN_TO_VOTE, {"cs_", "ph_", "gm_ww"})
 
-        print("Map voting should start now")
-    end)
+    print("Map voting should start now")
 end)
 
 hook.Add("PlayerInitialSpawn", "Send Round data to client", function(ply)
