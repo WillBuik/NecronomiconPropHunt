@@ -155,5 +155,7 @@ function SWEP:SecondaryAttack()
 
    owner:ViewPunch( Angle( util.SharedRandom(self:GetClass(),-0.2,-0.1,0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),-0.1,0.1,1) * self.Primary.Recoil, 0 ) )
 
+   print(self:Clip1())
+   print(self.Reload)
    if self:Clip1() == 0 then self:Reload() end
 end
