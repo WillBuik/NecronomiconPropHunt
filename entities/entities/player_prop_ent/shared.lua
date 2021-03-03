@@ -27,7 +27,7 @@ function ENT:Draw()
         end
     end
 
-    self:SetAngles(Angle(propAngle.p, trueAngle.y, owner:GetPropRollAngle()))
+    self:SetAngles(Angle(propAngle.p, propAngle.y, owner:GetPropRollAngle()))
 
     if (CLIENT) then
         -- third person stuff
