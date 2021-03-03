@@ -19,7 +19,7 @@ SWEP.Primary.Cone          = 0.03
 SWEP.Primary.ClipSize      = 45
 SWEP.Primary.Automatic     = true
 
-SWEP.Secondary.ClipSize     = 5
+SWEP.Secondary.ClipSize     = 1
 SWEP.Secondary.DefaultClip  = 0
 
 SWEP.Primary.DefaultClip   = 45
