@@ -39,6 +39,50 @@ function SWEP:SetupDataTables()
    self:NetworkVar("Float", 0, "ReloadTimer")
 end
 
+function SWEP:PrimaryAttack()
+
+   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+
+   if !self:CanPrimaryAttack() then return end
+
+   if SERVER then
+      sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
+   end
+
+   self:SendWeaponAnim(self.Primary.Anim)
+   self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self:GetPrimaryCone() )
+
+   self:TakePrimaryAmmo( 1 )
+
+   local owner = self:GetOwner()
+   if !IsValid(owner) or owner:IsNPC() or (!owner.ViewPunch) then return end
+
+   owner:ViewPunch( Angle( util.SharedRandom(self:GetClass(),-0.2,-0.1,0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),-0.1,0.1,1) * self.Primary.Recoil, 0 ) )
+   
+   if self:Clip1() == 0 then self:Reload() end
+end
+
+function SWEP:DryFire(setnext)
+   if CLIENT and LocalPlayer() == self:GetOwner() then
+      self:EmitSound(self.EmptySound)
+   end
+
+   setnext(self, CurTime() + 0.2)
+
+   self:Reload()
+end
+
+function SWEP:CanPrimaryAttack()
+   if !IsValid(self:GetOwner()) then return end
+
+   if self:Clip1() <= 0 then
+      self:DryFire(self.SetNextPrimaryFire)
+      return false
+   end
+   return true
+end
+
 function SWEP:Reload()
    if self:GetReloading() then return end
 
