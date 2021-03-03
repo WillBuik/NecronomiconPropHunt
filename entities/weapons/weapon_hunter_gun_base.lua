@@ -160,7 +160,7 @@ function SWEP:Reload()
    self:EmitSound(self.ReloadSound)
    self:DefaultReload(self.ReloadAnim)
    print(self:GetOwner():GetAmmoCount("SMG1_Grenade"))
-   --self:GetOwner():GiveAmmo(granades, "SMG1_Grenade")
+   self:GetOwner():GiveAmmo(granades, "SMG1_Grenade")
 end
 
 
