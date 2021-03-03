@@ -155,10 +155,10 @@ end
 
 function SWEP:Reload()
    if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
-    local granades = self:GetOwner():GetAmmoCount("SMG1_Grenade")
+   local granades = self:GetOwner():GetAmmoCount("SMG1_Grenade")
    self:EmitSound(self.ReloadSound)
    self:DefaultReload(self.ReloadAnim)
-    self:GetOwner():SetAmmo(granades, "SMG1_Grenade")
+   self:GetOwner():SetAmmo(granades, "SMG1_Grenade")
 end
 
 
