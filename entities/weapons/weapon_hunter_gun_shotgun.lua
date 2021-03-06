@@ -105,11 +105,18 @@ end
 function SWEP:Think()
    BaseClass.Think(self)
    if self:GetReloading() then
-      if (self:GetOwner():KeyDown(IN_ATTACK) or self:GetOwner():KeyDown(IN_ATTACK2)) and 
+      local primary = self:GetOwner():KeyDown(IN_ATTACK)
+      local secondary = self:GetOwner():KeyDown(IN_ATTACK2) 
+      if (primary or secondary) and 
          self:GetNextPrimaryFire() > CurTime() and
          self:Clip1() > 0
       then
          self:FinishReload()
+         if (primary) then
+            self:PrimaryAttack()
+         else
+            self:SecondaryAttack()
+         end
          return
       end
 
