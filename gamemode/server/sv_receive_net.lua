@@ -28,7 +28,9 @@ end)
 net.Receive("Taunt Selection", function(len, ply)
     local taunt = net.ReadString()
     local pitch = net.ReadUInt(8)
-    SendTaunt(ply, taunt, pitch)
+    if (!QMenuAntiAbuse(ply)) then
+        SendTaunt(ply, taunt, pitch)
+    end
 end)
 
 --[[ When a player presses +use on a prop ]]--

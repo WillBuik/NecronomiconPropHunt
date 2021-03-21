@@ -124,6 +124,7 @@ function SendTaunt(ply, taunt, pitch)
     net.Broadcast()
 end
 
+-- F3 Button, Taunt Now --
 function GM:ShowSpare1(ply)
     local TAUNTS
     if (ply:Team() == TEAM_PROPS) then
@@ -499,4 +500,32 @@ function GM:PlayerButtonUp(ply, button)
     if (button == KEY_LCONTROL) then
         ply.pickupProp = false
     end
+end
+
+-- Q-menu (Taunt Selection) Anti Abuse --
+function QMenuAntiAbuse(ply)
+    if (!QMENU_ANTI_ABUSE or ply:Team() != TEAM_PROPS) then
+        return false
+    end
+
+    if (math.random() * QMENU_CONSEQUENCE_ODDS < 1.0) then
+        if (ply:Alive()) then
+            ply:SetRenderMode(RENDERMODE_NORMAL)
+            ply:CreateRagdoll()
+            RemovePlayerProp(ply)
+            ply:KillSilent()
+            BroadcastPlayerDeath(ply)
+
+            net.Start("Death Notice")
+                net.WriteString("QAnon")
+                net.WriteUInt(TEAM_HUNTERS, 16)
+                net.WriteString("found")
+                net.WriteString(ply:Nick())
+                net.WriteUInt(ply:Team(), 16)
+            net.Broadcast()
+        end
+        return true;
+    end
+
+    return false
 end
