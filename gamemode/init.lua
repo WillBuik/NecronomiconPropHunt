@@ -318,21 +318,10 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     end
 
     local volume = (tHitboxMax.x - tHitboxMin.x) * (tHitboxMax.y - tHitboxMin.y) * (tHitboxMax.z - tHitboxMin.z)
+    ply.propSize = volume ^ (1 / 3) 
 
-    -- the damage percent is what percent of hp the prop currently has
-    ply.dmgPct = math.min(ply.dmgPct, ply:Health() / ply.oldMaxHP)
-
-    local maxHP = math.Clamp(volume / 10, 1, 100)
-
-    ply.oldMaxHP = maxHP
-
-    -- just enough to see the HP bar at lowest possible hp
-    local newHP = math.Clamp(maxHP * ply.dmgPct, 2, 100)
-    ply:SetHealth(newHP)
-
-    local speedModifier = ((maxHP / 100) * 0.15) + 0.85
-    ply:SetWalkSpeed(222 * speedModifier)
-    ply:SetRunSpeed(222 * speedModifier)
+    ply:SetupPropHealth()
+    ply:SetupPropSpeed()
 
     -- Update the player's mass to be something more reasonable to the prop
     local phys = ent:GetPhysicsObject()
@@ -405,8 +394,9 @@ hook.Add("PlayerSpawn", "Set ObjHunt model", function (ply)
     ply:SetStepSize(20)
     ply:SetNotSolid(false)
     if (ply:Team() == TEAM_PROPS) then
-        ply.oldMaxHP = 100
-        ply.dmgPct = 1
+        ply.propSize = 100
+        ply:SetupPropHealth()
+        ply:SetupPropSpeed()
         -- make the player invisible
         ply:SetRenderMode(RENDERMODE_NONE)
         ply:SetBloodColor(DONT_BLEED)

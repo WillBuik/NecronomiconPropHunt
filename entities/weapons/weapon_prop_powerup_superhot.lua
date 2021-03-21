@@ -21,8 +21,8 @@ function SWEP:Ability()
     GAMEMODE.PropAbilitySuperHotMode = true
     GAMEMODE.PropAbilitySuperHotModePly = ply
     GAMEMODE.PropAbilitySuperHotModeEndTime = RealTime() + self.AbilityDuration / self.AbilityTimeScale
-    ply:SetWalkSpeed(ply:GetWalkSpeed() * 6)
-    ply:SetRunSpeed(ply:GetRunSpeed() * 6)
+    ply:SetupPropSpeed(6)
+    ply:SetGravity(ply:GetGravity() * 6)
     for _, p in pairs(player.GetAll()) do
         p:SetNWBool(playerSuperHotNWVarName, true)
     end
@@ -33,8 +33,8 @@ local function endSuperHotMode()
     if CLIENT then return end
     local ply = GAMEMODE.PropAbilitySuperHotModePly
     game.SetTimeScale(1)
-    ply:SetWalkSpeed(ply:GetWalkSpeed() / 6)
-    ply:SetRunSpeed(ply:GetRunSpeed() / 6)
+    ply:SetupPropSpeed(1 / 6)
+    ply:SetGravity(ply:GetGravity() / 6)
     for _, p in pairs(player.GetAll()) do
         p:SetNWBool(playerSuperHotNWVarName, false)
     end
