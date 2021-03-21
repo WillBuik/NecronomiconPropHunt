@@ -17,7 +17,6 @@ function plymeta:SetupPropHealth()
     if (self.healthAtLastChange != self:Health()) then
         dmgPct = self:Health() / self.maxHP
         self.dmgPct = dmgPct
-        self.healthAtLastChange = self:Health() 
     end
 
 
@@ -26,6 +25,7 @@ function plymeta:SetupPropHealth()
     -- just enough to see the HP bar at lowest possible hp
     local newHP = math.Clamp(self.maxHP * dmgPct, 2, 200)
     self:SetHealth(newHP)
+    self.healthAtLastChange = self:Health() 
 end
 
 function plymeta:SetupPropSpeed(abilityModifier)
