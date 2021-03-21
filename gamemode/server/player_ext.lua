@@ -11,7 +11,7 @@ function plymeta:SetupPropHealth()
 
     -- the damage percent is what percent of hp the prop currently has
     local dmgPct = self:Health() / self.maxHP
-    self.maxHP = math.Clamp(self.propSize * 4, 1, 200)
+    self.maxHP = math.Clamp(self.propSize * 5 - 20, 1, 200)
 
     -- just enough to see the HP bar at lowest possible hp
     local newHP = math.Clamp(self.maxHP * dmgPct, 2, 200)
