@@ -3,6 +3,7 @@ AddCSLuaFile()
 SWEP.Base = "weapon_prop_powerup_base"
 SWEP.Name = "Stack"
 SWEP.PrintName = "Stack"
+SWEP.AbilityUsableBeforeHuntersReleaed = true
 
 SWEP.AbilityDescription = "Stack the Prop you're hold on top of you for better hiding."
 

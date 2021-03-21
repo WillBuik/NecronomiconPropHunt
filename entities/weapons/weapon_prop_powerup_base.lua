@@ -35,6 +35,8 @@ SWEP.AbilityDuration = 0
 SWEP.AbilityStartTime = 0
 SWEP.AbilityDescription = ""
 
+SWEP.AbilityUsableBeforeHuntersReleaed = false
+
 SWEP.WeaponIconKey = "c" -- Crowbar
 
 OBJ_ABILTY_CAST_ERROR_NO_TARGET = 1
@@ -109,6 +111,7 @@ end
 
 function SWEP:SecondaryAttack()
     if self:GetIsAbilityUsed() then return end
+    if !self.AbilityUsableBeforeHuntersReleaed and !GAMEMODE.HuntersReleased then return end
 
     self.AbilityStartTime = CurTime()
 

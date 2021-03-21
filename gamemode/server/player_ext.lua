@@ -6,7 +6,7 @@ function plymeta:SetupPropHealth()
     if (!ply.maxHP or !ply.dmgPct or !ply.propSize) then
         ply.maxHP = 100
         ply.dmgPct = 1
-        ply.propSize = 1000
+        ply.propSize = 100
         return
     end
 

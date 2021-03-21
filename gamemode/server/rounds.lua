@@ -100,6 +100,7 @@ local function StartRound()
     round.current = round.current + 1
     round.startTime = CurTime()
     round.state = ROUND_IN
+    GAMEMODE.HuntersReleased = false
     hook.Call("OBJHUNT_RoundStart")
 end
 
@@ -137,6 +138,7 @@ local function InRound()
     -- unfreeze the hunters after their time is up
     if (roundTime > OBJHUNT_HIDE_TIME and hunters[1]:IsFrozen()) then
         hook.Call("OBJHUNT_HuntersReleased")
+        GAMEMODE.HuntersReleased = true
         for _, v in pairs(hunters) do
             v:Freeze(false)
         end

@@ -3,8 +3,10 @@ AddCSLuaFile()
 SWEP.Base = "weapon_prop_powerup_base"
 SWEP.Name = "Remove"
 SWEP.PrintName = "Remove"
+SWEP.AbilityUsableBeforeHuntersReleaed = true
 
 SWEP.AbilityDescription = "Removes the Prop you're looking at for better hiding."
+
 
 function SWEP:Ability()
     if CLIENT then return end
