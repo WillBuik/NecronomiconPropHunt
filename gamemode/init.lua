@@ -124,6 +124,7 @@ function SendTaunt(ply, taunt, pitch)
     net.Broadcast()
 end
 
+-- F3 Button, Taunt Now --
 function GM:ShowSpare1(ply)
     local TAUNTS
     if (ply:Team() == TEAM_PROPS) then
