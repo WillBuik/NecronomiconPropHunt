@@ -3,19 +3,18 @@ if !plymeta then return end
 
 
 function plymeta:SetupPropHealth()
-    if (!self.maxHP or !self.dmgPct or !self.propSize) then
+    if (!self.maxHP or !self.propSize) then
         self.maxHP = 100
-        self.dmgPct = 1
         self.propSize = 100
         return
     end
 
     -- the damage percent is what percent of hp the prop currently has
-    self.dmgPct = math.min(self.dmgPct, self:Health() / self.maxHP)
-    self.maxHP = math.Clamp(self.propSize, 1, 200)
+    local dmgPct = self:Health() / self.maxHP
+    self.maxHP = math.Clamp(self.propSize * 4, 1, 200)
 
     -- just enough to see the HP bar at lowest possible hp
-    local newHP = math.Clamp(self.maxHP * self.dmgPct, 2, 200)
+    local newHP = math.Clamp(self.maxHP * dmgPct, 2, 200)
     self:SetHealth(newHP)
 end
 
