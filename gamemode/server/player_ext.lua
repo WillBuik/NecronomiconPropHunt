@@ -18,7 +18,7 @@ function plymeta:SetupPropHealth()
         dmgPct = self:Health() / self.maxHP
         self.dmgPct = dmgPct
         self.healthAtLastChange = self:Health() 
-    else
+    end
 
 
     self.maxHP = math.Clamp(self.propSize * 5.5 - 25, 1, 200)
