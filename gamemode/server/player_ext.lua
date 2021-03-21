@@ -3,36 +3,36 @@ if !plymeta then return end
 
 
 function plymeta:SetupPropHealth()
-    if (!ply.maxHP or !ply.dmgPct or !ply.propSize) then
-        ply.maxHP = 100
-        ply.dmgPct = 1
-        ply.propSize = 100
+    if (!self.maxHP or !self.dmgPct or !self.propSize) then
+        self.maxHP = 100
+        self.dmgPct = 1
+        self.propSize = 100
         return
     end
 
     -- the damage percent is what percent of hp the prop currently has
-    ply.dmgPct = math.min(ply.dmgPct, ply:Health() / ply.maxHP)
-    ply.maxHP = math.Clamp(ply.propSize, 1, 200)
+    self.dmgPct = math.min(self.dmgPct, self:Health() / self.maxHP)
+    self.maxHP = math.Clamp(self.propSize, 1, 200)
 
     -- just enough to see the HP bar at lowest possible hp
-    local newHP = math.Clamp(ply.maxHP * ply.dmgPct, 2, 200)
-    ply:SetHealth(newHP)
+    local newHP = math.Clamp(self.maxHP * self.dmgPct, 2, 200)
+    self:SetHealth(newHP)
 end
 
 function plymeta:SetupPropSpeed(abilityModifier)
     local baseSpeed = 222
-    local sizeModifier = ((math.Clamp(ply.propSize, 1, 200) / 100) * 0.15) + 0.85
+    local sizeModifier = ((math.Clamp(self.propSize, 1, 200) / 100) * 0.15) + 0.85
 
-    if (!ply.abilitySpeedModifier) then
+    if (!self.abilitySpeedModifier) then
         if (!abilityModifier) then
-            ply.abilitySpeedModifier = 1
+            self.abilitySpeedModifier = 1
         else
-            ply.abilitySpeedModifier = abilityModifier 
+            self.abilitySpeedModifier = abilityModifier 
         end
     end
 
-    ply:SetWalkSpeed(baseSpeed * sizeModifier * ply.abilitySpeedModifier)
-    ply:SetRunSpeed(baseSpeed * sizeModifier * ply.abilitySpeedModifier)
+    self:SetWalkSpeed(baseSpeed * sizeModifier * self.abilitySpeedModifier)
+    self:SetRunSpeed(baseSpeed * sizeModifier * self.abilitySpeedModifier)
 end
 
 
