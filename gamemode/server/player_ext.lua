@@ -3,15 +3,25 @@ if !plymeta then return end
 
 
 function plymeta:SetupPropHealth()
-    if (!self.maxHP or !self.propSize) then
+    if (!self.maxHP or !self.healthAtLastChange or !self.dmgPct or !self.propSize) then
         self.maxHP = 100
+        self.healthAtLastChange = 100
+        self.dmgPct = 1
         self.propSize = 100
         return
     end
 
     -- the damage percent is what percent of hp the prop currently has
-    local dmgPct = self:Health() / self.maxHP
-    self.maxHP = math.Clamp(self.propSize * 5 - 20, 1, 200)
+    -- Let's only change it if the prop has taken damge to prevent drift
+    local dmgPct = self.dmgPct
+    if (self.healthAtLastChange != self:Health()) then
+        dmgPct = self:Health() / self.maxHP
+        self.dmgPct = dmgPct
+        self.healthAtLastChange = self:Health() 
+    else
+
+
+    self.maxHP = math.Clamp(self.propSize * 5.5 - 25, 1, 200)
 
     -- just enough to see the HP bar at lowest possible hp
     local newHP = math.Clamp(self.maxHP * dmgPct, 2, 200)

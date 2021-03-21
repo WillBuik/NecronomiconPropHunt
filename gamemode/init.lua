@@ -339,6 +339,9 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
         ply:GetPhysicsObject():SetMass(mass)
     end
 
+    if (!ply.propHistory) then
+        ply.propHistory = EmptySet()
+    end
     SetAdd(ply.propHistory, ent:GetModel())
 end
 
