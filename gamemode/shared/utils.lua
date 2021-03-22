@@ -406,7 +406,7 @@ function EmptySet()
 end
 
 function SetAdd(set, elem)
-    if (!set[elem]) then
+    if (!set["elements"][elem]) then
         set["size"] = set["size"] + 1
         set["elements"][elem] = 1
     else
