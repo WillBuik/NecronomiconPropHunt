@@ -33,11 +33,10 @@ function plymeta:SetupPropSpeed(abilityModifier)
     local sizeModifier = ((math.Clamp(self.propSize, 1, 200) / 100) * 0.15) + 0.85
 
     if (!self.abilitySpeedModifier) then
-        if (!abilityModifier) then
-            self.abilitySpeedModifier = 1
-        else
-            self.abilitySpeedModifier = abilityModifier 
-        end
+        self.abilitySpeedModifier = 1
+    end
+    if (abilityModifier) then
+        self.abilitySpeedModifier = abilityModifier * self.abilitySpeedModifier 
     end
 
     self:SetWalkSpeed(baseSpeed * sizeModifier * self.abilitySpeedModifier)
