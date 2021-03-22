@@ -516,9 +516,8 @@ function QMenuAntiAbuse(ply)
         return false
     end
 
-    print(SetCountGetMax(ply.tauntHistory))
     local tauntRepeatsModifier = math.max(1, SetCountGetMax(ply.tauntHistory) - 2)
-    if (math.random() * QMENU_CONSEQUENCE_ODDS * tauntRepeatsModifier < 1.0) then
+    if (math.random() * QMENU_CONSEQUENCE_ODDS / tauntRepeatsModifier < 1.0) then
         if (ply:Alive()) then
             ply:SetRenderMode(RENDERMODE_NORMAL)
             ply:CreateRagdoll()
