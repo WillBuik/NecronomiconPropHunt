@@ -406,16 +406,35 @@ function EmptySet()
 end
 
 function SetAdd(set, elem)
-    set["size"] = set["size"] + 1
-    set["elements"][elem] = true
+    if (!set[elem]) then
+        set["size"] = set["size"] + 1
+        set["elements"][elem] = 1
+    else
+        set["elements"][elem] = set["elements"][elem] + 1
+    end
 end
 
 function SetContains(set, elem)
     if !set then return false end
-    return set["elements"][elem] == true
+    return set["elements"][elem] > 0
 end
 
 function SetSize(set)
     if !set then return 0 end
     return set["size"]
+end
+
+
+function SetCountGet(set, elem)
+    if !set or !set["elements"][elem] then return 0 end
+    return set["elements"][elem]
+end
+
+function SetCountGetMax(set)
+    if !set or !set["elements"][elem] then return 0 end
+
+    local currentMax = 0 
+    for _, v in pairs(set["elements"]) do
+        currentMax = math.max(currentMax, v)
+    end
 end

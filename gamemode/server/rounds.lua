@@ -82,6 +82,7 @@ local function WaitRound()
     for _, v in pairs(player.GetAll()) do
         v:SetPropPoints(0)
         v.propHistory = EmptySet()
+        v.tauntHistory = EmptySet()
     end
 
     round.state = ROUND_START

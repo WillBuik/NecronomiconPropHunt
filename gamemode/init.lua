@@ -122,6 +122,11 @@ function SendTaunt(ply, taunt, pitch)
         net.WriteUInt(pitch, 8)
         net.WriteUInt(ply:EntIndex(), 8)
     net.Broadcast()
+
+    if (!ply.tauntHistory) then
+        ply.tauntHistory = EmptySet()
+    end
+    SetAdd(ply.tauntHistory, taunt)
 end
 
 -- F3 Button, Taunt Now --
@@ -511,7 +516,8 @@ function QMenuAntiAbuse(ply)
         return false
     end
 
-    if (math.random() * QMENU_CONSEQUENCE_ODDS < 1.0) then
+    local tauntRepeatsModifier = math.max(1, SetCountGetMax(ply.tauntHistory) - 2)
+    if (math.random() * QMENU_CONSEQUENCE_ODDS * tauntRepeatsModifier < 1.0) then
         if (ply:Alive()) then
             ply:SetRenderMode(RENDERMODE_NORMAL)
             ply:CreateRagdoll()
