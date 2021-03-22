@@ -431,10 +431,11 @@ function SetCountGet(set, elem)
 end
 
 function SetCountGetMax(set)
-    if !set or !set["elements"][elem] then return 0 end
+    if !set or !set["elements"] then return 0 end
 
     local currentMax = 0 
     for _, v in pairs(set["elements"]) do
         currentMax = math.max(currentMax, v)
     end
+    return currentMax 
 end
