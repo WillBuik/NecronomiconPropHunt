@@ -192,7 +192,7 @@ local function DrawContextMenu()
 
         -- painting
         unstickPropBtn.Paint = function(self, w, h)
-            local btnColor table.Copy(Color(0, 0, 255, 100))
+            local btnColor = table.Copy(Color(0, 0, 255, 100))
 
             if (unstickPropBtn:IsHovered()) then
                 btnColor.a = btnColor.a + 20
@@ -226,7 +226,7 @@ local function DrawContextMenu()
 
         -- painting
         resetToSpawnBtn.Paint = function(self, w, h)
-            local btnColor table.Copy(Color(0, 0, 255, 100))
+            local btnColor = table.Copy(Color(0, 0, 255, 100))
 
             if (resetToSpawnBtn:IsHovered()) then
                 btnColor.a = btnColor.a + 20
