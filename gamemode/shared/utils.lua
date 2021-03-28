@@ -177,7 +177,7 @@ end
 -- Find a clear location for the given player, assuming that their new hitbox
 -- and hull will be defined by hbMin,hbMax (vectors relative to the player's
 -- position and angle).
-function FindSpotFor(ply, hbMin, hbMax)
+function FindSpotFor(ply, hbMin, hbMax, searchMultplier)
     if (!hbMin or !hbMax) then return nil end
 
     local plyPos = ply:GetPos()
@@ -223,7 +223,10 @@ function FindSpotFor(ply, hbMin, hbMax)
         end
     end
 
-    local approachVec = (hbMax - hbMin) * 2
+    if (!searchMultplier) then
+        searchMultplier = 2
+    end
+    local approachVec = (hbMax - hbMin) * searchMultplier
     local altWaysToApproach = {
         goalPos + Vector(0, 0, approachVec.z),
         goalPos + Vector(0, approachVec.y, 0),

@@ -18,6 +18,8 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("AutoTaunt Update")
     util.AddNetworkString("Prop Roll")
     util.AddNetworkString("Popup Open")
+    util.AddNetworkString("Reset To Spawn")
+    util.AddNetworkString("Unstick Prop")
 end)
 
 net.Receive("Class Selection", function(len, ply)
@@ -87,4 +89,13 @@ net.Receive("Prop Roll", function(len, ply)
     local rollAngleToAdd = net.ReadInt(16)
     local newRollAngle = (ply:GetPropRollAngle() + rollAngleToAdd + 180) % 360 - 180
     ply:SetPropRollAngle(newRollAngle)
+end)
+
+net.Receive("Unstick Prop", function(len, ply)
+    UnstickPlayer(ply, 10)
+end)
+
+net.Receive("Reset To Spawn", function(len, ply)
+    ply:SetPos(table.Random(team.GetSpawnPoints(ply:Team())):GetPos())
+    UnstickPlayer(ply, 10)
 end)

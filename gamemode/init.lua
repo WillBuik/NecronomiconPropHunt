@@ -374,6 +374,23 @@ function ResetPropToProp(ply)
         UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
 end
 
+function UnstickPlayer(ply, searchMultplier)
+        local tHitboxMin, tHitboxMax
+        if (ply:Team() == TEAM_PROPS) then
+            tHitboxMin, tHitboxMax = PropHitbox(ply)
+        elseif (ply:Team() == TEAM_HUNTERS) then
+            tHitboxMin, tHitboxMax = GetHitBoxCornersInModelCoordinates(ply)
+        else
+            return
+        end
+
+        --Adjust Position for no stuck
+        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax, searchMultplier)
+        ply:SetPos(foundSpot)
+
+        UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
+end
+
 function GetNumValidPropsOnMap()
     local numProps = 0
     local allEnts = ents.GetAll()

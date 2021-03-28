@@ -179,6 +179,73 @@ local function DrawContextMenu()
         end
     end
 
+    if (LocalPlayer():Team() == TEAM_PROPS) then
+        totalBtns = totalBtns + 1
+        local unstickPropBtn = vgui.Create("DButton", mainPanel)
+        unstickPropBtn:SetText("")
+        unstickPropBtn:SetPos(padding, totalBtns * padding  + (totalBtns - 1) * btnHeight)
+        unstickPropBtn:SetSize(width - 2 * padding, btnHeight)
+        unstickPropBtn.DoClick = function()
+            net.Start("Unstick Prop")
+            net.SendToServer()
+        end
+
+        -- painting
+        unstickPropBtn.Paint = function(self, w, h)
+            local btnColor table.Copy(Color(0, 0, 255, 100))
+
+            if (unstickPropBtn:IsHovered()) then
+                btnColor.a = btnColor.a + 20
+            end
+
+            surface.SetFont("Toggle Buttons")
+            surface.SetTextColor(Color(255, 255, 255, 255))
+            local text = "Unstick Prop"
+            local tw, th = surface.GetTextSize(text)
+            surface.SetTextPos(w / 2 - tw / 2, h / 2 - th / 2)
+            surface.DrawText(text)
+            surface.SetDrawColor(btnColor)
+            surface.DrawRect(0, 0, w, h)
+            surface.SetDrawColor(PANEL_BORDER)
+            surface.DrawOutlinedRect(0, 0, w, h)
+
+        end
+    end
+
+    if (LocalPlayer():Team() == TEAM_PROPS or
+        LocalPlayer():Team() == TEAM_HUNTERS) then
+        totalBtns = totalBtns + 1
+        local resetToSpawnBtn = vgui.Create("DButton", mainPanel)
+        resetToSpawnBtn:SetText("")
+        resetToSpawnBtn:SetPos(padding, totalBtns * padding  + (totalBtns - 1) * btnHeight)
+        resetToSpawnBtn:SetSize(width - 2 * padding, btnHeight)
+        resetToSpawnBtn.DoClick = function()
+            net.Start("Reset To Spawn")
+            net.SendToServer()
+        end
+
+        -- painting
+        resetToSpawnBtn.Paint = function(self, w, h)
+            local btnColor table.Copy(Color(0, 0, 255, 100))
+
+            if (resetToSpawnBtn:IsHovered()) then
+                btnColor.a = btnColor.a + 20
+            end
+
+            surface.SetFont("Toggle Buttons")
+            surface.SetTextColor(Color(255, 255, 255, 255))
+            local text = "Reset To Spawn"
+            local tw, th = surface.GetTextSize(text)
+            surface.SetTextPos(w / 2 - tw / 2, h / 2 - th / 2)
+            surface.DrawText(text)
+            surface.SetDrawColor(btnColor)
+            surface.DrawRect(0, 0, w, h)
+            surface.SetDrawColor(PANEL_BORDER)
+            surface.DrawOutlinedRect(0, 0, w, h)
+
+        end
+    end
+
     mainPanel.Paint = function(self,w,h)
     surface.SetDrawColor(PANEL_FILL)
         surface.DrawRect(0, 0, w, h)
