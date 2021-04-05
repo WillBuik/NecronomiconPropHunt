@@ -290,13 +290,18 @@ end
 
 function PlayerToAccentColor(ply)
     if !ply:AccountID() then return Vector(0,0,0) end
-    local cubeID = ply:AccountID() ^ 3
-    local idHash = math.floor(cubeID / 10^(math.floor(math.log10(cubeID) - 10)))
+    -- We have to make the ID small enough to avoid floating point error
+    local idInt = math.floor(ply:AccountID() / math.max(1, 10^(math.floor(math.log10(ply:AccountID()) - 10))))
+    -- We'll use the Division Method for hashing from here:
+    -- https://www.cs.hmc.edu/~geoff/classes/hmc.cs070.200101/homework10/hashfuncs.html
+    -- We just need 3 random-ish, reasonably sized (bigger than 256 by an order of 
+    -- magintude but small enough so no floating point error) primes than aren't close
+    -- to powers of 2.
     return Vector(
-        ((idHash * 3) % 256) / 256,
-        ((idHash * 5) % 256) / 256,
-        ((idHash * 7) % 256) / 256
-    )
+        (idInt % 5021) % 256,
+        (idInt % 1321) % 256,
+        (idInt % 6857) % 256
+    ) / 256
 end
 
 function TeamString(teamID)
