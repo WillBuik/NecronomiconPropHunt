@@ -9,6 +9,9 @@ SWEP.AbilityShowTargetHalos = true
 SWEP.AbilityPopupNumber = 3
 SWEP.AbilityDescription = "Make $AbilityPopupNumber Popup Ads appear on the screens of Hunters within a range of $AbilityRange."
 
+-- 1 in 4 odds of causing a BSOD
+SWEP.BSODChance = 4
+
 function SWEP:Ability()
     if CLIENT then return end
     local targets = self:GetHuntersInRange(self.AbilityRange, true)
@@ -17,11 +20,19 @@ function SWEP:Ability()
         return OBJ_ABILTY_CAST_ERROR_NO_TARGET
     end
 
+    local BSOD = math.random(self.BSODChance) == self.BSODChance
+
     for _,v in pairs(targets) do
-        v:EmitSound("weapons/error.wav")
-        net.Start("Popup Open")
-        net.WriteUInt(self.AbilityPopupNumber, 8)
-        net.Send(v)
+        if (BSOD == false) then
+            v:EmitSound("weapons/error.wav")
+            net.Start("Popup Open")
+            net.WriteUInt(self.AbilityPopupNumber, 8)
+            net.Send(v)
+        else
+            v:EmitSound("weapons/error_3_1.wav")
+            net.Start("BSOD Open")
+            net.Send(v)
+        end
     end
 end
 
@@ -179,21 +190,25 @@ if CLIENT then
                 )
             end
         end
-   end)
+    end)
+
+    net.Receive("BSOD Open", function(len , ply)
+    end)
 end
 
 if SERVER then
-   resource.AddFile("sound/weapons/error.wav")
-   resource.AddFile("materials/vgui/prophunt/popupgunicon.vmt")
-   resource.AddFile("materials/vgui/prophunt/popups/adareyouretarded.png")
-   resource.AddFile("materials/vgui/prophunt/popups/single.png")
-   resource.AddFile("materials/vgui/prophunt/popups/infected.png")
-   resource.AddFile("materials/vgui/prophunt/popups/iphonescampopup.png")
-   resource.AddFile("materials/vgui/prophunt/popups/freevbucks.png")
-   resource.AddFile("materials/vgui/prophunt/popups/norton.png")
-   resource.AddFile("materials/vgui/prophunt/popups/robuxscam.png")
-   resource.AddFile("materials/vgui/prophunt/popups/stupid.png")
-   resource.AddFile("materials/vgui/prophunt/popups/wannacry.png")
-   resource.AddFile("materials/vgui/prophunt/popups/discordscam.png")
+    resource.AddFile("sound/weapons/error.wav")
+    resource.AddFile("materials/vgui/prophunt/popupgunicon.vmt")
+    resource.AddFile("materials/vgui/prophunt/popups/adareyouretarded.png")
+    resource.AddFile("materials/vgui/prophunt/popups/single.png")
+    resource.AddFile("materials/vgui/prophunt/popups/infected.png")
+    resource.AddFile("materials/vgui/prophunt/popups/iphonescampopup.png")
+    resource.AddFile("materials/vgui/prophunt/popups/freevbucks.png")
+    resource.AddFile("materials/vgui/prophunt/popups/norton.png")
+    resource.AddFile("materials/vgui/prophunt/popups/robuxscam.png")
+    resource.AddFile("materials/vgui/prophunt/popups/stupid.png")
+    resource.AddFile("materials/vgui/prophunt/popups/wannacry.png")
+    resource.AddFile("materials/vgui/prophunt/popups/discordscam.png")
 
+    resource.AddFile("sound/weapons/error_3_1.wav")
 end
