@@ -24,7 +24,7 @@ function SWEP:CreateAllSmoke(originalCenter)
 
         local ownerFilter = RecipientFilter()
         ownerFilter:AddPlayer(self:GetOwner())
-        self:CreateSomeSmoke(originalCenter, 100, ownerFilter)
+        self:CreateSomeSmoke(originalCenter, 255, ownerFilter)
 end
 
 function SWEP:CreateSomeSmoke(originalCenter, alpha, recipientFilter)
