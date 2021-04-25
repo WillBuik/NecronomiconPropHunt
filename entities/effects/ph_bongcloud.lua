@@ -19,7 +19,7 @@ function EFFECT:Init(data)
             p:SetColor(gray, gray, gray)
             local alpha = 255
             if (LocalPlayer() == self:GetOwner()) then
-                alpha = 55
+                alpha = 32
             end
             p:SetStartAlpha(alpha)
             p:SetEndAlpha(math.max(0, alpha - 55))
