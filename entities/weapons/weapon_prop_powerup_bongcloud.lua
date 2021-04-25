@@ -41,10 +41,10 @@ function SWEP:CreateSomeSmoke(originalCenter, alpha, recipientFilter)
             Vector(currentCenter.x - originalCenter.x , currentCenter.y - originalCenter.y, 0)
         if differanceVec:IsZero() then return end
 
-        effect:SetOrigin(AddAngleToXY(differanceVec, 2 * math.pi / 3) + originalCenter)
-        util.Effect("ph_bongcloud", effect, true, recipientFilter)
+        -- effect:SetOrigin(AddAngleToXY(differanceVec, 2 * math.pi / 3) + originalCenter)
+        -- util.Effect("ph_bongcloud", effect, true, recipientFilter)
 
-        effect:SetOrigin(AddAngleToXY(differanceVec, -2 * math.pi / 3) + originalCenter)
-        util.Effect("ph_bongcloud", effect, true, recipientFilter)
+        -- effect:SetOrigin(AddAngleToXY(differanceVec, -2 * math.pi / 3) + originalCenter)
+        -- util.Effect("ph_bongcloud", effect, true, recipientFilter)
 end
 
