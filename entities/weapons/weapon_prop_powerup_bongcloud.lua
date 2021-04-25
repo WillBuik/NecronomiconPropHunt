@@ -23,7 +23,12 @@ function SWEP:CreateSmoke(originalCenter)
         effect:SetOrigin(currentCenter)
         effect:SetRadius(self.AbilityRadius)
         effect:SetScale(self.AbilityDuration * 3)
-        util.Effect("ph_bongcloud", effect, true, true)
+        effect:SetMagnitude(255)
+        local othersFilter = RecipientFilter():AddAllPlayers():RemovePlayer(self:GetOwner())
+        util.Effect("ph_bongcloud", effect, true, othersFilter)
+        effect:SetMagnitude(55)
+        local ownerFilter = RecipientFilter():AddPlayer(self:GetOwner())
+        util.Effect("ph_bongcloud", effect, true, ownerFilter)
         if !originalCenter then return end
         local differanceVec =
             Vector(currentCenter.x - originalCenter.x , currentCenter.y - originalCenter.y, 0)
