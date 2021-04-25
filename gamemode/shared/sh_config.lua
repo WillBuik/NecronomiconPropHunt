@@ -163,14 +163,14 @@ TEXT_COLOR = Color(255, 255, 255, 255)
 --[[================]]--
 
 ABILITIES = {
-    "weapon_prop_powerup_cloak",
-    "weapon_prop_powerup_disguise",
-    "weapon_prop_powerup_remove",
-    "weapon_prop_powerup_playdead",
-    "weapon_prop_powerup_stack",
-    "weapon_prop_powerup_popup",
-    "weapon_prop_powerup_superhot",
-    "weapon_prop_powerup_blastoff",
+    -- "weapon_prop_powerup_cloak",
+    -- "weapon_prop_powerup_disguise",
+    -- "weapon_prop_powerup_remove",
+    -- "weapon_prop_powerup_playdead",
+    -- "weapon_prop_powerup_stack",
+    -- "weapon_prop_powerup_popup",
+    -- "weapon_prop_powerup_superhot",
+    -- "weapon_prop_powerup_blastoff",
     "weapon_prop_powerup_bongcloud"
 --     "weapon_obj_decoy"
 }
@@ -200,7 +200,7 @@ TAUNT_MAX_PITCH = 110
 TAUNT_MIN_PITCH = 90
 
 -- Q-menu Anti Abuse Settings
-QMENU_ANTI_ABUSE = true         -- Kill players who abuse the Q-menu
+QMENU_ANTI_ABUSE = false        -- Kill players who abuse the Q-menu
 QMENU_CONSEQUENCE_ODDS = 200    -- Using the Q-menu will kill the player 1 in N times
 
 if (PROP_TAUNTS == nil) then
