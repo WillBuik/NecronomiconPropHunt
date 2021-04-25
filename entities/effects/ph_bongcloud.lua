@@ -3,7 +3,6 @@ function EFFECT:Init(data)
     local radius = data:GetRadius()
     local fadeoutTime = data:GetScale()
     local center = data:GetOrigin()
-    local alpha = data:GetMagnitude()
     local em = ParticleEmitter(center)
 
     local smokeparticles = {
@@ -18,6 +17,10 @@ function EFFECT:Init(data)
         if p then
             local gray = math.random(75, 200)
             p:SetColor(gray, gray, gray)
+            local alpha = 255
+            if (LocalPlayer() == self:GetOwner()) then
+                alpha = 55
+            end
             p:SetStartAlpha(alpha)
             p:SetEndAlpha(math.max(0, alpha - 55))
             p:SetVelocity(VectorRand() * math.Rand(900, 1300))
