@@ -25,7 +25,7 @@ SWEP.Primary.Ammo          = "AR2AltFire"
 SWEP.Primary.Sound         = Sound( "Weapon_AR2.Special1" )
 SWEP.Primary.AutoReload    = true
 SWEP.Primary.Anim          = ACT_VM_SECONDARYATTACK
-SWEP.Primary.Accuracy      = 70
+SWEP.Primary.Accuracy      = 110
 
 function SWEP:FireBall(closestPropTaunting)
     if CLIENT then return end
