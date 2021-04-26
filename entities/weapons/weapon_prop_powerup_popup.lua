@@ -9,6 +9,19 @@ SWEP.AbilityShowTargetHalos = true
 SWEP.AbilityPopupNumber = 3
 SWEP.AbilityDescription = "Make $AbilityPopupNumber Popup Ads appear on the screens of Hunters within a range of $AbilityRange."
 
+-- BSOD Parameters
+SWEP.BSODChance    = 4  -- 1 in 4 odds of causing a BSOD
+
+local BSODTime     = 3.0
+local BIOSBootTime = 2.5
+local MEBootTime   = 4.5
+
+local BSODTimeStarted = 0
+local BSODMaterial = nil
+local MEBootMaterial = nil
+local BIOSBootMaterial = nil
+
+
 function SWEP:Ability()
     if CLIENT then return end
     local targets = self:GetHuntersInRange(self.AbilityRange, true)
@@ -17,12 +30,25 @@ function SWEP:Ability()
         return OBJ_ABILTY_CAST_ERROR_NO_TARGET
     end
 
+    local BSOD = math.random(self.BSODChance) == self.BSODChance
+
     for _,v in pairs(targets) do
-        v:EmitSound("weapons/error.wav")
-        net.Start("Popup Open")
-        net.WriteUInt(self.AbilityPopupNumber, 8)
-        net.Send(v)
+        if (BSOD == false) then
+            v:EmitSound("weapons/error.wav")
+            net.Start("Popup Open")
+            net.WriteUInt(self.AbilityPopupNumber, 8)
+            net.Send(v)
+        else
+            v:EmitSound("weapons/error_3_1.wav")
+            net.Start("BSOD Open")
+            net.Send(v)
+        end
     end
+end
+
+function SWEP:AbilityCleanup()
+    -- Make sure we are no longer showing the BSOD overlay
+    BSODTimeStarted = 0
 end
 
 function BuildPopup(popupX, popupY, popupImage, closeSizeX, closeSizeY, closePosX, closePosY, closeText, closeColor)
@@ -179,21 +205,74 @@ if CLIENT then
                 )
             end
         end
-   end)
+    end)
+
+    net.Receive("BSOD Open", function(len , ply)
+        BSODTimeStarted = CurTime()
+    end)
+
+    local function PaintBSODOverlay()
+        if (BSODTimeStarted <= 0) then return end
+
+        if (BSODTimeStarted + BSODTime >= CurTime()) then
+            surface.SetDrawColor( 255, 255, 255, 255 )
+            surface.SetMaterial(BSODMaterial)
+            surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+        elseif (BSODTimeStarted + BSODTime + BIOSBootTime >= CurTime()) then
+            surface.SetDrawColor( 255, 255, 255, 255 )
+            surface.SetMaterial(BIOSBootMaterial)
+            surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+        elseif (BSODTimeStarted + BSODTime + BIOSBootTime + MEBootTime >= CurTime()) then
+            surface.SetDrawColor( 255, 255, 255, 255 )
+            surface.SetMaterial(MEBootMaterial)
+            surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+        else
+            LocalPlayer():EmitSound("weapons/me_startup.wav")
+            BSODTimeStarted = 0
+        end
+    end
+    
+    hook.Add("DrawOverlay", "BSOD Overlay", PaintBSODOverlay)
+
+    BSODMaterial = Material("windows_9x_bsod.png")
+    MEBootMaterial = Material("windows_me_boot.png")
+    BIOSBootMaterial = Material("bios_boot_screen.png")
 end
 
 if SERVER then
-   resource.AddFile("sound/weapons/error.wav")
-   resource.AddFile("materials/vgui/prophunt/popupgunicon.vmt")
-   resource.AddFile("materials/vgui/prophunt/popups/adareyouretarded.png")
-   resource.AddFile("materials/vgui/prophunt/popups/single.png")
-   resource.AddFile("materials/vgui/prophunt/popups/infected.png")
-   resource.AddFile("materials/vgui/prophunt/popups/iphonescampopup.png")
-   resource.AddFile("materials/vgui/prophunt/popups/freevbucks.png")
-   resource.AddFile("materials/vgui/prophunt/popups/norton.png")
-   resource.AddFile("materials/vgui/prophunt/popups/robuxscam.png")
-   resource.AddFile("materials/vgui/prophunt/popups/stupid.png")
-   resource.AddFile("materials/vgui/prophunt/popups/wannacry.png")
-   resource.AddFile("materials/vgui/prophunt/popups/discordscam.png")
+    resource.AddFile("sound/weapons/error.wav")
+    resource.AddFile("materials/vgui/prophunt/popupgunicon.vmt")
+    resource.AddFile("materials/vgui/prophunt/popups/adareyouretarded.png")
+    resource.AddFile("materials/vgui/prophunt/popups/single.png")
+    resource.AddFile("materials/vgui/prophunt/popups/infected.png")
+    resource.AddFile("materials/vgui/prophunt/popups/iphonescampopup.png")
+    resource.AddFile("materials/vgui/prophunt/popups/freevbucks.png")
+    resource.AddFile("materials/vgui/prophunt/popups/norton.png")
+    resource.AddFile("materials/vgui/prophunt/popups/robuxscam.png")
+    resource.AddFile("materials/vgui/prophunt/popups/stupid.png")
+    resource.AddFile("materials/vgui/prophunt/popups/wannacry.png")
+    resource.AddFile("materials/vgui/prophunt/popups/discordscam.png")
 
+    resource.AddFile("materials/windows_9x_bsod.png")
+    resource.AddFile("materials/windows_me_boot.png")
+    resource.AddFile("materials/bios_boot_screen.png")
+    resource.AddFile("sound/weapons/error_3_1.wav")
+    resource.AddFile("sound/weapons/me_startup.wav")
+
+    -- Debug commands
+
+    concommand.Add("testbsod", function(ply, cmd, args, str)
+        if (!ply) then return end
+        ply:EmitSound("weapons/error_3_1.wav")
+        net.Start("BSOD Open")
+        net.Send(ply)
+    end)
+
+    concommand.Add("testpopup", function(ply, cmd, args, str)
+        if (!ply) then return end
+        ply:EmitSound("weapons/error.wav")
+        net.Start("Popup Open")
+        net.WriteUInt(3, 8)
+        net.Send(ply)
+    end)
 end
