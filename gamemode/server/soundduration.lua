@@ -352,6 +352,9 @@ function NewSoundDuration(soundPath)
 
 	if (extension and soundDecoders[extension]) then
 		local buffer = file.Open(soundPath, "r", "GAME")
+		-- Modified from [3] on 2021/4/27 to return nil for non-existant files.
+		if (!buffer) then return nil end
+
 		duration = soundDecoders[extension](buffer)
 		buffer:Close()
 	else
