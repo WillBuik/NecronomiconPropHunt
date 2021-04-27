@@ -4,11 +4,14 @@
 -- folder, so it is not an exact drop-in replacement.
 --
 -- Copied from [3] on 2021/1/5.
+-- Added support for caching sound durations on 2021/4/26.
 --
 -- Refs.
 --  [1]: https://github.com/Facepunch/garrysmod-issues/issues/936
 --  [2]: https://wiki.facepunch.com/gmod/File_Search_Paths
 --  [3]: https://github.com/yobson1/glua-soundduration/raw/main/lua/autorun/soundduration.lua
+
+local SoundDurationCache = { }
 
 --[[-------------------------------------------------------------------------
 MIT License
@@ -223,13 +226,22 @@ local soundDecoders = {
 }
 
 function NewSoundDuration(soundPath)
-	local extension = soundPath:GetExtensionFromFilename()
-	if extension and soundDecoders[extension] then
-		local buffer = file.Open(soundPath, "r", "GAME")
-		local result = soundDecoders[extension](buffer)
-		buffer:Close()
-		return result
+	-- Modified from [3] on 2021/4/26 to cache sound durations.
+	if (SoundDurationCache[soundPath]) then
+		return SoundDurationCache[soundPath]
 	end
 
-	return SoundDuration(soundPath)
+	local duration = nil
+	local extension = soundPath:GetExtensionFromFilename():lower()
+
+	if (extension and soundDecoders[extension]) then
+		local buffer = file.Open(soundPath, "r", "GAME")
+		duration = soundDecoders[extension](buffer)
+		buffer:Close()
+	else
+		duration = SoundDuration(soundPath)
+	end
+
+	SoundDurationCache[soundPath] = duration
+	return duration;
 end
