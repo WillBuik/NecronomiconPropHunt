@@ -98,8 +98,13 @@ function SendTaunt(ply, taunt, pitch)
     -- for instance, clients won't have to do this when playing the sound.
     local duration = NewSoundDuration("sound/" .. taunt)
 
-    if (duration <= 0) then
-        print("ERROR: couldn't figure out duration for taunt " .. taunt)
+    -- Bail out if the duration could not be determined or is nonsensical.
+    -- NewSoundDuration's fallback to the built in SoundDuration can return
+    -- junk values if it can't parse a sound file. This is game-breaking so
+    -- bail if that happens. For more details see:
+    -- https://github.com/Facepunch/garrysmod-issues/issues/936
+    if (!duration or duration <= 0 or duration >= 50) then
+        print("[ERROR] Taunt '" .. taunt .. "' has bad duration '" .. duration .. "'")
         return
     end
 
