@@ -104,6 +104,7 @@ function SendTaunt(ply, taunt, pitch)
     -- bail if that happens. For more details see:
     -- https://github.com/Facepunch/garrysmod-issues/issues/936
     if (!duration or duration <= 0 or duration >= 50) then
+        if (!duration) then duration = "nil" end
         print("[ERROR] Taunt '" .. taunt .. "' has bad duration '" .. duration .. "'")
         return
     end
