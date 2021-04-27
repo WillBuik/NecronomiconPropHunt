@@ -190,6 +190,7 @@ function HurtPropAndCheckForDeath(ply, dmg, attacker)
     ply:SetHealth(ply:Health() - dmg)
     if (ply:Health() < 1 and ply:Alive()) then
         ply:SetRenderMode(RENDERMODE_NORMAL)
+        ply:CreateRagdoll()
         RemovePlayerProp(ply)
         ply:KillSilent()
         BroadcastPlayerDeath(ply)
