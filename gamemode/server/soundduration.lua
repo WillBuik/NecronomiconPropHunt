@@ -4,11 +4,125 @@
 -- folder, so it is not an exact drop-in replacement.
 --
 -- Copied from [3] on 2021/1/5.
+-- Added support for caching sound durations on 2021/4/26.
+-- Added support for decoding Ogg Vorbis on 2021/4/27.
 --
 -- Refs.
 --  [1]: https://github.com/Facepunch/garrysmod-issues/issues/936
 --  [2]: https://wiki.facepunch.com/gmod/File_Search_Paths
 --  [3]: https://github.com/yobson1/glua-soundduration/raw/main/lua/autorun/soundduration.lua
+
+local SoundDurationCache = { }
+
+local function ParseVorbisSampleRate(buffer)
+	-- Assumes buffer cursor is positioned at the begining of the Vorbis identification header.
+	-- Returns sample rate or zero if it could not be parsed.
+	-- Seeks back to original buffer location before returning.
+	local originalBufferPosition = buffer:Tell()
+	local sampleRate = 0
+
+	-- Check header type, vorbis ID and version
+	if (buffer:Read(11) == "\1vorbis\0\0\0\0") then
+		buffer:Skip(1) -- Skip number of channels
+		sampleRate = buffer:ReadULong() -- Read sample rate
+	end
+
+	buffer:Seek(originalBufferPosition)
+	return sampleRate
+end
+
+local function ParseOggPage(buffer)
+	local pageData = {}
+	pageData["page_absolute_offset"] = buffer:Tell()
+
+	-- Check capture pattern and version (must be zero)
+	if (buffer:EndOfFile() or buffer:Read(5) != "OggS\0") then
+		return nil
+	end
+
+	-- Page Header Type Bitfield
+	-- 1: Continued packet
+	-- 2: First page of logical bitstream
+	-- 4: Last page of logical bitstream
+	pageData["header_type"] = buffer:ReadByte()
+
+	-- Absolute Granual Position
+	-- AGP is a LE signed 64-bit integeger which is nightmarish to work with
+	-- in gmod lua. This is a massive hack but should work fine for Vorbis
+	-- files shorter than 27 hours :)
+	-- Note: ReadULong only reads a 32-bit integer!
+	local agp = buffer:ReadULong()
+	local agpHigh = buffer:ReadULong()
+	if (bit.band(agpHigh, 0x80000000) == 0x80000000) then
+		-- AGP is negative, meaningless in Vorbis, we can throw out the actual number.
+		agp = -1
+	elseif (agpHigh != 0) then
+		-- AGP is too big to deal with
+		return nil
+	end
+	pageData["absolute_granual_position"] = agp
+
+	-- Stream Serial, Page Sequence, Checksum
+	pageData["stream_serial_number"] = buffer:ReadULong()
+	pageData["page_sequence_number"] = buffer:ReadULong()
+	pageData["page_checksum"] = buffer:ReadULong()
+
+	-- Page Segments
+	local pageDataLength = 0
+	local pageSegmentTable = { }
+	local pageSegmentCount = buffer:ReadByte()
+	pageData["page_segment_count"] = pageSegmentCount
+	for i = 0, pageSegmentCount - 1, 1 do
+		pageSegmentTable[i] = buffer:ReadByte()
+		pageDataLength = pageDataLength + pageSegmentTable[i]
+	end
+	pageData["page_segment_table"] = pageSegmentTable
+	pageData["page_data_length"] = pageDataLength
+
+	return pageData
+end
+
+local function DecodeVorbis(buffer)
+	-- This Vorbis decoder is far from perfect but it seems to work with any Ogg Vorbis
+	-- files that are produced by SOX.
+
+	-- Read first page and decode headers.
+	local pageData = ParseOggPage(buffer)
+
+	if (!pageData or pageData["header_type"] != 2 or pageData["page_data_length"] < 16) then
+		-- Not an Ogg file, malformed Ogg file, or the Vorbis ID header was split across pages.
+		return nil
+	end
+
+	local sampleRate = ParseVorbisSampleRate(buffer)
+
+	if (sampleRate == 0) then
+		-- Ogg file doesn't contain Vorbis.
+		return nil
+	end
+
+	-- AGP for Vorbis indicates the last sample number in the page.
+	-- This can be used to accurately determine length of any conformant Ogg Vorbis.
+	local highestAGP = 0;
+
+	repeat
+		if (pageData["absolute_granual_position"] > highestAGP) then
+			highestAGP = pageData["absolute_granual_position"]
+		end
+
+		if (pageData["header_type"] == 4) then
+			-- This is the last page of the logical bitstream, return the highest AGP / sample rate.
+			return highestAGP / sampleRate
+		end
+
+		-- Seek to next page
+		buffer:Skip(pageData["page_data_length"])
+		pageData = ParseOggPage(buffer)
+	until (pageData == nil)
+
+	-- Ogg file didn't contain the last page of the logical bitstream, likely corrupted.
+	return nil
+end
 
 --[[-------------------------------------------------------------------------
 MIT License
@@ -203,6 +317,7 @@ local soundDecoders = {
 
 		return duration
 	end,
+
 	-- Reference: http://soundfile.sapp.org/doc/WaveFormat/
 	wav = function(buffer)
 		-- Get channels
@@ -219,17 +334,33 @@ local soundDecoders = {
 		local samples = (buffer:Size() - 44) / divisor
 
 		return samples / sampleRate / channels
-	end
+	end,
+
+	-- Modified from [3] on 2021/4/27 to add OGG Vorbis decoding
+	-- Reference: https://xiph.org/vorbis/doc/
+	ogg = DecodeVorbis
 }
 
 function NewSoundDuration(soundPath)
-	local extension = soundPath:GetExtensionFromFilename()
-	if extension and soundDecoders[extension] then
-		local buffer = file.Open(soundPath, "r", "GAME")
-		local result = soundDecoders[extension](buffer)
-		buffer:Close()
-		return result
+	-- Modified from [3] on 2021/4/26 to cache sound durations.
+	if (SoundDurationCache[soundPath]) then
+		return SoundDurationCache[soundPath]
 	end
 
-	return SoundDuration(soundPath)
+	local duration = nil
+	local extension = soundPath:GetExtensionFromFilename():lower()
+
+	if (extension and soundDecoders[extension]) then
+		local buffer = file.Open(soundPath, "r", "GAME")
+		-- Modified from [3] on 2021/4/27 to return nil for non-existant files.
+		if (!buffer) then return nil end
+
+		duration = soundDecoders[extension](buffer)
+		buffer:Close()
+	else
+		duration = SoundDuration(soundPath)
+	end
+
+	SoundDurationCache[soundPath] = duration
+	return duration;
 end
