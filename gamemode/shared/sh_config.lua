@@ -203,8 +203,12 @@ TAUNT_MIN_PITCH = 90
 QMENU_ANTI_ABUSE = false        -- Kill players who abuse the Q-menu
 QMENU_CONSEQUENCE_ODDS = 200    -- Using the Q-menu will kill the player 1 in N times
 
+-- Create taunt tables only if a pack hasn't already created them.
 if (PROP_TAUNTS == nil) then
-    PROP_TAUNTS = {}
+    PROP_TAUNTS = { }
+end
+if (HUNTER_TAUNTS == nil) then
+    HUNTER_TAUNTS = { }
 end
 
 -- USAGE:
@@ -237,8 +241,6 @@ PROP_TAUNTS["Woohoo!"]                      = "taunts/woohoo.wav"
 --PROP_TAUNTS["Why Nunu"]                     = "taunts/whynunu.wav"
 PROP_TAUNTS["Dark Side"]                    = "taunts/you_dont_know_the_power.wav"
 
-
-HUNTER_TAUNTS = {}
 -- USAGE:
 -- HUNTER_TAUNTS["Display Name"] = "taunts/file_name.wav"
 HUNTER_TAUNTS["GlaDoS - President"]    = "taunts/glados-president.wav"
