@@ -14,7 +14,7 @@ function EFFECT:Think()
         return false
     end
 
-    if  self.NextParticle < CurTime() then
+    if self.NextParticle < CurTime() then
         self.NextParticle = CurTime() + self.ParticleDelay
 
         local vOffset = self:GetOwner():GetPos() + Vector(math.Rand(-6, 6), math.Rand(-6, 6), math.Rand(-6, 6))
@@ -24,8 +24,8 @@ function EFFECT:Think()
         if particle then
             particle:SetVelocity(vNormal * math.Rand( 10, 30 ) + VectorRand() * 40)
             particle:SetDieTime(3.0)
-            particle:SetStartAlpha(math.Rand(50, 150))
-            particle:SetStartSize(math.Rand(48, 64 ))
+            particle:SetStartAlpha(math.Rand(30, 90))
+            particle:SetStartSize(math.Rand(48, 64))
             particle:SetEndSize(math.Rand(128, 312 ))
             particle:SetRoll(math.Rand(-0.2, 0.2 ))
             particle:SetColor(200, 200, 210)
