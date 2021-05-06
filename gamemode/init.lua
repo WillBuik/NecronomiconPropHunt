@@ -177,7 +177,7 @@ local function BroadcastPlayerDeath(ply)
     SafeRemoveEntityDelayed(ragdoll, PROP_RAGDOLL_DURATION)
 end
 
-local function AnnouncePlayerDeath(ply, attacker)
+function AnnouncePlayerDeath(ply, attacker)
     net.Start("Death Notice")
         net.WriteString(attacker:Nick())
         net.WriteUInt(attacker:Team(), 16)
