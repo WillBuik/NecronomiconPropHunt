@@ -106,9 +106,9 @@ function SWEP:Think()
    BaseClass.Think(self)
    if self:GetReloading() then
       local primary = self:GetOwner():KeyDown(IN_ATTACK)
-      local secondary = self:GetOwner():KeyDown(IN_ATTACK2) 
-      if (primary or secondary) and 
-         self:GetNextPrimaryFire() > CurTime() and
+      local secondary = self:GetOwner():KeyDown(IN_ATTACK2)
+      if (primary or secondary) and
+         self:GetNextPrimaryFire() <= CurTime() and
          self:Clip1() > 0
       then
          self:FinishReload()
@@ -141,8 +141,6 @@ function SWEP:Deploy()
 end
 
 function SWEP:SecondaryAttack()
-
-   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
    if !self:CanPrimaryAttack() then return end
@@ -151,7 +149,7 @@ function SWEP:SecondaryAttack()
       sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
    end
 
-   local ammo = self:Clip1() 
+   local ammo = self:Clip1()
 
    self:ShootBullet( self.Primary.Damage / 1.5, self.Primary.Recoil, self.Primary.NumShots * ammo, self:GetPrimaryCone() * ammo )
 
