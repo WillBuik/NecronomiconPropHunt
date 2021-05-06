@@ -17,21 +17,13 @@ function plymeta:ObjGetDisguiseName()
     return self:GetNWString("objAbilityDisguiseName", "")
 end
 
-function plymeta:ObjSetRagdolled(state)
-    self:SetNWBool("objAbilityIsRagdolled", state)
+-- indicates whether the player has set the Play Dead ability to trigger and how long it should go
+function plymeta:ObjSetPlaydeadDuration(dur)
+    self:SetNWBool("objPlaydeadDuration", dur)
 end
 
-function plymeta:ObjIsRagdolled()
-    return self:GetNWBool("objAbilityIsRagdolled", false)
-end
-
--- indicates whether the player has set the Play Dead ability to trigger
-function plymeta:ObjSetShouldPlaydead(state)
-    self:SetNWBool("objPlaydeadEnabled", state)
-end
-
-function plymeta:ObjShouldPlaydead()
-    return self:GetNWBool("objPlaydeadEnabled", false)
+function plymeta:ObjGetPlaydeadDuration()
+    return self:GetNWBool("objPlaydeadDuration", -1)
 end
 
 -- indicates whether the player is currently playing dead

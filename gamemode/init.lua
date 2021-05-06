@@ -195,20 +195,7 @@ end
 function HurtPropAndCheckForDeath(ply, dmg, attacker)
     ply:SetHealth(ply:Health() - dmg)
     if (ply:Health() < 1 and ply:Alive()) then
-        ply:SetRenderMode(RENDERMODE_NORMAL)
-        ply:CreateRagdoll()
-        RemovePlayerProp(ply)
-        ply:KillSilent()
-        BroadcastPlayerDeath(ply)
-        AnnouncePlayerDeath(ply, attacker)
-        -- an homage to a fun bug
-        if (math.random() > 0.98) then
-            AnnouncePlayerDeath(ply, attacker)
-            AnnouncePlayerDeath(ply, attacker)
-        end
-        attacker:AddFrags(1)
-        ply:AddDeaths(1)
-        ply:SetTimeOfDeath(CurTime())
+        ply:PropDeath(attacker)
     end
 end
 
@@ -251,14 +238,14 @@ local function DamageHandler(target, dmgInfo)
                 end
             elseif (target:GetOwner():IsPlayer() and target:GetOwner():Team() == TEAM_PROPS and !target:GetOwner():ObjIsPlaydead()) then
                 local ply = target:GetOwner()
-                if (ply:ObjShouldPlaydead()) then
+                if (ply:ObjGetPlaydeadDuration() > 0) then
                     ply:FakeDeath(attacker)
                 else
                     HurtProp(ply, dmg, attacker)
                 end
             elseif (target:IsPlayer() and target:Team() == TEAM_PROPS and !target:ObjIsPlaydead()) then
                 local ply = target
-                if (ply:ObjShouldPlaydead()) then
+                if (ply:ObjGetPlaydeadDuration() > 0) then
                     ply:FakeDeath(attacker)
                 else
                     HurtProp(ply, dmg, attacker)
@@ -330,7 +317,7 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     end
 
     local volume = (tHitboxMax.x - tHitboxMin.x) * (tHitboxMax.y - tHitboxMin.y) * (tHitboxMax.z - tHitboxMin.z)
-    ply.propSize = volume ^ (1 / 3) 
+    ply.propSize = volume ^ (1 / 3)
 
     ply:SetupPropHealth()
     ply:SetupPropSpeed()
