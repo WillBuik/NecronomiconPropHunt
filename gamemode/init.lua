@@ -259,6 +259,13 @@ hook.Add("EntityTakeDamage", "forward dmg to new system", function(target, dmg)
     DamageHandler(target, dmg)
 end)
 
+hook.Add( "StartCommand", "StartCommandExample", function( ply, cmd )
+    if !ply:IsZoolander() then return end
+
+    cmd:SetMouseX(math.abs(cmd:GetMouseX()))
+end)
+
+
 --[[ Door Exploit fix ]]--
 function GM:PlayerUse(ply, ent)
     if (table.HasValue(DOORS, ent:GetClass()) and ply.nextDoorTrigger and CurTime() < ply.nextDoorTrigger) then

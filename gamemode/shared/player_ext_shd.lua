@@ -35,6 +35,14 @@ function plymeta:ObjIsPlaydead()
     return self:GetNWBool("objAbilityIsPlaydead", false)
 end
 
+function plymeta:IsZoolander()
+    return self:GetNWBool("objZoolander", false)
+end
+
+function plymeta:SetZoolander(zoolander)
+    return self:SetNWBool("objZoolander", zoolander)
+end
+
 function plymeta:IsPropPitchEnabled()
     return self:GetNWBool("PropPitchEnabled", false)
 end
