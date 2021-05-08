@@ -122,7 +122,7 @@ end
 function plymeta:CanTauntNowOrLater()
     team = self:Team()
     if team == TEAM_PROPS then
-        return self:Alive() -- props can taunt when they are alive
+        return true -- all props can taunt, even as ghosts
     elseif team == TEAM_HUNTERS then
         return self:Alive() -- hunters can taunt when they are alive
     else
