@@ -203,9 +203,16 @@ function plymeta:SetNextAutoTauntDelay(delay)
     self:SetNWFloat("NextAutoTauntDelay", delay)
 end
 
--- NextAutoTauntTime: the timestamp of the next auto-taunt.  This is always
--- equal to LastTauntTime + NextAutoTauntDelay.
+-- NextAutoTauntTime: the timestamp of the next auto-taunt.  Returns one of:
+--   - nil (if this player is not obligated to taunt in the future)
+--   - LastTauntTime + NextAutoTauntDelay
+--
+-- The output of this method is only meaningful if CanTauntNowOrLater is true.
 
 function plymeta:GetNextAutoTauntTime()
-    return self:GetLastTauntTime() + self:GetNextAutoTauntDelay()
+    if AUTOTAUNT_ENABLED and self:Team() == TEAM_PROPS and self:Alive() then
+        return self:GetLastTauntTime() + self:GetNextAutoTauntDelay()
+    else
+        return nil
+    end
 end
