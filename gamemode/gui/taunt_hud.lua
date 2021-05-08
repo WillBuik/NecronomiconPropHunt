@@ -35,10 +35,10 @@ function tauntHUD()
     local ply = LocalPlayer()
 
     -- Check if the player is taunt-eligible.
-    if not IsValid(ply) or not ply:CanTauntNowOrLater() then return end
+    if !IsValid(ply) or !ply:CanTauntNowOrLater() then return end
 
     -- Eh, only props really want this HUD.
-    if ply:Team() ~= TEAM_PROPS then return end
+    if ply:Team() != TEAM_PROPS then return end
 
     -- Don't draw this HUD until the round starts and hunters are released
     local now = CurTime()
@@ -62,7 +62,7 @@ function tauntHUD()
     local label
     local eventColor
     local deadlineOfNextAutoTaunt = ply:GetNextAutoTauntTime()
-    if deadlineOfNextAutoTaunt ~= nil then
+    if deadlineOfNextAutoTaunt != nil then
         label = "Auto-Taunt"
         nextEventTimestamp = deadlineOfNextAutoTaunt
         eventColor = brightRed

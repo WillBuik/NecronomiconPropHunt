@@ -179,7 +179,7 @@ end
 
 function plymeta:GetNextTauntAvailableTime()
     local time = self:GetLastTauntTime() + self:GetLastTauntDuration()
-    if self:Team() == TEAM_PROPS and not self:Alive() then
+    if self:Team() == TEAM_PROPS and !self:Alive() then
         time = time + PROP_GHOST_TAUNT_WAIT
     end
     return time
