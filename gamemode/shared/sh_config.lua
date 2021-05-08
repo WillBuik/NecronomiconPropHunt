@@ -204,6 +204,9 @@ TAUNT_MIN_PITCH = 90
 QMENU_ANTI_ABUSE = false        -- Kill players who abuse the Q-menu
 QMENU_CONSEQUENCE_ODDS = 200    -- Using the Q-menu will kill the player 1 in N times
 
+-- Prop ghosts have to wait this many seconds between taunts
+PROP_GHOST_TAUNT_WAIT = 20
+
 -- Create taunt tables only if a pack hasn't already created them.
 if (PROP_TAUNTS == nil) then
     PROP_TAUNTS = { }

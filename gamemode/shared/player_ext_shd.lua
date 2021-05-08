@@ -178,7 +178,11 @@ end
 -- this has at the start of a round.)
 
 function plymeta:GetNextTauntAvailableTime()
-    return self:GetLastTauntTime() + self:GetLastTauntDuration()
+    local time = self:GetLastTauntTime() + self:GetLastTauntDuration()
+    if self:Team() == TEAM_PROPS and not self:Alive() then
+        time = time + PROP_GHOST_TAUNT_WAIT
+    end
+    return time
 end
 
 -- IsTauntingRightNow: is the player currently playing a taunt?  (Quick design
