@@ -168,7 +168,7 @@ function GM:PlayerShouldTakeDamage(victim, attacker)
     return false
 end
 
-local function BroadcastPlayerDeath(ply)
+function BroadcastPlayerDeath(ply)
     net.Start("Player Death")
         -- the player who died, so sad, too bad.
         net.WriteUInt(ply:EntIndex(), 8)
