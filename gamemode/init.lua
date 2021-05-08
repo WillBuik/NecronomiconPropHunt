@@ -89,7 +89,7 @@ function SendTaunt(ply, taunt, pitch)
     -- Checks: the player has to be allowed to make a taunt right now, and the
     -- server has to know about the taunt they want to play.
     local now = CurTime()
-    if ~IsValid(ply) or ~ply:CanTauntAt(now) then return end
+    if not IsValid(ply) or not ply:CanTauntAt(now) then return end
     if (ply:Team() == TEAM_PROPS and !table.HasValue(PROP_TAUNTS, taunt)) then return end
     if (ply:Team() == TEAM_HUNTERS and !table.HasValue(HUNTER_TAUNTS, taunt)) then return end
 

@@ -10,7 +10,7 @@ local function playTaunt(taunt, pitch)
     -- Only annoy the server if it looks like we can taunt right now.  (The
     -- server does its own checks, so we don't *need* this guard, but it can't
     -- hurt!)
-    if ~LocalPlayer():CanTauntAt(CurTime()) then return end
+    if not LocalPlayer():CanTauntAt(CurTime()) then return end
 
     net.Start("Taunt Selection")
         net.WriteString(taunt)
@@ -119,7 +119,7 @@ end
 
 hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
     ply = LocalPlayer()
-    if ~IsValid(ply) or ~ply:CanTauntNowOrLater() then return end
+    if not IsValid(ply) or not ply:CanTauntNowOrLater() then return end
     if (tauntPanel and tauntPanel:IsVisible()) then
         tauntPanel:SetVisible(false)
     end

@@ -38,7 +38,7 @@ function tauntHud()
     local ply = LocalPlayer()
 
     -- Check if the player is taunt-eligible.
-    if ~IsValid(ply) or ~ply:CanTauntNowOrLater() then return end
+    if not IsValid(ply) or not ply:CanTauntNowOrLater() then return end
 
     -- Don't draw this HUD until the round starts and hunters are released
     local now = CurTime()
