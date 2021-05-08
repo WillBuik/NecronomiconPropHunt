@@ -12,17 +12,18 @@ jobs:
     steps:
       # Check out repostitory
       - uses: actions/checkout@v2
-      
+
       # Get dependencies
       - name: Get Dependencies
         run: sudo apt install libffi6
-     
+
       # Get GLuaFixer linter from releases
       - uses: dsaltares/fetch-gh-release-asset@master
         with:
           repo: "FPtje/GLuaFixer"
           version: "tags/1.16.4"
           file: "glualint-1.16.4-linux-stripped.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # Unzip GLuaFixer binary
       - name: Unzip GLuaFixer
