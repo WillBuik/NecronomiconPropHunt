@@ -120,7 +120,7 @@ end
 -- return true for players who can't taunt right now, but could in the future.
 
 function plymeta:CanTauntNowOrLater()
-    team = self:Team()
+    local team = self:Team()
     if team == TEAM_PROPS then
         return true -- all props can taunt, even as ghosts
     elseif team == TEAM_HUNTERS then
