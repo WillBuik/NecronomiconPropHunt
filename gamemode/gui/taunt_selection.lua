@@ -7,10 +7,10 @@ local tauntPanel
 local pitchSlider
 
 local function playTaunt(taunt, pitch)
-
-    -- only play if the last taunt has ended
-    if (CurTime() < LocalPlayer():GetNextTauntAvailableTime()) then return end
-    if (!LocalPlayer():Alive()) then return end
+    -- Only annoy the server if it looks like we can taunt right now.  (The
+    -- server does its own checks, so we don't *need* this guard, but it can't
+    -- hurt!)
+    if ~LocalPlayer():CanTauntAt(CurTime()) then return end
 
     net.Start("Taunt Selection")
         net.WriteString(taunt)
@@ -21,10 +21,9 @@ local function playTaunt(taunt, pitch)
 end
 
 
-local function tauntSelection()
-    if (LocalPlayer():Team() != TEAM_PROPS and LocalPlayer():Team() != TEAM_HUNTERS or !LocalPlayer():Alive()) then return end
+local function tauntSelection(player)
     local TAUNTS
-    if (LocalPlayer():Team() == TEAM_PROPS) then
+    if (player:Team() == TEAM_PROPS) then
         TAUNTS = PROP_TAUNTS
     else
         TAUNTS = HUNTER_TAUNTS
@@ -53,7 +52,6 @@ local function tauntSelection()
 
     -- Remember what pitch the player last selected in this UI.
     local pitch = 100
-    local player = LocalPlayer()
     if (player.lastSelectedPitch != nil) then
         pitch = player.lastSelectedPitch
     end
@@ -120,18 +118,18 @@ local function tauntSelection()
 end
 
 hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
-    if (LocalPlayer():Team() != TEAM_PROPS and LocalPlayer():Team() != TEAM_HUNTERS or !LocalPlayer():Alive()) then return end
+    ply = LocalPlayer()
+    if ~IsValid(ply) or ~ply:CanTauntNowOrLater() then return end
     if (tauntPanel and tauntPanel:IsVisible()) then
         tauntPanel:SetVisible(false)
     end
-    tauntSelection()
+    tauntSelection(ply)
     tauntPanel:SetVisible(true)
     tauntPanel:MakePopup()
     tauntPanel:SetKeyboardInputEnabled(false)
 end)
 
 hook.Add("OnSpawnMenuClose", "Close the context menu", function()
-    if (LocalPlayer():Team() != TEAM_PROPS and LocalPlayer():Team() != TEAM_HUNTERS or !LocalPlayer():Alive()) then return end
     if (tauntPanel and !tauntPanel:IsVisible()) then return end
     tauntPanel:SetKeyboardInputEnabled(true)
     tauntPanel:SetVisible(false)
