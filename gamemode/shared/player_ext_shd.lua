@@ -189,7 +189,7 @@ end
 
 function plymeta:IsTauntingRightNow(now)
     local lastTauntStart = self:GetLastTauntTime()
-    local lastTauntEnd = start + self:GetLastTauntDuration()
+    local lastTauntEnd = lastTauntStart + self:GetLastTauntDuration()
     return lastTauntStart <= now and now <= lastTauntEnd
 end
 
