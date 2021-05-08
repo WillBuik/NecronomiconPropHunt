@@ -1,4 +1,4 @@
-surface.CreateFont("AutoTauntFont",
+surface.CreateFont("TauntHUDFont",
 {
     font = "coolvetica",
     size = 30,
@@ -11,6 +11,7 @@ local opacity = .5 * 255
 local brightBlue = Color(14, 54, 100, 100)
 local brightYellow = Color(150, 54, 100, 100)
 local brightRed = Color(255, 54, 100, 100)
+local brightGreen = Color(54, 255, 100, 100)
 local lightGray = Color(80, 80, 80, opacity)
 local brightWhite = Color(255, 255, 255, 255)
 
@@ -29,16 +30,15 @@ function draw.Circle(x, y, radius, seg)
     surface.DrawPoly(cir)
 end
 
-function validateProp(ply)
-    return ply:IsValid() and ply:Alive() and ply:Team() == TEAM_PROPS
-end
-
-function tauntHud()
+function tauntHUD()
 
     local ply = LocalPlayer()
 
     -- Check if the player is taunt-eligible.
     if not IsValid(ply) or not ply:CanTauntNowOrLater() then return end
+
+    -- Eh, only props really want this HUD.
+    if ply:Team() ~= TEAM_PROPS then return end
 
     -- Don't draw this HUD until the round starts and hunters are released
     local now = CurTime()
@@ -55,23 +55,30 @@ function tauntHud()
     local warnAtSecondsRemaining = 12 -- 40% there!
     local criticalAtSecondsRemaining = 6 -- 80% there!
 
-    -- Read/compute relevant auto-taunt state.  The visualization only
-    -- depends on the amount of time remaining, which is the most important
-    -- number for the player.
-    local nextInterestingDeadline
+    -- Read/compute relevant state.  The visualization depends on the amount of
+    -- time remaining and whether we are counting down to an auto-taunt or
+    -- to taunt eligibility.
+    local nextEventTimestamp
+    local label
+    local eventColor
     local deadlineOfNextAutoTaunt = ply:GetNextAutoTauntTime()
     if deadlineOfNextAutoTaunt ~= nil then
-        nextInterestingDeadline = math.max(deadlineOfNextAutoTaunt - now, 0)
+        label = "Auto-Taunt"
+        nextEventTimestamp = deadlineOfNextAutoTaunt
+        eventColor = brightRed
     else
-        nextInterestingDeadline = ply:GetNextTauntAvailableTime()
+        label = "Next Taunt"
+        nextEventTimestamp = ply:GetNextTauntAvailableTime()
+        eventColor = brightGreen
     end
-    local proportionRemaining = math.min(nextInterestingDeadline, startCountingAtSeconds) / startCountingAtSeconds
+    local timeUntilNextEvent = math.max(nextEventTimestamp - now, 0)
+    local proportionRemaining = math.min(timeUntilNextEvent, startCountingAtSeconds) / startCountingAtSeconds
 
     local x = ScrW() - paddingL
     local y = ScrH() - padding
 
     -- Set the text Position and Text
-    local timer = math.Round(timeUntilNextAutoTaunt, 0)
+    local timer = math.Round(timeUntilNextEvent, 0)
     local timertext = tostring(timer)
     if timer <= 0 then
         timertext = "!"
@@ -86,9 +93,9 @@ function tauntHud()
     -- This is the growing inner circle
     local timerRadius = (1 - proportionRemaining) * radius
     local color = nil
-    if (timeUntilNextAutoTaunt < criticalAtSecondsRemaining) then
-        color = brightRed
-    elseif (timeUntilNextAutoTaunt < warnAtSecondsRemaining) then
+    if (timeUntilNextEvent < criticalAtSecondsRemaining) then
+        color = eventColor
+    elseif (timeUntilNextEvent < warnAtSecondsRemaining) then
         color = brightYellow
     else
         color = brightBlue
@@ -96,7 +103,7 @@ function tauntHud()
     surface.SetDrawColor(color)
     draw.NoTexture()
     draw.Circle(x, y, timerRadius , radius)
-    draw.SimpleText("Auto-Taunt", "AutoTauntFont", x, y - radius, brightWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText(label, "TauntHUDFont", x, y - radius, brightWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 end
 
