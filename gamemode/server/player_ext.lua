@@ -81,7 +81,7 @@ function plymeta:FakeDeath(attacker)
         self:EndFakeDeath()
     end)
 
-    self:ObjSetPlaydeadDuraiton(-1)
+    self:ObjSetPlaydeadDuration(-1)
     self:ObjSetPlaydead(true)
 end
 
