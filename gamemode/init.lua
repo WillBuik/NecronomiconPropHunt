@@ -261,7 +261,7 @@ hook.Add("EntityTakeDamage", "forward dmg to new system", function(target, dmg)
     DamageHandler(target, dmg)
 end)
 
-hook.Add( "StartCommand", "StartCommandExample", function( ply, cmd )
+hook.Add( "StartCommand", "ZoolanderHook", function( ply, cmd )
     if !ply:IsZoolander() then return end
 
     cmd:SetMouseX(math.abs(cmd:GetMouseX()))

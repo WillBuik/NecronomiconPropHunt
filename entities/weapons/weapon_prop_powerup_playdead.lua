@@ -12,11 +12,11 @@ function SWEP:Ability()
 
     local ply = self:GetOwner()
 
-    ply:ObjGetPlaydeadDuration(self.AbilityDuration)
+    ply:ObjSetPlaydeadDuration(self.AbilityDuration)
     ply:PrintMessage(HUD_PRINTTALK, "The next time you take damage, you will play dead.")
 end
 
 function SWEP:AbilityCleanup()
-    self:GetOwner():ObjGetPlaydeadDuration(-1)
+    self:GetOwner():ObjSetPlaydeadDuration(-1)
     self:GetOwner():ObjSetPlaydead(false)
 end
