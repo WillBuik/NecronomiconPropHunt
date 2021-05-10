@@ -264,6 +264,7 @@ end)
 hook.Add( "StartCommand", "ZoolanderHook", function( ply, cmd )
     if !ply:IsZoolander() then return end
 
+    print(cmd:GetMouseX())
     cmd:SetMouseX(math.abs(cmd:GetMouseX()))
 end)
 
