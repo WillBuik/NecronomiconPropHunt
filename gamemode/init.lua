@@ -86,8 +86,10 @@ end
 
 -- [[ Taunts ]] --
 function SendTaunt(ply, taunt, pitch)
-    if (CurTime() < ply:GetNextTauntAvailableTime()) then return end
-    if (!ply:Alive()) then return end
+    -- Checks: the player has to be allowed to make a taunt right now, and the
+    -- server has to know about the taunt they want to play.
+    local now = CurTime()
+    if !IsValid(ply) or !ply:CanTauntAt(now) then return end
     if (ply:Team() == TEAM_PROPS and !table.HasValue(PROP_TAUNTS, taunt)) then return end
     if (ply:Team() == TEAM_HUNTERS and !table.HasValue(HUNTER_TAUNTS, taunt)) then return end
 
@@ -113,7 +115,7 @@ function SendTaunt(ply, taunt, pitch)
 
     local adjustedDuration = duration * (100 / pitch)
 
-    ply:SetLastTauntTime(CurTime())
+    ply:SetLastTauntTime(now)
     ply:SetLastTauntDuration(adjustedDuration)
 
     -- NOTE: +1 on the modifier to ensure that the previous taunt doesn't count
@@ -166,7 +168,7 @@ function GM:PlayerShouldTakeDamage(victim, attacker)
     return false
 end
 
-local function BroadcastPlayerDeath(ply)
+function BroadcastPlayerDeath(ply)
     net.Start("Player Death")
         -- the player who died, so sad, too bad.
         net.WriteUInt(ply:EntIndex(), 8)
@@ -456,7 +458,6 @@ end)
 hook.Add("PlayerDeath", "Remove ent prop on death", function(ply)
     BroadcastPlayerDeath(ply)
 
-    ply.nextTaunt = 0
     RemovePlayerProp(ply)
     if (ply:IsFrozen()) then
         ply:Freeze(false)

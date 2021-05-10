@@ -7,7 +7,8 @@ if AUTOTAUNT_ENABLED then
         for _,ply in pairs(props) do
             doHoldBreath(ply, now)
 
-            if now > ply:GetNextAutoTauntTime() then
+            local nextAutoTaunt = ply:GetNextAutoTauntTime()
+            if nextAutoTaunt ~= nil and now > nextAutoTaunt then
                 local taunt = table.Random(PROP_TAUNTS)
                 local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
                 local pitch = math.random() * pRange + TAUNT_MIN_PITCH

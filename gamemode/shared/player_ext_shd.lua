@@ -116,6 +116,31 @@ end
 --[[ Taunt-related state ]]
 --[[=====================]]
 
+-- CanTauntNowOrLater: Is this player ever allowed to taunt?  This method will
+-- return true for players who can't taunt right now, but could in the future.
+
+function plymeta:CanTauntNowOrLater()
+    local team = self:Team()
+    if team == TEAM_PROPS then
+        return true -- all props can taunt, even as ghosts
+    elseif team == TEAM_HUNTERS then
+        return self:Alive() -- hunters can taunt when they are alive
+    else
+        return false -- spectators can't ever taunt
+    end
+end
+
+-- CanTauntAt: Is this player allowed to taunt, and can they do it at the given
+-- timestamp?  (Quick design note: taking the timestamp as an argument rather
+-- than reading CurTime() inside this method is (1) more generic and (2)
+-- enables callers to avoid race conditions where the system clock changes
+-- between calling this method and using the result.)  Since we don't remember
+-- old taunts, this method is only meaningful for times >= GetLastTauntTime().
+
+function plymeta:CanTauntAt(time)
+    return self:CanTauntNowOrLater() and time >= self:GetNextTauntAvailableTime()
+end
+
 -- LastTauntTime: the timestamp of the last time this player issued a taunt.
 -- (NOTE 2020/1/10: the meaning of this variable is extremely unclear before
 -- the player's first taunt of the round.)
@@ -153,7 +178,23 @@ end
 -- this has at the start of a round.)
 
 function plymeta:GetNextTauntAvailableTime()
-    return self:GetLastTauntTime() + self:GetLastTauntDuration()
+    local time = self:GetLastTauntTime() + self:GetLastTauntDuration()
+    if self:Team() == TEAM_PROPS and !self:Alive() then
+        time = time + PROP_GHOST_TAUNT_WAIT
+    end
+    return time
+end
+
+-- IsTauntingRightNow: is the player currently playing a taunt?  (Quick design
+-- note: this method takes the current timestamp as an argument.  See
+-- CanTauntAt docs for justification.)  Since we don't remember old taunts and
+-- we can't predict when the player will taunt in the future, this method is
+-- only meaningful when the `now` argument is approximately CurTime().
+
+function plymeta:IsTauntingRightNow(now)
+    local lastTauntStart = self:GetLastTauntTime()
+    local lastTauntEnd = lastTauntStart + self:GetLastTauntDuration()
+    return lastTauntStart <= now and now <= lastTauntEnd
 end
 
 -- NextAutoTauntDelay: the duration from the last taunt to the next auto-taunt.
@@ -166,9 +207,16 @@ function plymeta:SetNextAutoTauntDelay(delay)
     self:SetNWFloat("NextAutoTauntDelay", delay)
 end
 
--- NextAutoTauntTime: the timestamp of the next auto-taunt.  This is always
--- equal to LastTauntTime + NextAutoTauntDelay.
+-- NextAutoTauntTime: the timestamp of the next auto-taunt.  Returns one of:
+--   - nil (if this player is not obligated to taunt in the future)
+--   - LastTauntTime + NextAutoTauntDelay
+--
+-- The output of this method is only meaningful if CanTauntNowOrLater is true.
 
 function plymeta:GetNextAutoTauntTime()
-    return self:GetLastTauntTime() + self:GetNextAutoTauntDelay()
+    if AUTOTAUNT_ENABLED and self:Team() == TEAM_PROPS and self:Alive() then
+        return self:GetLastTauntTime() + self:GetNextAutoTauntDelay()
+    else
+        return nil
+    end
 end

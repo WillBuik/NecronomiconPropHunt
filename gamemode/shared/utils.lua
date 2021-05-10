@@ -12,8 +12,9 @@ end
 function GetClosestTaunter(ply)
     local props = GetLivingPlayers(TEAM_PROPS)
     local closestPlyTaunting = nil
+    local now = CurTime()
     for _, prop in pairs(props) do
-        if (prop:GetNextTauntAvailableTime() > CurTime()) then
+        if (prop:IsTauntingRightNow(now)) then
             if (closestPlyTaunting == nil or
                 ply:GetPos():DistToSqr(prop:GetPos()) < ply:GetPos():DistToSqr(closestPlyTaunting:GetPos())) then
                 closestPlyTaunting = prop
