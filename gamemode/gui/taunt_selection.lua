@@ -130,7 +130,7 @@ hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
 end)
 
 hook.Add("OnSpawnMenuClose", "Close the context menu", function()
-    if (tauntPanel and !tauntPanel:IsVisible()) then return end
+    if (!tauntPanel) then return end
     tauntPanel:SetKeyboardInputEnabled(true)
     tauntPanel:SetVisible(false)
 end)
