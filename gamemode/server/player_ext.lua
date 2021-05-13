@@ -67,7 +67,7 @@ end
 function plymeta:FakeDeath(attacker)
     self:PropDeath(attacker, true)
 
-    ply:SetRenderMode(RENDERMODE_NONE)
+    self:SetRenderMode(RENDERMODE_NONE)
     self:GetProp():SetRenderMode(RENDERMODE_NONE)
     self:GetProp():DrawShadow(false)
     self:Freeze(true)
