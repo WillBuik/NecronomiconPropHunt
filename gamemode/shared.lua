@@ -127,7 +127,7 @@ hook.Add("ShouldCollide", "Initial Nocollide For Props", initNoCollide)
 hook.Add( "StartCommand", "ZoolanderHook", function( ply, cmd )
     if !ply:IsZoolander() then return end
 
-    cmd:GetViewAngles(angle)
+    local angle = cmd:GetViewAngles(angle)
     angle.yaw = math.abs(angle.yaw)
 	cmd:SetViewAngles(angle)
 end)
