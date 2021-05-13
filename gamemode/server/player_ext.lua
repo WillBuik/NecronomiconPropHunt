@@ -46,8 +46,7 @@ end
 function plymeta:PropDeath(attacker, fake)
     local ply = self
     ply:CreateRagdoll()
-    local ragdoll = ply:GetRagdollEntity()
-    ragdoll:SetRenderMode(RENDERMODE_NORMAL)
+    ply:SetRenderMode(RENDERMODE_NORMAL)
     BroadcastPlayerDeath(ply)
     AnnouncePlayerDeath(ply, attacker)
     -- an homage to a fun bug
@@ -58,7 +57,6 @@ function plymeta:PropDeath(attacker, fake)
 
     if (fake) then return end
 
-    ply:SetRenderMode(RENDERMODE_NORMAL)
     RemovePlayerProp(ply)
     ply:KillSilent()
     attacker:AddFrags(1)
@@ -93,6 +91,7 @@ function plymeta:EndFakeDeath()
         self:GetProp():SetRenderMode(RENDERMODE_NORMAL)
         self:GetProp():DrawShadow(true)
     end
+    self:SetRenderMode(RENDERMODE_NONE)
     self:Freeze(false)
     self:SetCollisionGroup(COLLISION_GROUP_NONE)
     self:ObjSetPlaydead(false)
