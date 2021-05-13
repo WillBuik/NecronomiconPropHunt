@@ -124,6 +124,13 @@ function initNoCollide(ent1, ent2)
 end
 hook.Add("ShouldCollide", "Initial Nocollide For Props", initNoCollide)
 
+hook.Add( "StartCommand", "ZoolanderHook", function( ply, cmd )
+    if !ply:IsZoolander() then return end
+
+    print(cmd:GetMouseX())
+    cmd:SetMouseX(math.abs(cmd:GetMouseX()))
+end)
+
 -- Seed the random number generator.
 local function seedRNG()
     -- Implementation notes:
