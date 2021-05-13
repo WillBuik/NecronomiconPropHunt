@@ -29,6 +29,7 @@ if CLIENT then
 
         print(x)
         cmd:SetMouseX(math.abs(x))
+        cmd:SetMouseY(y)
         return true
     end )
 end

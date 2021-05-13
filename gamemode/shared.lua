@@ -127,8 +127,6 @@ hook.Add("ShouldCollide", "Initial Nocollide For Props", initNoCollide)
 hook.Add( "StartCommand", "ZoolanderHook", function( ply, cmd )
     if !ply:IsZoolander() then return end
 
-    cmd:SetMouseX(math.abs(cmd:GetMouseX()))
-    cmd:SetMouseY(math.abs(cmd:GetMouseY()))
 end)
 
 -- Seed the random number generator.
