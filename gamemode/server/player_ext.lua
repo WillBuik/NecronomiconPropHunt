@@ -71,7 +71,7 @@ function plymeta:FakeDeath(attacker)
     self:GetProp():DrawShadow(false)
     self:Freeze(true)
 
-    local playDeadDuration = self:ObjGetPlaydeadDuraiton()
+    local playDeadDuration = self:ObjGetPlaydeadDuration()
 
     -- pause auto-taunting while fake-dead to avoid a dead giveaway (pun intended)
     self:SetNextAutoTauntDelay(self:GetNextAutoTauntDelay() + playDeadDuration)
