@@ -46,6 +46,8 @@ end
 function plymeta:PropDeath(attacker, fake)
     local ply = self
     ply:CreateRagdoll()
+    local ragdoll = ply:GetRagdollEntity()
+    ragdoll:SetRenderMode(RENDERMODE_NORMAL)
     BroadcastPlayerDeath(ply)
     AnnouncePlayerDeath(ply, attacker)
     -- an homage to a fun bug
