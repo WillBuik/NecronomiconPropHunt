@@ -45,8 +45,17 @@ end
 
 function plymeta:PropDeath(attacker, fake)
     local ply = self
-    ply:SetRenderMode(RENDERMODE_NORMAL)
-    ply:CreateRagdoll()
+    local ragdoll = ents.Create("prop_ragdoll")
+    ragdoll:SetAngles(self:GetAngles())
+    ragdoll:SetModel(self:GetModel())
+    ragdoll:SetPos(self:GetPos())
+    ragdoll:SetSkin(self:GetSkin())
+    ragdoll:SetColor(self:GetColor())
+    ragdoll:SetOwner(self)
+    ragdoll:Spawn()
+    ragdoll:Activate()
+    self:SetParent(ragdoll)
+    self.objRagdoll = ragdoll
     BroadcastPlayerDeath(ply)
     AnnouncePlayerDeath(ply, attacker)
     -- an homage to a fun bug
@@ -57,6 +66,7 @@ function plymeta:PropDeath(attacker, fake)
 
     if (fake) then return end
 
+    ply:SetRenderMode(RENDERMODE_NORMAL)
     RemovePlayerProp(ply)
     ply:KillSilent()
     attacker:AddFrags(1)
@@ -67,7 +77,6 @@ end
 function plymeta:FakeDeath(attacker)
     self:PropDeath(attacker, true)
 
-    self:SetRenderMode(RENDERMODE_NONE)
     self:GetProp():SetRenderMode(RENDERMODE_NONE)
     self:GetProp():DrawShadow(false)
     self:Freeze(true)
@@ -92,7 +101,9 @@ function plymeta:EndFakeDeath()
         self:GetProp():SetRenderMode(RENDERMODE_NORMAL)
         self:GetProp():DrawShadow(true)
     end
-    self:SetRenderMode(RENDERMODE_NONE)
+    local ragdoll = self.objRagdoll
+    self.objRagdoll = nil
+    ragdoll:Remove()
     self:Freeze(false)
     self:SetCollisionGroup(COLLISION_GROUP_NONE)
     self:ObjSetPlaydead(false)
