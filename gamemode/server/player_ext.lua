@@ -80,7 +80,7 @@ function plymeta:FakeDeath(attacker)
     self:GetProp():SetRenderMode(RENDERMODE_NONE)
     self:GetProp():DrawShadow(false)
     self:Freeze(true)
-    self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+    self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 
     local playDeadDuration = self:ObjGetPlaydeadDuration()
 

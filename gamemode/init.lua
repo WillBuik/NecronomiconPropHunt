@@ -521,12 +521,13 @@ function GM:PlayerButtonUp(ply, button)
     end
 end
 
-hook.Add( "Move", "ZoolanderHook", function(ply, mv)
+hook.Add("Move", "ZoolanderHook", function(ply, mv)
     if !ply:IsZoolander() then return end
 
     local angle = mv:GetMoveAngles()
     angle.yaw = math.abs(angle.yaw)
 	mv:SetMoveAngles(angle)
+    return true
 end)
 
 -- Q-menu (Taunt Selection) Anti Abuse --
