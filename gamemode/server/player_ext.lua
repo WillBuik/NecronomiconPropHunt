@@ -93,6 +93,7 @@ function plymeta:FakeDeath(attacker)
     self:GetProp():SetRenderMode(RENDERMODE_NONE)
     self:GetProp():DrawShadow(false)
     self:Freeze(true)
+    self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 
     local playDeadDuration = self:ObjGetPlaydeadDuration()
 
@@ -114,8 +115,11 @@ function plymeta:EndFakeDeath()
         self:GetProp():DrawShadow(true)
     end
     local ragdoll = self.objRagdoll
+    self:SetPos(ragdoll:GetPos())
+    ResetPropToProp(self)
     self.objRagdoll = nil
     ragdoll:Remove()
     self:Freeze(false)
+    self:SetCollisionGroup(COLLISION_GROUP_NONE)
     self:ObjSetPlaydead(false)
 end
