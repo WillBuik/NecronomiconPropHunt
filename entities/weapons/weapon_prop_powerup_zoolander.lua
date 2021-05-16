@@ -22,3 +22,12 @@ function SWEP:Ability()
         timer.Simple(self.AbilityDuration, function() ply:SetZoolander(false) end)
     end
 end
+
+if CLIENT then
+    hook.Add( "InputMouseApply", "ZoolanderHook", function(cmd)
+        if !LocalPlayer():IsZoolander() then return end
+
+        cmd:SetMouseX(math.max(cmd:GetMouseX(), 0))
+        return true
+    end )
+end

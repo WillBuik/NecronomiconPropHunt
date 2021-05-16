@@ -44,7 +44,6 @@ end
 
 
 function plymeta:PropDeath(attacker, fake)
-    local ply = self
     local ragdoll = ents.Create("prop_ragdoll")
     ragdoll:SetAngles(self:GetAngles())
     ragdoll:SetModel(self:GetModel())
@@ -54,24 +53,38 @@ function plymeta:PropDeath(attacker, fake)
     ragdoll:SetOwner(self)
     ragdoll:Spawn()
     ragdoll:Activate()
+
+    -- Set velocity for each piece of the ragdoll
+    local velocity = self:GetVelocity()
+    local j = 1
+    while true do -- Break inside
+        local phys_obj = ragdoll:GetPhysicsObjectNum(j)
+        if phys_obj then
+            phys_obj:SetVelocity(velocity * math.Clamp(phys_obj:GetMass() / 10, 0, 2))
+            j = j + 1
+        else
+            break
+        end
+    end
+
     self:SetParent(ragdoll)
     self.objRagdoll = ragdoll
-    BroadcastPlayerDeath(ply)
-    AnnouncePlayerDeath(ply, attacker)
+    BroadcastPlayerDeath(self)
+    AnnouncePlayerDeath(self, attacker)
     -- an homage to a fun bug
     if (math.random() > 0.98) then
-        AnnouncePlayerDeath(ply, attacker)
-        AnnouncePlayerDeath(ply, attacker)
+        AnnouncePlayerDeath(self, attacker)
+        AnnouncePlayerDeath(self, attacker)
     end
 
     if (fake) then return end
 
-    ply:SetRenderMode(RENDERMODE_NORMAL)
-    RemovePlayerProp(ply)
-    ply:KillSilent()
+    self:SetRenderMode(RENDERMODE_NORMAL)
+    RemovePlayerProp(self)
+    self:KillSilent()
     attacker:AddFrags(1)
-    ply:AddDeaths(1)
-    ply:SetTimeOfDeath(CurTime())
+    self:AddDeaths(1)
+    self:SetTimeOfDeath(CurTime())
 end
 
 function plymeta:FakeDeath(attacker)
@@ -80,7 +93,7 @@ function plymeta:FakeDeath(attacker)
     self:GetProp():SetRenderMode(RENDERMODE_NONE)
     self:GetProp():DrawShadow(false)
     self:Freeze(true)
-    self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+    self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 
     local playDeadDuration = self:ObjGetPlaydeadDuration()
 
@@ -105,6 +118,6 @@ function plymeta:EndFakeDeath()
     self.objRagdoll = nil
     ragdoll:Remove()
     self:Freeze(false)
-    self:SetCollisionGroup(COLLISION_GROUP_NONE)
+    self:SetCollisionGroup(COLLISION_GROUP_PLAYER)
     self:ObjSetPlaydead(false)
 end
