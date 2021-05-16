@@ -6,7 +6,7 @@ SWEP.PrintName = "Zoolander"
 
 SWEP.AbilityRange = 400
 SWEP.AbilityShowTargetHalos = true
-SWEP.AbilityDuration = 8
+SWEP.AbilityDuration = 11
 SWEP.AbilityDescription = "Make all hunters within a range of $AbilityRange unable to turn left for $AbilityDuration seconds"
 
 function SWEP:Ability()
