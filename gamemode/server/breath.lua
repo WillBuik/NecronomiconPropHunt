@@ -39,7 +39,13 @@ if AUTOTAUNT_ENABLED then
     end)
 
     hook.Add("PlayerButtonDown", "start_holding_breath", function(ply, button)
-        if SERVER and button == BREATH_BUTTON and ply:Alive() and ply:Team() == TEAM_PROPS then
+        if
+            SERVER and
+            button == BREATH_BUTTON and
+            ply:Alive() and
+            ply:Team() == TEAM_PROPS and
+            ply:Health() > BREATH_INIT_HEALTH_PENALTY + BREATH_PERIODIC_HEALTH_PENALTY
+        then
             local now = CurTime()
             ply.BreathHoldOffsetTime = now
             ply.LastSuffocationTime = now
