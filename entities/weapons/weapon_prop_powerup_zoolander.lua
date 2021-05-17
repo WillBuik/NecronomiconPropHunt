@@ -33,4 +33,19 @@ if CLIENT then
         cmd:SetViewAngles(angle)
         return true
     end )
+
+    local function PaintZoolanderOverlay()
+        if !LocalPlayer():IsZoolander() then return end
+
+        surface.SetDrawColor( 255, 255, 255, 255 )
+        surface.SetMaterial(ZoolanderMaterial)
+        surface.DrawTexturedRect(0, (ScrH() - 384) / 2, 384, 512)
+    end
+
+    hook.Add("DrawOverlay", "Zoolander Overlay", PaintZoolanderOverlay)
+    ZoolanderMaterial = Material("zoolander.png")
+end
+
+if SERVER then
+    resource.AddFile("materials/zoolander.png")
 end
