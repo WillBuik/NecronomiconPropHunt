@@ -44,6 +44,7 @@ end
 
 
 function plymeta:PropDeath(attacker, fake)
+    local ply = self
     local ragdoll = ents.Create("prop_ragdoll")
     ragdoll:SetAngles(self:GetAngles())
     ragdoll:SetModel(self:GetModel())
@@ -69,18 +70,18 @@ function plymeta:PropDeath(attacker, fake)
 
     self:SetParent(ragdoll)
     self.objRagdoll = ragdoll
-    BroadcastPlayerDeath(self)
-    AnnouncePlayerDeath(self, attacker)
+    BroadcastPlayerDeath(ply)
+    AnnouncePlayerDeath(ply, attacker)
     -- an homage to a fun bug
     if (math.random() > 0.98) then
-        AnnouncePlayerDeath(self, attacker)
-        AnnouncePlayerDeath(self, attacker)
+        AnnouncePlayerDeath(ply, attacker)
+        AnnouncePlayerDeath(ply, attacker)
     end
 
     if (fake) then return end
 
     self:SetRenderMode(RENDERMODE_NORMAL)
-    RemovePlayerProp(self)
+    RemovePlayerProp(ply)
     self:KillSilent()
     attacker:AddFrags(1)
     self:AddDeaths(1)
@@ -110,13 +111,14 @@ function plymeta:FakeDeath(attacker)
 end
 
 function plymeta:EndFakeDeath()
+    local ply = self
     if (IsValid(self:GetProp())) then
         self:GetProp():SetRenderMode(RENDERMODE_NORMAL)
         self:GetProp():DrawShadow(true)
     end
     local ragdoll = self.objRagdoll
     self:SetPos(ragdoll:GetPos())
-    ResetPropToProp(self)
+    ResetPropToProp(ply)
     self.objRagdoll = nil
     ragdoll:Remove()
     self:Freeze(false)
