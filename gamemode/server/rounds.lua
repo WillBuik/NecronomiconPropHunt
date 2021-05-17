@@ -51,10 +51,22 @@ local function RespawnTeams()
     local hunters = team.GetPlayers(TEAM_HUNTERS)
     local props = team.GetPlayers(TEAM_PROPS)
 
-    for _, v in pairs(hunters) do
+    local taunt_seeker = math.random(#hunters)
+    local taunt_grenade = math.random(#hunters)
+    while (#hunters > 1 and taunt_seeker == taunt_grenade) then
+        taunt_grenade = math.random(#hunters)
+    end
+    for i, v in pairs(hunters) do
         if (IsValid(v)) then
             v:KillSilent()
             v:Spawn()
+            if (i == taunt_seeker) then
+                v:Give("weapon_hunter_special_tauntseeker")
+                v:Strip("weapon_hunter_special_tauntgranade")
+            elseif (i == taunt_grenade) then
+                v:Give("weapon_hunter_special_tauntgranade")
+                v:Strip("weapon_hunter_special_tauntseeker")
+            end
         end
     end
 

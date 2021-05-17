@@ -39,14 +39,13 @@ function PLAYER:Loadout()
         self.Player:Give("weapon_hunter_gun_shotgun")
     end
 
+    self.Player:GiveAmmo(1, "AR2AltFire")
     if (math.random() > 0.5) then
-        self.Player:GiveAmmo(1, "AR2AltFire")
         self.Player:Give("weapon_hunter_special_tauntgranade")
     else
-        self.Player:GiveAmmo(1, "AR2AltFire")
         self.Player:Give("weapon_hunter_special_tauntseeker")
     end
-    
+
     self.Player:Give("weapon_hunter_special_selfdestruct")
 
 
