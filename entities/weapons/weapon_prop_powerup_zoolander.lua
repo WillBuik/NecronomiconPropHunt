@@ -29,4 +29,9 @@ if CLIENT then
 
         cmd:SetMouseX(math.max(cmd:GetMouseX(), 0))
     end )
+    hook.Add( "CreateMove", "ZoolanderHook2", function(cmd)
+        if !LocalPlayer():IsZoolander() then return end
+
+        cmd:SetMouseX(math.max(cmd:GetMouseX(), 0))
+    end )
 end
