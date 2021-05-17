@@ -28,6 +28,5 @@ if CLIENT then
         if !LocalPlayer():IsZoolander() then return end
 
         cmd:SetMouseX(math.max(cmd:GetMouseX(), 0))
-        return true
     end )
 end
