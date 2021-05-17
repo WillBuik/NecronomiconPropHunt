@@ -24,14 +24,13 @@ function SWEP:Ability()
 end
 
 if CLIENT then
-    hook.Add( "InputMouseApply", "ZoolanderHook", function(cmd)
+    hook.Add( "InputMouseApply", "ZoolanderHook", function( cmd, x, y, angle)
         if !LocalPlayer():IsZoolander() then return end
 
-        cmd:SetMouseX(math.max(cmd:GetMouseX(), 0))
-    end )
-    hook.Add( "CreateMove", "ZoolanderHook2", function(cmd)
-        if !LocalPlayer():IsZoolander() then return end
-
-        cmd:SetMouseX(math.max(cmd:GetMouseX(), 0))
+        angle.pitch = math.Clamp( angle.pitch + y * 0.022, -89, 89 )
+        angle.yaw =  angle.yaw + math.max(x, 0) * 0.022
+        angle:Normalize()
+        cmd:SetViewAngles(angle)
+        return true
     end )
 end
