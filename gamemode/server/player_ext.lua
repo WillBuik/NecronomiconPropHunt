@@ -116,12 +116,13 @@ function plymeta:EndFakeDeath()
         self:GetProp():SetRenderMode(RENDERMODE_NORMAL)
         self:GetProp():DrawShadow(true)
     end
+    self:Freeze(false)
+    self:SetCollisionGroup(COLLISION_GROUP_NONE)
+    self:ObjSetPlaydead(false)
+
     local ragdoll = self.objRagdoll
     self:SetPos(ragdoll:GetPos())
     ResetPropToProp(ply)
     self.objRagdoll = nil
     ragdoll:Remove()
-    self:Freeze(false)
-    self:SetCollisionGroup(COLLISION_GROUP_NONE)
-    self:ObjSetPlaydead(false)
 end
