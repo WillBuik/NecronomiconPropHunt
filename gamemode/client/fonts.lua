@@ -7,7 +7,7 @@ surface.CreateFont("ph_font_medium", {
 })
 
 surface.CreateFont("ph_font_huge", {
-    font = "Inter",
+    font = "Tahoma",
     size = 144,
     weight = 800,
     antialias = true,
@@ -15,7 +15,7 @@ surface.CreateFont("ph_font_huge", {
 })
 
 surface.CreateFont("ph_font_larger", {
-    font = "Inter",
+    font = "Tahoma",
     size = 96,
     weight = 400,
     antialias = true,
@@ -23,7 +23,7 @@ surface.CreateFont("ph_font_larger", {
 })
 
 surface.CreateFont("ph_font_large", {
-    font = "Inter",
+    font = "Tahoma",
     size = 48,
     weight = 400,
     antialias = true,
@@ -31,7 +31,7 @@ surface.CreateFont("ph_font_large", {
 })
 
 surface.CreateFont("ph_font_normal", {
-    font = "Inter",
+    font = "Tahoma",
     size = 24,
     weight = 400,
     antialias = true,
@@ -39,7 +39,7 @@ surface.CreateFont("ph_font_normal", {
 })
 
 surface.CreateFont("ph_font_small", {
-    font = "Inter",
+    font = "Tahoma",
     size = 17,
     weight = 400,
     antialias = true,
@@ -47,7 +47,7 @@ surface.CreateFont("ph_font_small", {
 })
 
 surface.CreateFont("ph_font_small_bold", {
-    font = "Inter",
+    font = "Tahoma",
     size = 17,
     weight = 800,
     antialias = true,
@@ -55,7 +55,7 @@ surface.CreateFont("ph_font_small_bold", {
 })
 
 surface.CreateFont("ph_font_smaller", {
-    font = "Inter",
+    font = "Tahoma",
     size = 13,
     weight = 400,
     antialias = true,
