@@ -110,13 +110,23 @@ end)
 hook.Add("KeyPress", "New Player Use", function(ply, key)
     if (ply:Team() != TEAM_PROPS) then return end
     if (key == IN_USE) then
-        if (CurTime() < ply:GetPropLastChange() + PROP_CHOOSE_COOLDOWN) then return end
-        local prop = getViewEnt(ply)
-        local sColor = stencilColor(LocalPlayer(), prop)
-        if (sColor == GOOD_HOVER_COLOR) then
-            net.Start("Selected Prop")
-                net.WriteEntity(prop)
-            net.SendToServer()
+        if (ply:Alive()) then
+            if (CurTime() < ply:GetPropLastChange() + PROP_CHOOSE_COOLDOWN) then return end
+            local prop = getViewEnt(ply)
+            local sColor = stencilColor(LocalPlayer(), prop)
+            if (sColor == GOOD_HOVER_COLOR) then
+                net.Start("Selected Prop")
+                    net.WriteEntity(prop)
+                net.SendToServer()
+            end
+        else
+            if (CurTime() < ply:GetTimeOfNextDoorOpen()) then return end
+            local ent = getViewEnt(ply)
+            if (!table.HasValue(DOORS, ent:GetClass())) then return end
+                net.Start("Ghost Door")
+                    net.WriteEntity(ent)
+                net.SendToServer()
+
         end
     end
 end)

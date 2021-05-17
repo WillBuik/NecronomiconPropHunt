@@ -208,6 +208,10 @@ QMENU_CONSEQUENCE_ODDS = 200    -- Using the Q-menu will kill the player 1 in N 
 -- taunt and the start of their next one.
 PROP_GHOST_TAUNT_WAIT = 30
 
+-- Prop ghosts have to wait this many seconds between the end of their last
+-- door open/close to do it again
+PROP_GHOST_DOOR_WAIT = 5
+
 -- Create taunt tables only if a pack hasn't already created them.
 if (PROP_TAUNTS == nil) then
     PROP_TAUNTS = { }

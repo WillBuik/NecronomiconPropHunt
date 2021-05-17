@@ -21,6 +21,7 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("BSOD Open")
     util.AddNetworkString("Reset To Spawn")
     util.AddNetworkString("Unstick Prop")
+    util.AddNetworkString("Ghost Door")
 end)
 
 net.Receive("Class Selection", function(len, ply)
@@ -72,10 +73,10 @@ net.Receive("Hunter Hint Updown", function(len, ply)
     if (closestPropTaunting != nil) then
         hightDiff = closestPropTaunting:GetPos().z - ply:GetPos().z
         if (hightDiff > 0) then
-            ply:ViewPunch( Angle( -15, 0, 0 ) ) 
+            ply:ViewPunch( Angle( -15, 0, 0 ) )
         elseif (hightDiff < 0) then
-            ply:ViewPunch( Angle( 15, 0, 0 ) ) 
-        end 
+            ply:ViewPunch( Angle( 15, 0, 0 ) )
+        end
     end
 end)
 
@@ -99,4 +100,11 @@ end)
 net.Receive("Reset To Spawn", function(len, ply)
     ply:SetPos(table.Random(team.GetSpawnPoints(ply:Team())):GetPos())
     UnstickPlayer(ply, 10)
+end)
+
+--[[ When a ghost prop presses +use on a prop ]]--
+net.Receive("Ghost Door", function(len, ply)
+    local door = net.ReadEntity()
+
+    door:Use(ply)
 end)

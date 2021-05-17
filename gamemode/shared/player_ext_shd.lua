@@ -112,6 +112,14 @@ function plymeta:GetTimeOfDeath()
     return self:GetNWFloat("TimeOfDeath", 0)
 end
 
+function plymeta:SetTimeOfNextDoorOpen(time)
+    self:SetNWFloat("TimeOfNextDoorOpen", time)
+end
+
+function plymeta:GetTimeOfNextDoorOpen()
+    return self:GetNWFloat("TimeOfNextDoorOpen", 0)
+end
+
 --[[=====================]]
 --[[ Taunt-related state ]]
 --[[=====================]]

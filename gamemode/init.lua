@@ -263,10 +263,14 @@ end)
 
 --[[ Door Exploit fix ]]--
 function GM:PlayerUse(ply, ent)
-    if (table.HasValue(DOORS, ent:GetClass()) and ply.nextDoorTrigger and CurTime() < ply.nextDoorTrigger) then
+    if (table.HasValue(DOORS, ent:GetClass()) and CurTime() < ply:GetTimeOfNextDoorOpen()) then
         return false
     else
-        ply.nextDoorTrigger = CurTime() + (0.5 + math.random())
+        local nextOpenDelay = 0.5 + math.random()
+        if (!ply:Alive()) then
+            nextOpenDelay = PROP_GHOST_DOOR_WAIT
+        end
+        ply:SetTimeOfNextDoorOpen(CurTime() + nextOpenDelay)
         return true
     end
 end
