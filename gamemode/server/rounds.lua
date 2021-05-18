@@ -53,7 +53,7 @@ local function RespawnTeams()
 
     local taunt_seeker = math.random(#hunters)
     local taunt_grenade = math.random(#hunters)
-    while (#hunters > 1 and taunt_seeker == taunt_grenade) then
+    while (#hunters > 1 and taunt_seeker == taunt_grenade) do
         taunt_grenade = math.random(#hunters)
     end
     for i, v in pairs(hunters) do
