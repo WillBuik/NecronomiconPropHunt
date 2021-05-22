@@ -266,11 +266,7 @@ function GM:PlayerUse(ply, ent)
     if (table.HasValue(DOORS, ent:GetClass()) and CurTime() < ply:GetTimeOfNextDoorOpen()) then
         return false
     else
-        local nextOpenDelay = 0.5 + math.random()
-        if (!ply:Alive()) then
-            nextOpenDelay = PROP_GHOST_DOOR_WAIT
-        end
-        ply:SetTimeOfNextDoorOpen(CurTime() + nextOpenDelay)
+        ply:SetTimeOfNextDoorOpen(CurTime() +  0.5 + math.random())
         return true
     end
 end

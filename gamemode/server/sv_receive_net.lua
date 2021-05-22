@@ -106,5 +106,7 @@ end)
 net.Receive("Ghost Door", function(len, ply)
     local door = net.ReadEntity()
 
+    ply:SetTimeOfNextDoorOpen(CurTime() + PROP_GHOST_DOOR_WAIT)
+    door:Fire("Toggle")
     door:Use(ply)
 end)
