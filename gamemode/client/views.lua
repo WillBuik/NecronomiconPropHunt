@@ -132,12 +132,11 @@ hook.Add("KeyPress", "New Player Use", function(ply, key)
         else
             if (CurTime() < ply:GetTimeOfNextDoorOpen()) then return end
             local ent = getViewEntDead(ply)
-            print(ent)
-            if (IsValid(ent) and table.HasValue(DOORS, ent:GetClass())) then return end
+            if (IsValid(ent) and table.HasValue(DOORS, ent:GetClass())) then
                 net.Start("Ghost Door")
                     net.WriteEntity(ent)
                 net.SendToServer()
-
+            end
         end
     end
 end)
