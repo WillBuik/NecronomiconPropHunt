@@ -12,7 +12,7 @@ hook.Add("CalcView", "ObjHunt CalcView", function(ply, pos, angles, fov)
     view.drawviewer = ply.wantThirdPerson
 
     -- blinding the player
-    if (ply:Team() == TEAM_HUNTERS) and (round.state == 2) and ((CurTime() - round.startTime) < OBJHUNT_HIDE_TIME) then
+    if (ply:Team() == TEAM_HUNTERS) and (round.state == ROUND_IN) and (!round.huntersReleased) then
         view.origin = Vector(0, 0, 34343)
         return view
 
