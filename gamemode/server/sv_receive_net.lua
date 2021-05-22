@@ -104,9 +104,10 @@ end)
 
 --[[ When a ghost prop presses +use on a prop ]]--
 net.Receive("Ghost Door", function(len, ply)
+    if (CurTime() < ply:GetTimeOfNextDoorOpen()) then return end
     local door = net.ReadEntity()
+    if (!IsValid(door) or !table.HasValue(DOORS, door:GetClass())) then return end
 
     ply:SetTimeOfNextDoorOpen(CurTime() + PROP_GHOST_DOOR_WAIT)
     door:Fire("Toggle")
-    door:Use(ply)
 end)
