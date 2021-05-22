@@ -41,11 +41,8 @@ function tauntHUD()
     if ply:Team() != TEAM_PROPS then return end
 
     -- Don't draw this HUD until the round starts and hunters are released
-    local now = CurTime()
     if (round.state != ROUND_IN) then return end
-    if (!round.startTime) then return end
-    local timeToHunterRelease = round.startTime + round.timePad + OBJHUNT_HIDE_TIME - now
-    if (timeToHunterRelease > 0) then return end
+    if (!round.huntersReleased) then return end
 
     -- Constants for HUD drawing
     local radius = 50
@@ -58,6 +55,7 @@ function tauntHUD()
     -- Read/compute relevant state.  The visualization depends on the amount of
     -- time remaining and whether we are counting down to an auto-taunt or
     -- to taunt eligibility.
+    local now = CurTime()
     local nextEventTimestamp
     local label
     local eventColor
