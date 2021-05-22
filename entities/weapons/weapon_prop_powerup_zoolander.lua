@@ -24,6 +24,34 @@ function SWEP:Ability()
 end
 
 if CLIENT then
+
+    -- Altering how "looking around" works was quite difficult to figure out.
+    -- Hooks like GM:StartCommand don't seem able to affect mouse movement and
+    -- player view angle.
+    --
+    -- Here's our best guess about how looking around works in GMod:
+    --
+    --  1. Player moves mouse
+    --  2. InputMouseApply hook called
+    --     - If hook returns false --> default implementation adjusts view
+    --       angle by pitch += y*0.022, yaw -= x*0.022.  See
+    --       https://github.com/ValveSoftware/source-sdk-2013/blob/0d8dceea4310fde5706b3ce1c70609d72a38efdf/mp/src/game/client/in_mouse.cpp#L484
+    --     - If hook returns true --> engine does nothing (hook is entirely
+    --       responsible for angle adjustment).  Thus, we have to re-implement
+    --       the default behavior and tweak it to suit our needs.  We would
+    --       much prefer a hook that runs AFTER the default implementation and
+    --       lets us modify what the default implementation did---but we don't
+    --       have such a hook.
+    --  3. View angles updated client-side
+    --     - This happens before CreateMove/StartCommand/etc.  Makes sense I
+    --       guess (no need to pester the server with frequent mouse move
+    --       events), but GMod docs don't say anything about it. :(
+    --  4. CreateMove hook called
+    --  5. StartCommand hook called (possibly many times)
+    --  6. SetupMove hook called (possibly many times)
+    --  7. Move hook called
+    --  8. FinishMove hook called
+
     hook.Add("InputMouseApply", "ZoolanderHook", function( cmd, x, y, angle)
         if !LocalPlayer():IsZoolander() then return end
 
