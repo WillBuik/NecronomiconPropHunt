@@ -252,6 +252,12 @@ local function DamageHandler(target, dmgInfo)
                 else
                     HurtProp(ply, dmg, attacker)
                 end
+            elseif (target:IsPlayer() and target:Team() == TEAM_HUNTERS and IsHunterFriendlyFireEnabled()) then
+                target:SetHealth(target:Health() - dmg)
+                if (target:Health() < 1) then
+                    target:KillSilent()
+                    AnnouncePlayerDeath(target, attacker)
+                end
             end
         end
     end
