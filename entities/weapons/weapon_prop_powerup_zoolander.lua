@@ -24,7 +24,7 @@ function SWEP:Ability()
 end
 
 if CLIENT then
-    hook.Add( "InputMouseApply", "ZoolanderHook", function( cmd, x, y, angle)
+    hook.Add("InputMouseApply", "ZoolanderHook", function( cmd, x, y, angle)
         if !LocalPlayer():IsZoolander() then return end
 
         angle.pitch = math.Clamp( angle.pitch + y * 0.022, -89, 89 )
@@ -35,13 +35,14 @@ if CLIENT then
     end )
 
     local function PaintZoolanderOverlay()
+        if SERVER or !LocalPlayer():IsZoolander() then return end
 
         surface.SetDrawColor( 255, 255, 255, 255 )
         surface.SetMaterial(ZoolanderMaterial)
         surface.DrawTexturedRect(0, (ScrH() - 384) / 2, 384, 512)
     end
 
-    hook.Add("DrawOverlay", "Zoolander Overlay", PaintZoolanderOverlay)
+    hook.Add("HUDPaint", "Zoolander Overlay", PaintZoolanderOverlay)
     ZoolanderMaterial = Material("zoolander.png")
 end
 
