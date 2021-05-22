@@ -39,7 +39,7 @@ net.Receive("Round Update", function()
     round.endTime   = net.ReadInt(32)
     -- pad the local clock so that the time is accurate
     round.timePad   = net.ReadInt(32) - CurTime()
-
+    round.huntersReleased = net.ReadBit() != 0
 end)
 
 net.Receive("Death Notice", function()

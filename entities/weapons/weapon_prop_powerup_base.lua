@@ -111,16 +111,9 @@ end
 
 function SWEP:SecondaryAttack()
     if self:GetIsAbilityUsed() then return end
+    if !self.AbilityUsableBeforeHuntersReleaed and !round.huntersReleased then return end
 
-    -- NOTE 2021/5/22: today, on the client side, GAMEMODE.HuntersReleased is
-    -- always false.  Thus, this entire procedure is effectively server-side
-    -- only.  However, to correctly draw the HUD, the client needs to read
-    -- AbilityStartTime.  Therefore, I have moved this assignment out front.
-    -- Since AbilityStartTime should be meaningless unless self:GetIsAbilityUsed()
-    -- is true, it should be ok to do this optimistically.
     self.AbilityStartTime = CurTime()
-
-    if !self.AbilityUsableBeforeHuntersReleaed and !GAMEMODE.HuntersReleased then return end
 
     local abilityError = self:Ability()
 

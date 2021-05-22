@@ -1,20 +1,21 @@
 --[[ Rounds are handled here, obviously ]]--
 
 -----------------------------------
--- THE HOOKS THAT THIS CALLS ARE --
--- OBJHUNT_RoundStart            --
--- OBJHUNT_RoundEnd_Props        --
--- OBJHUNT_RoundEnd_Hunters      --
--- OBJHUNT_RoundLimit            --
+-- This module invokes the following server-side hooks:
+--   OBJHUNT_RoundStart
+--   OBJHUNT_HuntersReleased
+--   OBJHUNT_RoundEnd
+--   OBJHUNT_RoundLimit
 -----------------------------------
 
 -- this var is used outside of this file
 round = {}
-round.state     = ROUND_WAIT
-round.current   = 0
-round.startTime = 0
-round.endTime   = 0
-round.winner    = "Newbrict"
+round.state           = ROUND_WAIT
+round.current         = 0
+round.startTime       = 0          -- only meaningful when state >= ROUND_IN
+round.huntersReleased = false      -- only meaningful when state == ROUND_IN
+round.endTime         = 0          -- only meaningful when state == ROUND_END
+round.winner          = "Newbrict" -- only meaningful when state == ROUND_END
 
 local function SendRoundUpdate(sendMethod)
     net.Start("Round Update")
@@ -22,6 +23,7 @@ local function SendRoundUpdate(sendMethod)
         net.WriteUInt(round.current, 8)
         net.WriteUInt(round.startTime, 32)
         net.WriteUInt(round.endTime, 32)
+        net.WriteBit(round.huntersReleased)
         net.WriteUInt(CurTime(), 32)
     sendMethod()
 end
@@ -113,7 +115,7 @@ local function StartRound()
     round.current = round.current + 1
     round.startTime = CurTime()
     round.state = ROUND_IN
-    GAMEMODE.HuntersReleased = false
+    round.huntersReleased = false
     hook.Call("OBJHUNT_RoundStart")
 end
 
@@ -149,12 +151,12 @@ local function InRound()
     end
 
     -- unfreeze the hunters after their time is up
-    if (roundTime > OBJHUNT_HIDE_TIME and hunters[1]:IsFrozen()) then
-        hook.Call("OBJHUNT_HuntersReleased")
-        GAMEMODE.HuntersReleased = true
+    if (roundTime > OBJHUNT_HIDE_TIME and !round.huntersReleased) then
         for _, v in pairs(hunters) do
             v:Freeze(false)
         end
+        round.huntersReleased = true
+        hook.Call("OBJHUNT_HuntersReleased")
     end
 
 end
@@ -222,6 +224,11 @@ hook.Add("OBJHUNT_RoundStart", "Round start stuff", function()
             v:SetPlayerColor(PlayerToAccentColor(v))
         end
     end
+end)
+
+hook.Add("OBJHUNT_HuntersReleased", "Handle hunter release", function()
+    print("Releasing hunters")
+    SendRoundUpdate(function() return net.Broadcast() end)
 end)
 
 hook.Add("OBJHUNT_RoundEnd", "Handle props winning", function()
