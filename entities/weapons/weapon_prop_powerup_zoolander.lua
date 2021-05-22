@@ -35,7 +35,6 @@ if CLIENT then
     end )
 
     local function PaintZoolanderOverlay()
-        if !LocalPlayer():IsZoolander() then return end
 
         surface.SetDrawColor( 255, 255, 255, 255 )
         surface.SetMaterial(ZoolanderMaterial)
