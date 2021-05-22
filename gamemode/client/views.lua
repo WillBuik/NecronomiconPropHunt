@@ -98,6 +98,17 @@ local function getViewEnt(ply)
     return tr.Entity
 end
 
+local function getViewEntDead(ply)
+
+    local trace = {}
+    trace.mask = MASK_SHOT_HULL
+    trace.start = ply:GetShootPos()
+    trace.endpos = trace.start + ply:GetAngles():Forward() * PROP_SELECT_DISTANCE
+    trace.filter = { ply:GetProp(), ply }
+    tr = util.TraceLine(trace)
+    return tr.Entity
+end
+
 hook.Add("PreDrawHalos", "Selectable Prop Halos", function()
     if (LocalPlayer():Team() != TEAM_PROPS) then return end
     local prop = getViewEnt(LocalPlayer())
@@ -121,7 +132,7 @@ hook.Add("KeyPress", "New Player Use", function(ply, key)
             end
         else
             if (CurTime() < ply:GetTimeOfNextDoorOpen()) then return end
-            local ent = getViewEnt(ply)
+            local ent = getViewEntDead(ply)
             print(ent)
             if (IsValid(ent) and table.HasValue(DOORS, ent:GetClass())) then return end
                 net.Start("Ghost Door")
