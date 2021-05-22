@@ -62,10 +62,10 @@ local function RespawnTeams()
             v:Spawn()
             if (i == taunt_seeker) then
                 v:Give("weapon_hunter_special_tauntseeker")
-                v:Strip("weapon_hunter_special_tauntgranade")
+                v:StripWeapon("weapon_hunter_special_tauntgranade")
             elseif (i == taunt_grenade) then
                 v:Give("weapon_hunter_special_tauntgranade")
-                v:Strip("weapon_hunter_special_tauntseeker")
+                v:StripWeapon("weapon_hunter_special_tauntseeker")
             end
         end
     end
