@@ -102,9 +102,7 @@ local function getViewEntDead(ply)
     local trace = {}
     trace.mask = MASK_SHOT_HULL
     trace.start = ply:GetShootPos()
-    print(ply:GetShootPos())
     trace.endpos = trace.start + ply:GetAngles():Forward() * PROP_SELECT_DISTANCE
-    print(ply:GetAngles():Forward())
     trace.filter = { ply }
     tr = util.TraceLine(trace)
     return tr.Entity
