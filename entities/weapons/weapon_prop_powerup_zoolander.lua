@@ -56,7 +56,7 @@ if CLIENT then
         if !LocalPlayer():IsZoolander() then return end
 
         angle.pitch = math.Clamp( angle.pitch + y * 0.022, -89, 89 )
-        angle.yaw =  angle.yaw + math.max(x, 0) * 0.022
+        angle.yaw =  angle.yaw - math.max(x, 0) * 0.022
         angle:Normalize()
         cmd:SetViewAngles(angle)
         return true
