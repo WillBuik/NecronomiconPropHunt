@@ -22,11 +22,10 @@ local function hideTimerHUD()
     if (!LocalPlayer():Alive()) then return end
     if (round.state != ROUND_IN) then return end
     if (!round.startTime) then return end
+    if (round.huntersReleased) then return end
 
     local textToDraw = round.startTime + round.timePad + OBJHUNT_HIDE_TIME - CurTime()
-    textToDraw = math.Round(textToDraw, 0)
-
-    if (textToDraw < 0) then return end
+    textToDraw = math.max(math.Round(textToDraw, 0), 0)
 
     if (LocalPlayer():Team() == TEAM_HUNTERS) then
         surface.SetFont("HideFont")
