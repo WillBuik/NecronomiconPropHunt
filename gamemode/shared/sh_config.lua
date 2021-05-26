@@ -93,6 +93,10 @@ PROP_ROLL_INCRIMENT = 15
 -- Affects both real death and fake "play dead" death
 PROP_RAGDOLL_DURATION = 8
 
+-- Duration (in seconds) that friendly fire is enabled when a prop uses the
+-- friendly fire powerup.
+FRIENDLY_FIRE_ABILITY_DURATION = 30
+
 -- Amount of time a player is given to contemplate their own demise before
 -- going into spectator mode
 -- If this is set to 0, the dead player's ragdoll may spawn in the wrong place,
@@ -163,6 +167,7 @@ TEXT_COLOR = Color(255, 255, 255, 255)
 --[[================]]--
 
 ABILITIES = {
+    "weapon_prop_powerup_friendlyfire",
     "weapon_prop_powerup_cloak",
     "weapon_prop_powerup_disguise",
     "weapon_prop_powerup_remove",
