@@ -161,10 +161,10 @@ local function InRound()
 
     -- Has anyone won yet?
     local winner = nil
-    if (roundTime >= OBJHUNT_ROUND_TIME or #hunters == 0) then
-        winner = "Props"
-    elseif (#props == 0) then
+    if (#props == 0) then
         winner = "Hunters"
+    elseif (roundTime >= OBJHUNT_ROUND_TIME or #hunters == 0) then
+        winner = "Props"
     end
 
     if (winner) then
