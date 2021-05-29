@@ -13,6 +13,8 @@ by disguising themselves as inanimate objects ("props").  Hunters seek.
 | E            | Prop          | Become a copy of the selected object         |
 | Right-click  | Prop          | Use powerup                                  |
 | R            | Prop          | Lock rotation                                |
+| T            | Prop          | Enable Tilting (pitch)                       |
+| F2           | Prop          | Random Taunt                                 |
 | Left-shift   | Prop          | Hold breath (delay auto-taunt, lose health)  |
 | Scroll wheel | Prop          | Rotate (roll)                                |
 | F            | Hunter        | Flashlight                                   |
@@ -79,6 +81,11 @@ causes you to lose health.  Shooting a player prop restores your health.
 Every hunter is randomly issued (1) either a pistol or a revolver, (2) either
 an SMG or a shotgun, (3) one special weapon with a small amount of ammo, and
 (4) one self-destruct.
+
+#### SMG and Shotgun
+The SMG and Shotgun both have an Alt-fire used by right-clicking.  The SMG will
+fire a granade once per round and the shotgun will fire all of it's currently
+loaded ammo in a wide spread.
 
 #### Special Hunter Weapons
 
