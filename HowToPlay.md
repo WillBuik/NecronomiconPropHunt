@@ -5,6 +5,9 @@ Finally, hide-and-seek for the 31st century.
 Each round, you will play as either a _hunter_ or a _prop_.  Prop players hide
 by disguising themselves as inanimate objects ("props").  Hunters seek.
 
+The hunters win if they kill all the props.  The props win if any props are
+alive when the round timer runs out.
+
 
 ## Controls Cheat Sheet
 
