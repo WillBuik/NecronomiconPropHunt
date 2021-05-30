@@ -28,7 +28,7 @@ concommand.Add("testmode", function (ply)
 end)
 
 -- [[ Class Selection ]] --
-function GM:ShowTeam(ply) -- This hook is called everytime F1 is pressed.
+function GM:ShowTeam(ply) -- This hook is called everytime F2 is pressed.
     net.Start("Class Selection")
         -- Just used as a hook
     net.Send(ply)
