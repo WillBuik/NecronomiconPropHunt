@@ -22,7 +22,7 @@ local function helpHUD()
     local html = vgui.Create("DHTML" , htmlPanel)
         html:Dock(FILL)
         html:SetAllowLua(false)
-        html:OpenURL("https://willbuik.github.io/NecronomiconPropHunt/HowToPlay")
+        html:OpenURL("http://nph.miats.com/HowToPlay")
 
     local exitBtn = vgui.Create("DImageButton", helpPanel)
         exitBtn:SetImage("icon16/cancel.png")
