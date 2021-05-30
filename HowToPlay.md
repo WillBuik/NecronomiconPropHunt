@@ -27,7 +27,7 @@ alive when the round timer runs out.
 | U            | Both          | Team chat                                    |
 | C (hold)     | Both          | Context menu with various settings/actions   |
 | F1           | Both          | Open the help window                         |
-| F3           | Both          | Open the team selection window               |
+| F2           | Both          | Open the team selection window               |
 | Space        | Spectator     | Cycle view mode (locked to player/free fly)  |
 
 
