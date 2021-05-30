@@ -137,21 +137,6 @@ function SendTaunt(ply, taunt, pitch)
     SetAdd(ply.tauntHistory, taunt)
 end
 
--- F3 Button, Taunt Now --
-function GM:ShowSpare1(ply)
-    local TAUNTS
-    if (ply:Team() == TEAM_PROPS) then
-        TAUNTS = PROP_TAUNTS
-    else
-        TAUNTS = HUNTER_TAUNTS
-    end
-
-    local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
-    local taunt = table.Random(TAUNTS)
-    local pitch = math.random() * pRange + TAUNT_MIN_PITCH
-    SendTaunt(ply, taunt, pitch)
-end
-
 function GM:PlayerSetModel(ply)
     class = player_manager.GetPlayerClass(ply)
     if (class == "player_hunter") then

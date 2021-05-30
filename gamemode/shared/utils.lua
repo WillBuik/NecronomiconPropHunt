@@ -295,7 +295,7 @@ function PlayerToAccentColor(ply)
     local idInt = math.floor(ply:AccountID() / math.max(1, 10^(math.floor(math.log10(ply:AccountID()) - 10))))
     -- We'll use the Division Method for hashing from here:
     -- https://www.cs.hmc.edu/~geoff/classes/hmc.cs070.200101/homework10/hashfuncs.html
-    -- We just need 3 random-ish, reasonably sized (bigger than 256 by an order of 
+    -- We just need 3 random-ish, reasonably sized (bigger than 256 by an order of
     -- magintude but small enough so no floating point error) primes than aren't close
     -- to powers of 2.
     return Vector(
@@ -303,6 +303,19 @@ function PlayerToAccentColor(ply)
         (idInt % 1321) % 256,
         (idInt % 6857) % 256
     ) / 256
+end
+
+function RandomTaunt(ply)
+    if (ply:Team() == TEAM_PROPS) then
+        return table.Random(PROP_TAUNTS)
+    else
+        return table.Random(HUNTER_TAUNTS)
+    end
+end
+
+function RandomPitch()
+    local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
+    return math.random() * pRange + TAUNT_MIN_PITCH
 end
 
 function TeamString(teamID)
@@ -351,7 +364,7 @@ end
 
 function AddAngleToXY(vector, rangle)
     local radius = math.sqrt(vector.x ^ 2, vector.y ^ 2)
-    local theta = math.atan2(vector.y, vector.x) + rangle 
+    local theta = math.atan2(vector.y, vector.x) + rangle
     return Vector(radius * math.cos(theta), radius * math.sin(theta), vector.z)
 end
 
@@ -442,9 +455,9 @@ end
 function SetCountGetMax(set)
     if !set or !set["elements"] then return 0 end
 
-    local currentMax = 0 
+    local currentMax = 0
     for _, v in pairs(set["elements"]) do
         currentMax = math.max(currentMax, v)
     end
-    return currentMax 
+    return currentMax
 end

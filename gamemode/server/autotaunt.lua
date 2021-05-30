@@ -9,9 +9,8 @@ if AUTOTAUNT_ENABLED then
 
             local nextAutoTaunt = ply:GetNextAutoTauntTime()
             if nextAutoTaunt ~= nil and now > nextAutoTaunt then
-                local taunt = table.Random(PROP_TAUNTS)
-                local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
-                local pitch = math.random() * pRange + TAUNT_MIN_PITCH
+                local taunt = RandomTuant(ply)
+                local pitch = RandomPitch()
                 --Send the Taunt to the player
                 SendTaunt(ply, taunt, pitch)
             end
@@ -28,7 +27,7 @@ if AUTOTAUNT_ENABLED then
 
             ply:SetNextAutoTauntDelay(
                 -- By adding this we can set NextAutoTauntTime from the CurTime instead of the LastTauntTime
-                (CurTime() - ply:GetLastTauntTime()) + 
+                (CurTime() - ply:GetLastTauntTime()) +
                 OBJHUNT_AUTOTAUNT_BASE_INTERVAL * (1 + math.random())
             )
 

@@ -84,8 +84,7 @@ local function tauntSelection(player)
         randomBtn:SetSize(btnWidth, btnHeight)
         randomBtn:SetPos(padding, height + padding * 2)
         randomBtn.DoClick = function()
-            local pRange = TAUNT_MAX_PITCH - TAUNT_MIN_PITCH
-            playTaunt(table.Random(TAUNTS), math.random() * pRange + TAUNT_MIN_PITCH)
+            playTaunt(RandomTaunt(player), RandomPitch())
         end
 
     -- Painting
@@ -118,7 +117,7 @@ local function tauntSelection(player)
 end
 
 hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
-    ply = LocalPlayer()
+    ply.tauntMenuOpened = CurTime()
     if !IsValid(ply) or !ply:CanTauntNowOrLater() then return end
     if (tauntPanel and tauntPanel:IsVisible()) then
         tauntPanel:SetVisible(false)
@@ -130,6 +129,18 @@ hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
 end)
 
 hook.Add("OnSpawnMenuClose", "Close the context menu", function()
+    ply = LocalPlayer()
+    if (ply.tauntMenuOpened and
+        ply.tauntMenuOpened + 0.4  > CurTime() and
+        ply:CanTauntAt(CurTime())
+    ) then
+        local taunt = RandomTaunt(ply)
+        local pitch = RandomPitch()
+        net.Start("Taunt Selection")
+            net.WriteString(taunt)
+            net.WriteUInt(pitch, 8)
+        net.SendToServer()
+    end
     if (!tauntPanel) then return end
     tauntPanel:SetKeyboardInputEnabled(true)
     tauntPanel:SetVisible(false)

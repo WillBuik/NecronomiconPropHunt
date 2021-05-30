@@ -17,14 +17,17 @@ alive when the round timer runs out.
 | Right-click  | Prop          | Use powerup                                  |
 | R            | Prop          | Lock rotation                                |
 | T            | Prop          | Enable Tilting (pitch)                       |
-| F2           | Prop          | Random Taunt                                 |
 | Left-shift   | Prop          | Hold breath (delay auto-taunt, lose health)  |
 | Scroll wheel | Prop          | Rotate (roll)                                |
 | F            | Hunter        | Flashlight                                   |
 | Left-shift   | Hunter        | Look up or down based on nearest taunt       |
-| Q            | Both          | Taunt the other team                         |
+| Left-ctrl    | Both          | "Crouch" (allows for finer prop placement)   |
+| Q            | Both          | Ramdomly taunt the other team                |
+| Q (hold)     | Both          | Taunt slection menu                          |
 | U            | Both          | Team chat                                    |
 | C (hold)     | Both          | Context menu with various settings/actions   |
+| F1           | Both          | Open the help window                         |
+| F3           | Both          | Open the team selection window               |
 | Space        | Spectator     | Cycle view mode (locked to player/free fly)  |
 
 
@@ -66,6 +69,8 @@ As a prop, you will start each round with a random single-use power-up.
 
  - Larger props have more health.  That means you can hold your breath longer
    as a huge prop!
+ - While taunting you can see the outlines of other players through walls, make
+   sure to note how close the hunters (outlined in red are to you)
  - Locking your rotation makes it easier to hide, and it also resets your
    collision box.  Use rotation lock if you find yourself hovering above the
    ground suspiciously.
