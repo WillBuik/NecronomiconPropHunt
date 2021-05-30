@@ -117,6 +117,7 @@ local function tauntSelection(player)
 end
 
 hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
+    ply = LocalPlayer()
     ply.tauntMenuOpened = CurTime()
     if !IsValid(ply) or !ply:CanTauntNowOrLater() then return end
     if (tauntPanel and tauntPanel:IsVisible()) then
