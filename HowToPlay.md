@@ -69,8 +69,8 @@ As a prop, you will start each round with a random single-use power-up.
 
  - Larger props have more health.  That means you can hold your breath longer
    as a huge prop!
- - While taunting you can see the outlines of other players through walls, make
-   sure to note how close the hunters (outlined in red are to you)
+ - While taunting you can see the outlines of other players through walls; make
+   sure to note how close the hunters (outlined in red) are to you.
  - Locking your rotation makes it easier to hide, and it also resets your
    collision box.  Use rotation lock if you find yourself hovering above the
    ground suspiciously.
