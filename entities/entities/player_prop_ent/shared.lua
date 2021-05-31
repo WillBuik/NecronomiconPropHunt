@@ -1,22 +1,6 @@
 ENT.Type = "anim"
 ENT.Base = "base_anim"
 
-function ENT:Draw()
-    if !IsValid(self) then return end
-
-    local owner = self:GetOwner()
-    if !IsValid(owner) then return end
-
-    self:SnapToPlayer()
-
-    if (CLIENT) then
-        -- third person stuff
-        if (LocalPlayer().wantThirdPerson or owner != LocalPlayer()) then
-            self:DrawModel()
-        end
-    end
-end
-
 function ENT:Think()
     if !IsValid(self) then return end
     self:SnapToPlayer()
