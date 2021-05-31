@@ -117,7 +117,7 @@ local function tauntSelection(player)
 end
 
 hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
-    ply = LocalPlayer()
+    local ply = LocalPlayer()
     ply.tauntMenuOpened = CurTime()
     if !IsValid(ply) or !ply:CanTauntNowOrLater() then return end
     if (tauntPanel and tauntPanel:IsVisible()) then
@@ -130,7 +130,7 @@ hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
 end)
 
 hook.Add("OnSpawnMenuClose", "Close the context menu", function()
-    ply = LocalPlayer()
+    local ply = LocalPlayer()
     if (ply.tauntMenuOpened and
         ply.tauntMenuOpened + 0.4  > CurTime() and
         ply:CanTauntAt(CurTime())

@@ -44,7 +44,7 @@ function GetHunterLookingAtYou(ply)
         trace.start = hunter:GetShootPos()
         trace.endpos = trace.start + (hunter:EyeAngles():Forward() * PROP_SELECT_DISTANCE * 3)
         trace.filter = { ply }
-        tr = util.TraceLine(trace)
+        local tr = util.TraceLine(trace)
         if tr.Entity == ply then return hunter end
     end
     return nil
@@ -350,7 +350,7 @@ function GetViewEntSv(ply)
     trace.start = ply:GetShootPos()
     trace.endpos = trace.start + ply:GetAngles():Forward() * (THIRDPERSON_DISTANCE + PROP_SELECT_DISTANCE)
     trace.filter = { ply:GetProp(), ply }
-    tr = util.TraceLine(trace)
+    local tr = util.TraceLine(trace)
     return tr.Entity
 end
 
@@ -390,7 +390,7 @@ function orderedNext(t, state)
     -- order. We use a temporary ordered key table that is stored in the
     -- table being iterated.
 
-    key = nil
+    local key = nil
     --print("orderedNext: state = "..tostring(state))
     if state == nil then
         -- the first time, generate the index

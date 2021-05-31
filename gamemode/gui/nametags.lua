@@ -39,7 +39,7 @@ hook.Add("PostDrawOpaqueRenderables", "Draw Nametags", function()
         --local angle = Angle(0,0,90) + pAng
 
         -- 'Sprite' like angles based on view angle
-        angle = Angle(0,0,90) + LocalPlayer():GetAimVector():Angle():Right():Angle()
+        local angle = Angle(0,0,90) + LocalPlayer():GetAimVector():Angle():Right():Angle()
 
         local name = v:Nick()
 

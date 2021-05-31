@@ -399,7 +399,7 @@ local SPECS_BOARD =
 
     Think = function(self)
 
-        Spectators = ""
+        local Spectators = ""
 
         local plyrs = player.GetAll()
 

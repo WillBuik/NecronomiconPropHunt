@@ -138,7 +138,7 @@ function SendTaunt(ply, taunt, pitch)
 end
 
 function GM:PlayerSetModel(ply)
-    class = player_manager.GetPlayerClass(ply)
+    local class = player_manager.GetPlayerClass(ply)
     if (class == "player_hunter") then
         ply:SetModel(TEAM_HUNTERS_DEFAULT_MODEL)
     elseif (class == "player_prop") then
