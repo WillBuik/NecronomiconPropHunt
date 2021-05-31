@@ -9,7 +9,7 @@ if AUTOTAUNT_ENABLED then
 
             local nextAutoTaunt = ply:GetNextAutoTauntTime()
             if nextAutoTaunt ~= nil and now > nextAutoTaunt then
-                local taunt = RandomTuant(ply)
+                local taunt = RandomTaunt(ply)
                 local pitch = RandomPitch()
                 --Send the Taunt to the player
                 SendTaunt(ply, taunt, pitch)
