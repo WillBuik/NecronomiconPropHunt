@@ -2,10 +2,38 @@ ENT.Type = "anim"
 ENT.Base = "base_anim"
 
 function ENT:Draw()
+    if !IsValid(self) then return end
 
     local owner = self:GetOwner()
+    if !IsValid(owner) then return end
 
-    if !self:IsValid() or !IsValid(owner) then return end
+    self:SnapToPlayer()
+
+    if (CLIENT) then
+        -- third person stuff
+        if (LocalPlayer().wantThirdPerson or owner != LocalPlayer()) then
+            self:DrawModel()
+        end
+    end
+end
+
+function ENT:Think()
+    if !IsValid(self) then return end
+    self:SnapToPlayer()
+end
+
+-- Adjust the prop's position and angle to match the player.  This should be
+-- called frequently on both server and client.
+--
+-- In general, the prop's position and angle cannot be trusted, since it will
+-- lag behind the player's by just a smidge.  Procedures that need up-to-date
+-- information should call this before reading the prop's properties.
+--
+-- Precondition: IsValid(self)
+function ENT:SnapToPlayer()
+
+    local owner = self:GetOwner()
+    if !IsValid(owner) then return end
 
     self:SetPos(owner:GetPos())
 
@@ -29,14 +57,4 @@ function ENT:Draw()
 
     self:SetAngles(Angle(propAngle.p, propAngle.y, owner:GetPropRollAngle()))
 
-    if (CLIENT) then
-        -- third person stuff
-        if (LocalPlayer().wantThirdPerson or owner != LocalPlayer()) then
-            self:DrawModel()
-        end
-    end
-end
-
-function ENT:Think()
-    self:Draw()
 end

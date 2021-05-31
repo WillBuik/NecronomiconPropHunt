@@ -51,13 +51,13 @@ end)
 net.Receive("Prop Angle Lock", function(len, ply)
     local shouldAngleLock = net.ReadBit() == 1
     local propAngle = net.ReadAngle()
+
     ply:SetPropAngleLocked(shouldAngleLock)
     ply:SetPropLockedAngle(propAngle)
 
-    if (IsValid(ply:GetProp())) then
-        -- We should investigate why this angle doesn't naturally stay in sync
-        propAngle = Angle(propAngle.p, propAngle.y, ply:GetPropRollAngle())
-        ply:GetProp():SetAngles(propAngle)
+    local prop = ply:GetProp()
+
+    if (IsValid(prop)) then
         ResetPropToProp(ply)
     end
 end)

@@ -51,9 +51,11 @@ function GetHunterLookingAtYou(ply)
 end
 
 function PropHitbox(ply)
-    local tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply:GetProp())
+    local prop = ply:GetProp()
+    prop:SnapToPlayer()
+    local tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(prop)
     if (ply:IsPropAngleLocked()) then
-        tHitboxMin, tHitboxMax = ply:GetProp():GetRotatedAABB(tHitboxMin, tHitboxMax)
+        tHitboxMin, tHitboxMax = prop:GetRotatedAABB(tHitboxMin, tHitboxMax)
     end
     return tHitboxMin, tHitboxMax
 end
