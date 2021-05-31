@@ -1,2 +1,2 @@
-// Include needed files
+-- Include needed files
 include("shared.lua")
