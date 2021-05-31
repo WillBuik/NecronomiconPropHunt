@@ -365,7 +365,7 @@ function UnstickPlayer(ply, searchMultplier)
         if (ply:Team() == TEAM_PROPS) then
             tHitboxMin, tHitboxMax = PropHitbox(ply)
         elseif (ply:Team() == TEAM_HUNTERS) then
-            tHitboxMin, tHitboxMax = GetHitBoxCornersInModelCoordinates(ply)
+            tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply)
         else
             return
         end
