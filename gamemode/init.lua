@@ -264,24 +264,21 @@ end
 
 --[[ sets the players prop, run PlayerCanBeEnt before using this ]]--
 function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
+    -- The player's prop entity will be adjusted in-place to look like `ent`.
+    local prop = ply:GetProp()
 
     -- scaling
-    ply:GetProp():SetModelScale(scale, 0)
+    prop:SetModelScale(scale, 0)
 
-    ply:GetProp():SetModel(ent:GetModel())
-    ply:GetProp():SetSkin(ent:GetSkin())
-    ply:GetProp():SetSolid(SOLID_VPHYSICS)
+    prop:SetModel(ent:GetModel())
+    prop:SetSkin(ent:GetSkin())
+    prop:SetSolid(SOLID_VPHYSICS)
 
     -- We will reset the roll and pitch of a Prop when changing to make for easier escapes
     ply:SetPropRollAngle(0)
-    if ply:IsPropAngleLocked() then
-        local lockedAngle = ply:GetPropLockedAngle()
-        local newAngle = Angle(0, lockedAngle.y, 0)
-        ply:SetPropLockedAngle(newAngle)
-        ply:GetProp():SetAngles(newAngle)
-    else
-        ply:GetProp():SetAngles(ply:GetAngles())
-    end
+    local lockedAngle = ply:GetPropLockedAngle()
+    local newAngle = Angle(0, lockedAngle.y, 0)
+    ply:SetPropLockedAngle(newAngle)
 
     local tHitboxMin, tHitboxMax = hbMin, hbMax
     if (hbMin == nil or hbMax == nil) then
@@ -302,7 +299,7 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     -- give bigger props a bonus for being big
     ply:SetJumpPower(PROP_DEFAULT_JUMP_POWER + math.sqrt(tHeight))
 
-    if (ply:GetProp() == ent) then
+    if (prop == ent) then
         -- In the case of the first Prop let's leave the Last Change Time at 0 so no cooldown
         ply:SetPropLastChange(0)
     else
@@ -321,7 +318,7 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
         ply:GetPhysicsObject():SetMass(phys:GetMass())
         -- vphysics
         local vPhysMesh = ent:GetPhysicsObject():GetMeshConvexes()
-        ply:GetProp():PhysicsInitMultiConvex(vPhysMesh)
+        prop:PhysicsInitMultiConvex(vPhysMesh)
     else
         -- Entity doesn't have a physics object so calculate mass
         local density = PROP_DEFAULT_DENSITY
