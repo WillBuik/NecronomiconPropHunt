@@ -24,7 +24,7 @@ local function hideTimerHUD()
     if (!round.startTime) then return end
     if (round.huntersReleased) then return end
 
-    local textToDraw = round.startTime + round.timePad + OBJHUNT_HIDE_TIME - CurTime()
+    local textToDraw = round.startTime + OBJHUNT_HIDE_TIME - CurTime()
     textToDraw = math.max(math.Round(textToDraw, 0), 0)
 
     if (LocalPlayer():Team() == TEAM_HUNTERS) then

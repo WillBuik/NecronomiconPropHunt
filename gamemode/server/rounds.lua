@@ -29,7 +29,6 @@ local function SendRoundUpdate(sendMethod)
         net.WriteUInt(round.startTime, 32)
         net.WriteUInt(round.endTime, 32)
         net.WriteBit(round.huntersReleased)
-        net.WriteUInt(CurTime(), 32)
     sendMethod()
 end
 
