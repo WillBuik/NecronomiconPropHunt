@@ -263,7 +263,14 @@ function GM:PlayerUse(ply, ent)
 end
 
 --[[ sets the players prop, run PlayerCanBeEnt before using this ]]--
-function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
+function SetPlayerProp(ply, ent, scale, forcePos, forceLockAngle, forceRollAngle)
+    ply.lastChange = CurTime()
+    ply.prevProp = ply:GetProp()
+    ply.prevPos = ply:GetPos()
+    ply.prevAngle = ply:GetAngle()
+    ply.prevAngleLockChange = false
+    ply.prevLockedAngle = ply:GetPropLockedAngle()
+    ply.prevRollAngle = ply:GetPropRollAngle()
     -- The player's prop entity will be adjusted in-place to look like `ent`.
     local prop = ply:GetProp()
 
@@ -275,19 +282,27 @@ function SetPlayerProp(ply, ent, scale, hbMin, hbMax)
     prop:SetSolid(SOLID_VPHYSICS)
 
     -- We will reset the roll and pitch of a Prop when changing to make for easier escapes
-    ply:SetPropRollAngle(0)
-    local lockedAngle = ply:GetPropLockedAngle()
-    local newAngle = Angle(0, lockedAngle.y, 0)
-    ply:SetPropLockedAngle(newAngle)
-
-    local tHitboxMin, tHitboxMax = hbMin, hbMax
-    if (hbMin == nil or hbMax == nil) then
-        tHitboxMin, tHitboxMax = PropHitbox(ply)
+    if (forceLockAngle) then
+        ply:SetPropLockedAngle(forceLockAngle)
+    else
+        local lockedAngle = ply:GetPropLockedAngle()
+        local newAngle = Angle(0, lockedAngle.y, 0)
+        ply:SetPropLockedAngle(newAngle)
+    end
+    if (forceRollAngle) then
+        ply:SetPropRollAngle(forceRollAngle)
+    else
+        ply:SetPropRollAngle(0)
     end
 
-    --Adjust Position for no stuck
-    local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
-    ply:SetPos(foundSpot)
+    local tHitboxMin, tHitboxMax = PropHitbox(ply)
+
+    if (forcePos) then
+        ply:SetPos(forcePos)
+    else
+        --Adjust Position for no stuck
+        ply:SetPos(FindSpotFor(ply, tHitboxMin, tHitboxMax))
+    end
 
     UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
 
@@ -347,31 +362,89 @@ function UpdatePlayerPropHitbox(ply, hbMin, hbMax)
         net.Send(ply)
 end
 
-function ResetPropToProp(ply)
+function RevertProp(ply)
+    if (
+        !ply:Alive() or
+        !ply.lastChange or
+        !ply.prevPos or
+        !ply.prevAngle or
+        !ply.prevLockedAngle or
+        !ply.prevRollAngle or
+        CurTime() < ply.lastChange + 3 * PROP_CHOOSE_COOLDOWN
+    ) then
+        return
+    end
+    if (ply.prevProp) then
+        SetPlayerProp(
+            ply,
+            ply.prevProp,
+            ply.prevProp:GetModelScale(),
+            ply.prevPos,
+            ply.prevLockedAngle,
+            ply.prevRollAngle
+        )
+    else
+        ply:SetPos(ply.prevPos)
+        ply.SetAngles(ply.prevAngle)
+        if (ply.prevAngleLockChange) then
+            ply:SetPropAngleLocked(!ply:GetPropAngleLocked())
+        end
+        ply:SetPropLockedAngle(ply.prevLockedAngle)
+        ply:SetPropRollAngle(ply.prevRollAngle)
         local tHitboxMin, tHitboxMax = PropHitbox(ply)
 
-        --Adjust Position for no stuck
-        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
-        ply:SetPos(foundSpot)
-
         UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
+    end
+
+
+    ply.prevProp = nil
+    ply.prevPos = nil
+    ply.prevAngle = nil
+    ply.prevAngleLockChange = false
+    ply.prevLockedAngle = nil
+    ply.prevRollAngle = nil
+end
+
+
+function ResetPropToProp(ply)
+    ply.lastChange = CurTime()
+    ply.prevProp = nil
+    ply.prevPos = ply:GetPos()
+    ply.prevAngle = ply:GetAngle()
+    ply.prevLockedAngle = ply:GetPropLockedAngle()
+    ply.prevRollAngle = ply:GetPropRollAngle()
+
+    local tHitboxMin, tHitboxMax = PropHitbox(ply)
+
+    --Adjust Position for no stuck
+    local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
+    ply:SetPos(foundSpot)
+
+    UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
 end
 
 function UnstickPlayer(ply, searchMultplier)
-        local tHitboxMin, tHitboxMax
-        if (ply:Team() == TEAM_PROPS) then
-            tHitboxMin, tHitboxMax = PropHitbox(ply)
-        elseif (ply:Team() == TEAM_HUNTERS) then
-            tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply)
-        else
-            return
-        end
+    local tHitboxMin, tHitboxMax
+    if (ply:Team() == TEAM_PROPS) then
+        ply.lastChange = CurTime()
+        ply.prevProp = nil
+        ply.prevPos = ply:GetPos()
+        ply.prevAngle = ply:GetAngle()
+        ply.prevAngleLockChange = false
+        ply.prevLockedAngle = ply:GetPropLockedAngle()
+        ply.prevRollAngle = ply:GetPropRollAngle()
+        tHitboxMin, tHitboxMax = PropHitbox(ply)
+    elseif (ply:Team() == TEAM_HUNTERS) then
+        tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply)
+    else
+        return
+    end
 
-        --Adjust Position for no stuck
-        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax, searchMultplier)
-        ply:SetPos(foundSpot)
+    --Adjust Position for no stuck
+    local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax, searchMultplier)
+    ply:SetPos(foundSpot)
 
-        UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
+    UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
 end
 
 function GetNumValidPropsOnMap()
