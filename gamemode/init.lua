@@ -368,7 +368,7 @@ function RevertProp(ply)
     print(ply.prevPos)
     print(ply.prevAngle)
     print(ply.prevLockedAngle)
-    print(ply.prevRollAngle))
+    print(ply.prevRollAngle)
     if (
         !ply:Alive() or
         !ply.lastChange or
