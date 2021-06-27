@@ -376,7 +376,7 @@ function RevertProp(ply)
         !ply.prevAngle or
         !ply.prevLockedAngle or
         !ply.prevRollAngle or
-        CurTime() < ply.lastChange + 3 * PROP_CHOOSE_COOLDOWN
+        CurTime() > ply.lastChange + 3 * PROP_CHOOSE_COOLDOWN
     ) then
         return
     end
