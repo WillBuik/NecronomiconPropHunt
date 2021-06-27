@@ -363,12 +363,6 @@ function UpdatePlayerPropHitbox(ply, hbMin, hbMax)
 end
 
 function RevertProp(ply)
-    print(ply:Alive())
-    print(ply.lastChange)
-    print(ply.prevPos)
-    print(ply.prevAngle)
-    print(ply.prevLockedAngle)
-    print(ply.prevRollAngle)
     if (
         !ply:Alive() or
         !ply.lastChange or
@@ -381,6 +375,7 @@ function RevertProp(ply)
         return
     end
     if (ply.prevProp) then
+        print(ply.prevProp:GetModel())
         SetPlayerProp(
             ply,
             ply.prevProp,
@@ -401,7 +396,6 @@ function RevertProp(ply)
 
         UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
     end
-
 
     ply.prevProp = nil
     ply.prevPos = nil
