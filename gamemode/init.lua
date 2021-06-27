@@ -363,6 +363,12 @@ function UpdatePlayerPropHitbox(ply, hbMin, hbMax)
 end
 
 function RevertProp(ply)
+    print(ply:Alive())
+    print(ply.lastChange)
+    print(ply.prevPos)
+    print(ply.prevAngle)
+    print(ply.prevLockedAngle)
+    print(ply.prevRollAngle))
     if (
         !ply:Alive() or
         !ply.lastChange or
