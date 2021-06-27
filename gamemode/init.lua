@@ -267,7 +267,7 @@ function SetPlayerProp(ply, ent, scale, forcePos, forceLockAngle, forceRollAngle
     ply.lastChange = CurTime()
     ply.prevProp = ply:GetProp()
     ply.prevPos = ply:GetPos()
-    ply.prevAngle = ply:GetAngle()
+    ply.prevAngle = ply:GetAngles()
     ply.prevAngleLockChange = false
     ply.prevLockedAngle = ply:GetPropLockedAngle()
     ply.prevRollAngle = ply:GetPropRollAngle()
