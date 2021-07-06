@@ -22,6 +22,8 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("Reset To Spawn")
     util.AddNetworkString("Unstick Prop")
     util.AddNetworkString("Ghost Door")
+    util.AddNetworkString("Pay Respects")
+    util.AddNetworkString("Display Respects")
 end)
 
 net.Receive("Class Selection", function(len, ply)
@@ -110,4 +112,9 @@ net.Receive("Ghost Door", function(len, ply)
 
     ply:SetTimeOfNextDoorOpen(CurTime() + PROP_GHOST_DOOR_WAIT)
     door:Fire("Toggle")
+end)
+
+net.Receive("Pay Respects", function(len, ply)
+    -- display shit in the killfeed
+    PayRespects(ply)
 end)

@@ -174,6 +174,18 @@ function AnnouncePlayerDeath(ply, attacker)
     net.Broadcast()
 end
 
+function PayRespects(ply)
+    local victim = ply --GetLatestVictim()
+    local display_string = "found" --random.choice
+    net.Start("Display Respects")
+        net.WriteString(ply:Nick())
+        net.WriteUInt(ply:Team(), 16)
+        net.WriteString(display_string)
+        net.WriteString(victim:Nick())
+        net.WriteUInt(victim:Team(), 16)
+    net.Broadcast()
+end
+
 -- NOTE: damage from hunters should go through HurtProp, which first rewards
 -- the attacker based on damage dealt and then calls this procedure.  This
 -- procedure merely:

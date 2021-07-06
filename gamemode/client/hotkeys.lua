@@ -33,6 +33,15 @@ hook.Add("KeyPress", "PressShiftHunterHintUpdown", function(ply, key)
     end
 end)
 
+hook.Add("PlayerButtonDown", "PressFToPayRespects", function(ply, button)
+    if (button == KEY_F and
+         ply:Team() == TEAM_PROPS
+    ) then
+        net.Start("Pay Respects")
+        net.SendToServer()
+    end
+end)
+
 
 function GM:PlayerBindPress(ply, bind, pressed)
     if (ply:Team() == TEAM_PROPS and
