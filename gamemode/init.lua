@@ -177,7 +177,7 @@ end
 function PayRespects(ply)
     local victim = GetLatestVictim()
     if (victim == nil) then return end
-    local display_string = "found" --random.choice
+    local display_string = RESPECTS_VERBS[math.random(#RESPECTS_VERBS)]
     net.Start("Display Respects")
         net.WriteString(ply:Nick())
         net.WriteUInt(ply:Team(), 16)

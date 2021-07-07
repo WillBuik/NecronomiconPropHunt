@@ -232,3 +232,15 @@ PROP_TAUNTS["LEEROY... JENKINS!"]           = "taunts/leeroy_jenkins.wav"
 -- USAGE:
 -- HUNTER_TAUNTS["Display Name"] = "taunts/file_name.wav"
 HUNTER_TAUNTS["GlaDoS - President"]         = "taunts/glados-president.wav"
+
+-- For paying respects
+RESPECTS_VERBS = {
+    "paid respects to",
+    "mourned",
+    "left a tribute for",
+    "poured one out for",
+    "observed a moment of silence for",
+    "lit a candle for",
+    "contemplated the fragility of the life of",
+    "dropped an F in the chat for"
+}
