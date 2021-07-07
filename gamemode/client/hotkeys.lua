@@ -36,8 +36,7 @@ end)
 hook.Add("PlayerButtonDown", "PressFToPayRespects", function(ply, button)
     if (CLIENT and
         IsFirstTimePredicted() and
-        button == KEY_F and
-        ply:Team() == TEAM_PROPS
+        button == KEY_F
     ) then
         net.Start("Pay Respects")
         net.SendToServer()

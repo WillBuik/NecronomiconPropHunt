@@ -175,7 +175,8 @@ function AnnouncePlayerDeath(ply, attacker)
 end
 
 function PayRespects(ply)
-    local victim = ply --GetLatestVictim()
+    local victim = GetLatestVictim()
+    if (victim == nil) then return end
     local display_string = "found" --random.choice
     net.Start("Display Respects")
         net.WriteString(ply:Nick())
