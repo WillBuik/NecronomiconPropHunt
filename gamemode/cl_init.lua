@@ -58,8 +58,8 @@ net.Receive("Display Respects", function()
     local victim = net.ReadString()
     local victimTeam = net.ReadUInt(16)
     
-    killicon.AddFont("kill", "Sharp HUD", verb, Color(255,255,255,255))
-    GAMEMODE:AddDeathNotice(attacker, attackerTeam, "kill", victim, victimTeam)
+    killicon.AddFont(verb, "Sharp HUD", verb, Color(255,255,255,255))
+    GAMEMODE:AddDeathNotice(attacker, attackerTeam, verb, victim, victimTeam)
 end)
 
 net.Receive("Taunt Selection BROADCAST", function()

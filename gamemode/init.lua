@@ -176,7 +176,8 @@ end
 
 function PayRespects(ply)
     local victim = GetLatestVictim()
-    if (victim == nil) then return end
+    -- can't pay respects to yourself or without a victim
+    if (victim == ply or victim == nil) then return end
     local display_string = RESPECTS_VERBS[math.random(#RESPECTS_VERBS)]
     net.Start("Display Respects")
         net.WriteString(ply:Nick())
