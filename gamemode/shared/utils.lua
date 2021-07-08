@@ -174,7 +174,13 @@ function FindSpotFor(ply, hbMin, hbMax, searchMultplier)
         end
     end
 
-    return closestToGoal
+    if closestToGoal != nil then
+        return closestToGoal
+    end
+
+    -- default to the original position to avoid spawning at map origin
+    print('Could not find a safe position to spawn prop!')
+    return plyPos
 end
 
 function LerpColor(frac,from,to)
