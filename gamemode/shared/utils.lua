@@ -179,7 +179,7 @@ function FindSpotFor(ply, hbMin, hbMax, searchMultplier)
     end
 
     -- default to the original position to avoid spawning at map origin
-    print('Could not find a safe position to spawn prop!')
+    print("Could not find a safe position to spawn prop!")
     return plyPos
 end
 
