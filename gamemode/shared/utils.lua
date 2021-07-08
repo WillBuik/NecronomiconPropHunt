@@ -91,7 +91,7 @@ function FindSpotFor(ply, hbMin, hbMax, searchMultplier)
     -- traces, but these fields won't change.
     local goalPos = plyPos + Vector(0, 0, zDelta)
     local td = {}
-    td.filter = { ply }
+    td.filter = { ply, ply.objRagdoll }
     if (IsValid(ply:GetProp())) then
         table.insert(td.filter, ply:GetProp())
     end
