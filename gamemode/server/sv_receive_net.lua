@@ -115,6 +115,5 @@ net.Receive("Ghost Door", function(len, ply)
 end)
 
 net.Receive("Pay Respects", function(len, ply)
-    -- display shit in the killfeed
     PayRespects(ply)
 end)

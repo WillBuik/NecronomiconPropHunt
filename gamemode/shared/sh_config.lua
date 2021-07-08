@@ -242,5 +242,6 @@ RESPECTS_VERBS = {
     "observed a moment of silence for",
     "lit a candle for",
     "contemplated the fragility of the life of",
+    "bowed their head for",
     "dropped an F in the chat for"
 }
