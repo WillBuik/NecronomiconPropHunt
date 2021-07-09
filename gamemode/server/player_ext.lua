@@ -121,7 +121,6 @@ function plymeta:EndFakeDeath()
     self:ObjSetPlaydead(false)
 
     local ragdoll = self.objRagdoll
-    self:SetPos(ragdoll:GetPos())
     ResetPropToProp(ply)
     self.objRagdoll = nil
     ragdoll:Remove()
