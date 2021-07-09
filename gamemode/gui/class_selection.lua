@@ -8,6 +8,16 @@ surface.CreateFont("Sharp HUD",
     shadow = true,
 })
 
+surface.CreateFont("Sharp HUD Small",
+{
+    font = "Helvetica",
+    size = 24,
+    weight = 800,
+    antialias = true,
+    outline = false,
+    shadow = true,
+})
+
 local function SendTeam(chosen)
     net.Start("Class Selection")
         net.WriteUInt(chosen, 32)
