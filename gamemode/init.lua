@@ -265,7 +265,7 @@ end
 --[[ sets the players prop, run PlayerCanBeEnt before using this ]]--
 function SetPlayerProp(ply, ent, scale, forcePos, forceLockAngle, forceRollAngle)
     ply.lastChange = CurTime()
-    ply.prevProp = ply:GetProp()
+    ply.prevProp = duplicator.Copy(ply:GetProp())
     ply.prevPos = ply:GetPos()
     ply.prevAngle = ply:GetAngles()
     ply.prevAngleLockChange = false
