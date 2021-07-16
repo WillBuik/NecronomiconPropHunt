@@ -440,7 +440,7 @@ function ResetPropToProp(ply)
     ply.lastChange = CurTime()
     ply.prevProp = nil
     ply.prevPos = ply:GetPos()
-    ply.prevAngle = ply:GetAngle()
+    ply.prevAngle = ply:GetAngles()
     ply.prevLockedAngle = ply:GetPropLockedAngle()
     ply.prevRollAngle = ply:GetPropRollAngle()
 
