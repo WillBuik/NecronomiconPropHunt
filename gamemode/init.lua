@@ -409,7 +409,7 @@ function RevertProp(ply)
         )
     else
         ply:SetPos(ply.prevPos)
-        ply.SetAngles(ply.prevAngle)
+        ply:SetAngles(ply.prevAngle)
         if (ply.prevAngleLockChange) then
             ply:SetPropAngleLocked(!ply:GetPropAngleLocked())
         end
