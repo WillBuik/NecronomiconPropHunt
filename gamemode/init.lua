@@ -273,6 +273,7 @@ function SetPlayerProp(ply, ent, scale, revert)
         ply.prevPropSkin = prop:GetSkin()
         ply.prevPropMass = ply:GetPhysicsObject():GetMass()
         ply.prevPropVMesh = ply:GetPhysicsObject():GetMeshConvexes()
+        ply.prevPropScale = prop:GetModelScale()
 
         ply.prevPos = ply:GetPos()
         ply.prevAngle = ply:GetAngles()
@@ -283,7 +284,11 @@ function SetPlayerProp(ply, ent, scale, revert)
 
 
     -- scaling
-    prop:SetModelScale(scale, 0)
+    if (revert and ply.prevPropScale) then
+        prop:SetModelScale(ply.prevPropScale, 0)
+    else
+        prop:SetModelScale(scale, 0)
+    end
 
     if (revert and ply.prevPropModel) then
         prop:SetModel(ply.prevPropModel)
@@ -401,8 +406,8 @@ function RevertProp(ply)
     if (ply.prevPropModel) then
         SetPlayerProp(
             ply,
-            ply.prevProp,
-            ply.prevProp:GetModelScale(),
+            ply:GetProp(),
+            ply:GetProp():GetModelScale(),
             true
         )
     else
@@ -422,6 +427,7 @@ function RevertProp(ply)
     ply.prevPropSkin = nil
     ply.prevPropMass = nil
     ply.prevPropVMesh = nil
+    ply.prevPropScale = nil
     ply.prevPos = nil
     ply.prevAngle = nil
     ply.prevAngleLockChange = false
