@@ -263,42 +263,61 @@ function GM:PlayerUse(ply, ent)
 end
 
 --[[ sets the players prop, run PlayerCanBeEnt before using this ]]--
-function SetPlayerProp(ply, ent, scale, forcePos, forceLockAngle, forceRollAngle)
+function SetPlayerProp(ply, ent, scale, revert)
     ply.lastChange = CurTime()
-    ply.prevProp = duplicator.Copy(ply:GetProp())
-    ply.prevPos = ply:GetPos()
-    ply.prevAngle = ply:GetAngles()
-    ply.prevAngleLockChange = false
-    ply.prevLockedAngle = ply:GetPropLockedAngle()
-    ply.prevRollAngle = ply:GetPropRollAngle()
+    if (!revert) then
+        ply.prevPropModel = ply:GetProp():GetModel()
+        ply.prevPropSkin = ply:GetProp():GetSkin()
+        ply.prevPropMass = ply:GetPhysicsObject():GetMass()
+        ply.prevPropVMesh = ply:GetPhysicsObject():GetMeshConvexes()
+
+        ply.prevPos = ply:GetPos()
+        ply.prevAngle = ply:GetAngles()
+        ply.prevAngleLockChange = false
+        ply.prevLockedAngle = ply:GetPropLockedAngle()
+        ply.prevRollAngle = ply:GetPropRollAngle()
+    end
+
+    if (!forceValues) then
+        forceValues = {}
+    end
     -- The player's prop entity will be adjusted in-place to look like `ent`.
     local prop = ply:GetProp()
 
     -- scaling
     prop:SetModelScale(scale, 0)
 
-    prop:SetModel(ent:GetModel())
-    prop:SetSkin(ent:GetSkin())
+    if (revert and ply.prevPropModel) then
+        prop:SetModel(ply.prevPropModel)
+    else
+        prop:SetModel(ent:GetModel())
+    end
+
+    if (revert and ply.prevPropSkin) then
+        prop:SetSkin(ply.prevPropSkin)
+    else
+        prop:SetSkin(ent:GetSkin())
+    end
     prop:SetSolid(SOLID_VPHYSICS)
 
     -- We will reset the roll and pitch of a Prop when changing to make for easier escapes
-    if (forceLockAngle) then
-        ply:SetPropLockedAngle(forceLockAngle)
+    if (revert and ply.prevLockedAngle) then
+        ply:SetPropLockedAngle(ply.prevLockedAngle)
     else
         local lockedAngle = ply:GetPropLockedAngle()
         local newAngle = Angle(0, lockedAngle.y, 0)
         ply:SetPropLockedAngle(newAngle)
     end
-    if (forceRollAngle) then
-        ply:SetPropRollAngle(forceRollAngle)
+    if (revert and ply.prevRollAngle) then
+        ply:SetPropRollAngle(ply.prevRollAngle)
     else
         ply:SetPropRollAngle(0)
     end
 
     local tHitboxMin, tHitboxMax = PropHitbox(ply)
 
-    if (forcePos) then
-        ply:SetPos(forcePos)
+    if (revert and ply.prevPos) then
+        ply:SetPos(ply.prevPos)
     else
         --Adjust Position for no stuck
         ply:SetPos(FindSpotFor(ply, tHitboxMin, tHitboxMax))
@@ -306,7 +325,7 @@ function SetPlayerProp(ply, ent, scale, forcePos, forceLockAngle, forceRollAngle
 
     UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
 
-    local tHeight = tHitboxMax.z-tHitboxMin.z
+    local tHeight = tHitboxMax.z - tHitboxMin.z
 
     -- scale steps to prop size
     ply:SetStepSize(math.Round(4 + tHeight / 4))
@@ -328,18 +347,25 @@ function SetPlayerProp(ply, ent, scale, forcePos, forceLockAngle, forceRollAngle
     ply:SetupPropSpeed()
 
     -- Update the player's mass to be something more reasonable to the prop
-    local phys = ent:GetPhysicsObject()
-    if IsValid(ent) and phys:IsValid() then
-        ply:GetPhysicsObject():SetMass(phys:GetMass())
-        -- vphysics
-        local vPhysMesh = ent:GetPhysicsObject():GetMeshConvexes()
-        prop:PhysicsInitMultiConvex(vPhysMesh)
+    if (revert and ply.prevPropMass) then
+        ply:GetPhysicsObject():SetMass(ply.prevPropMass)
+        if (ply.prevPropVMesh) then
+            prop:PhysicsInitMultiConvex(ply.prevPropVMesh)
+        end
     else
-        -- Entity doesn't have a physics object so calculate mass
-        local density = PROP_DEFAULT_DENSITY
-        local mass = volume * density
-        mass = math.Clamp(mass, 0, 100)
-        ply:GetPhysicsObject():SetMass(mass)
+        local phys = ent:GetPhysicsObject()
+        if IsValid(ent) and phys:IsValid() then
+            ply:GetPhysicsObject():SetMass(phys:GetMass())
+            -- vphysics
+            local vPhysMesh = phys:GetMeshConvexes()
+            prop:PhysicsInitMultiConvex(vPhysMesh)
+        else
+            -- Entity doesn't have a physics object so calculate mass
+            local density = PROP_DEFAULT_DENSITY
+            local mass = volume * density
+            mass = math.Clamp(mass, 0, 100)
+            ply:GetPhysicsObject():SetMass(mass)
+        end
     end
 
     if (!ply.propHistory) then
@@ -375,14 +401,11 @@ function RevertProp(ply)
         return
     end
     if (ply.prevProp) then
-        print(ply.prevProp:GetModel())
         SetPlayerProp(
             ply,
             ply.prevProp,
             ply.prevProp:GetModelScale(),
-            ply.prevPos,
-            ply.prevLockedAngle,
-            ply.prevRollAngle
+            true
         )
     else
         ply:SetPos(ply.prevPos)
@@ -397,7 +420,10 @@ function RevertProp(ply)
         UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
     end
 
-    ply.prevProp = nil
+    ply.prevPropModel = nil
+    ply.prevPropSkin = nil
+    ply.prevPropMass = nil
+    ply.prevPropVMesh = nil
     ply.prevPos = nil
     ply.prevAngle = nil
     ply.prevAngleLockChange = false
