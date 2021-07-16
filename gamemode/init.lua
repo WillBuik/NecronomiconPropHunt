@@ -265,9 +265,12 @@ end
 --[[ sets the players prop, run PlayerCanBeEnt before using this ]]--
 function SetPlayerProp(ply, ent, scale, revert)
     ply.lastChange = CurTime()
+    -- The player's prop entity will be adjusted in-place to look like `ent`.
+    local prop = ply:GetProp()
+
     if (!revert) then
-        ply.prevPropModel = ply:GetProp():GetModel()
-        ply.prevPropSkin = ply:GetProp():GetSkin()
+        ply.prevPropModel = prop:GetModel()
+        ply.prevPropSkin = prop:GetSkin()
         ply.prevPropMass = ply:GetPhysicsObject():GetMass()
         ply.prevPropVMesh = ply:GetPhysicsObject():GetMeshConvexes()
 
@@ -278,11 +281,6 @@ function SetPlayerProp(ply, ent, scale, revert)
         ply.prevRollAngle = ply:GetPropRollAngle()
     end
 
-    if (!forceValues) then
-        forceValues = {}
-    end
-    -- The player's prop entity will be adjusted in-place to look like `ent`.
-    local prop = ply:GetProp()
 
     -- scaling
     prop:SetModelScale(scale, 0)
@@ -400,7 +398,7 @@ function RevertProp(ply)
     ) then
         return
     end
-    if (ply.prevProp) then
+    if (ply.prevPropModel) then
         SetPlayerProp(
             ply,
             ply.prevProp,
