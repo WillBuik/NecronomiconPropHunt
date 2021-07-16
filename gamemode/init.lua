@@ -269,6 +269,7 @@ function SetPlayerProp(ply, ent, scale, revert)
     local prop = ply:GetProp()
 
     if (!revert) then
+        ResetPrevVals(ply)
         ply.prevPropModel = prop:GetModel()
         ply.prevPropSkin = prop:GetSkin()
         ply.prevPropMass = ply:GetPhysicsObject():GetMass()
@@ -277,7 +278,6 @@ function SetPlayerProp(ply, ent, scale, revert)
 
         ply.prevPos = ply:GetPos()
         ply.prevAngle = ply:GetAngles()
-        ply.prevAngleLockChange = false
         ply.prevLockedAngle = ply:GetPropLockedAngle()
         ply.prevRollAngle = ply:GetPropRollAngle()
     end
@@ -423,6 +423,10 @@ function RevertProp(ply)
         UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
     end
 
+    ResetPrevVals(ply)
+end
+
+function ResetPrevVals(ply)
     ply.prevPropModel = nil
     ply.prevPropSkin = nil
     ply.prevPropMass = nil
@@ -435,10 +439,9 @@ function RevertProp(ply)
     ply.prevRollAngle = nil
 end
 
-
 function ResetPropToProp(ply)
+    ResetPrevVals(ply)
     ply.lastChange = CurTime()
-    ply.prevProp = nil
     ply.prevPos = ply:GetPos()
     ply.prevAngle = ply:GetAngles()
     ply.prevLockedAngle = ply:GetPropLockedAngle()
@@ -457,10 +460,9 @@ function UnstickPlayer(ply, searchMultplier)
     local tHitboxMin, tHitboxMax
     if (ply:Team() == TEAM_PROPS) then
         ply.lastChange = CurTime()
-        ply.prevProp = nil
+        ResetPrevVals(ply)
         ply.prevPos = ply:GetPos()
         ply.prevAngle = ply:GetAngle()
-        ply.prevAngleLockChange = false
         ply.prevLockedAngle = ply:GetPropLockedAngle()
         ply.prevRollAngle = ply:GetPropRollAngle()
         tHitboxMin, tHitboxMax = PropHitbox(ply)
