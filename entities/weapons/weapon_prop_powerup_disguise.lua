@@ -4,6 +4,7 @@ SWEP.Base = "weapon_prop_powerup_base"
 SWEP.Name = "Disguise"
 SWEP.PrintName = "Disguise"
 
+SWEP.AbilityUseManuallyManaged = true
 SWEP.AbilityDescription = "Transforms you into a random hunter until you turn it off."
 
 function SWEP:Ability()
