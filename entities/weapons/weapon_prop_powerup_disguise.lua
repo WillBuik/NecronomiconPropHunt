@@ -19,7 +19,7 @@ function SWEP:Ability()
             ply:Give("weapon_prop_util_smgdummy")
             ply:SelectWeapon("weapon_prop_util_smgdummy")
 
-            local tHitboxMin, tHitboxMax = PropHitbox(ply)
+            local tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply)
             UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
         end
     else
