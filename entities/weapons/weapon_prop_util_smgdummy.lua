@@ -22,5 +22,4 @@ function SWEP:Ability()
         end
         ply:SetRenderMode(RENDERMODE_NONE)
     end
-    end
 end
