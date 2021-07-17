@@ -33,6 +33,7 @@ SWEP.AbilityShowTargetHalos = false
 SWEP.AbilityShowTargetHalosCheckLOS = false
 SWEP.AbilityDuration = 0
 SWEP.AbilityStartTime = 0
+SWEP.AbilityUseManuallyManaged = false
 SWEP.AbilityDescription = ""
 
 SWEP.AbilityUsableBeforeHuntersReleaed = false
@@ -129,7 +130,9 @@ function SWEP:SecondaryAttack()
                 self:EmitSound(abilitySound)
             end
         end
-        self:SetIsAbilityUsed(true)
+        if (!self.AbilityUseManuallyManaged) then
+            self:SetIsAbilityUsed(true)
+        end
     else
         if CLIENT then
             self:EmitSound(Sound("WallHealth.Deny"))
