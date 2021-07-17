@@ -58,7 +58,6 @@ function SWEP:Initialize()
     self:SetHoldType(self.HoldType)
 
     if self.IsNoAbility then
-        print("really wierd")
         self:SetIsAbilityUsed(true)
     else
         self:SetIsAbilityUsed(false)
@@ -112,17 +111,12 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-    print("IS used")
-    print(self:GetIsAbilityUsed())
     if self:GetIsAbilityUsed() then return end
     if !self.AbilityUsableBeforeHuntersReleaed and !round.huntersReleased then return end
 
-    print("here 1")
     self.AbilityStartTime = CurTime()
-    print("here 2")
 
     local abilityError = self:Ability()
-    print("here 3")
 
     if !abilityError then
         if self.AbilitySound then
@@ -136,12 +130,7 @@ function SWEP:SecondaryAttack()
                 self:EmitSound(abilitySound)
             end
         end
-        print("IS managaged")
-        print(self.AbilityUseManuallyManaged)
-        if (!self.AbilityUseManuallyManaged) then
-            print("got to wierd place")
-            self:SetIsAbilityUsed(true)
-        end
+        self:SetIsAbilityUsed(true)
     else
         if CLIENT then
             self:EmitSound(Sound("WallHealth.Deny"))
