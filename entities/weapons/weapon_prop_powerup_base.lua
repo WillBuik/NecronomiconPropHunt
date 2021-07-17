@@ -199,6 +199,7 @@ function SWEP:GetHuntersInRange(range, ignoreLOS)
 end
 
 function SWEP:GiveNewPowerup()
+    if CLIENT then return end
     local ply = self:GetOwner()
     ply:StripWeapons()
     ply:RemoveAllAmmo()
