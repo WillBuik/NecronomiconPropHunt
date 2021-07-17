@@ -10,9 +10,9 @@ SWEP.AbilityDescription = "Transforms you into a random hunter until you turn it
 function SWEP:Ability()
     local ply = self:GetOwner()
     if !ply:ObjIsDisguised() then
-        ply:ObjSetDisguised(true)
         local hunters = team.GetPlayers(TEAM_HUNTERS)
         if SERVER then
+            ply:ObjSetDisguised(true)
             ply:SetModel(TEAM_HUNTERS_DEFAULT_MODEL)
             ply:SetRenderMode(RENDERMODE_NORMAL)
             ply:GetProp():SetRenderMode(RENDERMODE_NONE)
@@ -20,14 +20,12 @@ function SWEP:Ability()
             ply:SelectWeapon("weapon_prop_util_smgdummy")
 
             ply:ResetHull()
-            net.Start("Reset Prop")
-                -- empty, just used for the hook
-            net.Send(ply)
         end
     else
-        ply:ObjSetDisguised(false)
-        self:SetIsAbilityUsed(true)
+        print("test")
         if SERVER then
+            ply:ObjSetDisguised(false)
+            self:SetIsAbilityUsed(true)
             ply:StripWeapon("weapon_prop_util_smgdummy")
             player_manager.RunClass(ply, "SetModel")
             if (IsValid(ply:GetProp())) then
