@@ -63,9 +63,12 @@ end
 -- Get an entity's hitbox as mins,maxs relative to the entity's model, not the
 -- entity's bones.  You should prefer this function over direct calls to
 -- Entity:GetHitBoxBounds() in virtually all cases.
-function GetHitBoxInModelCoordinates(ent)
+function GetHitBoxInModelCoordinates(ent, forcedScale)
     local mins, maxs = ent:GetModelBounds()
     local scale = ent:GetModelScale()
+    if forcedScale then
+        scale = forcedScale
+    end
     return mins * scale, maxs * scale
 end
 

@@ -16,10 +16,15 @@ function SWEP:Ability()
         ply:Give("weapon_prop_util_smgdummy")
         ply:SelectWeapon("weapon_prop_util_smgdummy")
 
-        local tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply)
+        ply:ResetHull()
+        local tHitboxMin, tHitboxMax = ply:GetHull()
         UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
         local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
         ply:SetPos(foundSpot)
+        net.Start("Prop Update")
+            net.WriteVector(tHitboxMax)
+            net.WriteVector(tHitboxMin)
+        net.Send(ply)
     end
 end
 

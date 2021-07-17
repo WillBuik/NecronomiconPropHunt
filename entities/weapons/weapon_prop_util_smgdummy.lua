@@ -13,7 +13,6 @@ SWEP.HoldType = "smg"
 function SWEP:Ability()
     local ply = self:GetOwner()
     if SERVER then
-        self:SetIsAbilityUsed(true)
         ply:StripWeapon("weapon_prop_util_smgdummy")
         player_manager.RunClass(ply, "SetModel")
         if (IsValid(ply:GetProp())) then
