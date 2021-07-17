@@ -111,6 +111,7 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
+    print("IS used")
     print(self:GetIsAbilityUsed())
     if self:GetIsAbilityUsed() then return end
     if !self.AbilityUsableBeforeHuntersReleaed and !round.huntersReleased then return end
@@ -131,8 +132,10 @@ function SWEP:SecondaryAttack()
                 self:EmitSound(abilitySound)
             end
         end
+        print("IS managaged")
         print(self.AbilityUseManuallyManaged)
         if (!self.AbilityUseManuallyManaged) then
+            print("got to wierd place")
             self:SetIsAbilityUsed(true)
         end
     else
