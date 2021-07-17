@@ -117,9 +117,12 @@ function SWEP:SecondaryAttack()
     if self:GetIsAbilityUsed() then return end
     if !self.AbilityUsableBeforeHuntersReleaed and !round.huntersReleased then return end
 
+    print("here 1")
     self.AbilityStartTime = CurTime()
+    print("here 2")
 
     local abilityError = self:Ability()
+    print("here 3")
 
     if !abilityError then
         if self.AbilitySound then
