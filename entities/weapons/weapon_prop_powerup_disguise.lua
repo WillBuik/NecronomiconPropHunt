@@ -19,12 +19,14 @@ function SWEP:Ability()
             ply:Give("weapon_prop_util_smgdummy")
             ply:SelectWeapon("weapon_prop_util_smgdummy")
 
-            ply:ResetHull()
+            local tHitboxMin, tHitboxMax = PropHitbox(ply)
+            UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
         end
     else
         print("test")
         if SERVER then
             ply:ObjSetDisguised(false)
+            print("another super odd place")
             self:SetIsAbilityUsed(true)
             ply:StripWeapon("weapon_prop_util_smgdummy")
             player_manager.RunClass(ply, "SetModel")

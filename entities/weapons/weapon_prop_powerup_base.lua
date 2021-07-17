@@ -58,6 +58,7 @@ function SWEP:Initialize()
     self:SetHoldType(self.HoldType)
 
     if self.IsNoAbility then
+        print("really wierd")
         self:SetIsAbilityUsed(true)
     else
         self:SetIsAbilityUsed(false)
