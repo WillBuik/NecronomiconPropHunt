@@ -12,11 +12,6 @@ function SWEP:Ability()
     self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
     local hunters = team.GetPlayers(TEAM_HUNTERS)
     ply:ObjSetDisguised(true)
-    if #hunters > 0 then
-        ply:ObjSetDisguiseName(hunters[math.random(1, #hunters)]:Nick())
-    else
-        ply:ObjSetDisguiseName(ply:Nick())
-    end
     if SERVER then
         ply:SetModel(TEAM_HUNTERS_DEFAULT_MODEL)
         ply:SetRenderMode(RENDERMODE_NORMAL)
