@@ -14,6 +14,7 @@ hook.Add("Initialize", "Precache all network strings", function()
     util.AddNetworkString("Prop Angle Lock")
     util.AddNetworkString("Prop Angle Snap")
     util.AddNetworkString("Prop Pitch Enable")
+    util.AddNetworkString("Prop Revert")
     util.AddNetworkString("Hunter Hint Updown")
     util.AddNetworkString("AutoTaunt Update")
     util.AddNetworkString("Prop Roll")
@@ -54,6 +55,7 @@ net.Receive("Prop Angle Lock", function(len, ply)
     local shouldAngleLock = net.ReadBit() == 1
     local propAngle = net.ReadAngle()
 
+    local prevLockedAngle = ply:GetPropLockedAngle()
     ply:SetPropAngleLocked(shouldAngleLock)
     ply:SetPropLockedAngle(propAngle)
 
@@ -61,6 +63,8 @@ net.Receive("Prop Angle Lock", function(len, ply)
 
     if (IsValid(prop)) then
         ResetPropToProp(ply)
+        ply.prevAngleLockChange = true
+        ply.prevLockedAngle = prevLockedAngle
     end
 end)
 
@@ -68,6 +72,11 @@ end)
 net.Receive("Prop Pitch Enable", function(len, ply)
     local shouldPitchEnable = net.ReadBit() == 1
     ply:SetPropPitchEnabled(shouldPitchEnable)
+end)
+
+--[[ When a player wants to lock world angles on their prop ]]--
+net.Receive("Prop Revert", function(len, ply)
+    RevertProp(ply)
 end)
 
 net.Receive("Hunter Hint Updown", function(len, ply)

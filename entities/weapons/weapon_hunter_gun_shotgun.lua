@@ -53,8 +53,6 @@ function SWEP:StartReload()
       return false
    end
 
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-
    local ply = self:GetOwner()
 
    if !ply or ply:GetAmmoCount(self.Primary.Ammo) <= 0 then
@@ -77,9 +75,6 @@ end
 
 function SWEP:PerformReload()
    local ply = self:GetOwner()
-
-   -- prevent normal shooting in between reloads
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
    if !ply or ply:GetAmmoCount(self.Primary.Ammo) <= 0 then return end
 

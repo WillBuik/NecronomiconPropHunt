@@ -23,6 +23,17 @@ hook.Add("PlayerButtonDown", "EnableTiltKeyPress", function(ply, button)
     end
 end)
 
+hook.Add("PlayerButtonDown", "RevertKeyPress", function(ply, button)
+    if (button == KEY_Z and
+         ply:Team() == TEAM_PROPS and
+         ply:Alive() and
+         IsValid(ply:GetProp())
+    ) then
+        net.Start("Prop Revert")
+        net.SendToServer()
+    end
+end)
+
 hook.Add("KeyPress", "PressShiftHunterHintUpdown", function(ply, key)
     if (key == IN_SPEED and
          ply:Team() == TEAM_HUNTERS and
@@ -47,7 +58,7 @@ end)
 function GM:PlayerBindPress(ply, bind, pressed)
     if (ply:Team() == TEAM_PROPS and
         ply:Alive() and
-        IsValid(ply:GetProp()) and 
+        IsValid(ply:GetProp()) and
         pressed
     ) then
         if (bind == "invnext") then
