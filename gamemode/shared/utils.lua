@@ -64,7 +64,9 @@ end
 -- entity's bones.  You should prefer this function over direct calls to
 -- Entity:GetHitBoxBounds() in virtually all cases.
 function GetHitBoxInModelCoordinates(ent)
-    return ent:GetModelBounds()
+    local mins, maxs = ent:GetModelBounds()
+    local scale = ent:GetModelScale()
+    return mins * scale, maxs * scale
 end
 
 function FindSpotForProp(ply, prop)
