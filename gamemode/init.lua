@@ -429,7 +429,7 @@ hook.Add("PlayerSpawn", "Set ObjHunt model", function (ply)
             ply:GetProp():Spawn()
             ply:GetProp():SetOwner(ply)
             -- custom initial hb (REMVOED): PROP_DEFAULT_HB_MIN, PROP_DEFAULT_HB_MAX
-            SetPlayerProp(ply, ply:GetProp(), 2.0)
+            SetPlayerProp(ply, ply:GetProp(), PROP_DEFAULT_SCALE)
         end)
 
         -- this fixes ent culling when head in ceiling

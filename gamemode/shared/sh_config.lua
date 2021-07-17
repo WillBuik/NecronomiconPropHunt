@@ -60,7 +60,7 @@ PROP_DEFAULT_HB_MIN = Vector(-10,-10,0)
 PROP_DEFAULT_HB_MAX = Vector(10,10,35)
 
 -- the default scale for the initial prop
-PROP_DEFAULT_SCALE = 0.5
+PROP_DEFAULT_SCALE = 2.0
 
 -- the scale for the props chosen by the player
 PROP_CHOSEN_SCALE = 1
