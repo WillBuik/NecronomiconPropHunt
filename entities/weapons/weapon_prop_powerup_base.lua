@@ -35,6 +35,7 @@ SWEP.AbilityDuration = 0
 SWEP.AbilityStartTime = 0
 SWEP.AbilityUseManuallyManaged = false
 SWEP.AbilityDescription = ""
+SWEP.AbilityCompletedLater = false
 
 SWEP.AbilityUsableBeforeHuntersReleaed = false
 
@@ -131,7 +132,9 @@ function SWEP:SecondaryAttack()
             end
         end
         self:SetIsAbilityUsed(true)
-
+        if (!self.AbilityCompletedLater) then
+            self:AbilityComplete()
+        end
     else
         if CLIENT then
             self:EmitSound(Sound("WallHealth.Deny"))
@@ -167,6 +170,9 @@ function SWEP:AbilityCancelled()
 end
 
 function SWEP:AbilityCleanup()
+end
+
+function SWEP:AbilityComplete()
     if CLIENT then return end
     self:GetOwner():GiveNewPowerupAfterWait()
 end

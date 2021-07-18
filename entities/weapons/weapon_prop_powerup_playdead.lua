@@ -6,6 +6,7 @@ SWEP.PrintName = "Play Dead"
 
 SWEP.AbilityDuration = PROP_RAGDOLL_DURATION
 SWEP.AbilityDescription = "Transforms you into a ragdoll for $AbilityDuration seconds the next time you take damage."
+SWEP.AbilityCompletedLater = true
 
 function SWEP:Ability()
     if CLIENT then return end

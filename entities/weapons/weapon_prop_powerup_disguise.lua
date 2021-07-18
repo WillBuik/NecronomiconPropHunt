@@ -5,6 +5,7 @@ SWEP.Name = "Disguise"
 SWEP.PrintName = "Disguise"
 
 SWEP.AbilityDescription = "Transforms you into a random hunter until you turn it off."
+SWEP.AbilityCompletedLater = true
 
 function SWEP:Ability()
     local ply = self:GetOwner()
