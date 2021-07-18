@@ -47,9 +47,9 @@ hook.Add("PostDrawOpaqueRenderables", "Draw Nametags", function()
             pos = v:GetPos() + LocalPlayer():GetViewOffset() + cOffset
             local hunters = team.GetPlayers(TEAM_HUNTERS)
             local disguiseIndex = 0
-            for k, v in pairs(hunters) do
-                if (v == LocalPlayer()) then
-                    disguiseIndex = (k + 1) % #hunters
+            for i, hunter in pairs(hunters) do
+                if (hunter == LocalPlayer()) then
+                    disguiseIndex = (i + 1) % #hunters
                     break
                 end
             end
