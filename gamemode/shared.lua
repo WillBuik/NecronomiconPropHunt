@@ -71,6 +71,9 @@ function playerCanBeEnt(ply, ent)
     -- make sure we can get the model and class
     if (    !ent:GetClass() or !ent:GetModel()) then return false end
 
+    -- Not if disguised
+    if (ply:ObjIsDisguised()) then return false end
+
     -- cooldown on switching props
     if (ply:GetProp():GetModel() != "models/player.mdl") then
         if (CurTime() < ply:GetPropLastChange() + PROP_CHOOSE_COOLDOWN) then

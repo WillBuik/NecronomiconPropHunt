@@ -45,7 +45,15 @@ hook.Add("PostDrawOpaqueRenderables", "Draw Nametags", function()
 
         if (v:ObjIsDisguised() and LocalPlayer():Team() == TEAM_HUNTERS) then
             pos = v:GetPos() + LocalPlayer():GetViewOffset() + cOffset
-            name = v:ObjGetDisguiseName()
+            local hunters = team.GetPlayers(TEAM_HUNTERS)
+            local disguiseIndex = 0
+            for i, hunter in pairs(hunters) do
+                if (hunter == LocalPlayer()) then
+                    disguiseIndex = (i + 1) % #hunters
+                    break
+                end
+            end
+            name = hunters[disguiseIndex]:Nick()
         end
 
         cam.Start3D2D(pos, angle, .05)

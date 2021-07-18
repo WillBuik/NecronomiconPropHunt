@@ -33,6 +33,7 @@ SWEP.AbilityShowTargetHalos = false
 SWEP.AbilityShowTargetHalosCheckLOS = false
 SWEP.AbilityDuration = 0
 SWEP.AbilityStartTime = 0
+SWEP.AbilityUseManuallyManaged = false
 SWEP.AbilityDescription = ""
 
 SWEP.AbilityUsableBeforeHuntersReleaed = false

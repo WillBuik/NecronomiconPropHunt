@@ -10,4 +10,30 @@ SWEP.ViewModel = "models/weapons/c_smg1.mdl"
 
 SWEP.HoldType = "smg"
 
-SWEP.IsNoAbility = true
+function SWEP:Ability()
+    local ply = self:GetOwner()
+    if SERVER then
+        ply:StripWeapon("weapon_prop_util_smgdummy")
+        player_manager.RunClass(ply, "SetModel")
+        if (IsValid(ply:GetProp())) then
+            ply:GetProp():SetRenderMode(RENDERMODE_NORMAL)
+            ResetPropToProp(ply)
+        end
+        ply:SetRenderMode(RENDERMODE_NONE)
+    end
+end
+
+function SWEP:AbilityCleanup()
+    if !IsValid(self:GetOwner()) then return end
+    local ply = self:GetOwner()
+    ply:ObjSetDisguised(false)
+    if SERVER then
+        ply:StripWeapon("weapon_prop_util_smgdummy")
+        player_manager.RunClass(ply, "SetModel")
+        if (IsValid(ply:GetProp())) then
+            ply:GetProp():SetRenderMode(RENDERMODE_NORMAL)
+            ResetPropToProp(ply)
+        end
+        ply:SetRenderMode(RENDERMODE_NONE)
+    end
+end

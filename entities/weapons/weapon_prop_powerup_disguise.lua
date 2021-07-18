@@ -4,20 +4,12 @@ SWEP.Base = "weapon_prop_powerup_base"
 SWEP.Name = "Disguise"
 SWEP.PrintName = "Disguise"
 
-SWEP.AbilityDuration = 20
-SWEP.AbilityDescription = "Transforms you into a random hunter for $AbilityDuration seconds."
+SWEP.AbilityDescription = "Transforms you into a random hunter until you turn it off."
 
 function SWEP:Ability()
     local ply = self:GetOwner()
-    self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
-    local hunters = team.GetPlayers(TEAM_HUNTERS)
-    ply:ObjSetDisguised(true)
-    if #hunters > 0 then
-        ply:ObjSetDisguiseName(hunters[math.random(1, #hunters)]:Nick())
-    else
-        ply:ObjSetDisguiseName(ply:Nick())
-    end
     if SERVER then
+        ply:ObjSetDisguised(true)
         ply:SetModel(TEAM_HUNTERS_DEFAULT_MODEL)
         ply:SetRenderMode(RENDERMODE_NORMAL)
         ply:GetProp():SetRenderMode(RENDERMODE_NONE)
@@ -25,8 +17,13 @@ function SWEP:Ability()
         ply:SelectWeapon("weapon_prop_util_smgdummy")
 
         ply:ResetHull()
-        net.Start("Reset Prop")
-            -- empty, just used for the hook
+        local tHitboxMin, tHitboxMax = ply:GetHull()
+        UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
+        local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax)
+        ply:SetPos(foundSpot)
+        net.Start("Prop Update")
+            net.WriteVector(tHitboxMax)
+            net.WriteVector(tHitboxMin)
         net.Send(ply)
     end
 end
