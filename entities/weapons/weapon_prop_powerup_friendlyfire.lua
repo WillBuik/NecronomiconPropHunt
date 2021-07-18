@@ -20,5 +20,6 @@ end
 function SWEP:AbilityCleanup()
     if SERVER then
         DisableHunterFriendlyFire(self:GetOwner())
+        self:GetOwner():GiveNewPowerupAfterWait()
     end
 end

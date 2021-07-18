@@ -47,6 +47,8 @@ function SWEP:AbilityCleanup()
     if IsValid(self:GetOwner()) and self:GetOwner() == GAMEMODE.PropAbilitySuperHotModePly then
         endSuperHotMode()
     end
+    if CLIENT then return end
+    self:GetOwner():GiveNewPowerupAfterWait()
 end
 
 if SERVER then
@@ -65,7 +67,7 @@ if CLIENT then
         if IsValid(LocalPlayer()) and LocalPlayer():GetNWBool(playerSuperHotNWVarName) then
             local x = ScrW() / 2
             local y = ScrH() / 2 - 200
-        
+
             local text = ""
 
             if math.floor(RealTime()) % 2 == 0 then

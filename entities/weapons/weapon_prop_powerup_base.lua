@@ -132,12 +132,6 @@ function SWEP:SecondaryAttack()
         end
         self:SetIsAbilityUsed(true)
 
-        -- Get a new power up after PROP_NEW_POWERUP_DURATION plus any extra time until the hunters are released
-        local timeUntilNewPowerUp = PROP_NEW_POWERUP_DURATION + math.max(
-            0,
-            round.startTime + OBJHUNT_HIDE_TIME - CurTime()
-        )
-        self:AbilityTimerIfValidOwnerAndAlive(timeUntilNewPowerUp, 1, true, function() self:GiveNewPowerup() end)
     else
         if CLIENT then
             self:EmitSound(Sound("WallHealth.Deny"))
@@ -173,6 +167,8 @@ function SWEP:AbilityCancelled()
 end
 
 function SWEP:AbilityCleanup()
+    if CLIENT then return end
+    self:GetOwner():GiveNewPowerupAfterWait()
 end
 
 function SWEP:AbilityIsTargetInLOS(target, mask)
@@ -197,15 +193,6 @@ function SWEP:GetHuntersInRange(range, ignoreLOS)
     end
     return result
 end
-
-function SWEP:GiveNewPowerup()
-    if CLIENT then return end
-    local ply = self:GetOwner()
-    ply:StripWeapons()
-    ply:RemoveAllAmmo()
-    ply:Give(ABILITIES[ math.random(#ABILITIES) ])
-end
-
 
 function SWEP:AbilityTimer(dur, reps, remove, fn)
     local timerName = "objAbility" .. "." .. self:EntIndex() .. "." .. self.currentTimerID

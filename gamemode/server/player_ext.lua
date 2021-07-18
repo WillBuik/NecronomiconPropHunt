@@ -127,4 +127,28 @@ function plymeta:EndFakeDeath()
     ResetPropToProp(ply)
     self.objRagdoll = nil
     ragdoll:Remove()
+    self:GiveNewPowerupAfterWait()
+end
+
+
+function plymeta:GiveNewPowerupAfterWait()
+    local ply = self
+    local timeUntilNewPowerUp = PROP_NEW_POWERUP_DURATION + math.max(
+        0,
+        round.startTime + OBJHUNT_HIDE_TIME - CurTime()
+    )
+    timer.Simple(timeUntilNewPowerUp, function () ply:GiveNewPowerup() end)
+end
+
+function plymeta:GiveNewPowerup()
+    local ply = self
+    if (
+         ply:Team() == TEAM_PROPS and
+         ply:Alive() and
+         IsValid(ply:GetProp())
+    ) then
+        ply:StripWeapons()
+        ply:RemoveAllAmmo()
+        ply:Give(ABILITIES[ math.random(#ABILITIES) ])
+    end
 end

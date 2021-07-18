@@ -40,5 +40,6 @@ function SWEP:AbilityCleanup()
             ResetPropToProp(ply)
         end
         ply:SetRenderMode(RENDERMODE_NONE)
+        self:GetOwner():GiveNewPowerupAfterWait()
     end
 end

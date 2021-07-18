@@ -25,4 +25,5 @@ function SWEP:AbilityCleanup()
         ply:GetProp():Fire( "alpha", 255, 0 )
         ply:GetProp():DrawShadow(true)
     end
+    self:GetOwner():GiveNewPowerupAfterWait()
 end

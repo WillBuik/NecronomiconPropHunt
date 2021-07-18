@@ -49,6 +49,8 @@ end
 function SWEP:AbilityCleanup()
     -- Make sure we are no longer showing the BSOD overlay
     BSODTimeStarted = 0
+    if CLIENT then return end
+    self:GetOwner():GiveNewPowerupAfterWait()
 end
 
 function BuildPopup(popupX, popupY, popupImage, closeSizeX, closeSizeY, closePosX, closePosY, closeText, closeColor)
@@ -231,7 +233,7 @@ if CLIENT then
             BSODTimeStarted = 0
         end
     end
-    
+
     hook.Add("DrawOverlay", "BSOD Overlay", PaintBSODOverlay)
 
     BSODMaterial = Material("windows_9x_bsod.png")

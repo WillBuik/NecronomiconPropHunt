@@ -103,8 +103,8 @@ FRIENDLY_FIRE_ABILITY_DURATION = 30
 -- on top of the player they are spectating
 TIME_BEFORE_SPECTATE = 3
 
--- Amount of time after a prop uses a powerup until they get a new one
-PROP_NEW_POWERUP_DURATION = 40
+-- Amount of time after a prop uses a powerup until they get a new one (from when it finishs)
+PROP_NEW_POWERUP_DURATION = 20
 
 -- Number maps shown to vote on
 MAPS_SHOWN_TO_VOTE = 10
