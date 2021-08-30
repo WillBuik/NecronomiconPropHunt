@@ -5,7 +5,6 @@ local btnWidth = width
 local btnHeight = 50
 local searchHeight = 25
 local tauntPanel = nil
-local pitchSlider
 local TAUNT_SELECTION_TIMER_ID = "SHOW_TAUNT_SELECTION_MENU"
 
 local function playTaunt(taunt, pitch)
