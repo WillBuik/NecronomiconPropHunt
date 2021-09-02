@@ -93,7 +93,7 @@ local function createTauntMenu()
         end
 
     searchTextEntry = vgui.Create("DTextEntry", prettyPanel)
-        searchTextEntry:SetPlaceholderText("Search...")
+        searchTextEntry:SetPlaceholderText("Search... (Click or Ctrl+Q)")
         searchTextEntry:SetEditable(true)
         searchTextEntry:SetSize(width, searchHeight)
         searchTextEntry:SetPos(padding, padding)
@@ -206,13 +206,19 @@ local function showTauntMenuAfter(delay)
     timer.Create(TAUNT_SELECTION_TIMER_ID, delay, 1, showTauntMenu)
 end
 
--- Hooks for taunt selection 'Q' button
+-- Hooks for taunt selection 'Q' button press.
 hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
-    showTauntMenuAfter(TAUNT_MENU_DELAY)
-    LocalPlayer().tauntMenuOpenTime = CurTime()
+    if input.IsKeyDown(KEY_LCONTROL) or input.IsKeyDown(KEY_RCONTROL) then
+        showTauntMenu()
+        tauntMenuEnableSearch()
+        LocalPlayer().tauntMenuOpenTime = nil
+    else
+        showTauntMenuAfter(TAUNT_MENU_DELAY)
+        LocalPlayer().tauntMenuOpenTime = CurTime()
+    end
 end)
 
--- Hooks for taunt selection 'Q' button
+-- Hooks for taunt selection 'Q' button release.
 hook.Add("OnSpawnMenuClose", "Close the context menu", function()
     -- Cancel the open timer, does nothing if the dialog is already open.
     cancelTauntMenuAfter()
