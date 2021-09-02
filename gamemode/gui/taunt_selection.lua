@@ -5,7 +5,42 @@ local btnWidth = width
 local btnHeight = 50
 local searchHeight = 25
 local tauntPanel = nil
+local searchTextEntry = nil;
 local TAUNT_SELECTION_TIMER_ID = "SHOW_TAUNT_SELECTION_MENU"
+
+-- Returns true if the taunt menu is visible and in search mode.
+local function tauntMenuIsSearching()
+    if tauntPanel != nil then
+        return tauntPanel:IsKeyboardInputEnabled()
+    end
+    return false
+end
+
+-- Enable taunt search and focus the search bar.
+local function tauntMenuEnableSearch()
+    if tauntPanel == nil or searchTextEntry == nil then return end
+    tauntPanel:SetKeyBoardInputEnabled(true)
+    searchTextEntry:RequestFocus()
+end
+
+-- Cancels the taunt menu display timer and returns true if it was running.
+local function cancelTauntMenuAfter()
+    if timer.Exists(TAUNT_SELECTION_TIMER_ID) then
+        -- This was a short press, play a random taunt and cancel the menu timer
+        timer.Remove(TAUNT_SELECTION_TIMER_ID)
+        return true
+    end
+    return false
+end
+
+-- Close the taunt menu.
+local function hideTauntMenu()
+    cancelTauntMenuAfter()
+    if tauntPanel == nil then return end
+    tauntPanel:Remove()
+    tauntPanel = nil
+    searchTextEntry = nil
+end
 
 local function playTaunt(taunt, pitch)
     -- Only annoy the server if it looks like we can taunt right now.  (The
@@ -26,7 +61,7 @@ local function getSearchString(str)
 end
 
 -- Create and show the taunt selection menu.
-local function showTauntSelctionMenu()
+local function createTauntMenu()
     local player = LocalPlayer()
     local TAUNTS
     if (player:Team() == TEAM_PROPS) then
@@ -50,15 +85,17 @@ local function showTauntSelctionMenu()
         local ebw = exitBtn:GetSize() / 2
         exitBtn:SetPos(width + padding * 3 - ebw, padding - ebw)
         exitBtn.DoClick = function()
-            tauntPanel:Remove()
+            hideTauntMenu()
         end
 
-    local searchTextEntry = vgui.Create("DTextEntry", prettyPanel)
+    searchTextEntry = vgui.Create("DTextEntry", prettyPanel)
         searchTextEntry:SetPlaceholderText("Search...")
         searchTextEntry:SetEditable(true)
         searchTextEntry:SetSize(width, searchHeight)
         searchTextEntry:SetPos(padding, padding)
-        searchTextEntry:RequestFocus()
+        searchTextEntry.OnGetFocus = function(self)
+            tauntMenuEnableSearch()
+        end
 
     -- Remember what pitch the player last selected in this UI.
     local pitch = 100
@@ -85,7 +122,7 @@ local function showTauntSelctionMenu()
             player.lastSelectedPitch = selectedPitch
             if line:GetValue(2):len() > 0 then
                 if playTaunt(line:GetValue(2), selectedPitch) then
-                    tauntPanel:Remove()
+                    hideTauntMenu()
                 end
             end
         end
@@ -117,7 +154,7 @@ local function showTauntSelctionMenu()
         randomBtn:SetPos(padding, height + searchHeight + padding * 3)
         randomBtn.DoClick = function()
             if playTaunt(RandomTaunt(player), RandomPitch()) then
-                tauntPanel:Remove()
+                hideTauntMenu()
             end
         end
 
@@ -149,24 +186,36 @@ local function showTauntSelctionMenu()
     end
 end
 
+-- Open the taunt menu.
+local function showTauntMenu()
+    cancelTauntMenuAfter()
+    if tauntPanel == nil then
+        createTauntMenu()
+        tauntPanel:SetKeyBoardInputEnabled(false)
+    end
+end
+
+-- Open the taunt menu after a short delay.
+local function showTauntMenuAfter(delay)
+    -- Start/restart timer to show the selection menu or taunt on a quick press
+    cancelTauntMenuAfter()
+    timer.Create(TAUNT_SELECTION_TIMER_ID, delay, 1, showTauntMenu)
+end
+
 -- Hooks for taunt selection 'Q' button
 hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
-    if tauntPanel == nil or tauntPanel:IsVisible() == false then
-        local ply = LocalPlayer()
-        if !IsValid(ply) or !ply:CanTauntNowOrLater() then return end
-        -- Start timer to show the selection menu or taunt on a quick press
-        timer.Create(TAUNT_SELECTION_TIMER_ID, 0.12, 1, showTauntSelctionMenu)
-    elseif tauntPanel != nil then
-        -- Hide the taunt selection menu
-        tauntPanel:Remove()
-    end
+    showTauntMenuAfter(0.12)
 end)
 
+-- Hooks for taunt selection 'Q' button
 hook.Add("OnSpawnMenuClose", "Close the context menu", function()
-    if timer.Exists(TAUNT_SELECTION_TIMER_ID) then
-        -- This was a short press, play a random taunt and cancel the menu timer
-        timer.Remove(TAUNT_SELECTION_TIMER_ID)
+    if cancelTauntMenuAfter() then
+        -- This was a short press, play a random taunt and cancel the menu timer.
         local ply = LocalPlayer()
         playTaunt(RandomTaunt(ply), RandomPitch())
+    end
+    if !tauntMenuIsSearching() then
+        -- Only hide the taunt menu if the user hasn't focused the search bar.
+        hideTauntMenu()
     end
 end)
