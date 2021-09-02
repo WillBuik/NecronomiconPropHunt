@@ -50,7 +50,7 @@ local function playTaunt(taunt, pitch)
     -- Only annoy the server if it looks like we can taunt right now.  (The
     -- server does its own checks, so we don't *need* this guard, but it can't
     -- hurt!)
-    if taunt == nil or !LocalPlayer():CanTauntAt(CurTime()) then return false end
+    if taunt == nil or taunt:len() == 0 or !LocalPlayer():CanTauntAt(CurTime()) then return false end
 
     net.Start("Taunt Selection")
         net.WriteString(taunt)
