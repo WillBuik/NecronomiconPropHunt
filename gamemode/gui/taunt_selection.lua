@@ -50,7 +50,7 @@ local function playTaunt(taunt, pitch)
     -- Only annoy the server if it looks like we can taunt right now.  (The
     -- server does its own checks, so we don't *need* this guard, but it can't
     -- hurt!)
-    if !LocalPlayer():CanTauntAt(CurTime()) then return false end
+    if taunt == nil or !LocalPlayer():CanTauntAt(CurTime()) then return false end
 
     net.Start("Taunt Selection")
         net.WriteString(taunt)
@@ -124,10 +124,8 @@ local function createTauntMenu()
         tauntList.OnClickLine = function(parent, line, isSelected)
             local selectedPitch = pitchSlider:GetValue()
             player.lastSelectedPitch = selectedPitch
-            if line:GetValue(2):len() > 0 then
-                if playTaunt(line:GetValue(2), selectedPitch) then
-                    hideTauntMenu()
-                end
+            if playTaunt(line:GetValue(2), selectedPitch) then
+                hideTauntMenu()
             end
         end
     
@@ -143,7 +141,13 @@ local function createTauntMenu()
             end
         end
         if noMatchingTaunts == true then
-            tauntList:AddLine("No Matching Taunts", "")
+            tauntList:AddLine("No Matching Taunts", nil)
+        end
+    end
+    
+    local function playRandomTauntInList()
+        if playTaunt(table.Random(tauntList:GetLines()):GetValue(2), RandomPitch()) then
+            hideTauntMenu()
         end
     end
 
@@ -151,16 +155,13 @@ local function createTauntMenu()
     searchTextEntry.OnChange = function()
         filterTauntList()
     end
+    searchTextEntry.OnEnter = playRandomTauntInList
 
     local randomBtn = vgui.Create("DButton", prettyPanel)
         randomBtn:SetText("")
         randomBtn:SetSize(btnWidth, btnHeight)
         randomBtn:SetPos(padding, height + searchHeight + padding * 3)
-        randomBtn.DoClick = function()
-            if playTaunt(RandomTaunt(player), RandomPitch()) then
-                hideTauntMenu()
-            end
-        end
+        randomBtn.DoClick = playRandomTauntInList
 
     -- Painting
     prettyPanel.Paint = function(self, w, h)
