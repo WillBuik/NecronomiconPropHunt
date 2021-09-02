@@ -4,9 +4,13 @@ local height = 400
 local btnWidth = width
 local btnHeight = 50
 local searchHeight = 25
+
+local TAUNT_MENU_DELAY = 0.07
+local TAUNT_MENU_SHORT_PRESS = 0.25
+local TAUNT_SELECTION_TIMER_ID = "SHOW_TAUNT_SELECTION_MENU"
+
 local tauntPanel = nil
 local searchTextEntry = nil;
-local TAUNT_SELECTION_TIMER_ID = "SHOW_TAUNT_SELECTION_MENU"
 
 -- Returns true if the taunt menu is visible and in search mode.
 local function tauntMenuIsSearching()
@@ -204,18 +208,24 @@ end
 
 -- Hooks for taunt selection 'Q' button
 hook.Add("OnSpawnMenuOpen", "Display the taunt menu", function()
-    showTauntMenuAfter(0.12)
+    showTauntMenuAfter(TAUNT_MENU_DELAY)
+    LocalPlayer().tauntMenuOpenTime = CurTime()
 end)
 
 -- Hooks for taunt selection 'Q' button
 hook.Add("OnSpawnMenuClose", "Close the context menu", function()
-    if cancelTauntMenuAfter() then
-        -- This was a short press, play a random taunt and cancel the menu timer.
-        local ply = LocalPlayer()
+    -- Cancel the open timer, does nothing if the dialog is already open.
+    cancelTauntMenuAfter()
+
+    -- Check if this was a short press, if so play a random taunt.
+    local ply = LocalPlayer()
+    if (ply.tauntMenuOpenTime and
+        ply.tauntMenuOpenTime + TAUNT_MENU_SHORT_PRESS  > CurTime()) then
         playTaunt(RandomTaunt(ply), RandomPitch())
     end
+
+    -- Hide the taunt menu if the user hasn't focused the search bar.
     if !tauntMenuIsSearching() then
-        -- Only hide the taunt menu if the user hasn't focused the search bar.
         hideTauntMenu()
     end
 end)
