@@ -23,7 +23,7 @@ alive when the round timer runs out.
 | Left-shift   | Hunter        | Look up or down based on nearest taunt       |
 | Left-ctrl    | Both          | "Crouch" (allows for finer prop placement)   |
 | Q            | Both          | Ramdomly taunt the other team                |
-| Q (hold)     | Both          | Taunt slection menu                          |
+| Q (hold)     | Both          | Taunt slection menu (+ Ctrl for search)      |
 | U            | Both          | Team chat                                    |
 | C (hold)     | Both          | Context menu with various settings/actions   |
 | F1           | Both          | Open the help window                         |
