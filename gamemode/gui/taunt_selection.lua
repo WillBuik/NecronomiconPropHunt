@@ -23,7 +23,7 @@ end
 -- Enable taunt search and focus the search bar.
 local function tauntMenuEnableSearch()
     if tauntPanel == nil or searchTextEntry == nil then return end
-    tauntPanel:SetKeyBoardInputEnabled(true)
+    tauntPanel:SetKeyboardInputEnabled(true)
     searchTextEntry:RequestFocus()
 end
 
@@ -195,7 +195,7 @@ local function showTauntMenu()
     cancelTauntMenuAfter()
     if tauntPanel == nil then
         createTauntMenu()
-        tauntPanel:SetKeyBoardInputEnabled(false)
+        tauntPanel:SetKeyboardInputEnabled(false)
     end
 end
 
