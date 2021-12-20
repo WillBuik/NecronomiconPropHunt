@@ -33,7 +33,6 @@ function SWEP:AbilityCleanup()
     local ply = self:GetOwner()
     ply:ObjSetDisguised(false)
     if SERVER then
-        ply:StripWeapon("weapon_prop_util_smgdummy")
         player_manager.RunClass(ply, "SetModel")
         if (IsValid(ply:GetProp())) then
             ply:GetProp():SetRenderMode(RENDERMODE_NORMAL)
