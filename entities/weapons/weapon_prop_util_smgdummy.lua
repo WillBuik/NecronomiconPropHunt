@@ -13,6 +13,7 @@ SWEP.HoldType = "smg"
 function SWEP:Ability()
     local ply = self:GetOwner()
     if SERVER then
+        ply:ObjSetDisguised(false)
         ply:StripWeapon("weapon_prop_util_smgdummy")
         player_manager.RunClass(ply, "SetModel")
         if (IsValid(ply:GetProp())) then
@@ -30,8 +31,8 @@ end
 function SWEP:AbilityCleanup()
     if !IsValid(self:GetOwner()) then return end
     local ply = self:GetOwner()
-    ply:ObjSetDisguised(false)
     if SERVER then
+        ply:ObjSetDisguised(false)
         ply:StripWeapon("weapon_prop_util_smgdummy")
         player_manager.RunClass(ply, "SetModel")
         if (IsValid(ply:GetProp())) then
