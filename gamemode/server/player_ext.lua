@@ -89,42 +89,8 @@ function plymeta:PropDeath(attacker, fake)
     RecordPropDeath(ply)
 end
 
-function plymeta:FakeDeath(attacker)
-    self:PropDeath(attacker, true)
-
-    self:GetProp():SetRenderMode(RENDERMODE_NONE)
-    self:GetProp():DrawShadow(false)
-    self:Freeze(true)
-    self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
-    RecordFakePropDeath(self)
-
-    local playDeadDuration = self:ObjGetPlaydeadDuration()
-
-    -- pause auto-taunting while fake-dead to avoid a dead giveaway (pun intended)
-    self:SetNextAutoTauntDelay(self:GetNextAutoTauntDelay() + playDeadDuration)
-
-    -- un-fake the death after a few seconds
-    timer.Create("EndFakeDeath", playDeadDuration, 1, function()
-        self:EndFakeDeath()
-    end)
-
-    self:ObjSetPlaydeadDuration(-1)
-    self:ObjSetPlaydead(true)
-end
-
-function plymeta:EndFakeDeath()
-    local ply = self
-    if (IsValid(self:GetProp())) then
-        self:GetProp():SetRenderMode(RENDERMODE_NORMAL)
-        self:GetProp():DrawShadow(true)
-    end
-    self:Freeze(false)
-    self:SetCollisionGroup(COLLISION_GROUP_NONE)
-    self:ObjSetPlaydead(false)
-    UndoFakePropDeath()
-
+function plymeta:RemoveRagdoll()
     local ragdoll = self.objRagdoll
-    ResetPropToProp(ply)
     self.objRagdoll = nil
     ragdoll:Remove()
 end

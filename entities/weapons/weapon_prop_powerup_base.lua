@@ -47,6 +47,7 @@ OBJ_ABILTY_CAST_ERROR_ALREADY_ACTIVE = 4
 
 function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "IsAbilityUsed")
+    self:NetworkVar("Bool", 1, "IsAbilityPrimed")
 
     self:AbilitySetupDataTables()
 end
@@ -59,8 +60,10 @@ function SWEP:Initialize()
 
     if self.IsNoAbility then
         self:SetIsAbilityUsed(true)
+        self:SetIsAbilityPrimed(true)
     else
         self:SetIsAbilityUsed(false)
+        self:SetIsAbilityPrimed(false)
     end
 
     self.currentTimerID = 0
@@ -112,6 +115,7 @@ end
 
 function SWEP:SecondaryAttack()
     if self:GetIsAbilityUsed() then return end
+    if self:GetIsAbilityPrimed() then return end
     if !self.AbilityUsableBeforeHuntersReleaed and !round.huntersReleased then return end
 
     self.AbilityStartTime = CurTime()
@@ -130,7 +134,9 @@ function SWEP:SecondaryAttack()
                 self:EmitSound(abilitySound)
             end
         end
-        self:SetIsAbilityUsed(true)
+        if (!self:GetIsAbilityPrimed()) then
+            self:SetIsAbilityUsed(true)
+        end
     else
         if CLIENT then
             self:EmitSound(Sound("WallHealth.Deny"))
