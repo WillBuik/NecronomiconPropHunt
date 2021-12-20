@@ -23,6 +23,10 @@ function SWEP:Ability()
     end
 end
 
+function SWEP:DrawWorldModel()
+    self:DrawModel()
+end
+
 function SWEP:AbilityCleanup()
     if !IsValid(self:GetOwner()) then return end
     local ply = self:GetOwner()
