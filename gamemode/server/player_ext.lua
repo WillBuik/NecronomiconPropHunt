@@ -87,6 +87,7 @@ function plymeta:PropDeath(attacker, fake)
     self:AddDeaths(1)
     self:SetTimeOfDeath(CurTime())
     RecordPropDeath(ply)
+    return ragdoll
 end
 
 function plymeta:RemoveRagdoll()

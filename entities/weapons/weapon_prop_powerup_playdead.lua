@@ -27,12 +27,15 @@ function SWEP:AbilityTrigger(attacker)
 
     local ply = self:GetOwner()
 
-    ply:PropDeath(attacker, true)
+    local ragdoll = ply:PropDeath(attacker, true)
 
     ply:GetProp():SetRenderMode(RENDERMODE_NONE)
     ply:GetProp():DrawShadow(false)
     ply:Freeze(true)
     ply:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+
+    ply:Spectate(OBS_MODE_CHASE)
+    ply:SpectateEntity(ragdoll)
     RecordFakePropDeath(ply)
 
     -- pause auto-taunting while fake-dead to avoid a dead giveaway (pun intended)
@@ -49,11 +52,13 @@ end
 function SWEP:AbilityCleanup()
     if CLIENT then return end
 
+
     self:SetIsAbilityPrimed(false)
     self:SetIsAbilityUsed(true)
 
     local ply = self:GetOwner()
 
+    ply:UnSpectate()
     ply:ObjSetPlaydeadPrimed(false)
     ply:ObjSetPlaydead(false)
 
