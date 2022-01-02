@@ -78,7 +78,7 @@ function plymeta:PropDeath(attacker, fake)
         AnnouncePlayerDeath(ply, attacker)
     end
 
-    if (fake) then return end
+    if (fake) then return ragdoll end
 
     self:SetRenderMode(RENDERMODE_NORMAL)
     RemovePlayerProp(ply)
