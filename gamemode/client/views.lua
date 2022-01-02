@@ -3,6 +3,9 @@ hook.Add("CalcView", "ObjHunt CalcView", function(ply, pos, angles, fov)
     -- disable custom viewing if we're dead, this fixes spec bug
     if (!ply:Alive()) then return true end
 
+    -- disable custom viewing if we're playing dead, this fixes spec bug
+    if (ply:ObjIsPlaydead()) then return true end
+
     -- this needs to be here otherwise some people get errors for some unknown reason
     if (ply.wantThirdPerson == nil) then return end
 
