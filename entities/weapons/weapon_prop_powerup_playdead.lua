@@ -13,7 +13,8 @@ function SWEP:Ability()
 
     local ply = self:GetOwner()
 
-    ply:ObjSetPlaydeadCallback(self)
+    ply:ObjSetPlaydeadPrimed(true)
+    ply.playdeadCallback = function () self:AbilityTrigger() end
     ply:PrintMessage(HUD_PRINTTALK, "The next time you take damage, you will play dead.")
 end
 
@@ -36,7 +37,7 @@ function SWEP:AbilityTrigger()
     -- pause auto-taunting while fake-dead to avoid a dead giveaway (pun intended)
     ply:SetNextAutoTauntDelay(ply:GetNextAutoTauntDelay() + self.AbilityDuration)
 
-    ply:ObjSetPlaydeadCallback(nil)
+    ply:ObjSetPlaydeadPrimed(false)
     ply:ObjSetPlaydead(true)
 
 
@@ -52,7 +53,7 @@ function SWEP:AbilityCleanup()
 
     local ply = self:GetOwner()
 
-    ply:ObjSetPlaydeadCallback(nil)
+    ply:ObjSetPlaydeadPrimed(false)
     ply:ObjSetPlaydead(false)
 
     if (IsValid(ply:GetProp())) then
@@ -61,7 +62,6 @@ function SWEP:AbilityCleanup()
     end
     ply:Freeze(false)
     ply:SetCollisionGroup(COLLISION_GROUP_NONE)
-    ply:ObjSetPlaydead(false)
     UndoFakePropDeath()
 
     ResetPropToProp(ply)

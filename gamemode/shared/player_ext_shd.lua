@@ -17,13 +17,13 @@ function plymeta:ObjGetDisguiseName()
     return self:GetNWString("objAbilityDisguiseName", "")
 end
 
--- indicates whether the player has set the Play Dead ability to trigger and gives a entity to callback with AbilityTrigger()
-function plymeta:ObjSetPlaydeadCallback(ent)
-    self:SetNWEntity("objPlaydeadCallback", ent)
+-- indicates whether the player has set the Play Dead ability to trigger
+function plymeta:ObjSetPlaydeadPrimed(state)
+    self:SetNWEntity("objPlaydeadPrimed", state)
 end
 
-function plymeta:ObjGetPlaydeadCallback()
-    return self:GetNWEntity("objPlaydeadCallback")
+function plymeta:ObjIsPlaydeadPrimed()
+    return self:GetNWEntity("objPlaydeadPrimed", false)
 end
 
 -- indicates whether the player is currently playing dead
