@@ -14,11 +14,11 @@ function SWEP:Ability()
     local ply = self:GetOwner()
 
     ply:ObjSetPlaydeadPrimed(true)
-    ply.playdeadCallback = function () self:AbilityTrigger() end
+    ply.playdeadCallback = function (attacker) self:AbilityTrigger(attacker) end
     ply:PrintMessage(HUD_PRINTTALK, "The next time you take damage, you will play dead.")
 end
 
-function SWEP:AbilityTrigger()
+function SWEP:AbilityTrigger(attacker)
     if CLIENT then return end
 
     self:SetIsAbilityPrimed(false)

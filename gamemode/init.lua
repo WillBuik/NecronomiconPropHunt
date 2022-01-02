@@ -240,14 +240,14 @@ local function DamageHandler(target, dmgInfo)
             elseif (target:GetOwner():IsPlayer() and target:GetOwner():Team() == TEAM_PROPS and !target:GetOwner():ObjIsPlaydead()) then
                 local ply = target:GetOwner()
                 if (ply:ObjIsPlaydeadPrimed()) then
-                    ply.playdeadCallback()
+                    ply.playdeadCallback(attacker)
                 else
                     HurtProp(ply, dmg, attacker)
                 end
             elseif (target:IsPlayer() and target:Team() == TEAM_PROPS and !target:ObjIsPlaydead()) then
                 local ply = target
                 if (ply:ObjIsPlaydeadPrimed()) then
-                    ply.playdeadCallback()
+                    ply.playdeadCallback(attacker)
                 else
                     HurtProp(ply, dmg, attacker)
                 end
