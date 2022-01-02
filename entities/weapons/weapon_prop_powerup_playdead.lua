@@ -19,7 +19,8 @@ function SWEP:Ability()
 end
 
 function SWEP:AbilityTrigger(attacker)
-    if CLIENT then return end
+    if CLIENT || !self:IsAbilityPrimed() || self:IsAbilityUsed()  then return end
+
 
     self:SetIsAbilityPrimed(false)
     self:SetIsAbilityUsed(true)
