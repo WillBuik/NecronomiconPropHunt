@@ -8,11 +8,12 @@ SWEP.AbilityDescription = "Transforms you into a random hunter until you turn it
 
 function SWEP:Ability()
     local ply = self:GetOwner()
+
+    ply:ObjSetDisguised(true)
+    ply:SetModel(TEAM_HUNTERS_DEFAULT_MODEL)
+    ply:SetRenderMode(RENDERMODE_NORMAL)
+    ply:GetProp():SetRenderMode(RENDERMODE_NONE)
     if SERVER then
-        ply:ObjSetDisguised(true)
-        ply:SetModel(TEAM_HUNTERS_DEFAULT_MODEL)
-        ply:SetRenderMode(RENDERMODE_NORMAL)
-        ply:GetProp():SetRenderMode(RENDERMODE_NONE)
         ply:Give("weapon_prop_util_smgdummy")
         ply:SelectWeapon("weapon_prop_util_smgdummy")
 

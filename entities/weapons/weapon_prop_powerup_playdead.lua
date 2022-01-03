@@ -34,8 +34,6 @@ function SWEP:AbilityTrigger(attacker)
     ply:Freeze(true)
     ply:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 
-    ply:Spectate(OBS_MODE_CHASE)
-    ply:SpectateEntity(ragdoll)
     RecordFakePropDeath(ply)
 
     -- pause auto-taunting while fake-dead to avoid a dead giveaway (pun intended)
@@ -58,7 +56,6 @@ function SWEP:AbilityCleanup()
 
     local ply = self:GetOwner()
 
-    ply:UnSpectate()
     ply:ObjSetPlaydeadPrimed(false)
     ply:ObjSetPlaydead(false)
 
