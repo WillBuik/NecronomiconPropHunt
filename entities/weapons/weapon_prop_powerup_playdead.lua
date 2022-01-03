@@ -27,7 +27,7 @@ function SWEP:AbilityTrigger(attacker)
 
     local ply = self:GetOwner()
 
-    local ragdoll = ply:PropDeath(attacker, true)
+    ply:PropDeath(attacker, true)
 
     ply:GetProp():SetRenderMode(RENDERMODE_NONE)
     ply:GetProp():DrawShadow(false)
