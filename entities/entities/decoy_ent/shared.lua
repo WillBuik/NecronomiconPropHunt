@@ -22,7 +22,7 @@ end
 
 function ENT:RunBehavior()
     while (true) do
-        if (self:PlayerNear()) then
+        if (true) then
             self.loco:SetDesiredSpeed(300)
             self:StartActivity(ACT_RUN)
             self:MoveToPos(self:GetPos() + Vector(math.random(-1, 1), math.random(-1, 1), 0) * self.FearRadius)
