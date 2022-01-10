@@ -4,11 +4,10 @@ ENT.Base = "base_nextbot"
 ENT.Type = "nextbot"
 
 function ENT:Initialize()
-	self:SetModel( "models/seagull.mdl" )
+    self:SetModel( "models/seagull.mdl" )
     self:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
     self.IsRunning = true
     self.FearRadius = 1000
-    self.loco:SetDesiredSpeed(300)
 end
 
 function ENT:PlayerNear()
@@ -24,6 +23,7 @@ end
 function ENT:RunBehavior()
     while (true) do
         if (self.IsRunning and self:PlayerNear()) then
+            self.loco:SetDesiredSpeed(300)
             self:StartActivity(ACT_RUN)
             self:MoveToPos(self:GetPos() + Vector(math.random(-1, 1), math.random(-1, 1), 0) * self.FearRadius)
         else
