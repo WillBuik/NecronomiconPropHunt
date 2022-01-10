@@ -167,7 +167,7 @@ TEXT_COLOR = Color(255, 255, 255, 255)
 --[[================]]--
 
 ABILITIES = {
-    "weapon_prop_powerup_friendlyfire",
+--    "weapon_prop_powerup_friendlyfire",
     "weapon_prop_powerup_cloak",
     "weapon_prop_powerup_disguise",
     "weapon_prop_powerup_remove",
