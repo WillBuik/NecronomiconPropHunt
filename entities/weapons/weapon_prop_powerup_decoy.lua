@@ -21,6 +21,7 @@ function SWEP:Ability()
         if !IsValid(decoy) then break end
         decoy:SetCollisionGroup(COLLISION_GROUP_NPC_SCRIPTED)
         decoy:SetPos(spawnPos + Vector(10 * math.random(), 10 * math.random(), 4))
+        decoy:DropToFloor()
         decoy:Spawn()
         decoy:Activate()
         SafeRemoveEntityDelayed(decoy, self.AbilityDuration)
