@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-ENT.Base = "base_entity"
+ENT.Base = "base_nextbot"
 ENT.Type = "nextbot"
 
 function ENT:Initialize()
