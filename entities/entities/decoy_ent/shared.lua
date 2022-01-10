@@ -31,4 +31,6 @@ function ENT:RunBehavior()
             self:StartActivity(ACT_IDLE)
         end
         coroutine.wait(1)
+    end
+end
 
