@@ -178,7 +178,7 @@ ABILITIES = {
     "weapon_prop_powerup_blastoff",
     "weapon_prop_powerup_bongcloud",
     "weapon_prop_powerup_zoolander"
---     "weapon_obj_decoy"
+--     "weapon_prop_powerup_decoy"
 }
 
 --[[=============]]--

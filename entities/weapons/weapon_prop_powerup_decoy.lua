@@ -17,15 +17,9 @@ function SWEP:Ability()
 
     self:GetOwner():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
     for _ = 1,self.AbilityDecoyCount do
-        local decoy = ents.Create("npc_kleiner")
+        local decoy = ents.Create("decoy_ent")
         if !IsValid(decoy) then break end
         decoy:SetCollisionGroup(COLLISION_GROUP_NPC_SCRIPTED)
-        decoy:NavSetRandomGoal(500, Vector(math.random(), math.random(), spawnPos.z))
-        --decoy:SetModel(self:GetOwner():GetProp():GetModel())
-        hbMins, hbMaxs = GetHitBoxInModelCoordinates(self:GetOwner():GetProp())
-        decoy:SetCollisionBounds(hbMins, hbMaxs)
-        decoy:SetCustomCollisionCheck(true)
-        decoy:SetSolid(SOLID_OBB)
         decoy:SetPos(spawnPos + Vector(10 * math.random(), 10 * math.random(), 4))
         decoy:Spawn()
         decoy:Activate()
