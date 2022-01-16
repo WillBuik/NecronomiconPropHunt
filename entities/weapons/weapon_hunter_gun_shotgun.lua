@@ -146,7 +146,7 @@ function SWEP:SecondaryAttack()
 
    local ammo = self:Clip1()
 
-   self:ShootBullet( self.Primary.Damage / 1.5, self.Primary.Recoil, self.Primary.NumShots * ammo, self:GetPrimaryCone() * ammo )
+   self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots * ammo, self:GetPrimaryCone() * math.sqrt(ammo) )
 
    self:TakePrimaryAmmo( ammo )
 
