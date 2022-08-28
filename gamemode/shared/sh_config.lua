@@ -19,7 +19,7 @@ MAX_TEAM_NUMBER_DIFFERENCE = 2
 OBJHUNT_ROUNDS = 4
 
 -- Length of each round in seconds
-OBJHUNT_ROUND_TIME = 300
+OBJHUNT_ROUND_TIME = 315
 
 -- Initial waiting time before first round starts
 OBJHUNT_PRE_ROUND_TIME = 90
@@ -28,7 +28,7 @@ OBJHUNT_PRE_ROUND_TIME = 90
 OBJHUNT_POST_ROUND_TIME = 5
 
 -- How much time props have before hunters are released
-OBJHUNT_HIDE_TIME = 30
+OBJHUNT_HIDE_TIME = 45
 
 -- This enables autotaunt
 AUTOTAUNT_ENABLED = true
