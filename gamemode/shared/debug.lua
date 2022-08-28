@@ -141,3 +141,23 @@ local function testargs_command(ply, cmd, args, str)
     end    
 end
 add_server_debug_command("testargs", testargs_command);
+
+local function pause_round_command(ply, cmd, args, str)
+    if is_admin(ply) then
+        SetRoundPaused(true);
+        debug_print(ply, "Round paused.")
+    else
+        debug_print(ply, "You must be an admin to run this command.")
+    end
+end
+add_server_debug_command("pause", pause_round_command);
+
+local function resume_round_command(ply, cmd, args, str)
+    if is_admin(ply) then
+        SetRoundPaused(false);
+        debug_print(ply, "Round resumed.")
+    else
+        debug_print(ply, "You must be an admin to run this command.")
+    end
+end
+add_server_debug_command("resume", resume_round_command);

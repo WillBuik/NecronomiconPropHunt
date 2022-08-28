@@ -241,7 +241,11 @@ end
 function RoundToTime(round)
     local secs = CurTime() - round.startTime
     if (round.state == ROUND_WAIT) then
-        return OBJHUNT_PRE_ROUND_TIME - secs
+        if round.roundPaused then
+            return 260
+        else
+            return OBJHUNT_PRE_ROUND_TIME - secs
+        end
     elseif (round.state == ROUND_IN or round.state == ROUND_START) then
         return OBJHUNT_ROUND_TIME - secs
     elseif (round.state == ROUND_END) then

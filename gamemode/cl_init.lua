@@ -38,6 +38,7 @@ net.Receive("Round Update", function()
     round.startTime       = net.ReadInt(32)
     round.endTime         = net.ReadInt(32)
     round.huntersReleased = net.ReadBit() != 0
+    round.roundPaused     = net.ReadBit() != 0
 end)
 
 net.Receive("Death Notice", function()

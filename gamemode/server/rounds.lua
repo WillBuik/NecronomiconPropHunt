@@ -16,6 +16,7 @@
 -- this var is used outside of this file
 round = {}
 round.state           = ROUND_WAIT
+round.roundPaused     = false      -- only meaningful when state == ROUND_WAIT
 round.current         = 0
 round.startTime       = 0          -- only meaningful when state >= ROUND_IN
 round.huntersReleased = false      -- only meaningful when state == ROUND_IN
@@ -29,6 +30,7 @@ local function SendRoundUpdate(sendMethod)
         net.WriteUInt(round.startTime, 32)
         net.WriteUInt(round.endTime, 32)
         net.WriteBit(round.huntersReleased)
+        net.WriteBit(round.roundPaused)
     sendMethod()
 end
 
@@ -89,6 +91,7 @@ local function WaitRound()
     local mapTime = CurTime()
     local spectators = team.GetPlayers(TEAM_SPECTATOR)
     if (mapTime < OBJHUNT_PRE_ROUND_TIME and #spectators != 0) then return end
+    if round.roundPaused then return end
 
     -- make sure we have at least one player on each team
     local hunters = team.GetPlayers(TEAM_HUNTERS)
@@ -224,6 +227,12 @@ roundHandler[ROUND_WAIT]  = WaitRound
 roundHandler[ROUND_START] = StartRound
 roundHandler[ROUND_IN]    = InRound
 roundHandler[ROUND_END]   = EndRound
+
+-- Pause/unpause the wait round.
+function SetRoundPaused(paused)
+    round.roundPaused = paused;
+    SendRoundUpdate(function() return net.Broadcast() end)
+end
 
 -- start the round orchestrator when the game has initialized
 hook.Add("Initialize", "Begin round functions", function()
