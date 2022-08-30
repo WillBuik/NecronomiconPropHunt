@@ -176,3 +176,13 @@ local function testmode_command(ply, cmd, args, str)
     end
 end
 add_server_debug_command("testmode", testmode_command);
+
+-- Add a bot.
+local function addbot_command(ply, cmd, args, str)
+    if is_admin(ply) then
+        RunConsoleCommand("bot")
+    else
+        debug_print(ply, "You must be an admin to run this command.")
+    end
+end
+add_server_debug_command("addbot", addbot_command);
