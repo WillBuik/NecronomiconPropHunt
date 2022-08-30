@@ -171,6 +171,8 @@ end
 -- Command list:
 add_command("Pause Countdown",               "phd pause")
 add_command("Resume Countdown",              "phd resume")
+
 add_command("  -- Debug *Use Caution* --",   "")
 add_command("Enter Testmode",                "phd testmode")
 add_command("Add Bot",                       "phd addbot")
+add_command("List Taunt Durations",          "phd tauntinfo")

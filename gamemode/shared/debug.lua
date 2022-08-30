@@ -1,34 +1,3 @@
--- Validate the lengths of all prop and hunter taunts.
-concommand.Add("checktaunts", function(ply, cmd, args, str)
-    if (SERVER) then
-        print("SERVER Side Taunts:")
-    else
-        print("CLIENT Side Taunts:")
-    end
-
-    for _, taunt in pairs(PROP_TAUNTS) do
-        local duration = NewSoundDuration("sound/" .. taunt)
-        local durationStr
-        if (!duration) then
-            durationStr = "nil"
-        else
-            durationStr = string.format("%.2fs", duration)
-        end
-        print("Taunt '" .. taunt .. "'\tduration " .. durationStr)
-    end
-
-    for _, taunt in pairs(HUNTER_TAUNTS) do
-        local duration = NewSoundDuration("sound/" .. taunt)
-        local durationStr
-        if (!duration) then
-            durationStr = "nil"
-        else
-            durationStr = string.format("%.2fs", duration)
-        end
-        print("Taunt '" .. taunt .. "'\tduration " .. durationStr)
-    end
-end)
-
 -- Lookup for server debug commands:
 --   server_debug_command_tab["command"] = {
 --       handler: server_func
@@ -186,3 +155,29 @@ local function addbot_command(ply, cmd, args, str)
     end
 end
 add_server_debug_command("addbot", addbot_command)
+
+-- Debug taunts, listing all durations. Nil durations are errors.
+local function tauntinfo_command(ply, cmd, args, str)
+    for _, taunt in pairs(PROP_TAUNTS) do
+        local duration = NewSoundDuration("sound/" .. taunt)
+        local durationStr
+        if (!duration) then
+            durationStr = "nil"
+        else
+            durationStr = string.format("%.2fs", duration)
+        end
+        debug_print(ply, "Taunt '" .. taunt .. "'\tduration " .. durationStr)
+    end
+
+    for _, taunt in pairs(HUNTER_TAUNTS) do
+        local duration = NewSoundDuration("sound/" .. taunt)
+        local durationStr
+        if (!duration) then
+            durationStr = "nil"
+        else
+            durationStr = string.format("%.2fs", duration)
+        end
+        debug_print(ply, "Taunt '" .. taunt .. "'\tduration " .. durationStr)
+    end
+end
+add_server_debug_command("tauntinfo", tauntinfo_command)
