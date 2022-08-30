@@ -10,14 +10,6 @@ local searchTextEntry = nil
 
 local COMMANDS = {}
 
--- Returns true if the command menu is visible and in search mode.
-local function commandMenuIsSearching()
-    if commandPanel != nil then
-        return commandPanel:IsKeyboardInputEnabled()
-    end
-    return false
-end
-
 -- Enable command search and focus the search bar.
 local function commandMenuEnableSearch()
     if commandPanel == nil or searchTextEntry == nil then return end
