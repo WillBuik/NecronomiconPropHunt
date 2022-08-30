@@ -103,7 +103,7 @@ local function DecodeVorbis(buffer)
 
 	-- AGP for Vorbis indicates the last sample number in the page.
 	-- This can be used to accurately determine length of any conformant Ogg Vorbis.
-	local highestAGP = 0;
+	local highestAGP = 0
 
 	repeat
 		if (pageData["absolute_granual_position"] > highestAGP) then
@@ -362,5 +362,5 @@ function NewSoundDuration(soundPath)
 	end
 
 	SoundDurationCache[soundPath] = duration
-	return duration;
+	return duration
 end

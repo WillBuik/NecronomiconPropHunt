@@ -641,7 +641,7 @@ function QMenuAntiAbuse(ply)
                 net.WriteUInt(ply:Team(), 16)
             net.Broadcast()
         end
-        return true;
+        return true
     end
 
     return false

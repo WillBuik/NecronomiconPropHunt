@@ -10,7 +10,7 @@ local TAUNT_MENU_SHORT_PRESS = 0.25
 local TAUNT_SELECTION_TIMER_ID = "SHOW_TAUNT_SELECTION_MENU"
 
 local tauntPanel = nil
-local searchTextEntry = nil;
+local searchTextEntry = nil
 
 -- Returns true if the taunt menu is visible and in search mode.
 local function tauntMenuIsSearching()

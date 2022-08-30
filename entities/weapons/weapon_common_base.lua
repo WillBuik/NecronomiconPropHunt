@@ -21,7 +21,7 @@ if CLIENT then
 end
 
 SWEP.Base = "weapon_base"
-SWEP.BounceWeaponIcon = false;
+SWEP.BounceWeaponIcon = false
 SWEP.DrawWeaponInfoBox = false
 SWEP.WeaponIconKey = "c" -- Defaults to crowbar
 

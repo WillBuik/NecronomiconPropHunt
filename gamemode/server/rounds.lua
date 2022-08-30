@@ -230,7 +230,7 @@ roundHandler[ROUND_END]   = EndRound
 
 -- Pause/unpause the wait round.
 function SetRoundPaused(paused)
-    round.roundPaused = paused;
+    round.roundPaused = paused
     SendRoundUpdate(function() return net.Broadcast() end)
 end
 

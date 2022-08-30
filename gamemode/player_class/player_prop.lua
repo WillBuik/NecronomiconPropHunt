@@ -24,7 +24,7 @@ function PLAYER:Loadout()
 end
 
 function PLAYER:SetupDataTables()
-    self.Player:NetworkVar("Entity", 0, "Prop");
+    self.Player:NetworkVar("Entity", 0, "Prop")
 end
 
 player_manager.RegisterClass("player_prop", PLAYER, "player_default")

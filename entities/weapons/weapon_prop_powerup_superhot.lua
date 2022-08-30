@@ -76,7 +76,7 @@ if CLIENT then
                 text = "HOT"
             end
 
-            local w, h = surface.GetTextSize(text);
+            local w, h = surface.GetTextSize(text)
 
             surface.SetTextPos(x - w / 2, y - h / 2)
             surface.SetTextColor(G_PHColors.white:Unpack())
