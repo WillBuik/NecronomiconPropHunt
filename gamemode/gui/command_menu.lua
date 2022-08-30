@@ -86,10 +86,10 @@ local function createCommandMenu()
         local commandSearch = getSearchString(searchTextEntry:GetText())
         local noMatchingCommand = true
         commandList:Clear()
-        for commandDisplayName, command in orderedPairs(COMMANDS) do
-            local commandSearchName = getSearchString(commandDisplayName)
+        for _, command in ipairs(COMMANDS) do
+            local commandSearchName = getSearchString(command.display)
             if commandSearch:len() == 0 or commandSearchName:find(commandSearch, 0, true) != nil then
-                commandList:AddLine(commandDisplayName, command)
+                commandList:AddLine(command.display, command.command)
                 noMatchingCommand = false
             end
         end
@@ -168,9 +168,16 @@ function showCommandMenu()
     end
 end
 
--- Command list:
-COMMANDS["Pause Countdown"]           = "phd pause"
-COMMANDS["Resume Countdown"]          = "phd resume"
+-- Add commands to the command list.
+local function add_command(display, command)
+    COMMANDS[#COMMANDS + 1] = {
+        display = display,
+        command = command
+    }
+end
 
-COMMANDS["-- Debug *Use Caution* --"] = ""
-COMMANDS["Enter Testmode"]            = "phd testmode"
+-- Command list:
+add_command("Pause Countdown",               "phd pause")
+add_command("Resume Countdown",              "phd resume")
+add_command("  -- Debug *Use Caution* --",   "")
+add_command("Enter Testmode",                "phd testmode")
