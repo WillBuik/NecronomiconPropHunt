@@ -169,5 +169,8 @@ function showCommandMenu()
 end
 
 -- Command list:
-COMMANDS["Pause Countdown"]         = "phd pause"
-COMMANDS["Resume Countdown"]        = "phd resume"
+COMMANDS["Pause Countdown"]           = "phd pause"
+COMMANDS["Resume Countdown"]          = "phd resume"
+
+COMMANDS["-- Debug *Use Caution* --"] = ""
+COMMANDS["Enter Testmode"]            = "phd testmode"

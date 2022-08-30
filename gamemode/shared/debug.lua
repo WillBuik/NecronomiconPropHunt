@@ -142,6 +142,7 @@ local function testargs_command(ply, cmd, args, str)
 end
 add_server_debug_command("testargs", testargs_command);
 
+-- Pause round start countdown.
 local function pause_round_command(ply, cmd, args, str)
     if is_admin(ply) then
         SetRoundPaused(true);
@@ -152,6 +153,7 @@ local function pause_round_command(ply, cmd, args, str)
 end
 add_server_debug_command("pause", pause_round_command);
 
+-- Resume round start countdown.
 local function resume_round_command(ply, cmd, args, str)
     if is_admin(ply) then
         SetRoundPaused(false);
@@ -161,3 +163,16 @@ local function resume_round_command(ply, cmd, args, str)
     end
 end
 add_server_debug_command("resume", resume_round_command);
+
+-- Disable hunter blindness countdown for testing.
+local function testmode_command(ply, cmd, args, str)
+    if is_admin(ply) then
+        -- This is a hack and only works for players currently logged in.
+        BroadcastLua("OBJHUNT_HIDE_TIME = 1")
+        OBJHUNT_HIDE_TIME = 1
+        debug_print(ply, "Test mode enabled.")
+    else
+        debug_print(ply, "You must be an admin to run this command.")
+    end
+end
+add_server_debug_command("testmode", testmode_command);

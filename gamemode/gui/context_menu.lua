@@ -288,6 +288,9 @@ hook.Add("OnContextMenuClose", "Close the context menu", function()
         LocalPlayer():Team() != TEAM_HUNTERS or
         !LocalPlayer():Alive()) then return end
 
+    -- bail if the menu isn't open
+    if mainPanel == nil then return end
+
     mainPanel:MoveTo(posXClose, posY, deltaTime, 0, 1)
     mainPanel:SetKeyboardInputEnabled(true)
     -- make sure it's not open before we kill it

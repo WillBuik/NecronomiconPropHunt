@@ -18,15 +18,6 @@ function GM:PlayerInitialSpawn(ply)
     net.Send(ply)
 end
 
--- Add command to hunter blindness for testing.
--- This is a huge hack but it is only needed for testing.
-concommand.Add("testmode", function (ply)
-    if IsValid(ply) then return end -- Bail if this is sent from a player.
-    BroadcastLua("OBJHUNT_HIDE_TIME = 1")
-    OBJHUNT_HIDE_TIME = 1
-    print("Test mode enabled.")
-end)
-
 -- [[ Class Selection ]] --
 function GM:ShowTeam(ply) -- This hook is called everytime F2 is pressed.
     net.Start("Class Selection")
@@ -39,7 +30,6 @@ function GM:ShowHelp(ply)
         -- Just used as a hook
     net.Send(ply)
 end
-
 
 function SetTeam(ply, chosen)
     local playerTable = {}
