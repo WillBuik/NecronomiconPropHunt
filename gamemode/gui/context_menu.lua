@@ -262,6 +262,12 @@ local function DrawContextMenu()
 end
 
 hook.Add("OnContextMenuOpen", "Display the context menu", function()
+    -- Open admin menu if Alt+C is pressed.
+    if (input.IsKeyDown(KEY_LALT) or input.IsKeyDown(KEY_RALT)) and IsValid(LocalPlayer()) and LocalPlayer():IsAdmin() then
+        showCommandMenu();
+        return;
+    end
+
     if (LocalPlayer():Team() != TEAM_PROPS and
         LocalPlayer():Team() != TEAM_HUNTERS or
         !LocalPlayer():Alive()) then return end
