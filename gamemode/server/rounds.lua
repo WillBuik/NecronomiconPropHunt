@@ -185,7 +185,7 @@ local function InRound()
     end
 
     -- unfreeze the hunters after their time is up
-    if (roundTime > OBJHUNT_HIDE_TIME and !round.huntersReleased) then
+    if ((roundTime > OBJHUNT_HIDE_TIME or (GetGlobalInt("PHD_TESTMODE") == 1)) and !round.huntersReleased) then
         print("Releasing hunters")
         for _, v in pairs(hunters) do
             v:Freeze(false)

@@ -145,9 +145,11 @@ add_server_debug_command("resume", resume_round_command)
 -- Disable hunter blindness countdown for testing.
 local function testmode_command(ply, cmd, args, str)
     if is_admin(ply) then
-        -- This is a hack and only works for players currently logged in.
-        BroadcastLua("OBJHUNT_HIDE_TIME = 1")
-        OBJHUNT_HIDE_TIME = 1
+        SetGlobalInt("PHD_TESTMODE", 1)
+        -- Refresh weapons for all living hunters.
+        for _, hunter in pairs(GetLivingPlayers(TEAM_HUNTERS)) do
+            hunter_setup_loadout(hunter, true)
+        end
         debug_print(ply, "Test mode enabled.")
     else
         debug_print(ply, "You must be an admin to run this command.")
