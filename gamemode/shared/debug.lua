@@ -49,6 +49,15 @@ local function debug_command_serverside_handler(ply, cmd, args, str)
         return
     end
 
+    -- Log all player debug commands to server console.
+    if IsValid(ply) and IsEntity(ply) and ply:IsPlayer() then
+        local is_admin_str = ""
+        if is_admin(ply) then
+            is_admin_str = " (ADMIN)"
+        end
+        print("Player " .. ply:Name() .. is_admin_str .. " issued command '" .. str .. "'")
+    end
+
     table.remove(args, 1)
     str = str:sub(subcmd:len() + 1, -1):gsub("^%s*", "")
     command_entry["handler"](ply, subcmd, args, str)
