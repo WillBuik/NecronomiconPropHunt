@@ -190,3 +190,23 @@ local function tauntinfo_command(ply, cmd, args, str)
     end
 end
 add_server_debug_command("tauntinfo", tauntinfo_command)
+
+-- Reload the current map.
+local function reload_command(ply, cmd, args, str)
+    if is_admin(ply) then
+        RunConsoleCommand("changelevel", game.GetMap())
+    else
+        debug_print(ply, "You must be an admin to run this command.")
+    end
+end
+add_server_debug_command("reloadmap", reload_command)
+
+-- Force a map change vote.
+local function votemap_command(ply, cmd, args, str)
+    if is_admin(ply) then
+        MapVote.Start(30, false, MAPS_SHOWN_TO_VOTE, {"cs_", "ph_", "gm_ww"})
+    else
+        debug_print(ply, "You must be an admin to run this command.")
+    end
+end
+add_server_debug_command("votemap", votemap_command)
