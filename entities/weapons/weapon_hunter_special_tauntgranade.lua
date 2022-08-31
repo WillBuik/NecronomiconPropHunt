@@ -26,6 +26,8 @@ SWEP.Primary.AutoReload    = true
 SWEP.Primary.Anim          = ACT_VM_THROW
 SWEP.Primary.EffectRange   = 300
 
+SWEP.ReloadSound           = ""
+SWEP.EmptySound            = ""
 
 function SWEP:Throw()
     if CLIENT then return end
