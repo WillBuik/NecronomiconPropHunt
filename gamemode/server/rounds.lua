@@ -68,12 +68,15 @@ local function RespawnTeams()
         if (IsValid(v)) then
             v:KillSilent()
             v:Spawn()
-            if (i == taunt_seeker) then
-                v:Give("weapon_hunter_special_tauntseeker")
-                v:StripWeapon("weapon_hunter_special_tauntgranade")
-            elseif (i == taunt_grenade) then
-                v:Give("weapon_hunter_special_tauntgranade")
-                v:StripWeapon("weapon_hunter_special_tauntseeker")
+            -- TODO, this doesn't work with a third special hunter weapon
+            if false then
+                if (i == taunt_seeker) then
+                    v:Give("weapon_hunter_special_tauntseeker")
+                    v:StripWeapon("weapon_hunter_special_tauntgranade")
+                elseif (i == taunt_grenade) then
+                    v:Give("weapon_hunter_special_tauntgranade")
+                    v:StripWeapon("weapon_hunter_special_tauntseeker")
+                end
             end
         end
     end
