@@ -24,7 +24,7 @@ local function hunter_give_weapon(ply, weapon, testmode)
             if testmode then
                 ply:SetAmmo(HUNTER_WEAPONS_TESTMODE_AMMO, weapon.ammo[i])
             else
-                ply:SetAmmo(weapon.ammo[i+1], weapon.ammo[i])
+                ply:SetAmmo(weapon.ammo[i + 1], weapon.ammo[i])
             end
         end
     end
