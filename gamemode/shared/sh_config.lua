@@ -181,6 +181,62 @@ ABILITIES = {
 --     "weapon_prop_powerup_decoy"
 }
 
+--[[=====================]]--
+--[[HUNTER WEAPONS CONFIG]]--
+--[[=====================]]--
+
+-- Hunter weapons, hunters will get one random weapon from each entry in this table.
+HUNTER_WEAPONS = {
+    -- Crowbar
+    {
+        {
+            swep = "weapon_crowbar"
+        }
+    },
+    -- Hand guns
+    {
+        {
+            swep = "weapon_hunter_gun_pistol",
+            ammo = { "Pistol", 256 }
+        },
+        {
+            swep = "weapon_hunter_gun_revolver",
+            ammo = { "357", 36 }
+        },
+    },
+    -- Long guns
+    {
+        {
+            swep = "weapon_hunter_gun_smg",
+            ammo = { "SMG1", 256, "SMG1_Grenade", 1 }
+        },
+        {
+            swep = "weapon_hunter_gun_shotgun",
+            ammo = { "Buckshot", 64 }
+        }
+    },
+    -- Special guns
+    {
+        {
+            swep = "weapon_hunter_special_tauntgranade",
+            ammo = { "AR2AltFire", 1 }
+        },
+        {
+            swep = "weapon_hunter_special_tauntseeker",
+            ammo = { "AR2AltFire", 1 }
+        }
+    },
+    -- Self destruct
+    {
+        {
+            swep = "weapon_hunter_special_selfdestruct"
+        }
+    }
+}
+
+-- Amount of ammo to give hunters in test mode.
+HUNTER_WEAPONS_TESTMODE_AMMO = 500
+
 --[[=============]]--
 --[[BREATH CONFIG]]--
 --[[=============]]--

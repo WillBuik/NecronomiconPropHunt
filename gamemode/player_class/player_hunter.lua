@@ -16,39 +16,39 @@ PLAYER.MaxHealth         = 100
 PLAYER.DuckSpeed         = 0.1
 PLAYER.UnDuckSpeed       = 0.1
 
+-- Give a hunter a weapon and setup ammo.
+local function hunter_give_weapon(ply, weapon, testmode)
+    ply:Give(weapon.swep)
+    if weapon.ammo != nil then
+        for i = 1, #weapon.ammo - 1, 2 do
+            if testmode then
+                ply:SetAmmo(HUNTER_WEAPONS_TESTMODE_AMMO, weapon.ammo[i])
+            else
+                ply:SetAmmo(weapon.ammo[i+1], weapon.ammo[i])
+            end
+        end
+    end
+end
+
+-- Setup the hunter loadout based on HUNTER_WEAPONS.
+function hunter_setup_loadout(ply, testmode)
+    ply:RemoveAllAmmo()
+    ply:StripWeapons()
+
+    for _, class_weapons in ipairs(HUNTER_WEAPONS) do
+        if testmode then
+            -- Give hunter all class weapons in testmode
+            for _, class_weapon in ipairs(class_weapons) do
+                hunter_give_weapon(ply, class_weapon, true)
+            end
+        else
+            hunter_give_weapon(ply, table.Random(class_weapons), false)
+        end
+    end
+end
+
 function PLAYER:Loadout()
-
-    self.Player:RemoveAllAmmo()
-
-    self.Player:Give("weapon_crowbar")
-
-    if (math.random() > 0.5) then
-        self.Player:GiveAmmo(256, "Pistol", true)
-        self.Player:Give("weapon_hunter_gun_pistol")
-    else
-        self.Player:GiveAmmo(36, "357")
-        self.Player:Give("weapon_hunter_gun_revolver")
-    end
-
-    if (math.random() > 0.5) then
-        self.Player:GiveAmmo(256, "SMG1")
-        self.Player:GiveAmmo(1, "SMG1_Grenade")
-        self.Player:Give("weapon_hunter_gun_smg")
-    else
-        self.Player:GiveAmmo(64, "Buckshot")
-        self.Player:Give("weapon_hunter_gun_shotgun")
-    end
-
-    self.Player:GiveAmmo(1, "AR2AltFire")
-    if (math.random() > 0.5) then
-        self.Player:Give("weapon_hunter_special_tauntgranade")
-    else
-        self.Player:Give("weapon_hunter_special_tauntseeker")
-    end
-
-    self.Player:Give("weapon_hunter_special_selfdestruct")
-
-
+    hunter_setup_loadout(self.Player, GetGlobalInt("PHD_TESTMODE") == 1)
 end
 
 player_manager.RegisterClass("player_hunter", PLAYER, "player_default")
