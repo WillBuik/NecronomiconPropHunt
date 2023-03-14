@@ -195,6 +195,7 @@ local function HurtProp(ply, dmg, attacker)
     if (attacker:Alive()) then
         local gain = math.min(ply:Health(), dmg)
         gain = gain / 2
+        gain = math.max(0, gain)
         local newHP = math.Clamp(attacker:Health() + gain, 0, 100)
         attacker:SetHealth(newHP)
     end
@@ -227,7 +228,7 @@ local function DamageHandler(target, dmgInfo)
                     attacker:Kill()
                     -- default suicide notice
                 end
-            elseif (target:GetOwner():IsPlayer() and target:GetOwner():Team() == TEAM_PROPS and !target:GetOwner():ObjIsPlaydead()) then
+            elseif (target:GetOwner():IsPlayer() and target:GetOwner():Team() == TEAM_PROPS and !target:GetOwner():ObjIsPlaydead() and target:GetOwner():Alive()) then
                 local ply = target:GetOwner()
                 if (ply:ObjIsPlaydeadPrimed()) then
                     ply.playdeadCallback(attacker)
