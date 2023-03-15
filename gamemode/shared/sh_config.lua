@@ -305,3 +305,8 @@ RESPECTS_VERBS = {
     "bowed their head for",
     "dropped an F in the chat for"
 }
+
+-- Enable PVS workaround for wallhacks
+-- Warning, this causes a performance hit, see "Wallhacks PVS fix" hook
+-- in init.lua for more details.
+WALLHACK_PVS_FIX = true

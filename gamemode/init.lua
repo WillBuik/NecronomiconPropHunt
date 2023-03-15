@@ -647,3 +647,24 @@ function QMenuAntiAbuse(ply)
 
     return false
 end
+
+hook.Add("SetupPlayerVisibility", "Wallhacks PVS fix", function(ply, viewEntity)
+    -- This is a hacky way to do this that will have perf issues if
+    -- there are too many players. See
+    -- https://github.com/Facepunch/garrysmod-requests/issues/245
+    -- for an even more hacky, but less perf intensive fix.
+
+    if WALLHACK_PVS_FIX and ply:Team() == TEAM_PROPS then
+        -- Add other players to each player's PVS calculation.
+        for _, hunter_ply in pairs(GetLivingPlayers(TEAM_HUNTERS)) do
+            if ply != hunter_ply then
+                AddOriginToPVS(hunter_ply:GetPos())
+            end
+        end
+        for _, prop_ply in pairs(GetLivingPlayers(TEAM_PROPS)) do
+            if ply != hunter_ply then
+                AddOriginToPVS(prop_ply:GetPos())
+            end
+        end
+    end
+end )
