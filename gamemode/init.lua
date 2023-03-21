@@ -401,7 +401,7 @@ function UpdatePlayerPropHitbox(ply, hbMin, hbMax)
         -- match the view offset for calcviewing to the height
         local height = hbMax.z - hbMin.z
         local scale = ply:GetProp():GetModelScale()
-        height = math.min(height*scale, 70)
+        height = math.min(height * scale, 70)
         ply:SetViewOffset(Vector(0, 0, height))
 
         net.Start("Prop Update")
