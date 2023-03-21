@@ -92,10 +92,6 @@ net.Receive("Taunt Selection BROADCAST", function()
     --EmitSound(taunt , ply:GetPos(), id, CHAN_AUTO, 1, 100, 2, pitch)
 end)
 
-net.Receive("AutoTaunt Update", function()
-    hook.Run("AutoTauntHUDRerender")
-end)
-
 net.Receive("Player Death", function()
     local id = net.ReadUInt(8)
     local ply = player.GetByID(id)

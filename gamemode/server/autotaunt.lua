@@ -31,8 +31,6 @@ if AUTOTAUNT_ENABLED then
                 OBJHUNT_AUTOTAUNT_BASE_INTERVAL * (1 + math.random())
             )
 
-            net.Start("AutoTaunt Update")
-            net.Send(ply)
         end
 
         if timer.Exists("AutoTauntTimer") then

@@ -106,4 +106,3 @@ function tauntHUD()
 end
 
 hook.Add("HUDPaint", "Load Additional HUDS", tauntHUD)
-hook.Add("AutoTauntHUDRerender", "Re-render Auto Taunt HUD", tauntHUD)
