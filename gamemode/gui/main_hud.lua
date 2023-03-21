@@ -158,48 +158,49 @@ local function ObjHUD()
     end
 
     -- POWERUP GUI
-    local weapon = ply:GetActiveWeapon()
-    if (ply:Alive() and
-        ply:Team() == TEAM_PROPS and
-        weapon != nil and
-        weapon.GetIsAbilityUsed and
-        (!weapon:GetIsAbilityUsed() or weapon.AbilityStartTime + weapon.AbilityDuration > CurTime())
-    ) then
+    for _, weapon in pairs(ply:GetWeapons()) do
+        if (ply:Alive() and
+            ply:Team() == TEAM_PROPS and
+            weapon != nil and
+            weapon.GetIsAbilityUsed and
+            (!weapon:GetIsAbilityUsed() or weapon.AbilityStartTime + weapon.AbilityDuration > CurTime())
+        ) then
 
-        startY = startY - padding - 16
+            startY = startY - padding - 16
 
-        -- icon
-        local tauntMat = Material("icon16/star.png", "unlitgeneric")
-        surface.SetMaterial(tauntMat)
-        surface.DrawTexturedRect(iconX, startY, 16 , 16)
+            -- icon
+            local tauntMat = Material("icon16/star.png", "unlitgeneric")
+            surface.SetMaterial(tauntMat)
+            surface.DrawTexturedRect(iconX, startY, 16 , 16)
 
-        local textToDraw = ""
-        if (!weapon:GetIsAbilityUsed()) then
-            textToDraw = weapon:GetPrintName()
-        else
-            -- bar
-            local powerupFrac = math.Clamp(CurTime() - weapon.AbilityStartTime, 0, weapon.AbilityDuration) / weapon.AbilityDuration
+            local textToDraw = ""
+            if (!weapon:GetIsAbilityUsed()) then
+                textToDraw = weapon:GetPrintName()
+            else
+                -- bar
+                local powerupFrac = math.Clamp(CurTime() - weapon.AbilityStartTime, 0, weapon.AbilityDuration) / weapon.AbilityDuration
 
-            local widthOffset = width - (padding * 3) - 16
-            surface.SetDrawColor(PANEL_FILL)
-            surface.DrawRect(barX, startY, widthOffset, 16)
-            surface.SetDrawColor(POWERUP_COLOR)
-            surface.DrawRect(barX, startY, widthOffset * powerupFrac, 16)
-            surface.SetDrawColor(PANEL_BORDER)
-            surface.DrawOutlinedRect(barX, startY, widthOffset, 16)
+                local widthOffset = width - (padding * 3) - 16
+                surface.SetDrawColor(PANEL_FILL)
+                surface.DrawRect(barX, startY, widthOffset, 16)
+                surface.SetDrawColor(POWERUP_COLOR)
+                surface.DrawRect(barX, startY, widthOffset * powerupFrac, 16)
+                surface.SetDrawColor(PANEL_BORDER)
+                surface.DrawOutlinedRect(barX, startY, widthOffset, 16)
+
+                --text
+                textToDraw = weapon.AbilityDuration - powerupFrac * weapon.AbilityDuration
+                textToDraw = math.ceil(textToDraw)
+            end
 
             --text
-            textToDraw = weapon.AbilityDuration - powerupFrac * weapon.AbilityDuration
-            textToDraw = math.ceil(textToDraw)
+            surface.SetFont("barHUD")
+            surface.SetTextColor(255, 255, 255, 255)
+            local textX = barX
+            local textY = startY
+            surface.SetTextPos(textX, textY)
+            surface.DrawText(textToDraw)
         end
-
-        --text
-        surface.SetFont("barHUD")
-        surface.SetTextColor(255, 255, 255, 255)
-        local textX = barX
-        local textY = startY
-        surface.SetTextPos(textX, textY)
-        surface.DrawText(textToDraw)
     end
 end
 
