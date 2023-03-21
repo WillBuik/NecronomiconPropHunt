@@ -64,6 +64,7 @@ As a prop, you will start each round with a random single-use power-up.
  - **Stack**: move the selected prop on top of yourself
  - **SUPER HOT**: slow down time for everyone but you
  - **Zoolander**: nearby hunters temporarily can't turn left
+ - **Gun**: get a gun for a short time
 
 #### Misc. Tips
 
@@ -104,6 +105,8 @@ grenades_ or _taunt seeker_ ammo to help you find props.
    holding their breath are forced to taunt.
  - **Taunt Seeker**: fires a slow, harmless projectile that moves roughly in
    the direction of an active taunt from a living prop.
+ - **Thumper**: causes nearby non-player objects to jump in the air.  Prop
+   players will remain stationary.
  - **Self Destruct**: right-click to use.  After a short fuse, you will
    explode!  In the event of a draw, hunters win—so don't be afraid to go for
    the Hail Mary.
