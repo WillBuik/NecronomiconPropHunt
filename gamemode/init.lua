@@ -154,11 +154,14 @@ function BroadcastPlayerDeath(ply)
     SafeRemoveEntityDelayed(ragdoll, PROP_RAGDOLL_DURATION)
 end
 
-function AnnouncePlayerDeath(ply, attacker)
+function AnnouncePlayerDeath(ply, attacker, verb)
+    if verb == nil then
+        verb = "found"
+    end
     net.Start("Death Notice")
         net.WriteString(attacker:Nick())
         net.WriteUInt(attacker:Team(), 16)
-        net.WriteString("found")
+        net.WriteString(verb)
         net.WriteString(ply:Nick())
         net.WriteUInt(ply:Team(), 16)
     net.Broadcast()
@@ -209,6 +212,7 @@ local function DamageHandler(target, dmgInfo)
     local attacker = dmgInfo:GetAttacker()
     -- dynamic damage
     local dmg = dmgInfo:GetDamage()
+    local dmgType = dmgInfo:GetDamageType()
 
     if (attacker:IsPlayer()) then
         if (attacker:Team() == TEAM_HUNTERS) then
@@ -216,7 +220,6 @@ local function DamageHandler(target, dmgInfo)
             -- player owned props from getting hurt
             if (!target:IsPlayer() and table.HasValue(USABLE_PROP_ENTITIES, target:GetClass()) and attacker:Alive()) then
                 -- disable stepping on bottles to hurt
-                local dmgType = dmgInfo:GetDamageType()
                 if (dmgType == DMG_CRUSH) then return end
                 -- static damage
                 if (HUNTER_DAMAGE_PENALTY > 0) then
@@ -247,6 +250,15 @@ local function DamageHandler(target, dmgInfo)
                 if (target:Health() < 1) then
                     target:KillSilent()
                     AnnouncePlayerDeath(target, attacker)
+                end
+            end
+        elseif (attacker:Team() == TEAM_PROPS) then
+            if (target:IsPlayer() and target:Team() == TEAM_HUNTERS and dmgType != DMG_CRUSH) then
+                target:SetHealth(target:Health() - dmg)
+                print("Health of " .. target:Name() .. " is now " .. target:Health())
+                if (target:Health() < 1) then
+                    target:KillSilent()
+                    AnnouncePlayerDeath(target, attacker, "murdered")
                 end
             end
         end
