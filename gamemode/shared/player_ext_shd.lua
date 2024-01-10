@@ -228,3 +228,15 @@ function plymeta:GetNextAutoTauntTime()
         return nil
     end
 end
+
+----- SetPos debugging
+if SETPOS_DEBUG then
+    local entmeta = FindMetaTable("Entity")
+    if (!entmeta) then return end
+
+    local setpos_detoured = entmeta.SetPos
+    function plymeta:SetPos(pos)
+        print("setpos intercept: (" .. self:Nick() .. ") " .. tostring(pos))
+        setpos_detoured(self, pos)
+    end
+end
