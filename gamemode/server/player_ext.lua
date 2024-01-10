@@ -68,7 +68,6 @@ function plymeta:PropDeath(attacker, fake)
         end
     end
 
-    self:SetParent(ragdoll)
     self.objRagdoll = ragdoll
     BroadcastPlayerDeath(ply)
     AnnouncePlayerDeath(ply, attacker)
