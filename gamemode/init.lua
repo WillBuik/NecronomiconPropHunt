@@ -3,7 +3,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 include("server/autotaunt.lua")
 
-function GM:PlayerInitialSpawn(ply)
+funcl;sl;sertl;ksrl;kserl;ktaserl;ktel;kddtion GM:PlayerInitialSpawn(ply)
     ply:SetTeam(TEAM_SPECTATOR)
     player_manager.SetPlayerClass(ply, "player_spectator")
 
