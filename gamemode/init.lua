@@ -8,8 +8,10 @@ function GM:PlayerInitialSpawn(ply)
     player_manager.SetPlayerClass(ply, "player_spectator")
 
     if (ply:IsBot()) then
-        -- Auto add bots to the smaller team for testing.
-        SetTeam(ply, TEAM_ANY)
+        -- Auto add bots to the smaller team for testing, but not in this tick or the game logic bugs out.
+        timer.Simple(0.5, function()
+            SetTeam(ply, TEAM_ANY)
+        end)
     end
 
     ply:SetCustomCollisionCheck(true)
@@ -575,6 +577,7 @@ end)
 function RemovePlayerProp(ply)
     if (ply.GetProp and IsValid(ply:GetProp())) then
         ply:GetProp():Remove()
+        print(ply:Nick() .. " removed player prop")
         ply:SetProp(nil)
     end
     ply:ResetHull()
