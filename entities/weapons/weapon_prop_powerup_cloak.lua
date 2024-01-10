@@ -10,7 +10,7 @@ SWEP.AbilityDescription = "Disappear almost completely for $AbilityDuration seco
 function SWEP:Ability()
     if CLIENT then return end
     local ply = self:GetOwner()
-    self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
+    self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanupOnce() end)
     ply:GetProp():SetRenderMode( RENDERMODE_TRANSALPHA )
     ply:GetProp():Fire( "alpha", 4, 0 )
     ply:GetProp():DrawShadow(false)

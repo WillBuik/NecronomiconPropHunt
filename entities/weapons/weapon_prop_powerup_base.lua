@@ -48,6 +48,7 @@ OBJ_ABILTY_CAST_ERROR_ALREADY_ACTIVE = 4
 function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "IsAbilityUsed")
     self:NetworkVar("Bool", 1, "IsAbilityPrimed")
+    self:NetworkVar("Bool", 2, "IsAbilityCleanedUp")
 
     self:AbilitySetupDataTables()
 end
@@ -161,13 +162,23 @@ function SWEP:OnRemove()
             timer.Remove(timerName)
         end
     end
-
-    if self:GetIsAbilityUsed() then
-        self:AbilityCleanup()
+    if (self.AbilityStartTime + self.AbilityDuration > CurTime()) then
+        self:AbilityCancelled()
     end
+
+    self:AbilityCleanupOnce()
+end
+
+function SWEP:AbilityCancelled()
 end
 
 function SWEP:AbilityCleanup()
+end
+
+function SWEP:AbilityCleanupOnce()
+    if self:GetIsAbilityCleanedUp() then end
+    self:AbilityCleanup()
+    self:SetIsAbilityCleanedUp(true)
 end
 
 function SWEP:AbilityIsTargetInLOS(target, mask)

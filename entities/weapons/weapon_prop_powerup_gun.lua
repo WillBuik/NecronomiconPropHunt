@@ -14,7 +14,7 @@ local AMMO_AMOUNT = 500
 function SWEP:Ability()
     if CLIENT then return end
     local ply = self:GetOwner()
-    self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
+    self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanupOnce() end)
     ply:Give(WEAPON_TO_GIVE)
     ply:SetAmmo(AMMO_AMOUNT, AMMO_TYPE)
     ply:SelectWeapon(WEAPON_TO_GIVE)

@@ -13,7 +13,7 @@ function SWEP:Ability()
         local ply = self:GetOwner()
         ply:PrintMessage(HUD_PRINTTALK, "Hunters will suffer friendly fire for the next " .. self.AbilityDuration .. " seconds")
         EnableHunterFriendlyFire(ply)
-        self:AbilityTimer(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
+        self:AbilityTimer(self.AbilityDuration, 1, true, function() self:AbilityCleanupOnce() end)
     end
 end
 

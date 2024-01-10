@@ -44,7 +44,7 @@ function SWEP:AbilityTrigger(attacker)
 
 
     -- un-fake the death after a few seconds
-    self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanup() end)
+    self:AbilityTimerIfValidOwner(self.AbilityDuration, 1, true, function() self:AbilityCleanupOnce() end)
 end
 
 function SWEP:AbilityCleanup()
