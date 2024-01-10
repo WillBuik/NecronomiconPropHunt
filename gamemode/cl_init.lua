@@ -19,10 +19,11 @@ net.Receive("Prop Update", function(length)
     LocalPlayer().propHeight = propHeight
 
     -- initialize third person if first prop
-    local firstProp = LocalPlayer():GetPropLastChange() == 0
-    if (firstProp) then
-        LocalPlayer().wantThirdPerson = true
-    end
+    -- but this is broken sometimes, so just always set third person
+    --local firstProp = LocalPlayer():GetPropLastChange() == 0
+    --if (firstProp) then
+    LocalPlayer().wantThirdPerson = true
+    --end
 
 end)
 
