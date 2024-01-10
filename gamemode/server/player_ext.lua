@@ -92,5 +92,7 @@ end
 function plymeta:RemoveRagdoll()
     local ragdoll = self.objRagdoll
     self.objRagdoll = nil
-    ragdoll:Remove()
+    if IsValid(ragdoll) then
+        ragdoll:Remove()
+    end
 end
