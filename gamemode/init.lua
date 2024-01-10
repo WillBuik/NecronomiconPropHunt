@@ -577,7 +577,6 @@ end)
 function RemovePlayerProp(ply)
     if (ply.GetProp and IsValid(ply:GetProp())) then
         ply:GetProp():Remove()
-        print(ply:Nick() .. " removed player prop")
         ply:SetProp(nil)
     end
     ply:ResetHull()
