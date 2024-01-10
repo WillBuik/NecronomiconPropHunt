@@ -481,10 +481,12 @@ function UnstickPlayer(ply, searchMultplier)
         ply.lastChange = CurTime()
         ResetPrevVals(ply)
         ply.prevPos = ply:GetPos()
-        ply.prevAngle = ply:GetAngle()
+        ply.prevAngle = ply:GetAngles()
         ply.prevLockedAngle = ply:GetPropLockedAngle()
         ply.prevRollAngle = ply:GetPropRollAngle()
         tHitboxMin, tHitboxMax = PropHitbox(ply)
+
+        UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
     elseif (ply:Team() == TEAM_HUNTERS) then
         tHitboxMin, tHitboxMax = GetHitBoxInModelCoordinates(ply)
     else
@@ -494,8 +496,6 @@ function UnstickPlayer(ply, searchMultplier)
     --Adjust Position for no stuck
     local foundSpot = FindSpotFor(ply, tHitboxMin, tHitboxMax, searchMultplier)
     ply:SetPos(foundSpot)
-
-    UpdatePlayerPropHitbox(ply, tHitboxMin, tHitboxMax)
 end
 
 function GetNumValidPropsOnMap()

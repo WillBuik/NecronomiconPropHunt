@@ -109,7 +109,9 @@ end)
 
 net.Receive("Reset To Spawn", function(len, ply)
     ply:SetPos(table.Random(team.GetSpawnPoints(ply:Team())):GetPos())
-    UnstickPlayer(ply, 10)
+    if (ply:Team() == TEAM_PROPS) then
+        UnstickPlayer(ply, 10)
+    end
 end)
 
 --[[ When a ghost prop presses +use on a prop ]]--
