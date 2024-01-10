@@ -31,7 +31,8 @@ function SWEP:AbilityTrigger(attacker)
 
     ply:GetProp():SetRenderMode(RENDERMODE_NONE)
     ply:GetProp():DrawShadow(false)
-    ply:Freeze(true)
+    ply:Spectate(OBS_MODE_CHASE)
+    ply:SpectateEntity(ply.objRagdoll)
     ply:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 
     RecordFakePropDeath(ply)
@@ -63,7 +64,7 @@ function SWEP:AbilityCleanup()
         ply:GetProp():SetRenderMode(RENDERMODE_NORMAL)
         ply:GetProp():DrawShadow(true)
     end
-    ply:Freeze(false)
+    ply:UnSpectate()
     ply:SetCollisionGroup(COLLISION_GROUP_NONE)
     UndoFakePropDeath()
 

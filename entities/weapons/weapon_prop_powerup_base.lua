@@ -62,9 +62,11 @@ function SWEP:Initialize()
     if self.IsNoAbility then
         self:SetIsAbilityUsed(true)
         self:SetIsAbilityPrimed(true)
+        self:SetIsAbilityCleanedUp(true)
     else
         self:SetIsAbilityUsed(false)
         self:SetIsAbilityPrimed(false)
+        self:SetIsAbilityCleanedUp(false)
     end
 
     self.currentTimerID = 0
@@ -176,7 +178,7 @@ function SWEP:AbilityCleanup()
 end
 
 function SWEP:AbilityCleanupOnce()
-    if self:GetIsAbilityCleanedUp() then end
+    if self:GetIsAbilityCleanedUp() then return end
     self:AbilityCleanup()
     self:SetIsAbilityCleanedUp(true)
 end
