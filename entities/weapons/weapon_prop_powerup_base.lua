@@ -161,14 +161,10 @@ function SWEP:OnRemove()
             timer.Remove(timerName)
         end
     end
-    if (self.AbilityStartTime + self.AbilityDuration > CurTime()) then
-        self:AbilityCancelled()
+
+    if self:GetIsAbilityUsed() then
+        self:AbilityCleanup()
     end
-
-    self:AbilityCleanup()
-end
-
-function SWEP:AbilityCancelled()
 end
 
 function SWEP:AbilityCleanup()
