@@ -32,7 +32,9 @@ net.Receive("Reset Prop", function(length)
     LocalPlayer().wantThirdPerson = false
 end)
 
-round = {}
+if round == nil then
+    round = {}
+end
 net.Receive("Round Update", function()
     round.state           = net.ReadInt(8)
     round.current         = net.ReadInt(8)

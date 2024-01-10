@@ -3,6 +3,16 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 include("server/autotaunt.lua")
 
+-- Detect server code hot-reload and restart the map
+if PROPHUNT_HAS_LOADED_ONCE == nil then
+    PROPHUNT_HAS_LOADED_ONCE = true
+else
+    PrintMessage(HUD_PRINTCENTER, "Server Code Hot-Loaded! Restarting...")
+    timer.Simple(3.0, function()
+        game.ConsoleCommand("phd reloadmap\n")
+    end)
+end
+
 function GM:PlayerInitialSpawn(ply)
     ply:SetTeam(TEAM_SPECTATOR)
     player_manager.SetPlayerClass(ply, "player_spectator")

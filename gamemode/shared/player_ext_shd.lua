@@ -230,7 +230,7 @@ function plymeta:GetNextAutoTauntTime()
 end
 
 ----- SetPos debugging
-if SETPOS_DEBUG then
+if SERVER and SETPOS_DEBUG then
     local entmeta = FindMetaTable("Entity")
     if (!entmeta) then return end
 
