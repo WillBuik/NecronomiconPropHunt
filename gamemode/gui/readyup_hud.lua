@@ -33,6 +33,28 @@ local TEAM_PROPS_COLOR = Color(0, 60, 255, 255)
 local TEAM_HUNTERS_COLOR = Color(230, 0, 30, 255)
 local TEAM_SPECTATOR_COLOR = Color(200, 200, 200, 255)
 
+local HELP_PROP = {
+    {"Q", "Taunt (Hold to Select)"},
+    {"E", "Become Prop / Interact (Open Door)"},
+    {"R-Click", "Use Powerup"},
+    {"R", "Lock Rotation"},
+    {"F", "Pay Respects"},
+    {"L-Shift", "Delay Forced Taunt (Costs Health)"}
+}
+
+local HELP_HUNTER = {
+    {"E", "Interact (Open Door)"},
+    {"F", "Flashlight / Pay Respects"},
+    {"L-Shift", "Look Up or Down at Nearest Taunt"}
+}
+
+local HELP_ALL = {
+    {"F1", "Show Detailed Help"},
+    {"C", "Hold to Show Player Options"},
+    {"TAB", "Show Score Board"},
+    {"Space", "(Spectate) No Clip / Follow Player"}
+}
+
 local function draw_text(x, y, text)
     surface.SetTextPos(x, y)
     surface.DrawText(text)
@@ -90,6 +112,46 @@ local function ReadyUpHUD()
             set_text_color(WHITE)
             text_y = text_y + 32
         end
+    end
+
+    local i = 0
+    local help = {}
+    if ply:Team() == TEAM_PROPS then
+        for _, v in pairs(HELP_PROP) do
+            help[i] = v
+            i = i + 1
+        end
+    end
+    if ply:Team() == TEAM_HUNTERS then
+        for _, v in pairs(HELP_HUNTER) do
+            help[i] = v
+            i = i + 1
+        end
+    end
+    for _, v in pairs(HELP_ALL) do
+        help[i] = v
+        i = i + 1
+    end
+
+    local help_lines = # help
+    text_y = ScrH() - 140 - 32 * help_lines
+    
+    set_text_color(WHITE)
+    surface.SetFont("ReadyHUDSubTitleFont")
+    if ply:Team() == TEAM_PROPS then
+        draw_text(60, text_y, "Help (Props)")
+    elseif ply:Team() == TEAM_HUNTERS then
+        draw_text(60, text_y, "Help (Hunters)")
+    else
+        draw_text(60, text_y, "Help")
+    end
+    text_y = text_y + 40
+    
+    surface.SetFont("ReadyHUDTextFont")
+    for _, v in pairs(help) do
+        draw_text(62, text_y, v[1])
+        draw_text(142, text_y, v[2])
+        text_y = text_y + 32
     end
 end
 
