@@ -267,7 +267,7 @@ local function DamageHandler(target, dmgInfo)
         elseif (attacker:Team() == TEAM_PROPS) then
             if (target:IsPlayer() and target:Team() == TEAM_HUNTERS and dmgType != DMG_CRUSH) then
                 target:SetHealth(target:Health() - dmg)
-                print("Health of " .. target:Name() .. " is now " .. target:Health())
+                -- print("Health of " .. target:Name() .. " is now " .. target:Health())
                 if (target:Health() < 1) then
                     target:KillSilent()
                     AnnouncePlayerDeath(target, attacker, "murdered")
