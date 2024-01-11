@@ -89,7 +89,7 @@ local function classSelection()
     end
 
     classPanel.Paint = function(self, w, h)
-        Derma_DrawBackgroundBlur(self, CurTime())
+        --Derma_DrawBackgroundBlur(self, CurTime())
 
         surface.SetFont("Sharp HUD")
         surface.SetTextColor(255, 255, 255, 255)
