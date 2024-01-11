@@ -48,7 +48,7 @@ function SetTeam(ply, chosen)
     local oldTeam = ply:Team()
 
     if chosen == ply:Team() then
-        ply:ChatPrint("You are already on that team.")
+        ply:PrintMessage(HUD_PRINTCENTER, "You are already on that team.")
         return end
     if chosen == TEAM_SPECTATOR then
         player_manager.SetPlayerClass(ply, "player_spectator")
@@ -69,7 +69,7 @@ function SetTeam(ply, chosen)
 
     if math.abs(playerTable[ TEAM_PROPS ] - playerTable[ TEAM_HUNTERS ]) >= MAX_TEAM_NUMBER_DIFFERENCE then
         if playerTable[ chosen ] == math.max(playerTable[ TEAM_PROPS ], playerTable[ TEAM_HUNTERS ]) then
-            ply:ChatPrint("Sorry, that team is currently full.")
+            ply:PrintMessage(HUD_PRINTCENTER, "Sorry, that team is currently full.")
             return end
     end
 
@@ -80,7 +80,7 @@ function SetTeam(ply, chosen)
         player_manager.SetPlayerClass(ply, "player_hunter")
     end
 
-    PrintMessage(HUD_PRINTTALK, ply:Nick() .. " moved from " .. TeamString(oldTeam) .. " to " .. TeamString(ply:Team()))
+    PrintMessage(HUD_PRINTCENTER, ply:Nick() .. " moved from " .. TeamString(oldTeam) .. " to " .. TeamString(ply:Team()))
     RemovePlayerProp(ply)
     ply:KillSilent()
     --ply:Spawn()
