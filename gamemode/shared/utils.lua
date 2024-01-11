@@ -60,6 +60,17 @@ function PropHitbox(ply)
     return tHitboxMin, tHitboxMax
 end
 
+-- Returns the center of a player's prop. This is better for targeting
+-- than the player position (often a corner, depending on the model).
+function PropCenterMass(ply)
+    local tHitboxMin, tHitboxMax = PropHitbox(ply)
+    tHitboxMax:Sub(tHitboxMin)
+    tHitboxMax:Div(2)
+    tHitboxMax:Add(tHitboxMin)
+    tHitboxMax:Add(ply:GetPos())
+    return tHitboxMax
+end
+
 -- Get an entity's hitbox as mins,maxs relative to the entity's model, not the
 -- entity's bones.  You should prefer this function over direct calls to
 -- Entity:GetHitBoxBounds() in virtually all cases.
