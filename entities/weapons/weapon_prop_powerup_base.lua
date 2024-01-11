@@ -34,6 +34,7 @@ SWEP.AbilityShowTargetHalosCheckLOS = false
 SWEP.AbilityDuration = 0
 SWEP.AbilityStartTime = 0
 SWEP.AbilityUseManuallyManaged = false
+SWEP.AbilityCallWhenPrimed = false
 SWEP.AbilityDescription = ""
 
 SWEP.AbilityUsableBeforeHuntersReleaed = false
@@ -118,7 +119,7 @@ end
 
 function SWEP:SecondaryAttack()
     if self:GetIsAbilityUsed() then return end
-    if self:GetIsAbilityPrimed() then return end
+    if self:GetIsAbilityPrimed() and !self.AbilityCallWhenPrimed then return end
     if !self.AbilityUsableBeforeHuntersReleaed and !round.huntersReleased then return end
 
     self.AbilityStartTime = CurTime()
