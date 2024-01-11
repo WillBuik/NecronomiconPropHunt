@@ -30,7 +30,7 @@ SWEP.Primary.Accuracy      = 110
 function SWEP:FireBall(closestPropTaunting)
     if CLIENT then return end
 
-    local posToShoot = closestPropTaunting:GetPos()
+    local posToShoot = PropCenterMass(closestPropTaunting)
 
     -- A little uncertaintity
     posToShoot:Add(Vector(
