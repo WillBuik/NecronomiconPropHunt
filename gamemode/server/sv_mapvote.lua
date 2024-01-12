@@ -40,6 +40,10 @@ function MapVote.Start(length, current, limit, prefix)
 
     for _, map in RandomPairs(maps) do
         if (!current and game.GetMap():lower() == map) then continue end
+        
+        local in_db, _, broken = load_map_info(map)
+        if in_db and broken then continue end
+
         vote_maps[#vote_maps + 1] = map
         amt = amt + 1
 
