@@ -74,7 +74,7 @@ end
 -- Does nothing if the current map isn't in the database.
 function increment_current_map_play_count()
     local cur_map = game.GetMap()
-    local in_db, prop_count, broken, comment, play_count = load_map_info(cur_map)
+    local in_db, _, _, _, play_count = load_map_info(cur_map)
     if in_db then
         save_map_info(cur_map, nil, nil, nil, play_count + 1)
     end
