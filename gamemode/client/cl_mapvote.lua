@@ -67,7 +67,12 @@ net.Receive("RAM_MapVoteUpdate", function()
         end
     elseif (update_type == MapVote.UPDATE_WIN) then
         if (IsValid(MapVote.Panel)) then
-            MapVote.Panel:Flash(net.ReadUInt(32))
+            MapVote.Panel:Flash(net.ReadUInt(32), 3, true)
+        end
+    elseif (update_type == MapVote.UPDATE_SUDDEN_DEATH) then
+        MapVote.EndTime = CurTime() + MapVote.Config.SuddenDeathTimeLimit
+        if (IsValid(MapVote.Panel)) then
+            MapVote.Panel:Flash(net.ReadUInt(32), 1, false)
         end
     end
 end)
@@ -305,18 +310,22 @@ function PANEL:Paint()
     surface.DrawRect(0, 0, ScrW(), ScrH())
 end
 
-function PANEL:Flash(id)
+function PANEL:Flash(id, count, select)
     self:SetVisible(true)
 
     local bar = self:GetMapButton(id)
 
     if (IsValid(bar)) then
-        timer.Simple(0.0, function() bar.bgColor = Color(0, 255, 255) surface.PlaySound("hl1/fvox/blip.wav") end)
-        timer.Simple(0.2, function() bar.bgColor = nil end)
-        timer.Simple(0.4, function() bar.bgColor = Color(0, 255, 255) surface.PlaySound("hl1/fvox/blip.wav") end)
-        timer.Simple(0.6, function() bar.bgColor = nil end)
-        timer.Simple(0.8, function() bar.bgColor = Color(0, 255, 255) surface.PlaySound("hl1/fvox/blip.wav") end)
-        timer.Simple(1.0, function() bar.bgColor = Color(100, 100, 100) end)
+        local delay = 0.0
+        for i = 1, count, 1 do
+            timer.Simple(delay, function() bar.bgColor = Color(0, 255, 255) surface.PlaySound("hl1/fvox/blip.wav") end)
+            delay = delay + 0.2
+            timer.Simple(delay, function() bar.bgColor = nil end)
+            delay = delay + 0.2
+        end
+        if select then
+            timer.Simple(delay, function() bar.bgColor = Color(100, 100, 100) end)
+        end
     end
 end
 

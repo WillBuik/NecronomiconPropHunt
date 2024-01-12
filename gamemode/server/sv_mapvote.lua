@@ -20,6 +20,8 @@ net.Receive("RAM_MapVoteUpdate", function(len, ply)
                         net.WriteEntity(ply)
                         net.WriteUInt(map_id, 32)
                     net.Broadcast()
+
+                    MapVote.CheckWinner(false)
                 end
             end
         end
@@ -28,6 +30,10 @@ end)
 
 
 function MapVote.Start(length, current, limit, prefix)
+    if MapVote.Allow then
+        MapVote.Cancel()
+    end
+
     current = current or MapVote.Config.AllowCurrentMap or false
     length = length or MapVote.Config.TimeLimit or 28
     limit = limit or MapVote.Config.MapLimit or 24
@@ -40,7 +46,7 @@ function MapVote.Start(length, current, limit, prefix)
 
     for _, map in RandomPairs(maps) do
         if (!current and game.GetMap():lower() == map) then continue end
-        
+
         local in_db, _, broken = load_map_info(map)
         if in_db and broken then continue end
 
@@ -68,43 +74,69 @@ function MapVote.Start(length, current, limit, prefix)
     MapVote.Allow = true
     MapVote.CurrentMaps = vote_maps
     MapVote.Votes = {}
+    MapVote.SuddenDeath = false
 
     timer.Create("RAM_MapVote", length, 1, function()
-        MapVote.Allow = false
-        local map_results = {}
+        MapVote.CheckWinner(true)
+    end)
+end
 
-        for k, v in pairs(MapVote.Votes) do
-            if (!map_results[v]) then
-                map_results[v] = 0
-            end
+function MapVote.CheckWinner(timeout)
+    if MapVote.SuddenDeath and !timeout then return end
 
-            for k2, v2 in pairs(player.GetAll()) do
-                if (v2:SteamID() == k) then
-                    if (MapVote.HasExtraVotePower(v2)) then
-                        map_results[v] = map_results[v] + 2
-                    else
-                        map_results[v] = map_results[v] + 1
-                    end
-                end
-            end
+    local map_results = {}
 
+    for k, v in pairs(MapVote.Votes) do
+        if (!map_results[v]) then
+            map_results[v] = 0
         end
 
-        local winner = table.GetWinningKey(map_results) or 1
+        for k2, v2 in pairs(player.GetAll()) do
+            if (v2:SteamID() == k) then
+                if (MapVote.HasExtraVotePower(v2)) then
+                    map_results[v] = map_results[v] + 2
+                else
+                    map_results[v] = map_results[v] + 1
+                end
+            end
+        end
 
-        net.Start("RAM_MapVoteUpdate")
-            net.WriteUInt(MapVote.UPDATE_WIN, 3)
+    end
 
-            net.WriteUInt(winner, 32)
-        net.Broadcast()
+    local winner = table.GetWinningKey(map_results) or 1
 
-        local map = MapVote.CurrentMaps[winner]
+    if !timeout then
+        local winner_votes = map_results[winner]
+
+        if winner_votes and winner_votes >= (# player.GetHumans()) * MapVote.Config.SuddenDeathThreshold then
+            timer.Remove("RAM_MapVote")
+            timer.Create("RAM_MapVote", MapVote.Config.SuddenDeathTimeLimit, 1, function()
+                MapVote.CheckWinner(true)
+            end)
+
+            net.Start("RAM_MapVoteUpdate")
+                net.WriteUInt(MapVote.UPDATE_SUDDEN_DEATH, 3)
+                net.WriteUInt(winner, 32)
+            net.Broadcast()
+        end
+
+        return
+    end
+
+    MapVote.Allow = false
+
+    net.Start("RAM_MapVoteUpdate")
+        net.WriteUInt(MapVote.UPDATE_WIN, 3)
+
+        net.WriteUInt(winner, 32)
+    net.Broadcast()
+
+    local map = MapVote.CurrentMaps[winner]
 
 
-        timer.Simple(4, function()
-            hook.Run("MapVoteChange", map)
-            RunConsoleCommand("changelevel", map)
-        end)
+    timer.Simple(4, function()
+        hook.Run("MapVoteChange", map)
+        RunConsoleCommand("changelevel", map)
     end)
 end
 
