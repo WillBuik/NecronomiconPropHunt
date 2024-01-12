@@ -252,3 +252,42 @@ local function maplist_command(ply, cmd, args, str)
     end
 end
 add_server_debug_command("maplist", maplist_command)
+
+-- Show map info
+local function mapinfo_command(ply, cmd, args, str)
+    if is_admin(ply) then
+        local map = game:GetMap()
+        local in_db, prop_count, broken, comment, play_count = load_map_info(map)
+        debug_print(ply, "Map (" .. map .. ")")
+        if in_db then
+            debug_print(ply, "  Props:   " .. prop_count)
+            debug_print(ply, "  Broken:  " .. tostring(broken))
+            debug_print(ply, "  Played:  " .. play_count)
+            if comment != "" then
+                debug_print(ply, "  Comment: " .. comment) 
+            end
+        else
+            debug_print(ply, "  Not in map info database.")
+        end
+    else
+        debug_print(ply, "You must be an admin to run this command.")
+    end
+end
+add_server_debug_command("mapinfo", mapinfo_command)
+
+-- Show map info
+local function mapbroken_command(ply, cmd, args, str)
+    if is_admin(ply) then
+        local map = game:GetMap()
+        local broken = args[1] != "clear"
+        save_map_info(map, nil, broken)
+        if broken then
+            debug_print(ply, "Map (" .. map .. ") marked broken.")
+        else
+            debug_print(ply, "Map (" .. map .. ") marked OK.")
+        end
+    else
+        debug_print(ply, "You must be an admin to run this command.")
+    end
+end
+add_server_debug_command("mapbroken", mapbroken_command)
