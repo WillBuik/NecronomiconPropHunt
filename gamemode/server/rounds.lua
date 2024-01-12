@@ -205,6 +205,17 @@ local function EndRound()
     if (round.current >= OBJHUNT_ROUNDS) then
         -- no longer need the round orchestrator
         hook.Remove("Tick", "Round orchestrator")
+
+        if # player.GetHumans() > 2 then
+            increment_current_map_play_count()
+            local in_db, _, _, _, play_count = load_map_info(game.GetMap())
+            if in_db then
+                print("Incremented map play count to " .. play_count)
+            end
+        else
+            print("Not enough human players, not increasing map play count.")
+        end
+
         MapVote.Start(30, false, MAPS_SHOWN_TO_VOTE, {"cs_", "ph_", "gm_ww"})
 
         print("Map voting should start now")

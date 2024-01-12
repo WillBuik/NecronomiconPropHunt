@@ -312,3 +312,7 @@ RESPECTS_VERBS = {
 -- Warning, this causes a performance hit, see "Wallhacks PVS fix" hook
 -- in init.lua for more details.
 WALLHACK_PVS_FIX = true
+
+-- Name of the map info SQL table in the server database
+-- This must be a safe name for a SQL table!
+MAP_DB_TABLE_NAME = "nph_map_info"

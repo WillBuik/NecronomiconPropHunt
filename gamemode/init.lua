@@ -525,12 +525,27 @@ function GetNumValidPropsOnMap()
                 numProps = numProps + 1
         end
     end
-    print(numProps)
     return numProps
 end
 
 hook.Add("InitPostEntity", "Entities ready, count props", function ()
-    SetGlobalInt("NumPropsOnMap", GetNumValidPropsOnMap())
+    local prop_count = GetNumValidPropsOnMap()
+    SetGlobalInt("NumPropsOnMap", prop_count)
+    local map_name = game:GetMap();
+    save_map_info(map_name, prop_count)
+
+    local in_db, db_prop_count, map_broken, comment, play_count = load_map_info(map_name)
+    if in_db then
+        print("Map Info (" .. map_name .. ")")
+        print("  Props:   " .. db_prop_count)
+        print("  Broken:  " .. tostring(map_broken))
+        print("  Comment: " .. comment)
+        print("  Plays:   " .. play_count)
+    else
+        print("Map Info (" .. map_name .. ")")
+        print("  Props:   " .. prop_count)
+        print("  Map DB Disabled")
+    end
 end)
 
 --[[ When a player on team_props spawns ]]--
