@@ -171,8 +171,8 @@ end
 -- Command list:
 add_command("Pause Countdown",               "phd pause")
 add_command("Resume Countdown",              "phd resume")
-add_command("Reload Current Map",            "phd reloadmap")
-add_command("Call Map Vote",                 "phd votemap")
+add_command("Reload Current Map",            "phd reload")
+add_command("Call Map Vote",                 "phd mapvote")
 
 add_command("  -- Debug *Use Caution* --",   "")
 add_command("Enter Testmode",                "phd testmode")

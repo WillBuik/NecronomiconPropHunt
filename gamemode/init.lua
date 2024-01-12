@@ -9,7 +9,15 @@ if PROPHUNT_HAS_LOADED_ONCE == nil then
 else
     PrintMessage(HUD_PRINTCENTER, "Server Code Hot-Loaded! Restarting...")
     timer.Simple(3.0, function()
-        game.ConsoleCommand("phd reloadmap\n")
+        game.ConsoleCommand("phd reload\n")
+    end)
+end
+
+-- Enable to cycle through all maps (to cache prop counts)
+-- Note: a player must be joined for the timer to fire.
+if false then
+    timer.Simple(2.0, function()
+        game.ConsoleCommand("phd reload next\n")
     end)
 end
 

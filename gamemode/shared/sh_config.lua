@@ -129,6 +129,9 @@ DOORS = {
     "func_door_rotating",
     "prop_door_rotating"
 }
+
+PROPHUNT_MAP_PREFIXES = {"cs_", "ph_", "gm_ww"}
+
 --[[=====================]]--
 --[[COLORS AND HUD CONFIG]]--
 --[[=====================]]--

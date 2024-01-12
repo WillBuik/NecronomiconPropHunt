@@ -193,22 +193,62 @@ local function tauntinfo_command(ply, cmd, args, str)
 end
 add_server_debug_command("tauntinfo", tauntinfo_command)
 
--- Reload the current map.
+-- Reload the map.
 local function reload_command(ply, cmd, args, str)
     if is_admin(ply) then
-        RunConsoleCommand("changelevel", game.GetMap())
+        local next_map = nil
+
+        if args[1] == "next" then
+            local maps = MapVote.MapList(PROPHUNT_MAP_PREFIXES)
+            for i, m in ipairs(maps) do
+                if m == game.GetMap() and i < #maps then
+                    next_map = maps[i + 1]
+                    break
+                end
+            end
+        elseif args[1] == "first" then
+            next_map = MapVote.MapList(PROPHUNT_MAP_PREFIXES)[1]
+        else
+            next_map = game.GetMap()
+        end
+
+        if next_map != nil then
+            RunConsoleCommand("changelevel", next_map)
+        end
     else
         debug_print(ply, "You must be an admin to run this command.")
     end
 end
-add_server_debug_command("reloadmap", reload_command)
+add_server_debug_command("reload", reload_command)
 
 -- Force a map change vote.
-local function votemap_command(ply, cmd, args, str)
+local function mapvote_command(ply, cmd, args, str)
     if is_admin(ply) then
-        MapVote.Start(30, false, MAPS_SHOWN_TO_VOTE, {"cs_", "ph_", "gm_ww"})
+        MapVote.Start(30, false, MAPS_SHOWN_TO_VOTE, PROPHUNT_MAP_PREFIXES)
     else
         debug_print(ply, "You must be an admin to run this command.")
     end
 end
-add_server_debug_command("votemap", votemap_command)
+add_server_debug_command("mapvote", mapvote_command)
+
+-- List maps on the server.
+local function maplist_command(ply, cmd, args, str)
+    if is_admin(ply) then
+        local maps = MapVote.MapList(PROPHUNT_MAP_PREFIXES)
+        for i, map in pairs(maps) do
+            debug_print(ply, tostring(i) .. " " .. tostring(map))
+            if args[1] == "info" then
+                local in_db, prop_count, broken, comment, play_count = load_map_info(map)
+                if in_db then
+                    debug_print(ply, "  Props: " .. prop_count .. ", Broken: " .. tostring(broken) .. ", Played: " .. play_count)
+                    if comment != "" then
+                        debug_print(ply, "  Comment: " .. comment) 
+                    end
+                end
+            end
+        end
+    else
+        debug_print(ply, "You must be an admin to run this command.")
+    end
+end
+add_server_debug_command("maplist", maplist_command)

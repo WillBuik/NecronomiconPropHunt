@@ -32,48 +32,16 @@ function MapVote.Start(length, current, limit, prefix)
     length = length or MapVote.Config.TimeLimit or 28
     limit = limit or MapVote.Config.MapLimit or 24
 
-    local is_expression = false
-
-    if !prefix then
-        local info = file.Read(GAMEMODE.Folder .. "/" .. GAMEMODE.FolderName .. ".txt", "GAME")
-
-        if (info) then
-            info = util.KeyValuesToTable(info)
-            prefix = info.maps
-        else
-            error("MapVote Prefix can not be loaded from gamemode")
-        end
-
-        is_expression = true
-    else
-        if prefix and type(prefix) != "table" then
-            prefix = {prefix}
-        end
-    end
-
-    local maps = file.Find("maps/*.bsp", "GAME")
+    local maps = MapVote.MapList(prefix)
 
     local vote_maps = {}
 
     local amt = 0
 
     for _, map in RandomPairs(maps) do
-        if (!current and game.GetMap():lower() .. ".bsp" == map) then continue end
-
-        if is_expression then
-            if (string.find(map, prefix)) then -- This might work (from gamemode.txt)
-                vote_maps[#vote_maps + 1] = map:sub(1, -5)
-                amt = amt + 1
-            end
-        else
-            for _, v in pairs(prefix) do
-                if string.find(map:lower(), "^" .. v) then
-                    vote_maps[#vote_maps + 1] = map:sub(1, -5)
-                    amt = amt + 1
-                    break
-                end
-            end
-        end
+        if (!current and game.GetMap():lower() == map) then continue end
+        vote_maps[#vote_maps + 1] = map
+        amt = amt + 1
 
         if (limit and amt >= limit) then break end
     end
@@ -140,4 +108,46 @@ function MapVote.Cancel()
 
         timer.Remove("RAM_MapVote")
     end
+end
+
+function MapVote.MapList(prefix)
+    local is_expression = false
+
+    if !prefix then
+        local info = file.Read(GAMEMODE.Folder .. "/" .. GAMEMODE.FolderName .. ".txt", "GAME")
+
+        if (info) then
+            info = util.KeyValuesToTable(info)
+            prefix = info.maps
+        else
+            error("MapVote Prefix can not be loaded from gamemode")
+        end
+
+        is_expression = true
+    else
+        if prefix and type(prefix) != "table" then
+            prefix = {prefix}
+        end
+    end
+
+    local maps = file.Find("maps/*.bsp", "GAME")
+    local filter_maps = {}
+    
+    for _, map in pairs(maps) do
+        if is_expression then
+            if (string.find(map, prefix)) then -- This might work (from gamemode.txt)
+                filter_maps[#filter_maps + 1] = map:sub(1, -5)
+            end
+        else
+            for _, v in pairs(prefix) do
+                if string.find(map:lower(), "^" .. v) then
+                    filter_maps[#filter_maps + 1] = map:sub(1, -5)
+                    break
+                end
+            end
+        end
+    end
+
+    table.sort(filter_maps) -- gmod already does this today, but who knows about tomorrow...
+    return filter_maps
 end

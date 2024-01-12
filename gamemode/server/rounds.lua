@@ -216,7 +216,7 @@ local function EndRound()
             print("Not enough human players, not increasing map play count.")
         end
 
-        MapVote.Start(30, false, MAPS_SHOWN_TO_VOTE, {"cs_", "ph_", "gm_ww"})
+        MapVote.Start(30, false, MAPS_SHOWN_TO_VOTE, PROPHUNT_MAP_PREFIXES)
 
         print("Map voting should start now")
         hook.Call("OBJHUNT_RoundLimit")
