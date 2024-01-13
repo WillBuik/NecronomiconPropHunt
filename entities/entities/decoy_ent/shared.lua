@@ -3,11 +3,28 @@ AddCSLuaFile()
 ENT.Base = "base_nextbot"
 ENT.Type = "nextbot"
 
+function ENT:SetupProp(model, scale)
+    -- Nextbot models must start at z=0 because their hull cannot be adjusted
+    -- like players. :( As such, many props don't work. Instead spawn
+    -- "decoy_prop_ent" to follow the bot. The "decoy_prop_ent" offsets its 
+    -- own position to render the bottom of the prop at the bot's z=0.
+    if !self.Prop then
+        self.Prop = ents.Create("decoy_prop_ent")
+        self.Prop:SetOwner(self)
+        self.Prop:SetParent(self)
+        self.Prop:Spawn()
+    end
+    self.Prop:SetModel(model)
+    self.Prop:SetModelScale(scale)
+end
+
 function ENT:Initialize()
-    self:SetModel( "models/seagull.mdl" )
     self:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
+    self:SetModel("models/player/combine_super_soldier.mdl")
+    self:SetNoDraw(true)
+
     --self.IsRunning = true
-    self.FearRadius = 1000
+    self.FearRadius = 200
 end
 
 function ENT:PlayerNear()
@@ -20,7 +37,9 @@ function ENT:PlayerNear()
     return false
 end
 
-function ENT:RunBehavior()
+function ENT:RunBehaviour()
+    self.loco:SetStepHeight(30)
+
     while (true) do
         if (true) then
             self.loco:SetDesiredSpeed(300)
@@ -30,7 +49,7 @@ function ENT:RunBehavior()
             --self.IsRunning = false
             self:StartActivity(ACT_IDLE)
         end
-        coroutine.wait(1)
+        coroutine.yield()
     end
 end
 

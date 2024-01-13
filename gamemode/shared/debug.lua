@@ -291,3 +291,46 @@ local function mapbroken_command(ply, cmd, args, str)
     end
 end
 add_server_debug_command("mapbroken", mapbroken_command)
+
+-- Navmesh debugging
+local function nav_command(ply, cmd, args, str)
+    if !is_admin(ply) then
+        debug_print(ply, "You must be an admin to run this command.")
+        return
+    end
+    
+    if args[1] == "info" then
+        debug_print(ply, "Navmesh info:")
+        debug_print(ply, "  Loaded: " .. tostring(navmesh.IsLoaded()))
+        --debug_print(ply, "  Generating: " .. tostring(navmesh.IsGenerating()))
+        debug_print(ply, "  Area Count: " .. navmesh.GetNavAreaCount())
+
+    elseif args[1] == "gen" then
+        debug_print(ply, "Generating navmesh...")
+        navmesh.BeginGeneration()
+
+    elseif args[1] == "decoy" then
+        if !IsValid(ply) then
+            debug_print(ply, "Must be actual player to create decoy")
+            return
+        end
+        if !navmesh.IsLoaded() then
+            debug_print(ply, "Warning: no navmesh loaded")
+        end
+
+        local decoy = ents.Create("decoy_ent")
+        if !IsValid(decoy) then return end
+        decoy:SetCollisionGroup(COLLISION_GROUP_NPC_SCRIPTED)
+        decoy:SetModel( "models/seagull.mdl" )
+        decoy:SetPos(ply:GetPos() + Vector(10 * math.random(), 10 * math.random(), 4))
+        decoy:DropToFloor()
+        decoy:Spawn()
+        decoy:Activate()
+        SafeRemoveEntityDelayed(decoy, 10)
+        debug_print(ply, "Spawned decoy")
+
+    else
+        debug_print(ply, "Unknown nav command.")
+    end 
+end
+add_server_debug_command("nav", nav_command)
