@@ -17,9 +17,22 @@ end
 -- Note: a player must be joined for the timer to fire.
 if false then
     timer.Simple(2.0, function()
-        game.ConsoleCommand("phd reload next\n")
+        if false and !navmesh.IsLoaded() then
+            game.ConsoleCommand("phd nav gen\n")
+        else
+            if false and !navmesh.IsLoaded() then
+                save_map_info(game:GetMap(), nil, nil, "No Navmesh", nil)
+            end
+            game.ConsoleCommand("phd reload next\n")
+        end
     end)
 end
+
+timer.Simple(2.0, function()
+    if !navmesh.IsLoaded() then
+        print("Warning: Map has no navmesh!")
+    end
+end)
 
 function GM:PlayerInitialSpawn(ply)
     ply:SetTeam(TEAM_SPECTATOR)
