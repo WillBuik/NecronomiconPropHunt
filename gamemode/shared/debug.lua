@@ -320,12 +320,7 @@ local function nav_command(ply, cmd, args, str)
 
         local decoy = ents.Create("decoy_ent")
         if !IsValid(decoy) then return end
-        decoy:SetCollisionGroup(COLLISION_GROUP_NPC_SCRIPTED)
-        decoy:SetModel( "models/seagull.mdl" )
-        decoy:SetPos(ply:GetPos() + Vector(10 * math.random(), 10 * math.random(), 4))
-        decoy:DropToFloor()
-        decoy:Spawn()
-        decoy:Activate()
+        decoy:InitAsPlayer(ply)
         SafeRemoveEntityDelayed(decoy, 10)
         debug_print(ply, "Spawned decoy")
 

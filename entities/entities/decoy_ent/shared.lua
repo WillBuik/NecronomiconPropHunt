@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Base = "base_nextbot"
 ENT.Type = "nextbot"
 
-function ENT:SetupProp(model, scale)
+function ENT:InitAsProp(start_pos, model, scale, movement_delay)
     -- Nextbot models must start at z=0 because their hull cannot be adjusted
     -- like players. :( As such, many props don't work. Instead spawn
     -- "decoy_prop_ent" to follow the bot. The "decoy_prop_ent" offsets its 
@@ -16,6 +16,22 @@ function ENT:SetupProp(model, scale)
     end
     self.Prop:SetModel(model)
     self.Prop:SetModelScale(scale)
+
+    self.Delay = movement_delay
+
+    self:SetPos(start_pos + Vector(5 * math.random(), 5 * math.random(), 0))
+    self:DropToFloor()
+    self:Spawn()
+    self:Activate()
+end
+
+function ENT:InitAsPlayer(ply, movement_delay)
+    local start_pos = ply:GetPos()
+    local prop = ply:GetProp()
+    if !IsValid(prop) then
+        prop = ply -- For debugging, clone the player model of hunters
+    end
+    self:InitAsProp(start_pos, prop:GetModel(), prop:GetModelScale(), movement_delay)
 end
 
 function ENT:Initialize()
@@ -40,11 +56,15 @@ end
 function ENT:RunBehaviour()
     self.loco:SetStepHeight(30)
 
+    if self.Delay then
+        coroutine.wait(self.Delay)
+    end
+
     while (true) do
         if (true) then
             self.loco:SetDesiredSpeed(300)
             self:StartActivity(ACT_RUN)
-            self:MoveToPos(self:GetPos() + Vector(math.random(-1, 1), math.random(-1, 1), 0) * self.FearRadius)
+            self:MoveToPos(Vector(0, 0, 5) + self:GetPos() + Vector(math.random(-1, 1), math.random(-1, 1), 0) * self.FearRadius)
         else
             --self.IsRunning = false
             self:StartActivity(ACT_IDLE)
