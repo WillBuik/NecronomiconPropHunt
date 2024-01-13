@@ -20,7 +20,19 @@ PLAYER.UnDuckSpeed       = 0.1
 
 function PLAYER:Loadout()
     self.Player:RemoveAllAmmo()
-    self.Player:Give(ABILITIES[ math.random(#ABILITIES) ])
+
+    local ability_count = # ABILITIES
+    if navmesh.IsLoaded() then
+        ability_count = ability_count + (# ABILITIES_REQUIRE_NAVMESH)
+    end
+    if ability_count > 0 then
+        local ability_idx = math.random(ability_count)
+        if ability_idx <= (# ABILITIES) then
+            self.Player:Give(ABILITIES[ability_idx])
+        else
+            self.Player:Give(ABILITIES_REQUIRE_NAVMESH[ability_idx - (# ABILITIES)])
+        end
+    end
 end
 
 function PLAYER:SetupDataTables()

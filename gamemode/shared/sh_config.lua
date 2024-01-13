@@ -182,8 +182,12 @@ ABILITIES = {
     "weapon_prop_powerup_bongcloud",
     "weapon_prop_powerup_zoolander",
     "weapon_prop_powerup_gun",
-    "weapon_prop_powerup_recall"
---     "weapon_prop_powerup_decoy"
+    "weapon_prop_powerup_recall",
+}
+
+-- These abilities are skipped if a Navmesh isn't loaded for the map.
+ABILITIES_REQUIRE_NAVMESH = {
+    "weapon_prop_powerup_decoy",
 }
 
 --[[=====================]]--
