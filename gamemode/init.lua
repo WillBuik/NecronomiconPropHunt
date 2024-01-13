@@ -539,7 +539,7 @@ end
 hook.Add("InitPostEntity", "Entities ready, count props", function ()
     local prop_count = GetNumValidPropsOnMap()
     SetGlobalInt("NumPropsOnMap", prop_count)
-    local map_name = game:GetMap();
+    local map_name = game:GetMap()
     save_map_info(map_name, prop_count)
 
     local in_db, db_prop_count, map_broken, comment, play_count = load_map_info(map_name)
