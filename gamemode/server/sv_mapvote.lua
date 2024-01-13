@@ -60,12 +60,13 @@ function MapVote.Start(length, current, limit, prefix)
         net.WriteUInt(#vote_maps, 32)
 
         for i = 1, #vote_maps do
-            local in_db, prop_count = load_map_info(vote_maps[i])
+            local in_db, prop_count, _, comment = load_map_info(vote_maps[i])
             if !in_db then
                 prop_count = -1
             end
             net.WriteString(vote_maps[i])
             net.WriteInt(prop_count, 16)
+            net.WriteString(comment)
         end
 
         net.WriteUInt(length, 32)

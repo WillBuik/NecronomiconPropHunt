@@ -34,10 +34,11 @@ net.Receive("RAM_MapVoteStart", function()
     for i = 1, amt do
         local map = net.ReadString()
         local map_prop_count = net.ReadInt(16)
+        local map_comment = net.ReadString()
         if map_prop_count >= 0 then
-            MapVote.CurrentMaps[#MapVote.CurrentMaps + 1] = map .. "  (" .. tostring(map_prop_count) .. " props)"
+            MapVote.CurrentMaps[#MapVote.CurrentMaps + 1] = map .. "  (" .. tostring(map_prop_count) .. " props) " .. map_comment 
         else
-            MapVote.CurrentMaps[#MapVote.CurrentMaps + 1] = map
+            MapVote.CurrentMaps[#MapVote.CurrentMaps + 1] = map .. " " .. map_comment
         end
     end
 
