@@ -38,7 +38,7 @@ function SWEP:AbilityCleanup()
         ply:GetProp():SetRenderMode(RENDERMODE_NORMAL)
         ply:GetProp():DrawShadow(true)
     end
-    if (IsValid(ply:GetObserverTarget()) then
+    if (IsValid(ply:GetObserverTarget())) then
         phys_prop = ply:GetObserverTarget()
         ply:SetPos(phys_prop:GetPos())
         ply:SetAngles(phys_prop:GetAngles())
