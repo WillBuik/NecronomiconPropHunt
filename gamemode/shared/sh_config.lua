@@ -237,6 +237,10 @@ HUNTER_WEAPONS = {
         {
             swep = "weapon_hunter_special_thumper",
             ammo = { "AR2AltFire", 1 }
+        },
+        {
+            swep = "weapon_hunter_special_clairvoyance",
+            ammo = { "AR2AltFire", 1 }
         }
     },
     -- Self destruct
